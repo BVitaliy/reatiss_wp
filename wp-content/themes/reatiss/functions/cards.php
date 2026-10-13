@@ -33,6 +33,8 @@ function rts_card_posts( string $post_type, $picked, int $limit = -1 ): array {
 		$args['posts_per_page'] = count( $picked );
 	} elseif ( 'post' === $post_type ) {
 		$args['posts_per_page'] = $limit;
+		$args['orderby']        = 'date'; // explicit: rspanel would sort posts by menu_order
+		$args['order']          = 'DESC';
 	} elseif ( 'rts_event' === $post_type ) {
 		// Upcoming first (by start date); past events only fill the gap.
 		$args['posts_per_page'] = $limit;
@@ -47,13 +49,13 @@ function rts_card_posts( string $post_type, $picked, int $limit = -1 ): array {
 			],
 		];
 
-		$posts = get_posts( $args );
+		$posts = rts_get_posts( $args );
 
 		if ( $limit > 0 && count( $posts ) < $limit ) {
 			$args['posts_per_page'] = $limit - count( $posts );
 			$args['order']          = 'DESC';
 			$args['meta_query'][0]['compare'] = '<';
-			$posts = array_merge( $posts, get_posts( $args ) );
+			$posts = array_merge( $posts, rts_get_posts( $args ) );
 		}
 
 		rts_prime_thumbnails( $posts );
@@ -67,10 +69,28 @@ function rts_card_posts( string $post_type, $picked, int $limit = -1 ): array {
 		];
 	}
 
-	$posts = get_posts( $args );
+	$posts = rts_get_posts( $args );
 	rts_prime_thumbnails( $posts );
 
 	return $posts;
+}
+
+/**
+ * get_posts() without its `suppress_filters` key.
+ *
+ * rspanel's post-order module turns date / DESC into menu_order / ASC for any
+ * query that has a `suppress_filters` key (get_posts() always sets one), so
+ * date-ordered lists are built through WP_Query directly.
+ *
+ * @param array $args WP_Query arguments.
+ * @return WP_Post[]
+ */
+function rts_get_posts( array $args ): array {
+	unset( $args['suppress_filters'] );
+
+	$query = new WP_Query( array_merge( [ 'no_found_rows' => true ], $args ) );
+
+	return $query->posts;
 }
 
 /**

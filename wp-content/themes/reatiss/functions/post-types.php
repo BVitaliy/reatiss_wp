@@ -24,6 +24,24 @@ class RTS_Post_Types {
 	}
 
 	public function register(): void {
+		// Taxonomy first: its /events/category/… rules must come before the
+		// event post type's /events/… ones, which would otherwise swallow them.
+		register_taxonomy(
+			'rts_event_cat',
+			[ 'rts_event' ],
+			[
+				'labels'            => $this->taxonomy_labels( 'Категорії подій', 'Категорія' ),
+				'public'            => true,
+				'hierarchical'      => true,
+				'show_admin_column' => true,
+				'show_in_rest'      => false,
+				'rewrite'           => [
+					'slug'       => 'events/category',
+					'with_front' => false,
+				],
+			]
+		);
+
 		$this->register_type(
 			'rts_service',
 			'services',
@@ -78,21 +96,6 @@ class RTS_Post_Types {
 			[ 'supports' => [ 'title', 'thumbnail', 'page-attributes' ] ]
 		);
 
-		register_taxonomy(
-			'rts_event_cat',
-			[ 'rts_event' ],
-			[
-				'labels'            => $this->taxonomy_labels( 'Категорії подій', 'Категорія' ),
-				'public'            => true,
-				'hierarchical'      => true,
-				'show_admin_column' => true,
-				'show_in_rest'      => false,
-				'rewrite'           => [
-					'slug'       => 'events/category',
-					'with_front' => false,
-				],
-			]
-		);
 	}
 
 	/**

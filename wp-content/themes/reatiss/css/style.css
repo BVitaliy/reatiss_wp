@@ -1934,3 +1934,4 @@ html.js .home-hero:not(.is-ready) .home-hero__content > * {opacity: 0;}
 .rts-form.invalid .wpcf7-response-output {display: none;}
 .form-box__form > .wpcf7,
 .modal__form > .wpcf7 {width: 100%;}
+.pager .btn.is-loading {opacity: 0.6;pointer-events: none;}

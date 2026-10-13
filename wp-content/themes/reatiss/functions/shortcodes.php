@@ -3,7 +3,7 @@
  * Editor inserts — the markup's article blocks as shortcodes, so editors can
  * place them anywhere in classic-editor / ACF WYSIWYG content:
  *
- *   [rts_cta title="Typical cycle time is 3-4 months." button="Process Report Example" url="https://…"]
+ *   [rts_cta title="Typical cycle time is 3-4 months." button="Process Report Example" url="https://…" size="big"]
  *   [rts_slider ids="12,13,14"]                         — .article-slider (app-article.js)
  *   [rts_youtube url="https://youtu.be/…" image="15"]   — .article-video facade (app-article.js)
  *
@@ -24,6 +24,9 @@ class RTS_Shortcodes {
 		add_shortcode( 'rts_cta', [ $this, 'cta' ] );
 		add_shortcode( 'rts_slider', [ $this, 'slider' ] );
 		add_shortcode( 'rts_youtube', [ $this, 'youtube' ] );
+
+		// Post / event content: shortcodes run at 11, unwrap right after.
+		add_filter( 'the_content', 'rts_unwrap_inserts', 12 );
 	}
 
 	/**
@@ -38,10 +41,14 @@ class RTS_Shortcodes {
 				'button' => '',
 				'url'    => '',
 				'new'    => '',
+				'size'   => '',
 			],
 			$atts,
 			'rts_cta'
 		);
+
+		// size="big" — the article's h4 heading (Figma 7999:18510), else the h5 note.
+		$big = 'big' === $atts['size'];
 
 		$link = '' !== $atts['url'] ? [
 			'url'     => rts_resolve_anchor( $atts['url'] ),
@@ -53,7 +60,11 @@ class RTS_Shortcodes {
 		?>
 		<div class="article-cta">
 			<?php if ( '' !== $atts['title'] ) { ?>
-				<p class="article-cta__title h5"><?php echo esc_html( $atts['title'] ); ?></p>
+				<?php if ( $big ) { ?>
+					<h2 class="article-cta__title h4"><?php echo esc_html( $atts['title'] ); ?></h2>
+				<?php } else { ?>
+					<p class="article-cta__title h5"><?php echo esc_html( $atts['title'] ); ?></p>
+				<?php } ?>
 			<?php } ?>
 			<?php if ( $link && '' !== $atts['button'] ) { ?>
 				<a class="btn btn--primary"<?php echo rts_link_attrs( $link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in rts_link_attrs(). ?>>
@@ -204,8 +215,16 @@ function rts_editor_content( string $html ): string {
 		);
 	}
 
-	// Block inserts must not sit inside the <p> / <br> wpautop put around them.
-	$html = (string) preg_replace(
+	return wp_kses( rts_unwrap_inserts( $html ), $allowed );
+}
+
+/**
+ * Removes the <p> / <br> wpautop puts around the block inserts (and the markers).
+ *
+ * @param string $html Formatted editor HTML.
+ */
+function rts_unwrap_inserts( string $html ): string {
+	return (string) preg_replace(
 		[
 			'#<p>\s*<!--rts-insert-->#',
 			'#<!--/rts-insert-->\s*(?:<br\s*/?>\s*)?</p>#',
@@ -215,6 +234,4 @@ function rts_editor_content( string $html ): string {
 		[ '<!--rts-insert-->', '<!--/rts-insert-->', '<!--/rts-insert-->', '' ],
 		$html
 	);
-
-	return wp_kses( $html, $allowed );
 }

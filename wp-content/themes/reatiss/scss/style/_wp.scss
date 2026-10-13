@@ -59,3 +59,9 @@
 .modal__form > .wpcf7 {
   width: 100%;
 }
+
+// "Show more" while the next page loads (app-load-more.js)
+.pager .btn.is-loading {
+  opacity: 0.6;
+  pointer-events: none;
+}

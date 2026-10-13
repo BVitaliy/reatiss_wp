@@ -18,7 +18,7 @@
 2. Page builder + Home ✅
 3. About ✅
 4. Services / Labs / Expertise (CPTs, list pages, singles on the builder) ✅
-5. Blog / Events / Authors
+5. Blog / Events / Authors ✅
 6. On Shelf + forms (reCAPTCHA keys later)
 7. Search (live + results page), Contacts, map
 8. Content seed, Yoast, performance, team checklist, adaptive QA
@@ -73,6 +73,14 @@ logs/             — custom logs (rts_log()), gitignored
 - Editor inserts (`functions/shortcodes.php`): `[rts_cta]`, `[rts_slider ids]`, `[rts_youtube url image]`
   → the markup's `.article-cta` / `.article-slider` / `.article-video`. Print WYSIWYG that may
   hold them with `rts_editor_content()` (kses + strips the `<p>` wpautop puts around them).
+- Lists (`functions/lists.php`): blog = posts page (`home.php`), categories / tags / event categories
+  = `archive.php`, events = page template «Події» (`templates/events.php`, own `/events/page/N/`
+  rule), author = `author.php`; all render `template-parts/lists/list.php` + `rts_pager()`.
+  "Show more" = `js/app-load-more.js` → `wp_ajax_rts_load_more` (nonce `rts_nonce`).
+- **rspanel sorts posts by menu_order** (its `pre_get_posts`): date-ordered post lists set
+  `orderby=date` explicitly and use `rts_get_posts()` (WP_Query without `suppress_filters`).
+- Articles / events: `single.php` → `template-parts/article/article.php` (+ related); tables are
+  wrapped in `.article-table` by a `the_content` filter; author fields = ACF on users.
 - Buttons / links: group { label, type: none|page|custom|modal, page, url, new_tab } →
   `rts_button()` / `rts_link()` + `rts_link_attrs()`.
 

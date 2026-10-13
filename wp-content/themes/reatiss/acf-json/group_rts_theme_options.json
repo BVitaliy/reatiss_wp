@@ -252,6 +252,100 @@
         },
         {
             "type": "tab",
+            "name": "blog_tab",
+            "label": "Блог і події",
+            "wrapper": {
+                "width": "100"
+            },
+            "placement": "top",
+            "key": "field_a9d333d2df4ddc42"
+        },
+        {
+            "type": "textarea",
+            "name": "blog_title",
+            "label": "Заголовок сторінки блогу",
+            "wrapper": {
+                "width": "50"
+            },
+            "rows": 2,
+            "new_lines": "br",
+            "default_value": "Research, Technology, and Engineering Insights",
+            "key": "field_26c05507e582a7e1"
+        },
+        {
+            "type": "textarea",
+            "name": "events_title",
+            "label": "Заголовок сторінки подій",
+            "wrapper": {
+                "width": "50"
+            },
+            "rows": 2,
+            "new_lines": "br",
+            "default_value": "Meet Our Experts Around the World",
+            "key": "field_a0cdd362edc21bab"
+        },
+        {
+            "type": "text",
+            "name": "blog_all_label",
+            "label": "Чипс «усі статті»",
+            "wrapper": {
+                "width": "25"
+            },
+            "default_value": "All posts",
+            "key": "field_89d1d6ffde90c5a2"
+        },
+        {
+            "type": "text",
+            "name": "events_all_label",
+            "label": "Чипс «усі події»",
+            "wrapper": {
+                "width": "25"
+            },
+            "default_value": "All events",
+            "key": "field_6c4312ab6424baa9"
+        },
+        {
+            "type": "text",
+            "name": "related_posts_title",
+            "label": "Стаття: заголовок «інші статті»",
+            "wrapper": {
+                "width": "50"
+            },
+            "default_value": "Discover More Articles",
+            "key": "field_03b2a9183b87a800"
+        },
+        {
+            "type": "text",
+            "name": "related_events_title",
+            "label": "Подія: заголовок «інші події»",
+            "wrapper": {
+                "width": "50"
+            },
+            "default_value": "Explore More Upcoming Events",
+            "key": "field_09bc88f36e5abdcb"
+        },
+        {
+            "type": "text",
+            "name": "author_posts_title",
+            "label": "Автор: заголовок списку статей",
+            "wrapper": {
+                "width": "50"
+            },
+            "default_value": "Latest Insights and Articles from the Author",
+            "key": "field_c6f4656b41fac48c"
+        },
+        {
+            "type": "text",
+            "name": "share_title",
+            "label": "Підпис «поділитися»",
+            "wrapper": {
+                "width": "50"
+            },
+            "default_value": "Share",
+            "key": "field_906e62fb7d80af5a"
+        },
+        {
+            "type": "tab",
             "name": "faq_tab",
             "label": "FAQ",
             "wrapper": {
@@ -986,5 +1080,5 @@
     "active": true,
     "description": "Глобальні налаштування: шапка, контакти, футер, попапи, форми.",
     "show_in_rest": 0,
-    "modified": 1791901887
+    "modified": 1791903754
 }

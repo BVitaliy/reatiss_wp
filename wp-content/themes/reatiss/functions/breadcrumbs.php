@@ -67,6 +67,18 @@ function rts_breadcrumbs(): array {
 		return $items;
 	}
 
+	// Blog page (the posts page is not singular).
+	if ( is_home() ) {
+		$items[] = [
+			'title' => get_the_title( (int) get_option( 'page_for_posts' ) ),
+			'url'   => '',
+		];
+
+		return $items;
+	}
+
+	// Archives: their section page (Blog / Events) goes before the archive itself.
+	$items   = (array) apply_filters( 'rts_breadcrumbs_before_current', $items );
 	$items[] = [
 		'title' => wp_strip_all_tags( (string) apply_filters( 'rts_breadcrumb_title', get_the_archive_title() ) ),
 		'url'   => '',

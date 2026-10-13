@@ -1,0 +1,116 @@
+{
+    "key": "group_rts_author",
+    "title": "Сторінка автора",
+    "fields": [
+        {
+            "type": "image",
+            "name": "photo",
+            "label": "Фото",
+            "wrapper": {
+                "width": "30"
+            },
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "mime_types": "jpg,jpeg,png,webp",
+            "required": 0,
+            "instructions": "1540×1230 px (пропорції 5:4).",
+            "key": "field_b344389084ed8a12"
+        },
+        {
+            "type": "text",
+            "name": "role",
+            "label": "Посада",
+            "wrapper": {
+                "width": "70"
+            },
+            "key": "field_a5ac2e11ad92b52f"
+        },
+        {
+            "type": "repeater",
+            "name": "socials",
+            "label": "Соцмережі",
+            "wrapper": {
+                "width": "100"
+            },
+            "layout": "table",
+            "button_label": "Додати",
+            "sub_fields": [
+                {
+                    "type": "select",
+                    "name": "icon",
+                    "label": "Мережа",
+                    "wrapper": {
+                        "width": "40"
+                    },
+                    "ui": 1,
+                    "return_format": "value",
+                    "required": 1,
+                    "choices": {
+                        "facebook": "Facebook",
+                        "instagram": "Instagram",
+                        "x": "X",
+                        "tiktok": "TikTok",
+                        "linkedin": "LinkedIn"
+                    },
+                    "key": "field_7fc9c724110164d6"
+                },
+                {
+                    "type": "url",
+                    "name": "link",
+                    "label": "Посилання",
+                    "wrapper": {
+                        "width": "60"
+                    },
+                    "required": 1,
+                    "key": "field_70009ecc85bd3411"
+                }
+            ],
+            "key": "field_04d45971a51ac8ab"
+        },
+        {
+            "type": "wysiwyg",
+            "name": "bio",
+            "label": "Біографія (видимий текст)",
+            "wrapper": {
+                "width": "100"
+            },
+            "toolbar": "full",
+            "media_upload": 0,
+            "tabs": "all",
+            "key": "field_cd2e140638bb32ad"
+        },
+        {
+            "type": "wysiwyg",
+            "name": "bio_more",
+            "label": "Біографія (під «Read more»)",
+            "wrapper": {
+                "width": "100"
+            },
+            "toolbar": "full",
+            "media_upload": 0,
+            "tabs": "all",
+            "instructions": "Порожньо — кнопки «Read more» немає.",
+            "key": "field_83a12198e6c89758"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "user_form",
+                "operator": "==",
+                "value": "all"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791903580
+}

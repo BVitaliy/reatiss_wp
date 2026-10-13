@@ -44,6 +44,7 @@ class RTS_Theme {
 		'rts-form'        => 'js/app-form.js',
 		'rts-cf7'         => 'js/app-cf7.js',
 		'rts-wp'          => 'js/app-wp.js',
+		'rts-load-more'   => 'js/app-load-more.js',
 		'rts-select'      => 'js/app-select.js',
 		'rts-hero'        => 'js/app-hero.js',
 		'rts-lines'       => 'js/app-lines.js',

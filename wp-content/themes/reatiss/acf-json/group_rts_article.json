@@ -1,0 +1,37 @@
+{
+    "key": "group_rts_article",
+    "title": "Стаття",
+    "fields": [
+        {
+            "type": "true_false",
+            "name": "toc",
+            "label": "Навігація «In this article»",
+            "wrapper": {
+                "width": "100"
+            },
+            "ui": 1,
+            "default_value": 1,
+            "instructions": "Бічна панель зі списком заголовків H2 статті (на телефоні — випадне меню). Вимкнено — текст однією колонкою по центру. Фото картки — «Зображення запису». Вставки в текст: [rts_cta title=\"…\" button=\"…\" url=\"…\" size=\"big\"], [rts_slider ids=\"…\"], [rts_youtube url=\"…\" image=\"ID\"].",
+            "key": "field_3db91c37c0f297f2"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": -1,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791903580
+}
