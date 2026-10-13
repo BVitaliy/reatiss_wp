@@ -30,7 +30,30 @@ $rts_variant  = $rts_variants[ $args['variant'] ?? '' ] ?? '';
 					<?php echo wp_kses_post( $args['text'] ); ?>
 				</div>
 			<?php } ?>
-			<?php rts_button( $args['btn'] ?? [], 'btn btn--primary left-right__btn' ); ?>
+			<?php
+			$rts_files = is_array( $args['files'] ?? null ) ? array_filter( $args['files'], static fn( $row ) => ! empty( $row['file'] ) ) : [];
+
+			if ( ! empty( $rts_files ) ) {
+				// Report files instead of the button (service "Process Report Example"):
+				// the title opens the PDF in a new tab, the icon downloads it.
+				?>
+				<ul class="result-list result-list--files left-right__files">
+					<?php foreach ( $rts_files as $rts_file ) { ?>
+						<li>
+							<span class="step-line"></span>
+							<div class="result-row result-row--file">
+								<a class="result-row__title text-lg" href="<?php echo esc_url( $rts_file['file'] ); ?>" target="_blank" rel="noopener"><?php echo esc_html( (string) ( $rts_file['title'] ?? '' ) ); ?></a>
+								<a class="result-row__file" href="<?php echo esc_url( $rts_file['file'] ); ?>" download aria-label="<?php echo esc_attr( sprintf( /* translators: %s: file title */ __( 'Download PDF: %s', 'reatiss' ), (string) ( $rts_file['title'] ?? '' ) ) ); ?>"><?php rts_icon( 'icons/pdf.svg' ); ?></a>
+							</div>
+						</li>
+					<?php } ?>
+				</ul>
+				<span class="step-line"></span>
+				<?php
+			} else {
+				rts_button( $args['btn'] ?? [], 'btn btn--primary left-right__btn' );
+			}
+			?>
 		</div>
 
 		<?php if ( rts_image_id( $args['image'] ?? 0 ) ) { ?>

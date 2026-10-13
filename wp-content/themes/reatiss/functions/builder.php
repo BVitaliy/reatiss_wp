@@ -128,3 +128,19 @@ function rts_builder_page(): void {
 
 	rts_render_builder();
 }
+
+/**
+ * Post types whose singles are built with the page builder (single-builder.php).
+ */
+const RTS_BUILDER_TYPES = [ 'rts_service', 'rts_lab', 'rts_expertise' ];
+
+add_filter(
+	'single_template_hierarchy',
+	static function ( $templates ) {
+		if ( is_singular( RTS_BUILDER_TYPES ) ) {
+			array_unshift( $templates, 'single-builder.php' );
+		}
+
+		return $templates;
+	}
+);

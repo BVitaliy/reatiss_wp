@@ -355,6 +355,31 @@
             "key": "field_c4afab481131d7c2"
         },
         {
+            "type": "post_object",
+            "name": "request_form",
+            "label": "Форма запиту (блок «Форма запиту»)",
+            "wrapper": {
+                "width": "50"
+            },
+            "return_format": "id",
+            "post_type": [
+                "wpcf7_contact_form"
+            ],
+            "ui": 1,
+            "allow_null": 1,
+            "key": "field_7ea0a642cacbe8f2"
+        },
+        {
+            "type": "message",
+            "name": "request_form_message",
+            "label": "",
+            "wrapper": {
+                "width": "50"
+            },
+            "message": "Блок «Форма запиту» на сторінках послуг, лабораторій, експертиз; у блоці можна обрати іншу форму.",
+            "key": "field_022e2d6b3d1e5365"
+        },
+        {
             "type": "text",
             "name": "reports_title",
             "label": "Попап «Звіти» (On Shelf) — заголовок",
@@ -961,5 +986,5 @@
     "active": true,
     "description": "Глобальні налаштування: шапка, контакти, футер, попапи, форми.",
     "show_in_rest": 0,
-    "modified": 1791897142
+    "modified": 1791901887
 }

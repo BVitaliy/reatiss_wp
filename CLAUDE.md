@@ -17,7 +17,7 @@
    modals, Site Settings, menus, CF7 forms, text pages, 404 ✅
 2. Page builder + Home ✅
 3. About ✅
-4. Services / Labs / Expertise (CPTs, list pages, singles on the builder)
+4. Services / Labs / Expertise (CPTs, list pages, singles on the builder) ✅
 5. Blog / Events / Authors
 6. On Shelf + forms (reCAPTCHA keys later)
 7. Search (live + results page), Contacts, map
@@ -68,6 +68,11 @@ logs/             — custom logs (rts_log()), gitignored
 - Cards: `template-parts/cards/{expertise,lab,news,event}.php`, lists via `rts_card_posts()`
   (`functions/cards.php`). Section list pages: Site Settings → Сторінки розділів
   (`functions/sections.php` — breadcrumbs, active menu item).
+- Service / lab / expertise singles use `single-builder.php` (`RTS_BUILDER_TYPES`); their list
+  pages are ordinary pages with the `list_page` block.
+- Editor inserts (`functions/shortcodes.php`): `[rts_cta]`, `[rts_slider ids]`, `[rts_youtube url image]`
+  → the markup's `.article-cta` / `.article-slider` / `.article-video`. Print WYSIWYG that may
+  hold them with `rts_editor_content()` (kses + strips the `<p>` wpautop puts around them).
 - Buttons / links: group { label, type: none|page|custom|modal, page, url, new_tab } →
   `rts_button()` / `rts_link()` + `rts_link_attrs()`.
 

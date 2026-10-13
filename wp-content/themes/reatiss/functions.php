@@ -47,6 +47,7 @@ require_once RTS_DIR . '/functions/media.php';
 require_once RTS_DIR . '/functions/security.php';
 require_once RTS_DIR . '/functions/migration.php';
 require_once RTS_DIR . '/functions/forms.php';
+require_once RTS_DIR . '/functions/shortcodes.php';
 
 // ACF 6.8.7+ rejects SVG in image fields; this scopes an exemption to icon fields.
 if ( class_exists( 'ACF' ) ) {

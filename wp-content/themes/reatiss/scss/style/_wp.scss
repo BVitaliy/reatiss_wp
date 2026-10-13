@@ -9,6 +9,12 @@
 // app-cf7.js marks the label (.field.is-invalid) instead.
 .wpcf7-form-control-wrap {
   display: block;
+
+  // a textarea is inline-block: in the wrap it would sit on the text baseline
+  // and leave a 6px gap below it
+  .field__input {
+    display: block;
+  }
 }
 
 .field.is-invalid .field__error {
@@ -45,4 +51,11 @@
   &.invalid .wpcf7-response-output {
     display: none;
   }
+}
+
+// CF7 wraps its <form> in div.wpcf7: the markup's form column (.form-box__form,
+// .modal__form) centres its children, so the wrapper must take the full width.
+.form-box__form > .wpcf7,
+.modal__form > .wpcf7 {
+  width: 100%;
 }

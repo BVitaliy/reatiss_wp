@@ -27,6 +27,54 @@ class RTS_Admin {
 		add_filter( 'wp_handle_sideload_prefilter', [ $this, 'sanitize_uploaded_svg' ] );
 		add_filter( 'wp_generate_attachment_metadata', [ $this, 'svg_metadata' ], 10, 2 );
 		add_action( 'admin_head', [ $this, 'svg_thumbnail_css' ] );
+
+		// 3D models for the «3D-модель» block.
+		add_filter( 'upload_mimes', [ $this, 'allow_glb_upload' ] );
+		add_filter( 'wp_check_filetype_and_ext', [ $this, 'fix_glb_filetype' ], 10, 4 );
+	}
+
+	/**
+	 * .glb (glTF binary) uploads for anyone who can upload files.
+	 *
+	 * @param array $mimes Allowed mime types.
+	 */
+	public function allow_glb_upload( array $mimes ): array {
+		if ( current_user_can( 'upload_files' ) ) {
+			$mimes['glb'] = 'model/gltf-binary';
+		}
+
+		return $mimes;
+	}
+
+	/**
+	 * finfo reports .glb as application/octet-stream; trust the extension only
+	 * when the file really starts with the glTF magic bytes.
+	 *
+	 * @param array  $data     Filetype data.
+	 * @param string $file     Full path to the file.
+	 * @param string $filename File name.
+	 * @param array  $mimes    Allowed mime types.
+	 */
+	public function fix_glb_filetype( $data, $file, $filename, $mimes ): array {
+		$data = is_array( $data ) ? $data : [];
+
+		if ( ! empty( $data['ext'] ) || 'glb' !== strtolower( pathinfo( (string) $filename, PATHINFO_EXTENSION ) ) ) {
+			return $data;
+		}
+
+		$handle = is_readable( $file ) ? fopen( $file, 'rb' ) : false; // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- read 4 bytes of the upload.
+		$magic  = $handle ? fread( $handle, 4 ) : ''; // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fread
+
+		if ( $handle ) {
+			fclose( $handle ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
+		}
+
+		if ( 'glTF' === $magic && ! empty( $mimes['glb'] ) ) {
+			$data['ext']  = 'glb';
+			$data['type'] = 'model/gltf-binary';
+		}
+
+		return $data;
 	}
 
 	/**
