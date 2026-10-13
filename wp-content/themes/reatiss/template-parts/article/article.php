@@ -3,7 +3,7 @@
  * Article — Figma 7999:18510 (blog post) and its event variant 8031:20617.
  * Head: date + author pills (event: date + location), title; the editor
  * content (.article-content.rich-text, inserts via shortcodes); share +
- * tags. With «Навігація» on, the sticky "In this article" list is built from
+ * tags. With “In this article navigation” on, the sticky "In this article" list is built from
  * the content's <h2>s by app-article.js.
  *
  * @package reatiss

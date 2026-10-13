@@ -1,11 +1,11 @@
 {
     "key": "group_rts_report",
-    "title": "Звіт",
+    "title": "Report",
     "fields": [
         {
             "type": "textarea",
             "name": "description",
-            "label": "Опис",
+            "label": "Description",
             "wrapper": {
                 "width": "100"
             },
@@ -33,5 +33,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791904101
+    "modified": 1791904778
 }

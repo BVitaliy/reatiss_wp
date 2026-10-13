@@ -2,7 +2,7 @@
 /**
  * Author — Figma 8031:20994: photo | name, role, socials, bio (.more-text),
  * then the author's articles (Figma 8031:21519) with the pager.
- * Fields: Users → profile → «Сторінка автора».
+ * Fields: Users → profile → “Author page”.
  *
  * @package reatiss
  */

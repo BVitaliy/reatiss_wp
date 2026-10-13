@@ -28,7 +28,7 @@ class RTS_Admin {
 		add_filter( 'wp_generate_attachment_metadata', [ $this, 'svg_metadata' ], 10, 2 );
 		add_action( 'admin_head', [ $this, 'svg_thumbnail_css' ] );
 
-		// 3D models for the «3D-модель» block.
+		// 3D models for the “3D model” block.
 		add_filter( 'upload_mimes', [ $this, 'allow_glb_upload' ] );
 		add_filter( 'wp_check_filetype_and_ext', [ $this, 'fix_glb_filetype' ], 10, 4 );
 	}
@@ -144,7 +144,7 @@ class RTS_Admin {
 		}
 
 		if ( ! $this->sanitizer->sanitize_file( $file['tmp_name'] ) ) {
-			$file['error'] = __( 'Не вдалося обробити цей SVG: файл містить недопустимі елементи або пошкоджений. Експортуйте його без скриптів і спробуйте ще раз.', 'reatiss' );
+			$file['error'] = __( 'This SVG could not be processed: it contains disallowed elements or is damaged. Export it without scripts and try again.', 'reatiss' );
 		}
 
 		return $file;

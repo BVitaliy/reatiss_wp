@@ -1,7 +1,7 @@
 <?php
 /**
  * Section list as the page title block — Services (8271:41098), Labs
- * (8069:21925), Expertise (8102:23334). All published items by «Порядок»;
+ * (8069:21925), Expertise (8102:23334). All published items by “Order”;
  * each list has its own decorative line, as in the markup.
  *
  * @package reatiss

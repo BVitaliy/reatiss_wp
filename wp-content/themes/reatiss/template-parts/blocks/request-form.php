@@ -1,7 +1,7 @@
 <?php
 /**
  * Request form — Figma 8102:23473. The shared .form-box centred (925),
- * its own cut; the CF7 form chosen in the block or Site Settings → Форми.
+ * its own cut; the CF7 form chosen in the block or Site Settings → Forms.
  *
  * @package reatiss
  *

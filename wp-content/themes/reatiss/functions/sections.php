@@ -1,7 +1,7 @@
 <?php
 /**
  * Section pages: the list page each post type belongs to (Site Settings →
- * Сторінки розділів). Used by the breadcrumbs, the menu's active item and the
+ * Section pages). Used by the breadcrumbs, the menu's active item and the
  * blocks' default "View all" links.
  *
  * @package reatiss

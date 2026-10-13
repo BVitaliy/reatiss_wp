@@ -63,7 +63,7 @@ class RTS_Svg_Acf {
 		$path = $this->local_path( $attachment );
 
 		if ( $path && '' === $this->sanitizer->sanitize( (string) file_get_contents( $path ) ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- local file.
-			$errors['invalid_image'] = __( 'Цей SVG не вдалося обробити: він містить недопустимі елементи або пошкоджений.', 'reatiss' );
+			$errors['invalid_image'] = __( 'This SVG could not be processed: it contains disallowed elements or is damaged.', 'reatiss' );
 
 			return $errors;
 		}

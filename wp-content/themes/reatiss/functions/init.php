@@ -99,13 +99,13 @@ class RTS_Theme {
 
 		register_nav_menus(
 			[
-				'header_menu'   => __( 'Головне меню (шапка і мобільне меню)', 'reatiss' ),
-				'footer_menu_1' => __( 'Футер — колонка 1', 'reatiss' ),
-				'footer_menu_2' => __( 'Футер — колонка 2', 'reatiss' ),
-				'footer_menu_3' => __( 'Футер — колонка 3', 'reatiss' ),
-				'footer_menu_4' => __( 'Футер — колонка 4', 'reatiss' ),
-				'footer_menu_5' => __( 'Футер — колонка 5', 'reatiss' ),
-				'legal_menu'    => __( 'Футер — юридичні посилання', 'reatiss' ),
+				'header_menu'   => __( 'Main menu (header and mobile menu)', 'reatiss' ),
+				'footer_menu_1' => __( 'Footer — column 1', 'reatiss' ),
+				'footer_menu_2' => __( 'Footer — column 2', 'reatiss' ),
+				'footer_menu_3' => __( 'Footer — column 3', 'reatiss' ),
+				'footer_menu_4' => __( 'Footer — column 4', 'reatiss' ),
+				'footer_menu_5' => __( 'Footer — column 5', 'reatiss' ),
+				'legal_menu'    => __( 'Footer — legal links', 'reatiss' ),
 			]
 		);
 	}

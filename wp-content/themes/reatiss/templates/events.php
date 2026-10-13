@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Події
+ * Template Name: Events
  *
  * Events list (Figma 8028:20020): the page title + event category chips +
  * event cards two per row + pager. Paged as /events/page/2/.

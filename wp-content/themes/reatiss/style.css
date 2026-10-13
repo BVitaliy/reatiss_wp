@@ -1,7 +1,7 @@
 /*!
 Theme Name: Reatiss
 Author: BVitaliy
-Description: Тема для сайту Reatiss — IC reverse engineering.
+Description: Reatiss theme — IC reverse engineering company site.
 Version: 1.0.0
 Requires at least: 6.5
 Tested up to: 7.0
@@ -11,6 +11,6 @@ Text Domain: reatiss
 */
 
 /*
- * Реальні стилі теми — css/main.css та css/style.css (компілюються з scss/ через `gulp styles`).
- * Цей файл потрібен WordPress лише як носій заголовка теми — не додавай сюди правил.
+ * The real styles are css/main.css and css/style.css (compiled from scss/ by `gulp styles`).
+ * WordPress needs this file only for the theme header — do not add rules here.
  */

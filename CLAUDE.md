@@ -8,8 +8,13 @@
   component list, adaptive rules, JS modules). When a template looks wrong, diff it
   against the original markup before "fixing" the CSS
 - Local site: http://localhost:8888/reatiss_wp (DB `reatiss_wp`, table prefix `rts_`)
-- Site language English only (qTranslate-XT not installed); **admin labels are Ukrainian**
-  (admin user locale `uk`). SEO via Yoast.
+- Site language English only (qTranslate-XT not installed). **The admin is English too** (for
+  English-speaking editors): ACF labels / instructions, CPT labels, menus, Site Settings are
+  English source strings in the `reatiss` text domain (`acf/settings/l10n_textdomain`), so a
+  translation file can localise them per user language later. SEO via Yoast.
+- WP core was copied from malvy_wp — a Ukrainian build (`$wp_local_package = 'uk'` in
+  wp-includes/version.php). The `WPLANG` option is set to '' on purpose: without it the whole
+  site (front `<html lang>`, login) falls back to Ukrainian.
 - Reference integration with the same conventions: `/Applications/MAMP/htdocs/malvy_wp`
 
 ## Integration plan (stages)
@@ -83,6 +88,8 @@ logs/             — custom logs (rts_log()), gitignored
   wrapped in `.article-table` by a `the_content` filter; author fields = ACF on users.
 - On Shelf: `reports_list` block (CPT `rts_report`, 10 a page) — a row opens the `reports`
   popup and `js/app-reports.js` puts its title into the CF7 hidden field `your-report`.
+- Admin list rows of pages, posts and every theme post type have **Duplicate** (draft copy with
+  all fields, image, terms) — `functions/admin-duplicate.php`.
 - Buttons / links: group { label, type: none|page|custom|modal, page, url, new_tab } →
   `rts_button()` / `rts_link()` + `rts_link_attrs()`.
 
@@ -101,7 +108,7 @@ the local WP site) and watches. **Never edit `css/*.css` directly.**
 ## Language
 - All code, comments, variable names, and commit messages in **English**
 - Front-end strings are **English**, wrapped for translation: `esc_html_e( 'Read more', 'reatiss' )`
-- Admin labels / ACF labels / instructions are **Ukrainian**
+- Admin labels / ACF labels / instructions are **English**, translatable (`__( '…', 'reatiss' )`)
 
 ## Escaping ACF output — no exceptions
 `get_field()` / `get_sub_field()` / `rts_option()` return unescaped data. Escape at

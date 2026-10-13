@@ -1,11 +1,11 @@
 {
     "key": "group_rts_team",
-    "title": "Член команди",
+    "title": "Team member",
     "fields": [
         {
             "type": "text",
             "name": "role",
-            "label": "Посада",
+            "label": "Position",
             "wrapper": {
                 "width": "50"
             },
@@ -15,17 +15,17 @@
         {
             "type": "repeater",
             "name": "socials",
-            "label": "Соцмережі",
+            "label": "Social networks",
             "wrapper": {
                 "width": "50"
             },
             "layout": "table",
-            "button_label": "Додати",
+            "button_label": "Add",
             "sub_fields": [
                 {
                     "type": "select",
                     "name": "icon",
-                    "label": "Мережа",
+                    "label": "Network",
                     "wrapper": {
                         "width": "40"
                     },
@@ -44,7 +44,7 @@
                 {
                     "type": "url",
                     "name": "link",
-                    "label": "Посилання",
+                    "label": "Link",
                     "wrapper": {
                         "width": "60"
                     },
@@ -57,14 +57,14 @@
         {
             "type": "wysiwyg",
             "name": "bio",
-            "label": "Біографія",
+            "label": "Bio",
             "wrapper": {
                 "width": "100"
             },
             "toolbar": "basic",
             "media_upload": 0,
             "tabs": "all",
-            "instructions": "Показується в попапі. Фото — «Зображення запису», 900×925 px.",
+            "instructions": "Shown in the popup. Photo — the Featured image, 900×925 px.",
             "key": "field_9bd073a20ffc52a3"
         }
     ],
@@ -86,5 +86,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791904101
+    "modified": 1791904778
 }

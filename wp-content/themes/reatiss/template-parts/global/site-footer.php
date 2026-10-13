@@ -2,7 +2,7 @@
 /**
  * Footer — Figma 7967:9237.
  * Background: cursor-reactive dot grid (.dot-field, app-stats.js).
- * Link columns are the «Футер — колонка N» menus; the column title is the menu name.
+ * Link columns are the “Footer — column N” menus; the column title is the menu name.
  *
  * @package reatiss
  */

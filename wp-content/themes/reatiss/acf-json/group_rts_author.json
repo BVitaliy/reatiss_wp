@@ -1,11 +1,11 @@
 {
     "key": "group_rts_author",
-    "title": "Сторінка автора",
+    "title": "Author page",
     "fields": [
         {
             "type": "image",
             "name": "photo",
-            "label": "Фото",
+            "label": "Photo",
             "wrapper": {
                 "width": "30"
             },
@@ -14,13 +14,13 @@
             "library": "all",
             "mime_types": "jpg,jpeg,png,webp",
             "required": 0,
-            "instructions": "1540×1230 px (пропорції 5:4).",
+            "instructions": "1540×1230 px (5:4).",
             "key": "field_b344389084ed8a12"
         },
         {
             "type": "text",
             "name": "role",
-            "label": "Посада",
+            "label": "Position",
             "wrapper": {
                 "width": "70"
             },
@@ -29,17 +29,17 @@
         {
             "type": "repeater",
             "name": "socials",
-            "label": "Соцмережі",
+            "label": "Social networks",
             "wrapper": {
                 "width": "100"
             },
             "layout": "table",
-            "button_label": "Додати",
+            "button_label": "Add",
             "sub_fields": [
                 {
                     "type": "select",
                     "name": "icon",
-                    "label": "Мережа",
+                    "label": "Network",
                     "wrapper": {
                         "width": "40"
                     },
@@ -58,7 +58,7 @@
                 {
                     "type": "url",
                     "name": "link",
-                    "label": "Посилання",
+                    "label": "Link",
                     "wrapper": {
                         "width": "60"
                     },
@@ -71,7 +71,7 @@
         {
             "type": "wysiwyg",
             "name": "bio",
-            "label": "Біографія (видимий текст)",
+            "label": "Bio (visible text)",
             "wrapper": {
                 "width": "100"
             },
@@ -83,14 +83,14 @@
         {
             "type": "wysiwyg",
             "name": "bio_more",
-            "label": "Біографія (під «Read more»)",
+            "label": "Bio (under “Read more”)",
             "wrapper": {
                 "width": "100"
             },
             "toolbar": "full",
             "media_upload": 0,
             "tabs": "all",
-            "instructions": "Порожньо — кнопки «Read more» немає.",
+            "instructions": "Empty — no “Read more” button.",
             "key": "field_83a12198e6c89758"
         }
     ],
@@ -112,5 +112,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791904101
+    "modified": 1791904778
 }

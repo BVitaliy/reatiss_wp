@@ -44,6 +44,11 @@ require_once RTS_DIR . '/functions/init.php';
 require_once RTS_DIR . '/functions/admin.php';
 require_once RTS_DIR . '/functions/admin-cleanup.php';
 require_once RTS_DIR . '/functions/admin-editor.php';
+
+if ( is_admin() ) {
+	require_once RTS_DIR . '/functions/admin-duplicate.php';
+}
+
 require_once RTS_DIR . '/functions/class-admin-bar.php';
 require_once RTS_DIR . '/functions/media.php';
 require_once RTS_DIR . '/functions/security.php';

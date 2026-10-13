@@ -6,7 +6,7 @@
  *   classic editor — it is removed, so the page builder sits right under the
  *   title. Pages without blocks (text pages) keep the editor.
  * - Yoast's box goes below the theme's fields.
- * - Collapsed builder rows show the block's title and a «приховано» mark.
+ * - Collapsed builder rows show the block's title and a “hidden” mark.
  *
  * @package reatiss
  */
@@ -24,7 +24,7 @@ class RTS_Admin_Editor {
 	}
 
 	/**
-	 * «Картки експертиз — Deep Technical Expertise (приховано)».
+	 * “Expertise cards — Deep Technical Expertise (hidden)”.
 	 *
 	 * @param string $title  Layout label.
 	 * @param array  $field  Flexible content field.
@@ -45,7 +45,7 @@ class RTS_Admin_Editor {
 		}
 
 		if ( get_sub_field( $layout['name'] . '_hide' ) ) {
-			$title .= ' <em style="color:#b32d2e">(' . esc_html__( 'приховано', 'reatiss' ) . ')</em>';
+			$title .= ' <em style="color:#b32d2e">(' . esc_html__( 'hidden', 'reatiss' ) . ')</em>';
 		}
 
 		return $title;

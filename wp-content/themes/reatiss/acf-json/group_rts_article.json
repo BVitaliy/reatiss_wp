@@ -1,17 +1,17 @@
 {
     "key": "group_rts_article",
-    "title": "Стаття",
+    "title": "Article",
     "fields": [
         {
             "type": "true_false",
             "name": "toc",
-            "label": "Навігація «In this article»",
+            "label": "“In this article” navigation",
             "wrapper": {
                 "width": "100"
             },
             "ui": 1,
             "default_value": 1,
-            "instructions": "Бічна панель зі списком заголовків H2 статті (на телефоні — випадне меню). Вимкнено — текст однією колонкою по центру. Фото картки — «Зображення запису». Вставки в текст: [rts_cta title=\"…\" button=\"…\" url=\"…\" size=\"big\"], [rts_slider ids=\"…\"], [rts_youtube url=\"…\" image=\"ID\"].",
+            "instructions": "A side panel listing the article’s H2 headings (a dropdown on phones). Off — one centred text column. Card photo — the Featured image. Inserts: [rts_cta title=\"…\" button=\"…\" url=\"…\" size=\"big\"], [rts_slider ids=\"…\"], [rts_youtube url=\"…\" image=\"ID\"].",
             "key": "field_3db91c37c0f297f2"
         }
     ],
@@ -33,5 +33,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791904101
+    "modified": 1791904778
 }

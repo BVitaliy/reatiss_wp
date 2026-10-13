@@ -1,18 +1,18 @@
 {
     "key": "group_rts_cards",
-    "title": "Картка у списках",
+    "title": "List card",
     "fields": [
         {
             "type": "textarea",
             "name": "card_text",
-            "label": "Короткий опис",
+            "label": "Short description",
             "wrapper": {
                 "width": "100"
             },
             "rows": 3,
             "new_lines": "",
             "required": 1,
-            "instructions": "Текст картки у списках і на головній. Фото картки — «Зображення запису».",
+            "instructions": "Card text in lists and on the home page. Card photo — the Featured image.",
             "key": "field_96c9c6ad6536b1d5"
         }
     ],
@@ -55,5 +55,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791904101
+    "modified": 1791904778
 }

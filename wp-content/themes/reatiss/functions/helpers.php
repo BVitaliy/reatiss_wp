@@ -261,7 +261,7 @@ function rts_title_separator(): string {
 }
 
 /**
- * Filled social links from Site Settings → Футер.
+ * Filled social links from Site Settings → Footer.
  *
  * @return array<int, array{icon:string,url:string,label:string}>
  */

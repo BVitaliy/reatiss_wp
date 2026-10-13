@@ -1,11 +1,11 @@
 {
     "key": "group_rts_event",
-    "title": "Подія",
+    "title": "Event",
     "fields": [
         {
             "type": "date_picker",
             "name": "date_start",
-            "label": "Дата початку",
+            "label": "Start date",
             "wrapper": {
                 "width": "33"
             },
@@ -18,20 +18,20 @@
         {
             "type": "date_picker",
             "name": "date_end",
-            "label": "Дата завершення",
+            "label": "End date",
             "wrapper": {
                 "width": "33"
             },
             "display_format": "d.m.Y",
             "return_format": "Ymd",
             "first_day": 1,
-            "instructions": "Порожньо — одноденна подія.",
+            "instructions": "Empty — a one-day event.",
             "key": "field_b157bec1ff412aa4"
         },
         {
             "type": "text",
             "name": "location",
-            "label": "Місце",
+            "label": "Location",
             "wrapper": {
                 "width": "34"
             },
@@ -58,5 +58,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791904101
+    "modified": 1791904778
 }

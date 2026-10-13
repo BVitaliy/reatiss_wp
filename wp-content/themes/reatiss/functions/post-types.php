@@ -4,10 +4,12 @@
  *
  * Services, labs and expertise have single pages built with the page builder
  * and card fields for the lists. Their list pages are ordinary pages (chosen in
- * Site Settings → Сторінки розділів), so the CPTs have no archives. Reports
+ * Site Settings → Section pages), so the CPTs have no archives. Reports
  * (On Shelf) and team members have no pages of their own.
  *
- * Order in lists = «Порядок» (menu_order) in the item's «Атрибути».
+ * Order in lists = “Order” (menu_order) in the item's Page Attributes.
+ *
+ * Labels are English and translatable (text domain `reatiss`).
  *
  * @package reatiss
  */
@@ -30,7 +32,7 @@ class RTS_Post_Types {
 			'rts_event_cat',
 			[ 'rts_event' ],
 			[
-				'labels'            => $this->taxonomy_labels( 'Категорії подій', 'Категорія' ),
+				'labels'            => $this->taxonomy_labels( __( 'Event categories', 'reatiss' ), __( 'Event category', 'reatiss' ) ),
 				'public'            => true,
 				'hierarchical'      => true,
 				'show_admin_column' => true,
@@ -45,7 +47,7 @@ class RTS_Post_Types {
 		$this->register_type(
 			'rts_service',
 			'services',
-			[ 'Послуги', 'Послуга', 'Додати послугу' ],
+			[ __( 'Services', 'reatiss' ), __( 'Service', 'reatiss' ), __( 'Add service', 'reatiss' ) ],
 			'dashicons-hammer',
 			21
 		);
@@ -53,7 +55,7 @@ class RTS_Post_Types {
 		$this->register_type(
 			'rts_lab',
 			'labs',
-			[ 'Лабораторії', 'Лабораторія', 'Додати лабораторію' ],
+			[ __( 'Labs', 'reatiss' ), __( 'Lab', 'reatiss' ), __( 'Add lab', 'reatiss' ) ],
 			'dashicons-building',
 			22
 		);
@@ -61,7 +63,7 @@ class RTS_Post_Types {
 		$this->register_type(
 			'rts_expertise',
 			'expertise',
-			[ 'Експертизи', 'Експертиза', 'Додати експертизу' ],
+			[ __( 'Expertise', 'reatiss' ), __( 'Expertise item', 'reatiss' ), __( 'Add expertise', 'reatiss' ) ],
 			'dashicons-lightbulb',
 			23
 		);
@@ -69,7 +71,7 @@ class RTS_Post_Types {
 		$this->register_type(
 			'rts_event',
 			'events',
-			[ 'Події', 'Подія', 'Додати подію' ],
+			[ __( 'Events', 'reatiss' ), __( 'Event', 'reatiss' ), __( 'Add event', 'reatiss' ) ],
 			'dashicons-calendar-alt',
 			24,
 			[
@@ -81,7 +83,7 @@ class RTS_Post_Types {
 		$this->register_type(
 			'rts_report',
 			'',
-			[ 'Звіти (On Shelf)', 'Звіт', 'Додати звіт' ],
+			[ __( 'Reports (On Shelf)', 'reatiss' ), __( 'Report', 'reatiss' ), __( 'Add report', 'reatiss' ) ],
 			'dashicons-media-document',
 			25,
 			[ 'supports' => [ 'title', 'page-attributes' ] ]
@@ -90,7 +92,7 @@ class RTS_Post_Types {
 		$this->register_type(
 			'rts_team',
 			'',
-			[ 'Команда', 'Член команди', 'Додати члена команди' ],
+			[ __( 'Team', 'reatiss' ), __( 'Team member', 'reatiss' ), __( 'Add team member', 'reatiss' ) ],
 			'dashicons-groups',
 			26,
 			[ 'supports' => [ 'title', 'thumbnail', 'page-attributes' ] ]
@@ -119,12 +121,13 @@ class RTS_Post_Types {
 						'menu_name'          => $names[0],
 						'add_new'            => $names[2],
 						'add_new_item'       => $names[2],
-						'edit_item'          => __( 'Редагувати', 'reatiss' ) . ': ' . mb_strtolower( $names[1] ),
+						/* translators: %s: item type */
+						'edit_item'          => sprintf( __( 'Edit %s', 'reatiss' ), mb_strtolower( $names[1] ) ),
 						'new_item'           => $names[2],
-						'view_item'          => __( 'Переглянути', 'reatiss' ),
-						'search_items'       => __( 'Шукати', 'reatiss' ),
-						'not_found'          => __( 'Нічого не знайдено', 'reatiss' ),
-						'not_found_in_trash' => __( 'У кошику нічого немає', 'reatiss' ),
+						'view_item'          => __( 'View', 'reatiss' ),
+						'search_items'       => __( 'Search', 'reatiss' ),
+						'not_found'          => __( 'Nothing found', 'reatiss' ),
+						'not_found_in_trash' => __( 'Nothing found in Trash', 'reatiss' ),
 						'all_items'          => $names[0],
 					],
 					'public'              => $public,
@@ -154,10 +157,10 @@ class RTS_Post_Types {
 			'singular_name' => $singular,
 			'menu_name'     => $plural,
 			'all_items'     => $plural,
-			'add_new_item'  => __( 'Додати', 'reatiss' ),
-			'edit_item'     => __( 'Редагувати', 'reatiss' ),
-			'search_items'  => __( 'Шукати', 'reatiss' ),
-			'not_found'     => __( 'Нічого не знайдено', 'reatiss' ),
+			'add_new_item'  => __( 'Add new', 'reatiss' ),
+			'edit_item'     => __( 'Edit', 'reatiss' ),
+			'search_items'  => __( 'Search', 'reatiss' ),
+			'not_found'     => __( 'Nothing found', 'reatiss' ),
 		];
 	}
 
@@ -167,8 +170,8 @@ class RTS_Post_Types {
 	 */
 	public function title_placeholder( $text, $post ): string {
 		$map = [
-			'rts_team'   => __( 'Ім’я та прізвище', 'reatiss' ),
-			'rts_report' => __( 'Назва звіту', 'reatiss' ),
+			'rts_team'   => __( 'Full name', 'reatiss' ),
+			'rts_report' => __( 'Report title', 'reatiss' ),
 		];
 
 		return $map[ $post->post_type ] ?? (string) $text;

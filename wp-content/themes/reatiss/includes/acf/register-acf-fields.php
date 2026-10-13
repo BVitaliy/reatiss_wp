@@ -29,6 +29,15 @@ add_filter(
 	}
 );
 
+// Field labels / instructions go through __( …, 'reatiss' ), so a translation
+// file can localise the admin per user language.
+add_filter(
+	'acf/settings/l10n_textdomain',
+	function () {
+		return 'reatiss';
+	}
+);
+
 add_action(
 	'acf/init',
 	function () {
@@ -38,8 +47,8 @@ add_action(
 
 		acf_add_options_page(
 			[
-				'page_title' => __( 'Налаштування сайту', 'reatiss' ),
-				'menu_title' => __( 'Налаштування сайту', 'reatiss' ),
+				'page_title' => __( 'Site Settings', 'reatiss' ),
+				'menu_title' => __( 'Site Settings', 'reatiss' ),
 				'menu_slug'  => 'rts-site-settings',
 				'capability' => 'edit_posts',
 				'redirect'   => false,

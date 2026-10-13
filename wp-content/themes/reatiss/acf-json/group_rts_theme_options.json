@@ -1,11 +1,11 @@
 {
     "key": "group_rts_theme_options",
-    "title": "Налаштування сайту",
+    "title": "Site Settings",
     "fields": [
         {
             "type": "tab",
             "name": "header_tab",
-            "label": "Шапка",
+            "label": "Header",
             "wrapper": {
                 "width": "100"
             },
@@ -15,28 +15,28 @@
         {
             "type": "text",
             "name": "header_cta_label",
-            "label": "Кнопка в шапці",
+            "label": "Header button",
             "wrapper": {
                 "width": "50"
             },
             "default_value": "Get a consultation",
-            "instructions": "Відкриває попап «Get a consultation». Порожньо — кнопка не виводиться.",
+            "instructions": "Opens the “Get a consultation” popup. Empty — no button.",
             "key": "field_205f0ef9ca1aa922"
         },
         {
             "type": "message",
             "name": "header_menu_message",
-            "label": "Меню",
+            "label": "Menu",
             "wrapper": {
                 "width": "50"
             },
-            "message": "Пункти меню шапки і мобільного меню — у «Вигляд → Меню», розташування «Головне меню».",
+            "message": "Header and mobile menu items are edited in Appearance → Menus, location “Main menu”.",
             "key": "field_cc5ce4abdfb8e4cb"
         },
         {
             "type": "tab",
             "name": "contacts_tab",
-            "label": "Контакти",
+            "label": "Contacts",
             "wrapper": {
                 "width": "100"
             },
@@ -51,13 +51,13 @@
                 "width": "50"
             },
             "default_value": "info@reatiss.com",
-            "instructions": "Виводиться в мобільному меню і футері.",
+            "instructions": "Shown in the mobile menu and the footer.",
             "key": "field_8e6290209a77ed8d"
         },
         {
             "type": "text",
             "name": "contact_phone",
-            "label": "Телефон",
+            "label": "Phone",
             "wrapper": {
                 "width": "50"
             },
@@ -67,7 +67,7 @@
         {
             "type": "tab",
             "name": "footer_tab",
-            "label": "Футер",
+            "label": "Footer",
             "wrapper": {
                 "width": "100"
             },
@@ -77,7 +77,7 @@
         {
             "type": "textarea",
             "name": "footer_text",
-            "label": "Текст під логотипом",
+            "label": "Text under the logo",
             "wrapper": {
                 "width": "100"
             },
@@ -89,7 +89,7 @@
         {
             "type": "text",
             "name": "socials_title",
-            "label": "Заголовок соцмереж",
+            "label": "Social media title",
             "wrapper": {
                 "width": "30"
             },
@@ -99,18 +99,18 @@
         {
             "type": "repeater",
             "name": "socials",
-            "label": "Соцмережі",
+            "label": "Social networks",
             "wrapper": {
                 "width": "100"
             },
             "layout": "table",
-            "button_label": "Додати соцмережу",
-            "instructions": "Соцмережа без посилання не виводиться; без жодної — блок «Social Media» прихований.",
+            "button_label": "Add network",
+            "instructions": "A network without a link is not shown; with none, the “Social Media” block is hidden.",
             "sub_fields": [
                 {
                     "type": "select",
                     "name": "icon",
-                    "label": "Мережа",
+                    "label": "Network",
                     "wrapper": {
                         "width": "30"
                     },
@@ -129,7 +129,7 @@
                 {
                     "type": "url",
                     "name": "link",
-                    "label": "Посилання",
+                    "label": "Link",
                     "wrapper": {
                         "width": "70"
                     },
@@ -142,7 +142,7 @@
         {
             "type": "text",
             "name": "contact_title",
-            "label": "Заголовок колонки контактів",
+            "label": "Contact column title",
             "wrapper": {
                 "width": "30"
             },
@@ -152,28 +152,28 @@
         {
             "type": "text",
             "name": "footer_copyright",
-            "label": "Копірайт",
+            "label": "Copyright",
             "wrapper": {
                 "width": "40"
             },
             "default_value": "© {year} Reatiss",
-            "instructions": "{year} — поточний рік.",
+            "instructions": "{year} — the current year.",
             "key": "field_0a1a2fc96798c1c6"
         },
         {
             "type": "message",
             "name": "footer_menu_message",
-            "label": "Колонки меню",
+            "label": "Menu columns",
             "wrapper": {
                 "width": "100"
             },
-            "message": "Посилання колонок — у «Вигляд → Меню» (розташування «Футер — колонка 1…5»). Заголовок колонки = назва меню. Юридичні посилання внизу — розташування «Футер — юридичні посилання».",
+            "message": "Column links are edited in Appearance → Menus (locations “Footer — column 1…5”). The column title is the menu name. Legal links at the bottom — location “Footer — legal links”.",
             "key": "field_7b21f3ed0fb88716"
         },
         {
             "type": "tab",
             "name": "sections_tab",
-            "label": "Сторінки розділів",
+            "label": "Section pages",
             "wrapper": {
                 "width": "100"
             },
@@ -183,17 +183,17 @@
         {
             "type": "message",
             "name": "sections_message",
-            "label": "Навіщо",
+            "label": "What for",
             "wrapper": {
                 "width": "100"
             },
-            "message": "Сторінки-списки розділів: вони стоять у хлібних крихтах послуг, лабораторій, експертиз і подій та підсвічують пункт меню.",
+            "message": "List pages of the sections: they appear in the breadcrumbs of services, labs, expertise and events, and light up the menu item.",
             "key": "field_5ea4bacb058a9338"
         },
         {
             "type": "post_object",
             "name": "services_page",
-            "label": "Сторінка послуг",
+            "label": "Services page",
             "wrapper": {
                 "width": "25"
             },
@@ -208,7 +208,7 @@
         {
             "type": "post_object",
             "name": "labs_page",
-            "label": "Сторінка лабораторій",
+            "label": "Labs page",
             "wrapper": {
                 "width": "25"
             },
@@ -223,7 +223,7 @@
         {
             "type": "post_object",
             "name": "expertise_page",
-            "label": "Сторінка експертиз",
+            "label": "Expertise page",
             "wrapper": {
                 "width": "25"
             },
@@ -238,7 +238,7 @@
         {
             "type": "post_object",
             "name": "events_page",
-            "label": "Сторінка подій",
+            "label": "Events page",
             "wrapper": {
                 "width": "25"
             },
@@ -253,7 +253,7 @@
         {
             "type": "tab",
             "name": "blog_tab",
-            "label": "Блог і події",
+            "label": "Blog & events",
             "wrapper": {
                 "width": "100"
             },
@@ -263,7 +263,7 @@
         {
             "type": "textarea",
             "name": "blog_title",
-            "label": "Заголовок сторінки блогу",
+            "label": "Blog page title",
             "wrapper": {
                 "width": "50"
             },
@@ -275,7 +275,7 @@
         {
             "type": "textarea",
             "name": "events_title",
-            "label": "Заголовок сторінки подій",
+            "label": "Events page title",
             "wrapper": {
                 "width": "50"
             },
@@ -287,7 +287,7 @@
         {
             "type": "text",
             "name": "blog_all_label",
-            "label": "Чипс «усі статті»",
+            "label": "“All posts” chip",
             "wrapper": {
                 "width": "25"
             },
@@ -297,7 +297,7 @@
         {
             "type": "text",
             "name": "events_all_label",
-            "label": "Чипс «усі події»",
+            "label": "“All events” chip",
             "wrapper": {
                 "width": "25"
             },
@@ -307,7 +307,7 @@
         {
             "type": "text",
             "name": "related_posts_title",
-            "label": "Стаття: заголовок «інші статті»",
+            "label": "Article: “more articles” title",
             "wrapper": {
                 "width": "50"
             },
@@ -317,7 +317,7 @@
         {
             "type": "text",
             "name": "related_events_title",
-            "label": "Подія: заголовок «інші події»",
+            "label": "Event: “more events” title",
             "wrapper": {
                 "width": "50"
             },
@@ -327,7 +327,7 @@
         {
             "type": "text",
             "name": "author_posts_title",
-            "label": "Автор: заголовок списку статей",
+            "label": "Author: articles list title",
             "wrapper": {
                 "width": "50"
             },
@@ -337,7 +337,7 @@
         {
             "type": "text",
             "name": "share_title",
-            "label": "Підпис «поділитися»",
+            "label": "“Share” label",
             "wrapper": {
                 "width": "50"
             },
@@ -357,18 +357,18 @@
         {
             "type": "repeater",
             "name": "faq_items",
-            "label": "Загальні питання",
+            "label": "Shared questions",
             "wrapper": {
                 "width": "100"
             },
             "layout": "block",
-            "button_label": "Додати питання",
-            "instructions": "Виводяться в блоці «Питання та відповіді» на сторінках, де обрано «Загальні».",
+            "button_label": "Add question",
+            "instructions": "Shown in the “FAQ” block on pages where “Shared” is selected.",
             "sub_fields": [
                 {
                     "type": "text",
                     "name": "question",
-                    "label": "Питання",
+                    "label": "Questions",
                     "wrapper": {
                         "width": "80"
                     },
@@ -378,19 +378,19 @@
                 {
                     "type": "true_false",
                     "name": "open",
-                    "label": "Відкрите",
+                    "label": "Open",
                     "wrapper": {
                         "width": "20"
                     },
                     "ui": 1,
                     "default_value": 0,
-                    "instructions": "Розгорнуте при завантаженні.",
+                    "instructions": "Expanded on page load.",
                     "key": "field_c948ab02364b773c"
                 },
                 {
                     "type": "wysiwyg",
                     "name": "answer",
-                    "label": "Відповідь",
+                    "label": "Answer",
                     "wrapper": {
                         "width": "100"
                     },
@@ -406,7 +406,7 @@
         {
             "type": "tab",
             "name": "forms_tab",
-            "label": "Форми",
+            "label": "Forms",
             "wrapper": {
                 "width": "100"
             },
@@ -416,17 +416,17 @@
         {
             "type": "message",
             "name": "forms_message",
-            "label": "Як працює",
+            "label": "How it works",
             "wrapper": {
                 "width": "100"
             },
-            "message": "Поля форм і листи редагуються в «Contact Form 7». Тут — у якому попапі яка форма і тексти навколо неї.",
+            "message": "Form fields and emails are edited in Contact Form 7. Here — which form each popup uses and the texts around it.",
             "key": "field_12bb69f0a390adf8"
         },
         {
             "type": "text",
             "name": "consultation_title",
-            "label": "Попап «Консультація» — заголовок",
+            "label": "“Consultation” popup — title",
             "wrapper": {
                 "width": "50"
             },
@@ -436,7 +436,7 @@
         {
             "type": "post_object",
             "name": "consultation_form",
-            "label": "Попап «Консультація» — форма",
+            "label": "“Consultation” popup — form",
             "wrapper": {
                 "width": "50"
             },
@@ -451,7 +451,7 @@
         {
             "type": "post_object",
             "name": "request_form",
-            "label": "Форма запиту (блок «Форма запиту»)",
+            "label": "Request form (“Request form” block)",
             "wrapper": {
                 "width": "50"
             },
@@ -470,13 +470,13 @@
             "wrapper": {
                 "width": "50"
             },
-            "message": "Блок «Форма запиту» на сторінках послуг, лабораторій, експертиз; у блоці можна обрати іншу форму.",
+            "message": "Used by the “Request form” block on service, lab and expertise pages; a block can pick another form.",
             "key": "field_022e2d6b3d1e5365"
         },
         {
             "type": "text",
             "name": "reports_title",
-            "label": "Попап «Звіти» (On Shelf) — заголовок",
+            "label": "“Reports” popup (On Shelf) — title",
             "wrapper": {
                 "width": "50"
             },
@@ -486,7 +486,7 @@
         {
             "type": "post_object",
             "name": "reports_form",
-            "label": "Попап «Звіти» — форма",
+            "label": "“Reports” popup — form",
             "wrapper": {
                 "width": "50"
             },
@@ -501,7 +501,7 @@
         {
             "type": "text",
             "name": "thanks_title",
-            "label": "Попап «Дякуємо» — заголовок",
+            "label": "“Thank you” popup — title",
             "wrapper": {
                 "width": "30"
             },
@@ -511,7 +511,7 @@
         {
             "type": "textarea",
             "name": "thanks_text",
-            "label": "Попап «Дякуємо» — текст",
+            "label": "“Thank you” popup — text",
             "wrapper": {
                 "width": "45"
             },
@@ -523,7 +523,7 @@
         {
             "type": "text",
             "name": "thanks_btn",
-            "label": "Попап «Дякуємо» — кнопка",
+            "label": "“Thank you” popup — button",
             "wrapper": {
                 "width": "25"
             },
@@ -533,7 +533,7 @@
         {
             "type": "tab",
             "name": "promo_tab",
-            "label": "Попап послуги",
+            "label": "Service popup",
             "wrapper": {
                 "width": "100"
             },
@@ -543,19 +543,19 @@
         {
             "type": "true_false",
             "name": "promo_enable",
-            "label": "Показувати попап",
+            "label": "Show popup",
             "wrapper": {
                 "width": "25"
             },
             "ui": 1,
             "default_value": 0,
-            "instructions": "Відкривається сам, один раз за сесію.",
+            "instructions": "Opens by itself, once per session.",
             "key": "field_76fb52df1bce5be3"
         },
         {
             "type": "number",
             "name": "promo_delay",
-            "label": "Затримка, секунд",
+            "label": "Delay, seconds",
             "wrapper": {
                 "width": "25"
             },
@@ -577,7 +577,7 @@
         {
             "type": "image",
             "name": "promo_image",
-            "label": "Зображення",
+            "label": "Image",
             "wrapper": {
                 "width": "25"
             },
@@ -585,7 +585,7 @@
             "preview_size": "medium",
             "library": "all",
             "mime_types": "jpg,jpeg,png,webp",
-            "instructions": "Квадрат 800×800 px.",
+            "instructions": "Square 800×800 px.",
             "conditional_logic": [
                 [
                     {
@@ -600,7 +600,7 @@
         {
             "type": "image",
             "name": "promo_image_mobile",
-            "label": "Зображення (мобільне)",
+            "label": "Image (mobile)",
             "wrapper": {
                 "width": "25"
             },
@@ -608,7 +608,7 @@
             "preview_size": "medium",
             "library": "all",
             "mime_types": "jpg,jpeg,png,webp",
-            "instructions": "Необов’язково. 800×800 px.",
+            "instructions": "Optional. 800×800 px.",
             "conditional_logic": [
                 [
                     {
@@ -623,7 +623,7 @@
         {
             "type": "text",
             "name": "promo_title",
-            "label": "Заголовок",
+            "label": "Title",
             "wrapper": {
                 "width": "50"
             },
@@ -641,7 +641,7 @@
         {
             "type": "textarea",
             "name": "promo_text",
-            "label": "Текст",
+            "label": "Text",
             "wrapper": {
                 "width": "50"
             },
@@ -661,7 +661,7 @@
         {
             "type": "group",
             "name": "promo_btn",
-            "label": "Кнопка",
+            "label": "Button",
             "wrapper": {
                 "width": "100"
             },
@@ -670,7 +670,7 @@
                 {
                     "type": "text",
                     "name": "label",
-                    "label": "Текст кнопки",
+                    "label": "Button text",
                     "wrapper": {
                         "width": "30"
                     },
@@ -679,7 +679,7 @@
                 {
                     "type": "select",
                     "name": "type",
-                    "label": "Тип посилання",
+                    "label": "Link type",
                     "wrapper": {
                         "width": "20"
                     },
@@ -687,17 +687,17 @@
                     "return_format": "value",
                     "default_value": "none",
                     "choices": {
-                        "none": "Без посилання",
-                        "page": "Сторінка сайту",
-                        "custom": "Своє посилання",
-                        "modal": "Попап «Консультація»"
+                        "none": "No link",
+                        "page": "Site page",
+                        "custom": "Custom URL",
+                        "modal": "“Consultation” popup"
                     },
                     "key": "field_65bbc31796d54a17"
                 },
                 {
                     "type": "page_link",
                     "name": "page",
-                    "label": "Сторінка",
+                    "label": "Page",
                     "wrapper": {
                         "width": "50"
                     },
@@ -727,12 +727,12 @@
                 {
                     "type": "text",
                     "name": "url",
-                    "label": "Посилання",
+                    "label": "Link",
                     "wrapper": {
                         "width": "35"
                     },
                     "required": 1,
-                    "placeholder": "https://… або #anchor",
+                    "placeholder": "https://… or #anchor",
                     "conditional_logic": [
                         [
                             {
@@ -747,7 +747,7 @@
                 {
                     "type": "true_false",
                     "name": "new_tab",
-                    "label": "У новій вкладці",
+                    "label": "Open in new tab",
                     "wrapper": {
                         "width": "15"
                     },
@@ -779,7 +779,7 @@
         {
             "type": "tab",
             "name": "toast_tab",
-            "label": "Банер у кутку",
+            "label": "Corner banner",
             "wrapper": {
                 "width": "100"
             },
@@ -789,19 +789,19 @@
         {
             "type": "true_false",
             "name": "toast_enable",
-            "label": "Показувати банер",
+            "label": "Show banner",
             "wrapper": {
                 "width": "25"
             },
             "ui": 1,
             "default_value": 0,
-            "instructions": "Невеликий банер у кутку екрана, один раз за сесію.",
+            "instructions": "A small banner in the corner of the screen, once per session.",
             "key": "field_bd37a3270c66f7b8"
         },
         {
             "type": "number",
             "name": "toast_delay",
-            "label": "Затримка, секунд",
+            "label": "Delay, seconds",
             "wrapper": {
                 "width": "25"
             },
@@ -823,7 +823,7 @@
         {
             "type": "image",
             "name": "toast_image",
-            "label": "Зображення",
+            "label": "Image",
             "wrapper": {
                 "width": "50"
             },
@@ -831,7 +831,7 @@
             "preview_size": "medium",
             "library": "all",
             "mime_types": "jpg,jpeg,png,webp",
-            "instructions": "Квадрат 800×800 px.",
+            "instructions": "Square 800×800 px.",
             "conditional_logic": [
                 [
                     {
@@ -846,7 +846,7 @@
         {
             "type": "text",
             "name": "toast_title",
-            "label": "Заголовок",
+            "label": "Title",
             "wrapper": {
                 "width": "50"
             },
@@ -864,7 +864,7 @@
         {
             "type": "textarea",
             "name": "toast_text",
-            "label": "Текст",
+            "label": "Text",
             "wrapper": {
                 "width": "50"
             },
@@ -884,7 +884,7 @@
         {
             "type": "group",
             "name": "toast_link",
-            "label": "Посилання «Learn more»",
+            "label": "“Learn more” link",
             "wrapper": {
                 "width": "100"
             },
@@ -893,7 +893,7 @@
                 {
                     "type": "text",
                     "name": "label",
-                    "label": "Текст кнопки",
+                    "label": "Button text",
                     "wrapper": {
                         "width": "30"
                     },
@@ -902,7 +902,7 @@
                 {
                     "type": "select",
                     "name": "type",
-                    "label": "Тип посилання",
+                    "label": "Link type",
                     "wrapper": {
                         "width": "20"
                     },
@@ -910,17 +910,17 @@
                     "return_format": "value",
                     "default_value": "none",
                     "choices": {
-                        "none": "Без посилання",
-                        "page": "Сторінка сайту",
-                        "custom": "Своє посилання",
-                        "modal": "Попап «Консультація»"
+                        "none": "No link",
+                        "page": "Site page",
+                        "custom": "Custom URL",
+                        "modal": "“Consultation” popup"
                     },
                     "key": "field_685551959740fb32"
                 },
                 {
                     "type": "page_link",
                     "name": "page",
-                    "label": "Сторінка",
+                    "label": "Page",
                     "wrapper": {
                         "width": "50"
                     },
@@ -950,12 +950,12 @@
                 {
                     "type": "text",
                     "name": "url",
-                    "label": "Посилання",
+                    "label": "Link",
                     "wrapper": {
                         "width": "35"
                     },
                     "required": 1,
-                    "placeholder": "https://… або #anchor",
+                    "placeholder": "https://… or #anchor",
                     "conditional_logic": [
                         [
                             {
@@ -970,7 +970,7 @@
                 {
                     "type": "true_false",
                     "name": "new_tab",
-                    "label": "У новій вкладці",
+                    "label": "Open in new tab",
                     "wrapper": {
                         "width": "15"
                     },
@@ -1002,7 +1002,7 @@
         {
             "type": "tab",
             "name": "map_tab",
-            "label": "Карта",
+            "label": "Map",
             "wrapper": {
                 "width": "100"
             },
@@ -1012,11 +1012,11 @@
         {
             "type": "text",
             "name": "google_maps_key",
-            "label": "Ключ Google Maps API",
+            "label": "Google Maps API key",
             "wrapper": {
                 "width": "50"
             },
-            "instructions": "Для живої карти на сторінці контактів. Без ключа виводиться зображення карти.",
+            "instructions": "For the live map on the contacts page. Without a key the map image is shown.",
             "key": "field_dd8298ae0e3a498d"
         },
         {
@@ -1032,7 +1032,7 @@
         {
             "type": "text",
             "name": "error_title",
-            "label": "Заголовок",
+            "label": "Title",
             "wrapper": {
                 "width": "50"
             },
@@ -1042,7 +1042,7 @@
         {
             "type": "textarea",
             "name": "error_text",
-            "label": "Текст",
+            "label": "Text",
             "wrapper": {
                 "width": "50"
             },
@@ -1054,7 +1054,7 @@
         {
             "type": "text",
             "name": "error_btn",
-            "label": "Кнопка",
+            "label": "Button",
             "wrapper": {
                 "width": "30"
             },
@@ -1078,7 +1078,7 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "Глобальні налаштування: шапка, контакти, футер, попапи, форми.",
+    "description": "Global settings: header, contacts, footer, popups, forms.",
     "show_in_rest": 0,
-    "modified": 1791903754
+    "modified": 1791904778
 }
