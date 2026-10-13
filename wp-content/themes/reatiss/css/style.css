@@ -1935,3 +1935,4 @@ html.js .home-hero:not(.is-ready) .home-hero__content > * {opacity: 0;}
 .form-box__form > .wpcf7,
 .modal__form > .wpcf7 {width: 100%;}
 .pager .btn.is-loading {opacity: 0.6;pointer-events: none;}
+.wpcf7 .screen-reader-response {position: absolute;width: 1px;height: 1px;margin: -1px;padding: 0;overflow: hidden;clip: rect(0 0 0 0);border: 0;white-space: nowrap;}

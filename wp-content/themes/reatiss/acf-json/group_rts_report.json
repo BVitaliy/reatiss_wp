@@ -1,0 +1,37 @@
+{
+    "key": "group_rts_report",
+    "title": "Звіт",
+    "fields": [
+        {
+            "type": "textarea",
+            "name": "description",
+            "label": "Опис",
+            "wrapper": {
+                "width": "100"
+            },
+            "rows": 3,
+            "new_lines": "",
+            "required": 1,
+            "key": "field_57bdabf2834146e4"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "rts_report"
+            }
+        ]
+    ],
+    "menu_order": -1,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791904101
+}

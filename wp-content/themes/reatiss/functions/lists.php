@@ -15,8 +15,18 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Cards per page: 3 columns of posts, 2 columns of events.
  */
 const RTS_PER_PAGE = [
-	'post'      => 9,
-	'rts_event' => 6,
+	'post'       => 9,
+	'rts_event'  => 6,
+	'rts_report' => 10,
+];
+
+/**
+ * Card partial per list type.
+ */
+const RTS_LIST_CARDS = [
+	'post'       => 'news',
+	'rts_event'  => 'event',
+	'rts_report' => 'report',
 ];
 
 class RTS_Lists {
@@ -90,7 +100,8 @@ class RTS_Lists {
 		check_ajax_referer( 'rts_nonce', 'nonce' );
 
 		// phpcs:disable WordPress.Security.NonceVerification.Missing -- verified above.
-		$type     = isset( $_POST['type'] ) && 'rts_event' === $_POST['type'] ? 'rts_event' : 'post';
+		$type     = isset( $_POST['type'] ) ? sanitize_key( wp_unslash( $_POST['type'] ) ) : 'post';
+		$type     = isset( RTS_LIST_CARDS[ $type ] ) ? $type : 'post';
 		$taxonomy = isset( $_POST['taxonomy'] ) ? sanitize_key( wp_unslash( $_POST['taxonomy'] ) ) : '';
 		$term     = isset( $_POST['term'] ) ? absint( $_POST['term'] ) : 0;
 		$author   = isset( $_POST['author'] ) ? absint( $_POST['author'] ) : 0;
@@ -102,7 +113,7 @@ class RTS_Lists {
 		ob_start();
 		foreach ( $query->posts as $post ) {
 			echo '<li>';
-			get_template_part( 'template-parts/cards/' . ( 'rts_event' === $type ? 'event' : 'news' ), null, [ 'post' => $post ] );
+			get_template_part( 'template-parts/cards/' . RTS_LIST_CARDS[ $type ], null, [ 'post' => $post ] );
 			echo '</li>';
 		}
 
@@ -179,6 +190,11 @@ function rts_list_query( string $type, int $page = 1, string $taxonomy = '', int
 		$args['meta_key'] = 'date_start'; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 		$args['orderby']  = 'meta_value';
 		$args['order']    = 'DESC';
+	} elseif ( 'rts_report' === $type ) {
+		$args['orderby'] = [
+			'menu_order' => 'ASC',
+			'title'      => 'ASC',
+		];
 	} else {
 		$args['orderby'] = 'date'; // explicit — see RTS_Lists::main_query()
 		$args['order']   = 'DESC';

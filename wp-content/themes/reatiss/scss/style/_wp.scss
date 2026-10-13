@@ -65,3 +65,16 @@
   opacity: 0.6;
   pointer-events: none;
 }
+
+// CF7's live region for screen readers — CF7's own (disabled) CSS hid it visually
+.wpcf7 .screen-reader-response {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  border: 0;
+  white-space: nowrap;
+}

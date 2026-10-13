@@ -19,7 +19,7 @@
 3. About ✅
 4. Services / Labs / Expertise (CPTs, list pages, singles on the builder) ✅
 5. Blog / Events / Authors ✅
-6. On Shelf + forms (reCAPTCHA keys later)
+6. On Shelf + forms (reCAPTCHA keys later) ✅
 7. Search (live + results page), Contacts, map
 8. Content seed, Yoast, performance, team checklist, adaptive QA
 
@@ -81,6 +81,8 @@ logs/             — custom logs (rts_log()), gitignored
   `orderby=date` explicitly and use `rts_get_posts()` (WP_Query without `suppress_filters`).
 - Articles / events: `single.php` → `template-parts/article/article.php` (+ related); tables are
   wrapped in `.article-table` by a `the_content` filter; author fields = ACF on users.
+- On Shelf: `reports_list` block (CPT `rts_report`, 10 a page) — a row opens the `reports`
+  popup and `js/app-reports.js` puts its title into the CF7 hidden field `your-report`.
 - Buttons / links: group { label, type: none|page|custom|modal, page, url, new_tab } →
   `rts_button()` / `rts_link()` + `rts_link_attrs()`.
 

@@ -3814,6 +3814,40 @@
                     "key": "layout_a4aa9e5483803904"
                 },
                 {
+                    "name": "reports_list",
+                    "label": "Список звітів (On Shelf)",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "reports_list_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_9bbf70b2ba8652c9"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "title",
+                            "label": "Заголовок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "rows": 2,
+                            "new_lines": "br",
+                            "default_value": "Available Analysis Reports",
+                            "instructions": "Звіти — розділ «Звіти (On Shelf)», порядок — поле «Порядок». Клік по звіту відкриває попап «Звіти» (Налаштування сайту → Форми); назва звіту потрапляє в заявку.",
+                            "key": "field_d8a19a695f1bd8d0"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_9e53f9b3640e2c18"
+                },
+                {
                     "name": "cta_box",
                     "label": "Заклик до дії (світлий блок)",
                     "display": "block",
@@ -4017,5 +4051,5 @@
     "active": true,
     "description": "Блоки сторінки у порядку виводу. Якщо блоків немає — сторінка показує заголовок і текст із редактора (текстова сторінка).",
     "show_in_rest": 0,
-    "modified": 1791903580
+    "modified": 1791904101
 }
