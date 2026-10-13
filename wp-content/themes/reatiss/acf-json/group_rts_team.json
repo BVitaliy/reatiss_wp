@@ -1,0 +1,90 @@
+{
+    "key": "group_rts_team",
+    "title": "Член команди",
+    "fields": [
+        {
+            "type": "text",
+            "name": "role",
+            "label": "Посада",
+            "wrapper": {
+                "width": "50"
+            },
+            "required": 1,
+            "key": "field_552b03fc00a81746"
+        },
+        {
+            "type": "repeater",
+            "name": "socials",
+            "label": "Соцмережі",
+            "wrapper": {
+                "width": "50"
+            },
+            "layout": "table",
+            "button_label": "Додати",
+            "sub_fields": [
+                {
+                    "type": "select",
+                    "name": "icon",
+                    "label": "Мережа",
+                    "wrapper": {
+                        "width": "40"
+                    },
+                    "ui": 1,
+                    "return_format": "value",
+                    "required": 1,
+                    "choices": {
+                        "facebook": "Facebook",
+                        "instagram": "Instagram",
+                        "x": "X",
+                        "tiktok": "TikTok",
+                        "linkedin": "LinkedIn"
+                    },
+                    "key": "field_2b86bb0d806e39b3"
+                },
+                {
+                    "type": "url",
+                    "name": "link",
+                    "label": "Посилання",
+                    "wrapper": {
+                        "width": "60"
+                    },
+                    "required": 1,
+                    "key": "field_389b22ddd8144d65"
+                }
+            ],
+            "key": "field_48ecb37aa89e59d1"
+        },
+        {
+            "type": "wysiwyg",
+            "name": "bio",
+            "label": "Біографія",
+            "wrapper": {
+                "width": "100"
+            },
+            "toolbar": "basic",
+            "media_upload": 0,
+            "tabs": "all",
+            "instructions": "Показується в попапі. Фото — «Зображення запису», 900×925 px.",
+            "key": "field_9bd073a20ffc52a3"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "rts_team"
+            }
+        ]
+    ],
+    "menu_order": -1,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791897142
+}

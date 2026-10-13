@@ -1,0 +1,41 @@
+@use "../mixins" as *;
+
+// ── Drawn line illustrations (app-draw.js) ──
+// --draw 0 → 1 moves a diagonal edge across the picture: the art is masked
+// up to the edge, and .draw-pen (the same image used as a mask) glows blue
+// just behind it, so the strokes look inked by a moving pen.
+.js-draw {
+  --draw: 1;
+  --draw-edge: calc(var(--draw) * 130%);
+  position: relative;
+
+  img {
+    -webkit-mask-image: linear-gradient(115deg, #000 calc(var(--draw-edge) - 30%), transparent var(--draw-edge));
+    mask-image: linear-gradient(115deg, #000 calc(var(--draw-edge) - 30%), transparent var(--draw-edge));
+  }
+}
+
+.draw-pen {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(115deg,
+      transparent calc(var(--draw-edge) - 26%),
+      var(--clr-accent) calc(var(--draw-edge) - 14%),
+      transparent calc(var(--draw-edge) - 4%));
+  -webkit-mask: var(--draw-src) center / var(--draw-fit, contain) no-repeat;
+  mask: var(--draw-src) center / var(--draw-fit, contain) no-repeat;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+
+  .is-drawing > & {
+    opacity: 1;
+  }
+}
+
+// the card hover zooms the picture — the pen follows
+.expertise-card:hover .draw-pen {
+  transform: scale(1.04);
+  transition: opacity 0.4s ease, transform 1.2s var(--ease-out);
+}

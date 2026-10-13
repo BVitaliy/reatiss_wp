@@ -1,0 +1,37 @@
+@use "../mixins" as *;
+
+// ── Title reveal "decode" (app-titles.js) ──
+// Titles wait hidden until the script has split them; if it never runs they
+// show after 3s anyway (fail-safe animation). Reduced motion: no hiding.
+@keyframes title-failsafe {
+  to {
+    visibility: visible;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  // opted-out blocks ([data-title-anim="off"]) are never hidden
+  html.js main :is(.h2, .h3, .h1--sm):not(.is-title-ready):not([data-title-anim="off"] *) {
+    visibility: hidden;
+    animation: title-failsafe 0s 3s forwards;
+  }
+
+  html.js .home-hero :is(.h2, .h3, .h1--sm) {
+    visibility: visible;
+    animation: none;
+  }
+}
+
+.title-word {
+  white-space: nowrap;
+}
+
+// fixed to the final glyph width by the script, so bits don't reflow
+.title-char {
+  display: inline-block;
+  text-align: center;
+
+  &.is-bit {
+    color: var(--clr-accent);
+  }
+}

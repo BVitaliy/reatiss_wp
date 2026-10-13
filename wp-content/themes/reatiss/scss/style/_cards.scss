@@ -1,0 +1,332 @@
+@use "../mixins" as *;
+
+// ── Cards ──────────────────────────────────────────────────────────
+// Grids/sliders live in the sections; here only the card itself.
+
+// Shared photo behaviour: slow zoom on card hover
+%card-photo {
+  picture {
+    height: 100%;
+  }
+
+  img {
+    @include cover;
+    transition: transform 1.2s var(--ease-out);
+  }
+}
+
+// ── Expertise card ── Figma 7967:8910
+// Light tile: title + text + link on the left, framed illustration right.
+.expertise-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.136fr); // 405 : 460
+  gap: rem(10);
+  min-height: rem(350);
+  padding: rem(20) rem(20) rem(20) rem(30);
+  border-radius: var(--rd-lg);
+  background: var(--bg-1);
+
+  @include maxMedia(lg) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    min-height: 0;
+    height: 100%;
+    padding: 16px;
+    gap: 20px;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: rem(30);
+    padding-block: rem(10);
+
+    @include maxMedia(lg) {
+      order: 2;
+      padding: 0;
+      gap: 20px;
+    }
+  }
+
+  &__title {
+    transition: color var(--transition-1);
+  }
+
+  &__foot {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: rem(30);
+
+    @include maxMedia(md) {
+      gap: 16px;
+    }
+  }
+
+  &__text {
+    max-width: rem(287);
+    color: var(--clr-text);
+
+    @include maxMedia(xl) {
+      max-width: none;
+    }
+  }
+
+  &__media {
+    @extend %card-photo;
+    aspect-ratio: 460 / 310;
+    align-self: center;
+    border-radius: var(--rd-lg);
+    overflow: hidden;
+
+    img {
+      object-fit: contain;
+    }
+  }
+
+  @include hover {
+    .expertise-card__title {
+      color: var(--clr-main);
+    }
+
+    .expertise-card__media img {
+      transform: scale(1.04);
+    }
+  }
+}
+
+// ── Lab card ── Figma 7967:9025
+// Full photo with a stepped top edge; white info panel inside at the bottom.
+.lab-card {
+  @extend %card-photo;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: rem(630);
+  padding: rem(20);
+  isolation: isolate;
+
+  // below 1200 the card is taller than the desktop 613×630: the text panel
+  // keeps its size (full text on phones), so the photo needs the room
+  @include maxMedia(xl) {
+    min-height: 520px;
+    padding: 12px;
+  }
+
+  @include maxMedia(md) {
+    min-height: 460px;
+  }
+
+  &__media {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    --cut-x: 54.3%; // diagonal 333 → 367 of 613 (Figma mask)
+    --cut-h: #{rem(30)};
+    --cut-w: #{rem(34)};
+  }
+
+  &__panel {
+    --cut-x: 55.5%; // diagonal 318 → 338 of 573
+    --cut-h: #{rem(14)};
+    --cut-w: #{rem(20)};
+    --cut-f: #{rem(4)};
+    display: flex;
+    flex-direction: column;
+    gap: rem(20);
+    min-height: rem(228);
+    padding: rem(20) rem(20) rem(33);
+    background: var(--clr-white);
+
+    @include maxMedia(xl) {
+      min-height: 0;
+      padding: 16px 16px 28px;
+      gap: 14px;
+    }
+  }
+
+  &__title {
+    transition: color var(--transition-1);
+  }
+
+  // Figma: the description box is 3 lines, longer CMS text ends with "…"
+  // (desktop, where the panels sit on one line; phones show it all)
+  &__text {
+    color: var(--clr-text);
+
+    @include minMedia(xl) {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      overflow: hidden;
+    }
+  }
+
+  .link-arrow {
+    align-self: flex-end;
+    margin-top: auto;
+    padding-top: rem(12); // 32 from the text with the 20 gap
+  }
+
+  @include hover {
+    .lab-card__title {
+      color: var(--clr-main);
+    }
+
+    .lab-card__media {
+      --cut-x: 62%;
+    }
+
+    .lab-card__media img {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// person (about team 8271:40303): name · 12 · role · 32 · Learn more,
+// the panel 168 high (no description box)
+.lab-card--person {
+  // the small panel leaves the photo room: desktop proportions everywhere
+  @include maxMedia(xl) {
+    min-height: 0;
+    aspect-ratio: 613 / 630;
+  }
+
+  .lab-card__panel {
+    gap: rem(12);
+    min-height: rem(168);
+
+    @include maxMedia(xl) {
+      gap: 8px;
+    }
+  }
+
+  .link-arrow {
+    padding-top: rem(20);
+  }
+}
+
+// ── News / event card ── Figma 7967:9046 (news), 7967:9141 (event)
+// Photo with the left part of its bottom edge raised; title + meta below.
+.news-card {
+  display: flex;
+  flex-direction: column;
+  gap: rem(10);
+  height: 100%;
+
+  &__media {
+    @extend %card-photo;
+    --cut-x: 54%; // diagonal 332 → 368 of 614 (Figma mask)
+    --cut-w: #{rem(36)};
+
+    // phones: the step is 20 deep (.cut) — keep the diagonal near 45°
+    @include maxMedia(md) {
+      --cut-w: #{rem(22)};
+    }
+    display: block;
+    aspect-ratio: 614 / 481;
+  }
+
+  &--event &__media {
+    aspect-ratio: 614 / 600;
+  }
+
+  // Figma: body is a fixed 96 box — meta pinned to the bottom, so dates line
+  // up across cards whether the title takes one line or two
+  &__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: rem(19);
+    min-height: rem(96);
+    padding-inline: rem(10);
+
+    @include maxMedia(xl) {
+      gap: 16px;
+      min-height: 0;
+      padding-inline: 4px;
+    }
+  }
+
+  &--event &__body {
+    gap: rem(20);
+    min-height: rem(68);
+  }
+
+  // max 3 lines, then "…" (long CMS titles must not stretch the card)
+  &__title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+    transition: color var(--transition-1);
+  }
+
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: rem(16);
+    margin-top: auto;
+  }
+
+  &__date {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(5);
+    color: var(--clr-text);
+    font-size: max(14px, #{rem(16)});
+    font-weight: 300;
+    line-height: 1.2;
+
+    svg {
+      width: rem(16);
+      height: rem(16);
+      flex: none;
+
+      @include maxMedia(xl) {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  // event: date + location chip (events list, 8028:20442); wraps on phones
+  &__info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: rem(8) rem(16);
+    min-width: 0;
+
+    @include maxMedia(md) {
+      gap: 8px 12px;
+    }
+
+
+    // the location is a label, not a link — no hover of its own
+    .chip {
+      pointer-events: none;
+    }
+  }
+
+  @include hover {
+    .news-card__title {
+      color: var(--clr-main);
+    }
+
+    // task: "on image hover the cut slides a little to the right"
+    .news-card__media {
+      --cut-x: 62%;
+    }
+
+    .news-card__media img {
+      transform: scale(1.05);
+    }
+  }
+}

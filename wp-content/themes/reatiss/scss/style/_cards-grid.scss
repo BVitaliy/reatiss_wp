@@ -1,0 +1,31 @@
+@use "../mixins" as *;
+
+// ── Card grid (lists) ── Figma blog 7989:32257, author 8031:20994
+// 3 columns, gap 10, rows 80 apart; 2 columns below 992, 1 below 576.
+// For list pages (blog, author, events) — the home rows use .grid-slider instead.
+// --2: two centred columns of 614 (events 8028:20020).
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-md) var(--sp-2xs);
+
+  @include maxMedia(lg) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 48px 16px;
+  }
+
+  @include maxMedia(sm) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+  }
+
+  &--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: rem(1238);
+    margin-inline: auto;
+
+    @include maxMedia(sm) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+}

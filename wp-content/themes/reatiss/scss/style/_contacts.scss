@@ -1,0 +1,287 @@
+@use "../mixins" as *;
+
+// ── Contacts ── Figma 8038:22456 (page) · 8069:19628 (info + form) · 8069:19671 (map)
+
+// icon + text rows (address / phone / email) — contacts intro, office cards
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: rem(12);
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: rem(12);
+    font-size: max(15px, #{rem(16)});
+    line-height: 1.55;
+    color: var(--clr-text);
+  }
+
+  // 20px icon box, centred on the first 25px text line
+  svg {
+    flex: none;
+    width: rem(20);
+    height: rem(20);
+    margin-top: rem(2.5);
+    color: var(--clr-main);
+
+    @include maxMedia(xl) {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+    }
+  }
+
+  a {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    transition: color var(--transition-1);
+
+    @include hover {
+      color: var(--clr-main);
+    }
+  }
+}
+
+// office: "City • Company" (Jakarta 18) → 20 → .contact-list
+.office-card {
+  display: flex;
+  flex-direction: column;
+  gap: rem(20);
+  min-width: 0;
+
+  &__title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: rem(12);
+    font-family: var(--font-display);
+    font-size: max(17px, #{rem(18)});
+    line-height: 1.26;
+    color: var(--clr-black);
+  }
+
+  &__dot {
+    flex: none;
+    width: rem(4);
+    height: rem(4);
+    border-radius: 50%;
+    background: var(--clr-main);
+
+    @include maxMedia(xl) {
+      width: 4px;
+      height: 4px;
+    }
+  }
+}
+
+// ── Info + form ──
+.contacts {
+  margin-top: rem(80); // breadcrumbs → title (Figma 134 → 214), as the blog
+
+  @include maxMedia(xl) {
+    margin-top: 40px;
+  }
+
+  // Figma: 851 | 83 | 925, vertically centred
+  &__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 851fr) minmax(0, 925fr);
+    align-items: center;
+    column-gap: rem(83);
+
+    @include maxMedia(xl) {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--sp-md);
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+  }
+
+  // title → 50 → socials → 24 → lead → 24 → contacts
+  &__title {
+    margin-bottom: var(--sp-sm);
+  }
+
+  &__lead {
+    max-width: rem(458);
+    margin: rem(24) 0;
+    color: var(--clr-text);
+
+    @include maxMedia(md) {
+      margin: 20px 0;
+    }
+  }
+
+  // 60 above and below; the mockup line is 831.5 of 851, step at 337.8
+  &__line {
+    --step-x: 40.6%;
+    max-width: rem(831.5);
+    margin: rem(60) 0;
+
+    @include maxMedia(xl) {
+      margin: 40px 0;
+    }
+  }
+
+  &__offices {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: rem(40);
+    width: 100%;
+
+    @include maxMedia(md) {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 30px;
+    }
+  }
+
+  // Figma "Subtract" 8064:19452: bottom edge steps UP on the right (last 306);
+  // the box itself is the shared .form-box
+  &__form-box {
+    --cut-x: calc(100% - #{rem(343)});
+    --cut-h: #{rem(42)};
+    --cut-w: #{rem(37)};
+
+    @include maxMedia(xl) {
+      --cut-x: calc(100% - 300px);
+    }
+
+    @include maxMedia(md) {
+      --cut-x: calc(100% - 150px);
+    }
+  }
+}
+
+// ── Map ── full-width 700 (Figma). Live Google Map (contacts-map.php) or a
+// picture (contacts-map-image.php); both carry the same pin + office card.
+// The marker box is a 0×0 point = the pin tip: centred by CSS, placed on
+// the office by app-map.js once the map is up.
+.contacts-map {
+  position: relative;
+  height: rem(700);
+  overflow: hidden;
+  background: #e9edf1;
+
+  @include maxMedia(xl) {
+    height: 560px;
+  }
+
+  @include maxMedia(md) {
+    height: 520px;
+  }
+
+  &__canvas,
+  &__image {
+    position: absolute;
+    inset: 0;
+  }
+
+  &__image {
+    img {
+      @include cover;
+    }
+  }
+
+  &__marker {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+  }
+
+  // on the live map the overlay sets left/top in px
+  &__marker.is-on-map {
+    top: 0;
+    left: 0;
+  }
+
+  // 50×66, tip at the bottom centre
+  &__pin {
+    position: absolute;
+    left: rem(-25);
+    bottom: 0;
+    display: block;
+    width: rem(50);
+    height: rem(66);
+    color: var(--clr-main);
+    transform-origin: 50% 100%;
+    transition: transform 0.4s var(--ease-out);
+
+    @include maxMedia(xl) {
+      left: -22px;
+      width: 44px;
+      height: 58px;
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    @include hover {
+      transform: scale(1.08);
+    }
+  }
+
+  // Figma: 39 right of the tip, top 133 above it; 363 wide
+  &__card {
+    position: absolute;
+    top: rem(-133);
+    left: rem(39);
+    width: rem(363);
+    padding: rem(24);
+    border-radius: var(--rd-lg);
+    background: var(--clr-white);
+    box-shadow: 0 rem(12) rem(32) rgba(2, 16, 22, 0.08);
+    cursor: auto;
+    transition: opacity 0.3s ease, visibility 0.3s, transform 0.4s var(--ease-out);
+
+    @include maxMedia(xl) {
+      width: 340px;
+      padding: 20px;
+    }
+
+    // phones: under the tip, centred on it
+    @include maxMedia(md) {
+      top: 12px;
+      left: 0;
+      width: min(340px, calc(100vw - 32px));
+      transform: translateX(-50%);
+    }
+
+    // keep the title clear of the close button
+    .office-card__title {
+      padding-right: rem(40);
+    }
+  }
+
+  &__close {
+    position: absolute;
+    top: rem(8);
+    right: rem(8);
+
+    @include maxMedia(xl) {
+      top: 6px;
+      right: 6px;
+    }
+  }
+
+  &.is-card-closed &__card {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(#{rem(8)});
+
+    @include maxMedia(md) {
+      transform: translate(-50%, 8px);
+    }
+  }
+}

@@ -1,0 +1,146 @@
+@use "../mixins" as *;
+
+// ── Service page blocks ── Figma 8271:41273
+// Banner (_page-banner), statement (_statement), left-right ×3, FAQ and
+// gallery (_gallery-strip) are shared blocks; here only the service parts.
+
+// Available Analysis Levels (8271:41371): title + .faq--wide, 1236 column
+.service-levels {
+  &__inner {
+    max-width: rem(1236);
+    margin-inline: auto;
+  }
+
+  &__head {
+    margin-bottom: var(--sp-sm); // Figma: 50 to the first line
+
+    .section-head__title {
+      --title-w: 14em;
+    }
+  }
+}
+
+// What Process Analysis Reveals (8271:41456): 4 cards between vertical
+// step lines (line · 50 · card · 50 · line …), drawings draw in (.js-draw)
+.service-reveals {
+  .section-head {
+    margin-bottom: var(--sp-sm); // Figma: 50 title → cards
+  }
+
+  &__list {
+    position: relative;
+    padding-right: rem(7); // room for the closing line
+
+    @include maxMedia(xl) {
+      padding-right: 0;
+    }
+
+    .grid-slider:not(.swiper-initialized) .swiper-wrapper {
+      gap: 0;
+    }
+  }
+
+  // closing line after the last card (grid only — the slider scrolls)
+  &__end {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    @include maxMedia(xl) {
+      display: none;
+    }
+  }
+}
+
+.reveal-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: rem(3) rem(50) rem(3) calc(#{rem(7)} + #{rem(50)});
+
+  @include maxMedia(xl) {
+    padding: 0 24px 0 31px;
+  }
+
+  &__line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+  }
+
+  // Figma: 260 square, cover
+  &__media {
+    width: rem(260);
+    max-width: 100%;
+    aspect-ratio: 1;
+
+    @include maxMedia(xl) {
+      width: 220px;
+    }
+
+    picture {
+      height: 100%;
+    }
+
+    img {
+      @include cover;
+    }
+  }
+
+  &__title {
+    margin-top: rem(80);
+    color: var(--clr-black);
+
+    @include maxMedia(xl) {
+      margin-top: 40px;
+    }
+  }
+
+  &__text {
+    margin-top: rem(20);
+    color: var(--clr-text);
+
+    @include maxMedia(xl) {
+      margin-top: 12px;
+    }
+  }
+}
+
+// Built on Expertise (8271:41515): centred title + article body, 1236
+.service-content {
+  &__inner {
+    max-width: rem(1236);
+    margin-inline: auto;
+  }
+
+  &__title {
+    margin-bottom: rem(24);
+    text-align: center;
+    text-wrap: balance;
+
+    @include maxMedia(md) {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+// a video in the content (expertise 8271:40687: 1236×750)
+.service-content .article-video {
+  aspect-ratio: 1236 / 750;
+
+  @include maxMedia(md) {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+// ── Reports above the form (template-parts/service-files.php) ──
+// the On Shelf list, 1236 wide, rows with an icon (.result-row--icon)
+.service-files {
+  &__inner {
+    max-width: rem(1236);
+    margin-inline: auto;
+  }
+}

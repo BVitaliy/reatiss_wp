@@ -1,0 +1,45 @@
+@use "../mixins" as *;
+
+// ── Expertise page ── Figma 8102:23319
+
+// own line (8422:36028): starts 70 above the title on the left, runs down
+// at x725 behind the left cards, steps out right 96 below the grid
+.expertise-list__line {
+  top: calc(-70 / 1920 * 100vw);
+  aspect-ratio: 1920 / 1442;
+}
+
+// all expertise cards in a 2-col grid (the home row is a slider on phones)
+.expertise-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-2xs);
+
+  @include maxMedia(lg) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  > li {
+    min-width: 0;
+  }
+}
+
+// request form, centred 925 (Figma 8102:23473): right part of the bottom
+// edge raised 31 from x ≈ 648 → 679 of 925; 86 at the bottom (as the modal)
+.request-form__box {
+  --cut-x: calc(100% - #{rem(277)});
+  --cut-h: #{rem(31)};
+  --cut-w: #{rem(31)};
+  max-width: rem(925);
+  margin-inline: auto;
+  padding-bottom: rem(86);
+
+  @include maxMedia(xl) {
+    --cut-x: calc(100% - 200px);
+    max-width: 925px;
+  }
+
+  @include maxMedia(md) {
+    --cut-x: calc(100% - 140px);
+  }
+}

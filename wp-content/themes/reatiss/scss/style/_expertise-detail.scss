@@ -1,0 +1,219 @@
+@use "../mixins" as *;
+
+// ── Expertise detail ── Figma 8271:40608
+// Shared blocks (banner, statement, left-right, model, video, content, CTA,
+// gallery, FAQ, expertise cards) keep their own partials; here the page
+// specifics: line offsets, the workflow cards, the dark stat rows.
+
+// statement line (8356:17076): drops from the banner 151 above the text
+.expertise-detail__statement .statement__line {
+  top: calc(-151 / 1920 * 100vw);
+}
+
+// content line (8278:46389): leaves the video above on the right, 282 above
+// the title, runs out to the right edge
+.expertise-detail__content {
+  position: relative;
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.expertise-detail__content-line {
+  z-index: 0;
+  top: calc(-282 / 1920 * 100vw);
+  aspect-ratio: 1920 / 391;
+
+  @include maxMedia(md) {
+    display: none;
+  }
+}
+
+// ── 3D Transistor Analysis Workflow (8271:40659) ──
+// the line (8278:46382) starts 326 above the title, behind the block above
+.expertise-workflow {
+  position: relative;
+
+  &__line {
+    z-index: 0;
+    top: calc(-326 / 1920 * 100vw);
+    aspect-ratio: 1920 / 624;
+
+    @include maxMedia(md) {
+      display: none;
+    }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-head {
+    margin-bottom: var(--sp-sm); // Figma: 50 title → cards
+  }
+}
+
+// photo card: photo 449×400 r10 · 40 · title (h5) · 20 · text (16 grey)
+.info-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &__media {
+    aspect-ratio: 449.5 / 400;
+    border-radius: var(--rd-lg);
+    overflow: hidden;
+    background: var(--bg-1);
+
+    picture {
+      height: 100%;
+    }
+
+    img {
+      @include cover;
+    }
+  }
+
+  &__title {
+    margin-top: rem(40);
+    color: var(--clr-black);
+
+    @include maxMedia(xl) {
+      margin-top: 24px;
+    }
+  }
+
+  &__text {
+    margin-top: rem(20);
+    color: var(--clr-text);
+
+    @include maxMedia(xl) {
+      margin-top: 12px;
+    }
+  }
+}
+
+// ── Dark stat rows (8271:40694) ──
+// padding 150 / 179; lead (h3, 1008) at x186 of the frame; under it the text
+// (455) on the left and the rows (1081) on the right, 50 below the lead
+.stats-rows {
+  position: relative;
+  padding-block: var(--sp-xl) rem(179);
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  @include maxMedia(xl) {
+    padding-block: var(--sp-xl);
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 593fr) minmax(0, 1081fr); // rows at x809, 1081 wide
+    grid-template-areas:
+      "lead lead"
+      "text rows";
+    column-gap: rem(30);
+    row-gap: var(--sp-sm);
+    padding-left: calc(var(--gutter) + #{rem(156)}); // lead at x186 of the frame
+
+    @include maxMedia(xl) {
+      padding-left: var(--gutter);
+    }
+
+    @include maxMedia(lg) {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: "lead" "text" "rows";
+      row-gap: 32px;
+    }
+  }
+
+  &__lead {
+    grid-area: lead;
+    max-width: rem(1008);
+  }
+
+  &__text {
+    grid-area: text;
+    max-width: rem(455);
+    color: rgba(255, 255, 255, 0.6);
+
+    @include maxMedia(lg) {
+      max-width: 640px;
+    }
+  }
+}
+
+// rows between step lines: line · 50 · row · 50 · line …  (last row open)
+// row: number (stat-num accent, 214) · 39 · label (h5) | 40 · text (433)
+.stat-rows {
+  grid-area: rows;
+  display: flex;
+  flex-direction: column;
+  gap: rem(50);
+
+  @include maxMedia(md) {
+    gap: 28px;
+  }
+
+  .step-line {
+    color: rgba(255, 255, 255, 0.14);
+    margin-bottom: rem(49);
+
+    @include maxMedia(md) {
+      margin-bottom: 24px;
+    }
+  }
+}
+
+.stat-row {
+  &__body {
+    display: grid;
+    grid-template-columns: rem(214) minmax(0, 285fr) minmax(0, 433fr);
+    align-items: center;
+    column-gap: rem(39);
+
+    @include maxMedia(xl) {
+      grid-template-columns: 170px minmax(0, 1fr) minmax(0, 1.4fr);
+      column-gap: 24px;
+    }
+
+    @include maxMedia(md) {
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-areas: "num label" "text text";
+      row-gap: 12px;
+      column-gap: 20px;
+    }
+  }
+
+  &__num {
+    color: var(--clr-accent);
+    white-space: nowrap;
+
+    @include maxMedia(md) {
+      grid-area: num;
+    }
+  }
+
+  &__label {
+    @include maxMedia(md) {
+      grid-area: label;
+    }
+  }
+
+  &__text {
+    margin-left: rem(1); // 40 from the label column (39 gap + 1)
+    color: var(--clr-white);
+
+    @include maxMedia(md) {
+      grid-area: text;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.75);
+    }
+  }
+}

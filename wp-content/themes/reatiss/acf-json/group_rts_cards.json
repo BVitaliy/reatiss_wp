@@ -1,0 +1,59 @@
+{
+    "key": "group_rts_cards",
+    "title": "Картка у списках",
+    "fields": [
+        {
+            "type": "textarea",
+            "name": "card_text",
+            "label": "Короткий опис",
+            "wrapper": {
+                "width": "100"
+            },
+            "rows": 3,
+            "new_lines": "",
+            "required": 1,
+            "instructions": "Текст картки у списках і на головній. Фото картки — «Зображення запису».",
+            "key": "field_96c9c6ad6536b1d5"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "rts_service"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "rts_lab"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "rts_expertise"
+            }
+        ]
+    ],
+    "menu_order": -1,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "excerpt",
+        "discussion",
+        "comments",
+        "author",
+        "format",
+        "send-trackbacks"
+    ],
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791897142
+}

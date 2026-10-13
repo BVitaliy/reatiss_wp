@@ -1,0 +1,89 @@
+@use "../mixins" as *;
+
+// ── Search results page ── Figma 7982:27491
+// Centred 925 column: title → 12 → "Found: N" → 12 → .search-field--grey
+// → 50 → rows (step line, 20, title + ↘, 32 to the next line) → closing
+// step line → 50 → .pager. A stepped line (7989:34618) runs down the left.
+.search-page {
+  position: relative;
+  margin-top: rem(80); // breadcrumbs → title, as on the blog
+
+  @include maxMedia(xl) {
+    margin-top: 40px;
+  }
+
+  // Figma: starts 84 above the title and runs on behind the footer —
+  // clipped at the footer (the spacer-xl below the section)
+  &__line {
+    z-index: 0;
+    top: calc(-84 / 1920 * 100vw);
+    bottom: calc(-1 * var(--sp-xl));
+    aspect-ratio: auto;
+    overflow: hidden;
+
+    .run-line__svg {
+      height: auto;
+    }
+
+    // the SVG keeps its proportions (height follows the width), so with more
+    // results than in the mockup its last vertical would stop short of the
+    // footer — continue it with a plain 1px rule from the SVG's bottom
+    // (x 324.169 of 1920) down to the clip edge. % margins resolve against
+    // the width, so the start follows the SVG at any screen size.
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: calc(324.169 / 1920 * 100% - 0.5px);
+      width: 1px;
+      margin-top: calc(1752 / 1920 * 100% - 1px);
+      background: var(--clr-line);
+    }
+
+    @include maxMedia(lg) {
+      display: none;
+    }
+  }
+
+  > .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__inner {
+    max-width: rem(925);
+    margin: 0 auto;
+  }
+
+  &__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: rem(12);
+    margin-bottom: var(--sp-sm);
+    text-align: center;
+
+    @include maxMedia(xl) {
+      gap: 12px;
+    }
+  }
+
+  &__found {
+    color: var(--clr-text);
+
+    b {
+      margin-left: rem(4); // + the space = Figma's 8
+      font-weight: 500;
+      color: var(--clr-black);
+    }
+  }
+
+  &__form {
+    width: 100%;
+  }
+
+  &__pager {
+    margin-top: var(--sp-sm);
+  }
+}

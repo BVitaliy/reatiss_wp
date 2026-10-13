@@ -1,0 +1,522 @@
+@use "../mixins" as *;
+
+// ── Article page ── Figma 7999:18510 (logic from Ajour's article page)
+// Head (meta pills + title) centred; body = .rich-text content 1081 wide +
+// sticky "In this article" nav 420 (gap 47) — `.article-page--nav`.
+// Without the modifier the content is a single centred column.
+// Body rhythm (Figma): 50 between blocks, 24 heading → text, 16 p → p.
+.article-page {
+  --article-gap: #{rem(47)};
+
+  &__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: rem(20);
+    margin-top: rem(80);
+    text-align: center;
+
+    @include maxMedia(xl) {
+      margin-top: 48px;
+      gap: 16px;
+    }
+  }
+
+  &__title {
+    max-width: rem(1082);
+  }
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: rem(10);
+  }
+
+  &__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(4);
+    height: rem(43);
+    padding: 0 rem(12);
+    border-radius: rem(40);
+    background: var(--bg-1);
+    font-size: max(14px, #{rem(16)});
+    color: var(--clr-black);
+    transition: color var(--transition-1);
+
+    @include maxMedia(xl) {
+      height: 38px;
+    }
+
+    svg {
+      width: rem(16);
+      height: rem(16);
+      flex: none;
+      color: var(--clr-text);
+
+      @include maxMedia(xl) {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  a.article-page__pill {
+    @include hover {
+      color: var(--clr-main);
+    }
+  }
+
+  &__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    justify-content: center;
+    align-items: start;
+    gap: var(--article-gap);
+    max-width: calc(#{rem(1081)} + var(--gutter) * 2);
+    margin-top: rem(50);
+
+    @include maxMedia(xl) {
+      margin-top: 36px;
+    }
+  }
+
+  // event (Figma 8031:20617): date + location pills 16 apart, title box 810
+  &--event &__meta {
+    gap: rem(16);
+  }
+
+  &--event &__title {
+    max-width: rem(810);
+  }
+
+  &--nav &__layout {
+    grid-template-columns: minmax(0, 1081fr) minmax(0, 420fr);
+    max-width: calc(#{rem(1548)} + var(--gutter) * 2);
+
+    @include maxMedia(lg) {
+      grid-template-columns: minmax(0, 1fr);
+      max-width: calc(#{rem(1081)} + var(--gutter) * 2);
+      gap: 24px;
+    }
+  }
+
+  // no-nav variant: the nav markup may stay in the template, just hidden
+  &:not(.article-page--nav) .article-toc {
+    display: none;
+  }
+}
+
+// ── Body ──
+.article-content {
+  min-width: 0;
+
+  // big blocks and new parts: 50 apart (Figma)
+  > * + :is(h2, figure, blockquote, table, .article-slider, .article-cta, .article-video, .article-share, .article-table) {
+    margin-top: rem(50);
+
+    @include maxMedia(md) {
+      margin-top: 32px;
+    }
+  }
+
+  > h2 {
+    // land under the fixed header + the mobile nav bar when jumped to
+    scroll-margin-top: calc(var(--header-h) + #{rem(24)});
+
+    @include maxMedia(lg) {
+      scroll-margin-top: calc(var(--header-h) + 76px);
+    }
+  }
+
+  // p → list 24 (Figma)
+  > p + :is(ul, ol) {
+    margin-top: rem(24);
+  }
+
+  > :is(ul, ol) + p {
+    margin-top: rem(24);
+  }
+
+  // editor images / embeds
+  :where(figure) {
+    margin: 0;
+    border-radius: var(--rd-lg);
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  :where(iframe) {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    border: 0;
+    border-radius: var(--rd-lg);
+  }
+
+  // wide tables scroll sideways inside the column (wrap the <table>)
+  .article-table {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+
+    table {
+      min-width: 640px;
+    }
+  }
+}
+
+// CTA box — Figma 8054:19203: light box r10, padding 32, h4 + primary button
+.article-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(24);
+  padding: rem(32);
+  border-radius: var(--rd-lg);
+  background: var(--bg-1);
+
+  @include maxMedia(md) {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  h2,
+  &__title {
+    margin: 0;
+    max-width: rem(736);
+  }
+
+  // one-line note as the title (service 8271:41537, Jakarta 23)
+  &__title.h5 {
+    max-width: rem(862);
+  }
+
+  .btn {
+    flex: none;
+  }
+}
+
+// Photo slider — Figma 8026:19658: r10, dots in a dark pill.
+// Height follows the current image (Swiper autoHeight, as in Ajour) —
+// editor images keep their own proportions, nothing is cropped.
+.article-slider {
+  position: relative;
+  border-radius: var(--rd-lg);
+  overflow: hidden;
+
+  .swiper-wrapper {
+    align-items: flex-start;
+    transition-property: transform, height;
+  }
+
+  .swiper-slide {
+    height: auto;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &__pagination.swiper-pagination {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    right: auto;
+    bottom: rem(23);
+    top: auto;
+    display: flex;
+    gap: rem(16);
+    width: auto;
+    padding: rem(16) rem(20);
+    border-radius: var(--rd-lg);
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    transform: translateX(-50%);
+
+    @include maxMedia(md) {
+      bottom: 12px;
+      gap: 10px;
+      padding: 10px 14px;
+    }
+
+    .swiper-pagination-bullet {
+      width: rem(10);
+      height: rem(10);
+      margin: 0 !important;
+      background: var(--clr-white);
+      opacity: 0.4;
+      transition: opacity var(--transition-1);
+
+      @include maxMedia(md) {
+        width: 8px;
+        height: 8px;
+      }
+    }
+
+    .swiper-pagination-bullet-active {
+      opacity: 1;
+    }
+  }
+}
+
+// Video — Figma 8026:19684: 1081×750 poster r10 + YouTube play button.
+// YouTube facade (.js-youtube, app-article.js): on click the button is
+// replaced by .article-video--embed with the youtube-nocookie iframe
+// (autoplay) — same box, so nothing jumps. A plain editor <iframe> is styled
+// in .article-content above.
+.article-video {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1081 / 750;
+  border-radius: var(--rd-lg);
+  overflow: hidden;
+  cursor: pointer;
+
+  @include maxMedia(md) {
+    aspect-ratio: 16 / 10;
+  }
+
+  picture {
+    height: 100%;
+  }
+
+  img {
+    @include cover;
+    transition: transform 1s var(--ease-out);
+  }
+
+  &__play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: rem(92);
+    height: rem(62);
+    transform: translate(-50%, -50%);
+    transition: transform 0.4s var(--ease-out);
+
+    @include maxMedia(md) {
+      width: 64px;
+      height: 44px;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  @include hover {
+    img {
+      transform: scale(1.03);
+    }
+
+    .article-video__play {
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--clr-main);
+    outline-offset: 4px;
+  }
+
+  // after click: same box holds the player
+  &--embed {
+    background: #000;
+    cursor: auto;
+
+    iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      aspect-ratio: auto;
+      border: 0;
+      border-radius: 0;
+    }
+  }
+}
+
+// Share + tags — Figma 8099:23174
+.article-share {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(16) rem(24);
+  padding: rem(12) rem(24);
+  border-radius: var(--rd-lg);
+  background: var(--bg-1);
+
+  @include maxMedia(md) {
+    padding: 16px;
+  }
+
+  &__group {
+    display: flex;
+    align-items: center;
+    gap: rem(24);
+
+    @include maxMedia(md) {
+      gap: 16px;
+    }
+  }
+
+  &__tags {
+    justify-content: flex-end;
+  }
+}
+
+// ── "In this article" — Figma 8054:19419 ─────────────────────────
+// Desktop: sticky light box r10, padding 32, title 23, links 16/1.55 grey,
+// active main. Below 992: a sticky dropdown bar above the content (Ajour);
+// its list drops down over the content (no page shift).
+.article-toc {
+  position: sticky;
+  top: calc(var(--header-h) + #{rem(20)});
+  z-index: 5;
+  padding: rem(32);
+  border-radius: var(--rd-lg);
+  background: var(--bg-1);
+
+  &__toggle {
+    display: none;
+  }
+
+  &__title {
+    margin-bottom: rem(24);
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: rem(16);
+  }
+
+  &__link {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    font-size: max(14px, #{rem(16)});
+    line-height: 1.55;
+    color: var(--clr-text);
+    transition: color var(--transition-1);
+
+    &.is-active {
+      color: var(--clr-main);
+    }
+
+    @include hover {
+      color: var(--clr-main);
+    }
+  }
+
+  // Below 992: the sticky box itself is the bar (as Ajour: border + white);
+  // the list drops down from it, positioned against the sticky box
+  @include maxMedia(lg) {
+    order: -1;
+    top: calc(var(--header-h) + 8px);
+    padding: 0;
+    border: 1px solid var(--clr-line);
+    background: var(--clr-white);
+    transition: border-radius var(--transition-1);
+
+    &.is-open {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &__toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      width: 100%;
+      min-height: 52px;
+      padding: 12px 16px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--clr-main);
+      text-align: left;
+
+      svg {
+        width: 18px;
+        height: 18px;
+        flex: none;
+        transform: rotate(90deg);
+        transition: transform var(--transition-1);
+      }
+    }
+
+    &__current {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    // the list drops down OVER the content (absolute) — opening it never
+    // moves the page
+    &__panel {
+      position: absolute;
+      top: calc(100% + 1px); // under the bar's bottom border, not over it
+      left: -1px;
+      right: -1px;
+      display: grid;
+      grid-template-rows: 0fr;
+      border: 1px solid transparent;
+      border-top: 0;
+      border-radius: 0 0 var(--rd-lg) var(--rd-lg);
+      background: var(--clr-white);
+      visibility: hidden; // closed: nothing of it shows (its white strip covered the text)
+      transition: grid-template-rows 0.4s var(--ease-out), border-color 0.4s, box-shadow 0.4s, visibility 0s 0.4s;
+    }
+
+    &__panel-inner {
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    &__title {
+      display: none;
+    }
+
+    &__list {
+      padding: 4px 16px 16px;
+      gap: 12px;
+    }
+
+    &.is-open &__panel {
+      grid-template-rows: 1fr;
+      visibility: visible;
+      transition-delay: 0s;
+      border-color: var(--clr-line);
+      box-shadow: 0 16px 32px rgba(2, 16, 22, 0.08);
+    }
+
+    &.is-instant &__panel {
+      transition: none;
+    }
+
+    &.is-open &__panel-inner {
+      max-height: 60svh;
+      overflow-y: auto;
+    }
+
+    &.is-open &__toggle svg {
+      transform: rotate(-90deg);
+    }
+  }
+}

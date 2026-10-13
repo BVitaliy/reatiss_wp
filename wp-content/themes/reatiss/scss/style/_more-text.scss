@@ -1,0 +1,91 @@
+@use "../mixins" as *;
+
+// ── Expandable text ("Read more" / "Show less") ────────────────────
+// Visible and hidden parts both come from the CMS editor (two WYSIWYG
+// fields) — plain tags, styled by .rich-text. Used by the SEO block and the
+// author bio (Ajour's seo-block / author-hero pattern).
+//   <div class="more-text js-more-text">
+//     <div class="more-text__visible rich-text text-md">…</div>
+//     <div class="more-text__hidden" id="…"><div class="more-text__hidden-inner rich-text text-md">…</div></div>
+//     <button class="more-text__toggle link-arrow js-more-text-toggle" aria-controls="…">
+//       <span class="more-text__more">Read more</span><span class="more-text__less">Show less</span> arrow
+//     </button>
+//   </div>
+// --more-gap: text → button (Figma: 30 in the SEO block, 16 in the author bio).
+// .more-text--diag: "Read more ↘" (regular link arrow) instead of "↓".
+// .more-text--clamp: below 1200 the first visible paragraph is cut to 5 lines
+// until opened.
+.more-text {
+  --more-gap: #{rem(30)};
+
+  // height animates via grid rows; hidden text can't take focus while closed
+  &__hidden {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    transition: grid-template-rows 0.5s var(--ease-out), visibility 0s linear 0.5s;
+  }
+
+  &__hidden-inner {
+    min-height: 0;
+    overflow: hidden;
+
+    // gap above the hidden part as the first child's margin — it clips away
+    // with the content, so nothing shows while collapsed
+    > :first-child {
+      margin-top: rem(16);
+    }
+  }
+
+  &.is-open &__hidden {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  &__toggle {
+    margin-top: var(--more-gap);
+
+    @include maxMedia(xl) {
+      margin-top: min(var(--more-gap), 20px);
+    }
+
+    // "Read more ↓" — arrow points down, up when open
+    svg,
+    &:hover svg {
+      transform: rotate(90deg);
+    }
+  }
+
+  &.is-open &__toggle svg {
+    transform: rotate(-90deg);
+  }
+
+  // --diag: arrow stays the regular .link-arrow ↘ (author bio, Figma 8054:19280)
+  &--diag &__toggle svg {
+    transform: rotate(45deg);
+  }
+
+  &--diag &__toggle:hover svg {
+    transform: rotate(0);
+  }
+
+  &--diag.is-open &__toggle svg {
+    transform: rotate(-90deg);
+  }
+
+  &.is-open &__more,
+  &:not(.is-open) &__less {
+    display: none;
+  }
+
+  &--clamp:not(.is-open) &__visible > :first-child {
+    @include maxMedia(xl) {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 5;
+      line-clamp: 5;
+      overflow: hidden;
+    }
+  }
+}

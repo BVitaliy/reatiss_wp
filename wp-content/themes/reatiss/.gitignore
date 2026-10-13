@@ -1,0 +1,12 @@
+node_modules/
+vendor/
+.env
+
+# Джерела зображень для `gulp img`. Оптимізований результат у img/ — він трекається.
+images/
+
+*.css.map
+.DS_Store
+
+# Custom logs (written by the theme, see RTS_LOG_DIR)
+logs/*.log

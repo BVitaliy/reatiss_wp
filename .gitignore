@@ -1,0 +1,58 @@
+# --- WordPress core ---
+/wp-admin/
+/wp-includes/
+/wp-*.php
+/index.php
+/xmlrpc.php
+/license.txt
+/readme.html
+/liesmich.html
+
+# --- config & secrets ---
+wp-config.php
+.env
+
+# .htaccess містить RewriteBase, прив'язаний до конкретного середовища
+# (локально /reatiss_wp/, на проді /). Генерується WordPress при збереженні
+# постійних посилань — не трекаємо.
+/.htaccess
+
+# --- core translations (тягне wp core language update) ---
+/wp-content/languages/
+
+# --- uploads & caches ---
+/wp-content/uploads/
+/wp-content/upgrade/
+/wp-content/cache/
+/wp-content/backup*/
+/wp-content/ai1wm-backups/
+/wp-content/debug.log
+/wp-content/advanced-cache.php
+/wp-content/db.php
+/wp-content/object-cache.php
+
+# --- plugins: керуються окремо, не трекаємо ---
+/wp-content/plugins/*
+!/wp-content/plugins/index.php
+
+# --- themes: трекаємо тільки нашу ---
+/wp-content/themes/*
+!/wp-content/themes/reatiss/
+!/wp-content/themes/index.php
+
+# --- theme build artifacts ---
+/wp-content/themes/reatiss/node_modules/
+/wp-content/themes/reatiss/vendor/
+/wp-content/themes/reatiss/**/*.css.map
+
+# --- OS / IDE ---
+.DS_Store
+Thumbs.db
+*.sublime-*
+.idea/
+
+# --- theme logs (see RTS_LOG_DIR) ---
+/wp-content/themes/reatiss/logs/*.log
+
+# --- plugin working dirs ---
+/wp-content/updraft/

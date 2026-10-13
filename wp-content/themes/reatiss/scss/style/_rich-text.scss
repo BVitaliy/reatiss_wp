@@ -1,0 +1,282 @@
+@use "../mixins" as *;
+
+// ── Rich text (CMS / WYSIWYG content) ──────────────────────────────
+// Styles bare tags so editor output works without classes: used by the SEO
+// block and the article body. Figma article 7999:18510:
+//   p 18/1.55 grey (size comes from the text-* class on the wrapper)
+//   h2 → .h4 (32), h3 → .h5 (23) Jakarta black · links Inter 500 main
+//   ul: 7px main dots · ol: main numbers · blockquote: light box r10,
+//   blue quote mark, Jakarta 23 · table: #EEEFF0 grid, light head row.
+// :where() keeps specificity at zero so blocks can still override.
+// Only class-less tags are styled (what the editor outputs) — component
+// markup inside the content (buttons, share lists, tags…) keeps its own look.
+.rich-text {
+  color: var(--clr-text);
+
+  > * + * {
+    margin-top: rem(16);
+  }
+
+  :where(h2, h3, h4) {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.26;
+    color: var(--clr-black);
+  }
+
+  :where(h2) {
+    font-size: max(24px, #{rem(32)});
+
+    @include maxMedia(md) {
+      font-size: 22px;
+    }
+  }
+
+  :where(h3, h4) {
+    font-size: max(19px, #{rem(23)});
+  }
+
+  // headings open a new part: more air above, 24 to their text
+  > :where(h2, h3, h4) {
+    margin-top: rem(40);
+  }
+
+  > :where(h2, h3, h4) + * {
+    margin-top: rem(24);
+  }
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  :where(a:not([class])) {
+    color: var(--clr-main);
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.18em;
+    transition: text-decoration-color var(--transition-1);
+
+    @include hover {
+      text-decoration-color: currentColor;
+    }
+  }
+
+  :where(strong, b) {
+    font-weight: 500;
+    color: var(--clr-black);
+  }
+
+  :where(ul:not([class]), ol:not([class])) {
+    display: grid;
+    gap: rem(8);
+  }
+
+  :where(ul:not([class]) > li) {
+    position: relative;
+    padding-left: rem(23);
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: calc(0.775em - #{rem(3.5)}); // centred on the first line
+      width: rem(7);
+      height: rem(7);
+      border-radius: 50%;
+      background: var(--clr-main);
+    }
+  }
+
+  :where(ol:not([class])) {
+    counter-reset: rich-list;
+  }
+
+  :where(ol:not([class]) > li) {
+    position: relative;
+    padding-left: rem(32);
+    counter-increment: rich-list;
+
+    &::before {
+      content: counter(rich-list) ".";
+      position: absolute;
+      left: 0;
+      color: var(--clr-main);
+    }
+  }
+
+  :where(blockquote) {
+    display: grid;
+    grid-template-columns: rem(25) minmax(0, 1fr);
+    align-items: center;
+    gap: rem(32);
+    margin-inline: 0;
+    padding: rem(32);
+    border-radius: var(--rd-lg);
+    background: var(--bg-1);
+    font-family: var(--font-display);
+    font-size: max(18px, #{rem(23)});
+    line-height: 1.26;
+    color: var(--clr-black);
+
+    @include maxMedia(md) {
+      gap: 16px;
+      padding: 20px;
+      font-size: 17px;
+    }
+
+    &::before {
+      content: "";
+      width: rem(25);
+      height: rem(18);
+      background: var(--clr-main);
+      -webkit-mask: url("../img/icons/quote.svg") center / contain no-repeat;
+      mask: url("../img/icons/quote.svg") center / contain no-repeat;
+    }
+
+    > * {
+      margin: 0;
+    }
+  }
+
+  // ── editor images ──
+  // Classic editor / ACF WYSIWYG output: <img class="alignnone size-…"> (often
+  // inside a <p>), [caption] → figure.wp-caption, [gallery] → div.gallery
+  // (with add_theme_support('html5', ['gallery', 'caption'])). Gutenberg's
+  // .wp-block-gallery / figure.wp-block-image are covered too.
+  :where(img) {
+    max-width: 100%;
+    height: auto;
+  }
+
+  // editor pictures only (component images inside — sliders etc. — keep theirs)
+  :where(p > img, p > a > img, figure img, .wp-caption img, .gallery img) {
+    border-radius: var(--rd-lg);
+  }
+
+  :where(figure) {
+    margin: 0;
+  }
+
+  :where(figure img, .wp-caption img, .gallery img) {
+    display: block;
+    width: 100%;
+  }
+
+  :where(.wp-caption) {
+    max-width: 100%; // WP sets an inline width in px
+  }
+
+  :where(.aligncenter) {
+    display: block;
+    margin-inline: auto;
+  }
+
+  :where(figcaption, .wp-caption-text) {
+    margin-top: rem(10);
+    font-size: max(13px, #{rem(14)});
+    line-height: 1.55;
+    color: var(--clr-text);
+  }
+
+  // galleries: 2 columns by default, the editor's column count where set.
+  // Items = whatever is inside: bare <img>s (or <a><img>) as in the demo, or
+  // the shortcode's figure.gallery-item wrappers — each child is a cell
+  :where(.gallery, .wp-block-gallery) {
+    --gallery-cols: 2;
+    display: grid;
+    grid-template-columns: repeat(var(--gallery-cols), minmax(0, 1fr));
+    gap: rem(20);
+
+    @include maxMedia(md) {
+      --gallery-cols: 1;
+      gap: 12px;
+    }
+  }
+
+  :where(.gallery-columns-1, .wp-block-gallery.columns-1) {
+    --gallery-cols: 1;
+  }
+
+  @include minMedia(md) {
+    :where(.gallery-columns-3, .gallery-columns-4, .wp-block-gallery.columns-3, .wp-block-gallery.columns-4) {
+      --gallery-cols: 3;
+    }
+  }
+
+  @include minMedia(xl) {
+    :where(.gallery-columns-4, .wp-block-gallery.columns-4) {
+      --gallery-cols: 4;
+    }
+  }
+
+  // the shortcode's clearing <br>s and WP's default gallery <style>
+  // (#gallery-N .gallery-item { float; width: 50% } and a grey img border —
+  // integration: add_filter('use_default_gallery_style', '__return_false'))
+  .gallery br {
+    display: none;
+  }
+
+  .gallery .gallery-item {
+    float: none !important;
+    width: auto !important;
+    margin: 0 !important;
+  }
+
+  .gallery img {
+    border: 0 !important;
+  }
+
+  :where(table) {
+    width: 100%;
+    border: 0px solid var(--clr-line);
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  :where(th, td) {
+    padding: rem(12) rem(16);
+    border: 1px solid var(--clr-line);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  // Figma table 8026:19703: cells are 18/1.55 grey whatever the text size
+  // of the wrapper (article body 18, SEO block 16) — one look everywhere
+  :where(td) {
+    font-size: max(16px, #{rem(18)});
+    line-height: 1.55;
+
+    @include maxMedia(md) {
+      font-size: 15px;
+    }
+  }
+
+  :where(th) {
+    height: rem(60);
+    vertical-align: middle;
+    background: var(--bg-1);
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: max(18px, #{rem(23)});
+    line-height: 1.26;
+    color: var(--clr-black);
+  }
+
+  // phones: the table scrolls sideways instead of squeezing the columns
+  @include maxMedia(md) {
+    :where(table) {
+      display: block;
+      overflow-x: auto;
+      table-layout: auto;
+    }
+
+    :where(th, td) {
+      min-width: 180px;
+    }
+
+    :where(th) {
+      font-size: 16px;
+    }
+  }
+}

@@ -1,0 +1,132 @@
+@use "../mixins" as *;
+
+// ── Stepped cut shapes ─────────────────────────────────────────────
+// Figma: modal 7976:18095 · news 7967:9047 · event 7967:9142 · lab 7967:9025
+// Geometry lives in _mixins (cut-* mixins); here are the defaults + utilities.
+//
+// Usage: <div class="cut cut--bl"> … </div>   (bl / br / tr)
+// Tweak per block: --cut-x (step position), --cut-h (depth), --cut-w (diagonal)
+
+// Registered so --cut-x can be transitioned (hover: the step slides right)
+@property --cut-x {
+  syntax: "<length-percentage>";
+  inherits: true;
+  initial-value: 50%;
+}
+
+.cut {
+  --cut-x: 50%;
+  --cut-h: #{rem(31)};
+  --cut-w: #{rem(34)};
+  --cut-r: #{rem(10)};
+  --cut-f: #{rem(7)};
+  --cut-t: 0.14; // fillet end on the diagonal (share of its run; ≈ 0.7 × f at 45°)
+  // polygon() fallback keeps rounded outer corners from here
+  border-radius: var(--cut-r);
+  overflow: hidden;
+  transition: --cut-x 0.7s var(--ease-out);
+
+  @include maxMedia(md) {
+    --cut-h: #{rem(20)};
+    --cut-w: #{rem(22)};
+    --cut-f: #{rem(5)};
+  }
+
+  &--bl {
+    @include cut-bottom-left;
+  }
+
+  &--br {
+    @include cut-bottom-right;
+  }
+
+  &--tr {
+    @include cut-top-right;
+  }
+}
+
+// ── Step line ──────────────────────────────────────────────────────
+// Divider with a 45° step (FAQ, search results, section intros) —
+// Figma "Vector 156": 0.5 → step at --step-x → 16px lower to the right edge.
+// Built so the three strokes always meet, whatever the width:
+//   ::before  left horizontal + diagonal (diagonal pinned with `right 0`)
+//   ::after   right horizontal, starting at --step-x + --step-w
+// (Percentage mask/background positions can't be used here: X% aligns the
+// image's own X% point, so a 16px piece drifts by up to 16px.)
+// The diagonal is a tiny SVG mask — a gradient diagonal anti-aliases away.
+$step-diagonal: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 17' preserveAspectRatio='none'%3E%3Cpath d='M0 .5 16 16.5' stroke='%23000' stroke-width='1.1'/%3E%3C/svg%3E";
+
+.step-line {
+  --step-x: 50%;
+  --step-w: #{rem(16)};
+  position: relative;
+  display: block;
+  width: 100%;
+  height: rem(17);
+  color: var(--clr-line);
+  pointer-events: none;
+
+  @include maxMedia(xl) {
+    --step-w: 16px;
+    height: 17px;
+  }
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    background: currentColor;
+  }
+
+  &::before {
+    top: 0;
+    left: 0;
+    width: calc(var(--step-x) + var(--step-w));
+    height: 100%;
+    $mask:
+      linear-gradient(#000 0 0) left top / calc(100% - var(--step-w)) 1px no-repeat,
+      url($step-diagonal) right top / var(--step-w) 100% no-repeat;
+    -webkit-mask: $mask;
+    mask: $mask;
+  }
+
+  &::after {
+    right: 0;
+    bottom: 0;
+    left: calc(var(--step-x) + var(--step-w));
+    height: 1px;
+  }
+}
+
+// vertical variant (Figma 8271:41460, service "Reveals" columns): runs down,
+// steps 7 to the right at --step-x of its height. Stretches to its box.
+.step-line--v {
+  --step-x: 43%;
+  --step-w: #{rem(7)};
+  width: rem(7);
+  height: auto;
+
+  @include maxMedia(xl) {
+    --step-w: 7px;
+    width: 7px;
+    height: auto;
+  }
+
+  &::before {
+    width: 100%;
+    height: calc(var(--step-x) + var(--step-w));
+    $mask:
+      linear-gradient(#000 0 0) left top / 1px calc(100% - var(--step-w)) no-repeat,
+      url($step-diagonal) left bottom / 100% var(--step-w) no-repeat;
+    -webkit-mask: $mask;
+    mask: $mask;
+  }
+
+  &::after {
+    top: calc(var(--step-x) + var(--step-w));
+    left: auto;
+    right: 0;
+    width: 1px;
+    height: auto;
+  }
+}

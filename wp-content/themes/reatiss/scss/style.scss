@@ -1,0 +1,58 @@
+// Components and sections — one partial per block: style/_{slug}.scss
+@use "style/cut";
+@use "style/titles";
+@use "style/draw";
+@use "style/forms";
+@use "style/form-box";
+@use "style/cards";
+@use "style/grid-slider";
+@use "style/faq";
+@use "style/modals";
+@use "style/run-line";
+@use "style/video-modal";
+@use "style/left-right";
+@use "style/rich-text";
+@use "style/more-text";
+@use "style/social";
+@use "style/cards-grid";
+@use "style/seo-block";
+@use "style/breadcrumbs";
+@use "style/article";
+@use "style/related";
+@use "style/chips";
+@use "style/pagination";
+@use "style/list-page";
+@use "style/author";
+@use "style/result-list";
+@use "style/search";
+@use "style/contacts";
+@use "style/text-page";
+@use "style/expertise-page";
+@use "style/shelf";
+@use "style/services";
+@use "style/page-banner";
+@use "style/statement";
+@use "style/service";
+@use "style/gallery-strip";
+@use "style/lightgallery";
+@use "style/model-3d";
+@use "style/expertise-detail";
+@use "style/cta-box";
+@use "style/dot-field";
+@use "style/about";
+@use "style/capabilities";
+@use "style/error-page";
+
+// Home sections
+@use "style/home/hero";
+@use "style/home/expertise";
+@use "style/home/solutions";
+@use "style/home/labs";
+@use "style/home/stats";
+@use "style/home/news";
+@use "style/home/video";
+@use "style/home/events";
+@use "style/home/faq" as home-faq;
+
+@use "style/elements";
+@use "style/wp";

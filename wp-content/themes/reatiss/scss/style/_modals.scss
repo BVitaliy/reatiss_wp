@@ -1,0 +1,485 @@
+@use "../mixins" as *;
+
+// ── Modals ─────────────────────────────────────────────────────────
+// Figma: consultation 7967:15775 · service 7976:18111 · corner toast 7976:20379
+// ONE .modal wrapper (overlay + every panel). Open with
+// [data-modal-open="name"] → .modal__panel[data-modal="name"] (app-modals.js).
+// Panels use the stepped cut (bottom edge, right part raised by 32px).
+
+// Scroll lock (see app-modals.js): the page bar is dropped while locked and
+// its width is given back as padding so nothing shifts.
+html.is-scroll-locked,
+body.is-scroll-locked {
+  overflow: clip;
+}
+
+body.is-scroll-pinned {
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+.modal {
+  position: fixed;
+  z-index: 200;
+  inset: 0;
+  display: flex;
+  padding: rem(24) var(--gutter);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility 0s linear 0.45s;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &.is-open {
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+
+  &__overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.45s ease;
+    cursor: pointer;
+  }
+
+  &.is-open &__overlay {
+    opacity: 1;
+  }
+
+  &__panel {
+    --cut-x: calc(100% - #{rem(284)}); // raised part: last 246px
+    --cut-h: #{rem(32)};
+    --cut-w: #{rem(38)};
+    position: relative;
+    display: none;
+    width: min(100%, #{rem(925)});
+    margin: auto; // centred; collapses to 0 when taller than the viewport
+    padding: rem(75) rem(75) rem(86); // 86 = 589 − 75 − 428 (mockup)
+    background: var(--clr-white);
+    opacity: 0;
+    transform: translateY(#{rem(30)});
+    transition: opacity 0.45s ease, transform 0.6s var(--ease-out);
+
+    @include maxMedia(xl) {
+      padding: 64px 40px calc(48px + var(--cut-h));
+    }
+
+    @include maxMedia(md) {
+      --cut-x: calc(100% - 140px);
+      padding: 64px 20px calc(32px + var(--cut-h));
+    }
+
+    &.is-active {
+      display: block;
+    }
+
+    // team member — Figma 8271:40574: 1436 wide, plain rounded box (no cut),
+    // photo 648 | 50 | text 590, inset 75 (photo) / 115 (text top)
+    &--team {
+      width: min(100%, #{rem(1436)});
+      padding: rem(75) rem(75) rem(76) rem(73);
+      border-radius: var(--rd-lg);
+
+      @include maxMedia(xl) {
+        padding: 56px 32px 40px;
+      }
+
+      @include maxMedia(md) {
+        padding: 56px 16px 28px;
+      }
+    }
+
+    // reports modal — Figma 8278:46875: 925×542, content 392 → 75 top and
+    // bottom; right part of the bottom edge raised 32 (diagonal 648 → 679)
+    &--reports {
+      --cut-x: calc(100% - #{rem(277)});
+      --cut-w: #{rem(31)};
+      padding-bottom: rem(75);
+
+      @include maxMedia(xl) {
+        padding-bottom: calc(48px + var(--cut-h));
+      }
+
+      @include maxMedia(md) {
+        padding-bottom: calc(32px + var(--cut-h));
+      }
+    }
+
+    // service modal — Figma 7976:18485: 1065×642, cut 49 deep, diagonal
+    // 697 → 745 (367 from the right), content 913 inset 73 / 76.5 / 74
+    &--wide {
+      --cut-x: calc(100% - #{rem(367.5)});
+      --cut-h: #{rem(49)};
+      --cut-w: #{rem(47.5)};
+      width: min(100%, #{rem(1065)});
+      padding: rem(73) rem(76.5) rem(74);
+
+      @include maxMedia(xl) {
+        padding: 64px 40px calc(40px + var(--cut-h));
+      }
+
+      @include maxMedia(md) {
+        --cut-x: calc(100% - 160px);
+        padding: 64px 20px calc(28px + var(--cut-h));
+      }
+
+      .modal__close {
+        top: rem(26);
+        right: rem(26);
+
+        @include maxMedia(xl) {
+          top: 12px;
+          right: 12px;
+        }
+      }
+    }
+  }
+
+  &.is-open &__panel {
+    opacity: 1;
+    transform: none;
+  }
+
+  // a panel that replaces another in the open popup (form → thanks)
+  &__panel.is-swapped {
+    animation: modal-swap 0.6s var(--ease-out);
+  }
+
+  // thanks — no mockup: the consultation box, centred title / text / button
+  &__panel--thanks {
+    width: min(100%, #{rem(720)});
+    text-align: center;
+  }
+
+  &__thanks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-xs);
+
+    .modal__title {
+      margin: 0;
+    }
+
+    .btn {
+      margin-top: rem(20);
+    }
+  }
+
+  &__thanks-text {
+    max-width: rem(480);
+  }
+
+  &__close {
+    position: absolute;
+    top: rem(20);
+    right: rem(20);
+    z-index: 2;
+
+    @include maxMedia(xl) {
+      top: 12px;
+      right: 12px;
+    }
+  }
+
+  // ── consultation ──
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: rem(50);
+
+    @include maxMedia(md) {
+      gap: 28px;
+    }
+
+    .form-grid {
+      width: 100%;
+    }
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  // ── service ──
+  // photo 452×495 | 60 | text 401 (title + text 40 from the top, button at
+  // the bottom — space-between over the photo height)
+  &__service {
+    display: grid;
+    grid-template-columns: minmax(0, 452fr) minmax(0, 401fr);
+    gap: rem(60);
+
+    @include maxMedia(md) {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+
+  &__service-media {
+    aspect-ratio: 452 / 495;
+    border-radius: var(--rd-lg);
+    overflow: hidden;
+
+    @include maxMedia(md) {
+      aspect-ratio: 16 / 10;
+    }
+
+    picture {
+      height: 100%;
+    }
+
+    img {
+      @include cover;
+    }
+  }
+
+  &__service-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: rem(40);
+    padding-block: rem(40);
+
+    @include maxMedia(md) {
+      padding-block: 0;
+    }
+  }
+
+  &__service-text {
+    display: flex;
+    flex-direction: column;
+    gap: rem(24);
+
+    @include maxMedia(md) {
+      gap: 14px;
+    }
+
+    .text-lg {
+      color: var(--clr-text);
+    }
+  }
+}
+
+// ── Corner toast (promo) ── no overlay, page stays usable
+.toast {
+  position: fixed;
+  z-index: 150;
+  right: rem(30);
+  bottom: rem(30);
+  width: rem(411); // Figma 7976:24911
+  padding: rem(12) rem(12) rem(32);
+  border: 1px solid var(--clr-line);
+  border-radius: var(--rd-lg);
+  background: var(--clr-white);
+  box-shadow: 0 rem(24) rem(48) rgba(2, 16, 22, 0.08);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(#{rem(24)});
+  transition: opacity 0.45s ease, visibility 0.45s, transform 0.6s var(--ease-out);
+
+  @include maxMedia(xl) {
+    width: 320px;
+    right: 16px;
+    bottom: 16px;
+  }
+
+  @include maxMedia(sm) {
+    left: 16px;
+    width: auto;
+    padding-bottom: 20px;
+  }
+
+  &.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  &__close {
+    position: absolute;
+    top: rem(8);
+    right: rem(8);
+    z-index: 2;
+  }
+
+  &__media {
+    position: relative;
+    display: block;
+    aspect-ratio: 385 / 282;
+    border-radius: var(--rd-lg);
+    overflow: hidden;
+
+    @include maxMedia(sm) {
+      aspect-ratio: 16 / 9;
+    }
+
+    picture {
+      height: 100%;
+    }
+
+    img {
+      @include cover;
+      transition: transform 0.6s var(--ease-out);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: rem(20);
+    margin-top: rem(24);
+    text-align: center;
+
+    @include maxMedia(sm) {
+      gap: 12px;
+      margin-top: 16px;
+    }
+  }
+
+  // title + text in a 316 column; "Learn more" 24 below
+  &__body > :not(.link-arrow) {
+    max-width: rem(316);
+  }
+
+  // each link has its own hover: photo zoom, title colour, "Learn more" arrow
+  &__title {
+    color: var(--clr-black);
+    transition: color var(--transition-1);
+
+    @include hover {
+      color: var(--clr-main);
+    }
+  }
+
+  // photo zooms only under the cursor
+  &__media {
+    @include hover {
+      img {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  &__body > .h5 {
+    max-width: rem(306); // Figma title box — breaks as "…With / Product Analysis"
+  }
+
+  &__text {
+    color: var(--clr-text);
+  }
+
+  .link-arrow {
+    margin-top: rem(4);
+  }
+}
+
+// ── team member popup content (copied in from the card's <template>) ──
+.team-modal {
+  display: grid;
+  grid-template-columns: minmax(0, 648fr) minmax(0, 590fr);
+  column-gap: rem(50);
+  align-items: start;
+
+  @include maxMedia(lg) {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 28px;
+  }
+
+  // photo with the stepped top (as the lab cards)
+  &__photo {
+    --cut-x: 54.3%;
+    --cut-h: #{rem(30)};
+    --cut-w: #{rem(34)};
+    aspect-ratio: 648 / 666;
+    background: var(--bg-1);
+
+    @include maxMedia(lg) {
+      aspect-ratio: 4 / 3;
+      max-width: 560px;
+    }
+
+    @include maxMedia(md) {
+      aspect-ratio: 1;
+    }
+
+    picture {
+      height: 100%;
+    }
+
+    img {
+      @include cover;
+      object-position: 50% 20%;
+    }
+  }
+
+  // name · 12 · role · 32 · socials · 60 · bio (text 40 lower than the photo)
+  &__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: rem(40);
+
+    @include maxMedia(lg) {
+      padding-top: 0;
+    }
+  }
+
+  &__head {
+    display: flex;
+    flex-direction: column;
+    gap: rem(12);
+  }
+
+  &__role {
+    color: var(--clr-text);
+  }
+
+  &__socials {
+    margin-top: rem(32);
+
+    @include maxMedia(xl) {
+      margin-top: 20px;
+    }
+  }
+
+  &__text {
+    margin-top: rem(60);
+
+    @include maxMedia(xl) {
+      margin-top: 28px;
+    }
+
+    &.rich-text > * + * {
+      margin-top: rem(16);
+    }
+  }
+}
+
+@keyframes modal-swap {
+  from {
+    opacity: 0;
+    transform: translateY(#{rem(30)});
+  }
+}

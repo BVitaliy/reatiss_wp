@@ -1,0 +1,51 @@
+@use "../mixins" as *;
+
+// ── Round social buttons ── Figma 8099:23174 (article share), 8054:19262 (author)
+// 50px circle, 22px icon, black; hover main. White by default (on light
+// boxes), --light = #F8F9FA circle on white.
+.social-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(10);
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: rem(50);
+  height: rem(50);
+  border-radius: 50%;
+  background: var(--clr-white);
+  color: var(--clr-black);
+  transition: background var(--transition-1), color var(--transition-1);
+
+  @include maxMedia(xl) {
+    width: 44px;
+    height: 44px;
+  }
+
+  svg {
+    width: rem(22);
+    height: rem(22);
+
+    @include maxMedia(xl) {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &--light {
+    background: var(--bg-1);
+  }
+
+  &.is-copied {
+    background: var(--clr-main);
+    color: var(--clr-white);
+  }
+
+  @include hover {
+    background: var(--clr-main);
+    color: var(--clr-white);
+  }
+}

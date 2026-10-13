@@ -1,0 +1,101 @@
+@use "../mixins" as *;
+
+// ── "Show more" + pagination ── Figma 8031:20591
+// Primary "Show more" button, 24 below it: ← 1 2 … 3 4 … 18 19 →
+// (50×50 cells, Inter 18 grey; current = main on a light circle; gap 24 to
+// the arrows). Markup is plain links — WP paginate_links() maps 1:1.
+.pager {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: rem(24);
+
+  @include maxMedia(md) {
+    gap: 20px;
+  }
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: rem(24);
+
+  @include maxMedia(md) {
+    gap: 4px;
+  }
+
+  &__list {
+    display: flex;
+    align-items: center;
+  }
+
+  &__item,
+  &__arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: rem(50);
+    height: rem(50);
+    border-radius: 50%;
+    font-size: max(16px, #{rem(18)});
+    color: var(--clr-text);
+    transition: color var(--transition-1), background var(--transition-1);
+
+    @include maxMedia(xl) {
+      width: 44px;
+      height: 44px;
+    }
+
+    @include maxMedia(md) {
+      width: 36px;
+      height: 36px;
+      font-size: 16px;
+    }
+  }
+
+  a.pagination__item {
+    @include hover {
+      color: var(--clr-main);
+    }
+  }
+
+  &__item.is-active {
+    background: var(--bg-1);
+    color: var(--clr-main);
+  }
+
+  &__dots {
+    pointer-events: none;
+  }
+
+  &__arrow {
+    svg {
+      width: rem(18);
+      height: rem(18);
+
+      @include maxMedia(xl) {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    // Figma: prev arrow main, next grey
+    &--prev {
+      color: var(--clr-main);
+
+      svg {
+        transform: rotate(180deg);
+      }
+    }
+
+    @include hover {
+      background: var(--bg-1);
+      color: var(--clr-main);
+    }
+
+    &.is-disabled {
+      opacity: 0.35;
+      pointer-events: none;
+    }
+  }
+}

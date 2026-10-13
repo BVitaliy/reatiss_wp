@@ -1,0 +1,378 @@
+@use "../mixins" as *;
+
+// ── Buttons & links ────────────────────────────────────────────────
+// Figma: hero "View All" 7982:27449 · modal "Send" 7972:18026 ·
+// "More about service" 7976:18503 · "All news" 7967:11089 · "Learn more" 7967:8920
+
+// Arrow icon: ↘ at rest, turns → on hover (the two states in the mockup)
+%arrow-turn {
+  svg {
+    transform: rotate(45deg);
+    transition: transform 0.4s var(--ease-out);
+  }
+}
+
+// Button with a square icon tile (Figma default 7556:5442 · hover 7967:8867,
+// 7967:9113). Hover works like a toggle: the tile slides to the other end
+// and the label slides the other way — colours stay, the arrow turns ↘ → →.
+// The width never changes (the side paddings just trade places).
+// .btn — white / blue text (on photos, dark sections)
+// .btn--primary — blue / white text
+// .btn--tile-right — tile after the label at rest (About, "Contact us")
+.btn {
+  --btn-bg: var(--clr-white);
+  --btn-fg: var(--clr-main);
+  --btn-tile: var(--clr-main);
+  --btn-tile-fg: var(--clr-white);
+  --btn-tile-size: calc(#{rem(50)} - #{rem(4)});
+  --btn-pad-tile: #{rem(68)}; // tile side: 2 + 46 + 20
+  --btn-pad: #{rem(20)};
+  --btn-ease: 0.55s cubic-bezier(0.65, 0, 0.35, 1);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: rem(50);
+  padding: 0 var(--btn-pad) 0 var(--btn-pad-tile);
+  border-radius: var(--rd-md);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--font-main);
+  font-size: max(13px, #{rem(14)});
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: padding var(--btn-ease);
+
+  @include maxMedia(xl) {
+    --btn-tile-size: 44px;
+    --btn-pad-tile: 64px;
+    --btn-pad: 20px;
+    height: 48px;
+  }
+
+  &__tile {
+    position: absolute;
+    top: 50%;
+    left: 2px;
+    width: var(--btn-tile-size);
+    height: var(--btn-tile-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--rd-sm);
+    background: var(--btn-tile);
+    color: var(--btn-tile-fg);
+    translate: 0 -50%;
+    transition: left var(--btn-ease);
+
+    svg {
+      width: rem(23);
+      height: rem(23);
+      transform: rotate(45deg);
+      transition: transform 0.45s var(--ease-out);
+
+      @include maxMedia(xl) {
+        width: 23px;
+        height: 23px;
+      }
+    }
+  }
+
+  // tile to the far end, label to the start
+  @include hover {
+    padding: 0 var(--btn-pad-tile) 0 var(--btn-pad);
+
+    .btn__tile {
+      left: calc(100% - var(--btn-tile-size) - 2px);
+
+      svg {
+        transform: rotate(0);
+      }
+    }
+  }
+
+  &--tile-right {
+    padding: 0 var(--btn-pad-tile) 0 var(--btn-pad);
+
+    .btn__tile {
+      left: calc(100% - var(--btn-tile-size) - 2px);
+    }
+
+    @include hover {
+      padding: 0 var(--btn-pad) 0 var(--btn-pad-tile);
+
+      .btn__tile {
+        left: 2px;
+      }
+    }
+  }
+
+  &--primary {
+    --btn-bg: var(--clr-main);
+    --btn-fg: var(--clr-white);
+    --btn-tile: var(--clr-white);
+    --btn-tile-fg: var(--clr-main);
+  }
+
+  // Alternative hover (the first version, kept on elements.php): the tile
+  // stays put and grows under the label, colours swap.
+  &--fill {
+    isolation: isolate;
+    transition: color 0.4s ease;
+
+    .btn__tile {
+      z-index: -1;
+      justify-content: flex-start;
+      padding-left: calc((var(--btn-tile-size) - #{rem(23)}) / 2);
+      transition: width 0.5s var(--ease-out);
+    }
+
+    @include hover {
+      padding: 0 var(--btn-pad) 0 var(--btn-pad-tile);
+      color: var(--btn-tile-fg);
+
+      .btn__tile {
+        left: 2px;
+        width: calc(100% - 4px);
+      }
+    }
+  }
+}
+
+// Solid pill without tile (header CTA)
+.btn-solid {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: rem(46);
+  padding: 0 rem(20);
+  border-radius: var(--rd-md);
+  background: var(--clr-main);
+  color: var(--clr-white);
+  font-size: max(13px, #{rem(14)});
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background var(--transition-1), color var(--transition-1);
+
+  @include maxMedia(xl) {
+    height: 44px;
+  }
+
+  @include hover {
+    background: var(--clr-accent);
+  }
+}
+
+// Round icon button (search, close)
+.btn-round {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: rem(46);
+  height: rem(46);
+  border-radius: 50%;
+  background: var(--bg-1);
+  color: var(--clr-main);
+  transition: background var(--transition-1), color var(--transition-1);
+
+  @include maxMedia(xl) {
+    width: 44px;
+    height: 44px;
+  }
+
+  svg {
+    width: rem(20);
+    height: rem(20);
+
+    @include maxMedia(xl) {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  @include hover {
+    background: var(--clr-main);
+    color: var(--clr-white);
+  }
+
+  // close (×) — grey icon on light circle
+  &--close {
+    color: var(--clr-text);
+
+    svg {
+      width: rem(24);
+      height: rem(24);
+
+      @include maxMedia(xl) {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+}
+
+// "Learn more ↘" / "Read more ↘"
+.link-arrow {
+  @extend %arrow-turn;
+  display: inline-flex;
+  align-items: center;
+  gap: rem(5);
+  color: var(--clr-main);
+  font-size: max(13px, #{rem(14)});
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+
+  svg {
+    width: rem(17);
+    height: rem(17);
+    flex: none;
+
+    @include maxMedia(xl) {
+      width: 17px;
+      height: 17px;
+    }
+  }
+
+  @include hover {
+    svg {
+      transform: rotate(0);
+    }
+  }
+}
+
+// Card hover drives the arrow too
+.is-hover-arrow {
+  @include hover {
+    .link-arrow svg {
+      transform: rotate(0);
+    }
+  }
+}
+
+// "All news ↘" — Figma 7892:4586 (rest) · 7967:11089 (hover).
+// Label + arrow over a 1px grey rule, a 5px accent bar on its right end
+// (73 of 302). Hover anywhere on the link: the accent bar slides off to the
+// right while a main-blue bar runs out from the left and fills the whole
+// rule; the arrow turns ↘ → →. Transitions, so leaving plays it backwards.
+// Markup: <a class="link-line">Label <span class="link-line__icon">svg</span></a>
+.link-line {
+  --line-ease: 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(20);
+  width: min(100%, #{rem(302)});
+  padding-bottom: rem(12);
+  border-bottom: 1px solid var(--clr-line);
+  color: var(--clr-main);
+  font-size: max(13px, #{rem(14)});
+  font-weight: 500;
+
+  @include maxMedia(xl) {
+    width: min(100%, 302px);
+  }
+
+  // one arrow that turns: ↘ at rest, → on hover
+  &__icon {
+    display: flex;
+    flex: none;
+    width: rem(23);
+    height: rem(23);
+
+    @include maxMedia(xl) {
+      width: 23px;
+      height: 23px;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(45deg);
+      transition: transform 0.45s var(--ease-out);
+    }
+
+    // older markup carried the arrow twice
+    svg + svg {
+      display: none;
+    }
+  }
+
+  // the two bars share the 5px track under the rule
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: rem(-3);
+    height: rem(5);
+    border-radius: rem(18);
+    box-shadow: 0 0 rem(5.7) rem(1) rgba(235, 235, 235, 0.15);
+    transition: clip-path var(--line-ease);
+
+    @include maxMedia(xl) {
+      bottom: -3px;
+      height: 5px;
+    }
+  }
+
+  // main bar: hidden to the left at rest
+  &::before {
+    background: var(--clr-main);
+    clip-path: inset(0 100% 0 0 round #{rem(18)});
+  }
+
+  // accent bar: the last 73 at rest
+  &::after {
+    background: var(--clr-accent);
+    clip-path: inset(0 0 0 calc(100% - #{rem(73)}) round #{rem(18)});
+
+    @include maxMedia(xl) {
+      clip-path: inset(0 0 0 calc(100% - 73px) round 18px);
+    }
+  }
+
+  @include hover {
+    &::before {
+      clip-path: inset(0 0 0 0 round #{rem(18)});
+    }
+
+    &::after {
+      clip-path: inset(0 0 0 100% round #{rem(18)});
+      transition-duration: 0.4s;
+    }
+
+    .link-line__icon svg {
+      transform: rotate(0);
+    }
+  }
+}
+
+// Inline big link inside a sentence ("Get to know and View all → our expertise")
+// Figma 7967:11118: Inter Medium at the sentence size, 2px underline.
+.link-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(5);
+  padding-bottom: rem(4);
+  border-bottom: 2px solid currentColor;
+  color: var(--clr-main);
+  font-family: var(--font-main);
+  font-weight: 500;
+
+  svg {
+    width: 0.9em;
+    height: 0.9em;
+    transition: transform 0.4s var(--ease-out);
+  }
+
+  @include hover {
+    svg {
+      transform: translateX(#{rem(6)});
+    }
+  }
+}

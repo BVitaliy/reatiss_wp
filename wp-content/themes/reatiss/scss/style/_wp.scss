@@ -1,0 +1,48 @@
+@use "../mixins" as *;
+
+// WordPress-only additions (admin bar offset, CF7 states, editor output…).
+// The markup partials stay as delivered — put WP fixes here.
+
+// ── Contact Form 7 ─────────────────────────────────────────────────
+// CF7 wraps every control in span.wpcf7-form-control-wrap, so the markup's
+// `.field__input.is-error + .field__error` sibling rule can't reach the error;
+// app-cf7.js marks the label (.field.is-invalid) instead.
+.wpcf7-form-control-wrap {
+  display: block;
+}
+
+.field.is-invalid .field__error {
+  display: block;
+}
+
+// CF7's own tooltip and spinner — the design shows .field__error and a busy button
+.wpcf7-not-valid-tip,
+.wpcf7-spinner,
+.rts-form .hidden-fields-container {
+  display: none !important;
+}
+
+.rts-form {
+  .btn.is-loading {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .wpcf7-response-output {
+    width: 100%;
+    margin: 0;
+    font-size: 14px;
+    text-align: center;
+    color: var(--clr-error);
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  // sent / validation messages are shown by the design (thanks popup, field errors)
+  &.sent .wpcf7-response-output,
+  &.invalid .wpcf7-response-output {
+    display: none;
+  }
+}

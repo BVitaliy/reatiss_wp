@@ -1,0 +1,66 @@
+@use "../mixins" as *;
+
+.container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+// ── Spacers ────────────────────────────────────────────────────────
+// Vertical rhythm lives in the markup: <div class="spacer-xl"></div>
+// between sections. Heights come from the --sp-* scale.
+.spacer-xl {
+  height: var(--sp-xl);
+}
+
+.spacer-lg {
+  height: var(--sp-lg);
+}
+
+.spacer-md {
+  height: var(--sp-md);
+}
+
+.spacer-sm {
+  height: var(--sp-sm);
+}
+
+.spacer-xs {
+  height: var(--sp-xs);
+}
+
+// Dark full-bleed section (solutions, stats, footer)
+.section-dark {
+  background: var(--bg-dark);
+  color: var(--clr-white);
+
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5 {
+    color: var(--clr-white);
+  }
+}
+
+// Centered section head: title (+ optional link) above content
+.section-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-sm);
+  margin-bottom: var(--sp-md);
+  text-align: center;
+
+  // Figma breaks every section title into two balanced lines; widths vary
+  // (485–614) — override per title with style="--title-w: …" when needed
+  &__title {
+    max-width: var(--title-w, 11em);
+    text-wrap: var(--title-wrap, balance); // --title-wrap: wrap where Figma leaves a short last line
+  }
+
+  &--left {
+    align-items: flex-start;
+    text-align: left;
+  }
+}

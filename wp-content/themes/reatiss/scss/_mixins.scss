@@ -1,0 +1,139 @@
+@use "sass:math";
+@use "sass:map";
+
+// px → rem (design authored at 1920 / 16px root)
+@function rem($px) {
+  @return math.div($px, 16) * 1rem;
+}
+
+$breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1441px,
+  xxxl: 1681px,
+);
+
+// min-width (mobile-first)
+@mixin minMedia($bp) {
+  @media (min-width: map.get($breakpoints, $bp)) {
+    @content;
+  }
+}
+
+// max-width (desktop-first)
+@mixin maxMedia($bp) {
+  @media (max-width: (map.get($breakpoints, $bp) - 0.02px)) {
+    @content;
+  }
+}
+
+// Hover only from xl on real pointers — no sticky hover on phones/tablets.
+@mixin hover {
+  @media (min-width: map.get($breakpoints, xl)) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+// ── Stepped cut ("mask") shapes ────────────────────────────────────
+// The Reatiss shape: a rounded rectangle whose top or bottom edge steps by
+// --cut-h through a ~45° diagonal (--cut-w wide) with small fillets (--cut-f).
+// All values are CSS custom properties, so one shape stretches to any size
+// and --cut-x (registered in style/_cut.scss) can be transitioned on hover.
+//   --cut-x  step position from the left edge (where the diagonal starts)
+//   --cut-h  step depth · --cut-w diagonal width · --cut-r outer radius
+// shape() gives rounded corners + fillets (Chrome 135+, Safari 18.4+);
+// other browsers get the same outline as polygon() + border-radius.
+$cut-x: var(--cut-x);
+$cut-h: var(--cut-h);
+$cut-w: var(--cut-w);
+$cut-r: var(--cut-r);
+$cut-f: var(--cut-f);
+// Fillet ends on the diagonal: a fraction (--cut-t) of its width / height,
+// so they sit exactly on the diagonal whatever its angle (a fixed 45° offset
+// left kinks when --cut-w ≠ --cut-h).
+$cut-kx: calc(var(--cut-w) * var(--cut-t));
+$cut-ky: calc(var(--cut-h) * var(--cut-t));
+
+@mixin shape-supported {
+  @supports (clip-path: shape(from 0 0, line to 1px 1px)) {
+    @content;
+  }
+}
+
+// Bottom edge, LEFT part raised (news / event photos, lab info box)
+@mixin cut-bottom-left {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, calc(#{$cut-x} + #{$cut-w}) 100%, #{$cut-x} calc(100% - #{$cut-h}), 0 calc(100% - #{$cut-h}));
+
+  @include shape-supported {
+    clip-path: shape(from #{$cut-r} 0,
+      hline to calc(100% - #{$cut-r}),
+      arc to 100% #{$cut-r} of #{$cut-r} cw,
+      vline to calc(100% - #{$cut-r}),
+      arc to calc(100% - #{$cut-r}) 100% of #{$cut-r} cw,
+      hline to calc(#{$cut-x} + #{$cut-w} + #{$cut-f}),
+      curve to calc(#{$cut-x} + #{$cut-w} - #{$cut-kx}) calc(100% - #{$cut-ky}) with calc(#{$cut-x} + #{$cut-w}) 100%,
+      line to calc(#{$cut-x} + #{$cut-kx}) calc(100% - #{$cut-h} + #{$cut-ky}),
+      curve to calc(#{$cut-x} - #{$cut-f}) calc(100% - #{$cut-h}) with #{$cut-x} calc(100% - #{$cut-h}),
+      hline to #{$cut-r},
+      arc to 0 calc(100% - #{$cut-h} - #{$cut-r}) of #{$cut-r} cw,
+      vline to #{$cut-r},
+      arc to #{$cut-r} 0 of #{$cut-r} cw,
+      close);
+  }
+}
+
+// Bottom edge, RIGHT part raised (modals)
+@mixin cut-bottom-right {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - #{$cut-h}), calc(#{$cut-x} + #{$cut-w}) calc(100% - #{$cut-h}), #{$cut-x} 100%, 0 100%);
+
+  @include shape-supported {
+    clip-path: shape(from #{$cut-r} 0,
+      hline to calc(100% - #{$cut-r}),
+      arc to 100% #{$cut-r} of #{$cut-r} cw,
+      vline to calc(100% - #{$cut-h} - #{$cut-r}),
+      arc to calc(100% - #{$cut-r}) calc(100% - #{$cut-h}) of #{$cut-r} cw,
+      hline to calc(#{$cut-x} + #{$cut-w} + #{$cut-f}),
+      curve to calc(#{$cut-x} + #{$cut-w} - #{$cut-kx}) calc(100% - #{$cut-h} + #{$cut-ky}) with calc(#{$cut-x} + #{$cut-w}) calc(100% - #{$cut-h}),
+      line to calc(#{$cut-x} + #{$cut-kx}) calc(100% - #{$cut-ky}),
+      curve to calc(#{$cut-x} - #{$cut-f}) 100% with #{$cut-x} 100%,
+      hline to #{$cut-r},
+      arc to 0 calc(100% - #{$cut-r}) of #{$cut-r} cw,
+      vline to #{$cut-r},
+      arc to #{$cut-r} 0 of #{$cut-r} cw,
+      close);
+  }
+}
+
+// Top edge, RIGHT part lowered (lab photos)
+@mixin cut-top-right {
+  clip-path: polygon(0 0, #{$cut-x} 0, calc(#{$cut-x} + #{$cut-w}) #{$cut-h}, 100% #{$cut-h}, 100% 100%, 0 100%);
+
+  @include shape-supported {
+    clip-path: shape(from #{$cut-r} 0,
+      hline to calc(#{$cut-x} - #{$cut-f}),
+      curve to calc(#{$cut-x} + #{$cut-kx}) #{$cut-ky} with #{$cut-x} 0,
+      line to calc(#{$cut-x} + #{$cut-w} - #{$cut-kx}) calc(#{$cut-h} - #{$cut-ky}),
+      curve to calc(#{$cut-x} + #{$cut-w} + #{$cut-f}) #{$cut-h} with calc(#{$cut-x} + #{$cut-w}) #{$cut-h},
+      hline to calc(100% - #{$cut-r}),
+      arc to 100% calc(#{$cut-h} + #{$cut-r}) of #{$cut-r} cw,
+      vline to calc(100% - #{$cut-r}),
+      arc to calc(100% - #{$cut-r}) 100% of #{$cut-r} cw,
+      hline to #{$cut-r},
+      arc to 0 calc(100% - #{$cut-r}) of #{$cut-r} cw,
+      vline to #{$cut-r},
+      arc to #{$cut-r} 0 of #{$cut-r} cw,
+      close);
+  }
+}
+
+// Absolute-fill media
+@mixin cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}

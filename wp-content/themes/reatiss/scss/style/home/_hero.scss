@@ -1,0 +1,120 @@
+@use "../../mixins" as *;
+
+// ── Home hero ── Figma 7967:8854
+// Full screen height; on short screens the min-height wins so the content
+// always fits below the header (content has padding-top = header height).
+// Photo + 30% black shade + hexagon outlines. Scroll motion: app-hero.js.
+.home-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100svh;
+  min-height: rem(720);
+  overflow: hidden;
+  background: var(--bg-dark);
+  color: var(--clr-white);
+
+  @include maxMedia(xl) {
+    min-height: 600px;
+  }
+
+  &__media {
+    position: absolute;
+    inset: 0;
+    will-change: transform;
+
+    picture {
+      height: 100%;
+    }
+
+    img {
+      @include cover;
+    }
+  }
+
+  // video variant: the loop lies over the picture and fades in once playing
+  &__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+
+    &.is-playing {
+      opacity: 1;
+    }
+  }
+
+  // Figma: rgba(0,0,0,.3); JS deepens it while the hero scrolls away
+  &__shade {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    opacity: 0.3;
+  }
+
+  &__grid {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: rem(1795);
+    max-width: none;
+    height: auto;
+    transform: translate(-50%, -50%);
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 1;
+    pointer-events: none;
+
+    path {
+      vector-effect: non-scaling-stroke;
+    }
+
+    @include maxMedia(md) {
+      width: 1100px;
+    }
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: calc(var(--header-h) + #{rem(40)});
+    padding-bottom: rem(60);
+    text-align: center;
+    will-change: transform, opacity;
+  }
+
+  &__title {
+    max-width: rem(988);
+    text-wrap: balance;
+  }
+
+  &__text {
+    max-width: rem(409);
+    margin-top: rem(30);
+    color: rgba(255, 255, 255, 0.75);
+
+    @include maxMedia(xl) {
+      max-width: 460px;
+      margin-top: 20px;
+    }
+  }
+
+  &__btn {
+    margin-top: rem(50);
+
+    @include maxMedia(xl) {
+      margin-top: 32px;
+    }
+  }
+}
+
+// No flash before the intro: app-hero.js adds .is-ready once the start state
+// is set (or straight away when motion is off / GSAP missing).
+html.js .home-hero:not(.is-ready) .home-hero__content > * {
+  opacity: 0;
+}

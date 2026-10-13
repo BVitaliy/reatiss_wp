@@ -1,0 +1,347 @@
+@use "../mixins" as *;
+
+// ── Capabilities scroll story ── Figma 8356:36580 (lab detail), motion after
+// cofactr.com "How Companies Improve Operations with Cofactr".
+// ≥1200: the stage (one row high) is sticky under the header while the track
+// scrolls by; rows lie on top of each other, app-lab.js marks the current one
+// .is-active (earlier ones .is-past): its photo wipes up over the previous
+// one, the panel parts come in one after another. All motion = CSS
+// transitions, so scrolling back plays it in reverse.
+// Below 1200: a swipe slider of rows (photo, panel); desktop with reduced
+// motion: a plain column.
+// Row (Figma 1920 × 789): photo 1160 | panel (106 gap, 624, 30 right),
+// panel padding 30 top (head raised — manager) / 60, number on a step line
+// with a main-blue bar, title (h4), the text after a gap that grows with the
+// screen height, icon list (48 white boxes), the row's own link (optional,
+// any label) at the bottom. The stage is pinned to the bottom of the screen.
+
+// rows as ordinary blocks (no stacking, everything shown)
+@mixin capabilities-unstacked {
+  .capabilities__track,
+  .capabilities__stage {
+    position: relative;
+    top: auto; // the sticky offset would shift a relative box
+    height: auto;
+    background: none;
+  }
+
+  .capability {
+    position: relative;
+    inset: auto;
+    pointer-events: auto;
+  }
+
+  .capability__media {
+    clip-path: none;
+
+    img {
+      scale: 1;
+    }
+  }
+
+  .capability__panel {
+    visibility: visible;
+    background: var(--bg-1);
+
+    > *,
+    .capability__item {
+      opacity: 1;
+      translate: none;
+    }
+  }
+}
+
+.capabilities {
+  &__title {
+    max-width: rem(677);
+    margin-bottom: var(--sp-md);
+
+    @include maxMedia(xl) {
+      max-width: 560px;
+    }
+  }
+
+  &__track {
+    position: relative;
+    // one row on screen + one scroll step (90svh) per further row
+    height: calc(var(--stage-h) + (var(--n, 3) - 1) * 90svh);
+    // the mockup height (789), at most what fits under the header (+20)
+    --stage-h: min(#{rem(789)}, calc(100svh - var(--header-h) - 20px));
+  }
+
+  // pinned to the bottom of the screen (manager): on tall screens the free
+  // space is above it, under the header — never an empty strip below
+  &__stage {
+    position: sticky;
+    top: calc(100svh - var(--stage-h));
+    height: var(--stage-h);
+    overflow: hidden;
+    background: var(--bg-1);
+  }
+
+  &__pagination {
+    display: none;
+  }
+
+  // below 1200: a swipe slider (Swiper, app-lab.js) — one row + the edge of
+  // the next; slides keep equal height (panel stretches)
+  @include maxMedia(xl) {
+    @include capabilities-unstacked;
+
+    .capabilities__stage {
+      overflow: visible; // the next slide peeks in; <main> clips the page
+      padding-inline: var(--gutter); // first slide on the content edge
+    }
+
+    .capability {
+      display: flex;
+      flex-direction: column;
+      height: auto;
+    }
+
+    .capability__panel {
+      flex: 1;
+    }
+
+    .capabilities__pagination {
+      display: flex;
+    }
+  }
+
+  // desktop with reduced motion: no pinned story, a column of rows
+  @media (prefers-reduced-motion: reduce) and (min-width: 1200px) {
+    @include capabilities-unstacked;
+
+    .capabilities__stage .swiper-wrapper {
+      flex-direction: column;
+      gap: var(--sp-2xs);
+    }
+  }
+}
+
+.capability {
+  position: absolute;
+  inset: 0;
+  z-index: calc(var(--i, 0) + 1);
+  display: grid;
+  grid-template-columns: minmax(0, 1160fr) minmax(0, 760fr);
+  // no own background: the rows lie on top of each other on the stage —
+  // and only the current one takes clicks (the ones above it are see-through
+  // but would still catch the pointer)
+  pointer-events: none;
+
+  &.is-active {
+    pointer-events: auto;
+  }
+
+  @include maxMedia(xl) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  // ── photo: wipes up over the previous row ──
+  &__media {
+    position: relative;
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1.1s cubic-bezier(0.7, 0, 0.2, 1);
+
+    @include maxMedia(xl) {
+      aspect-ratio: 1160 / 789;
+    }
+
+    picture {
+      position: absolute;
+      inset: 0;
+    }
+
+    img {
+      @include cover;
+      scale: 1.12;
+      transition: scale 1.6s var(--ease-out);
+    }
+  }
+
+  // the first row is there from the start
+  &:first-child &__media,
+  &.is-active &__media,
+  &.is-past &__media {
+    clip-path: inset(0 0 0 0);
+  }
+
+  &.is-active &__media img {
+    scale: 1;
+  }
+
+  // ── panel ──
+  // number + title at the top, the text under the title after a gap that
+  // grows with the screen height, the link (optional, per row) at the bottom
+  &__panel {
+    display: flex;
+    flex-direction: column;
+    gap: rem(40);
+    min-width: 0;
+    padding: rem(30) rem(30) rem(60) rem(106);
+    visibility: hidden;
+    transition: visibility 0s 0.6s;
+
+    @include maxMedia(xl) {
+      padding: 32px 24px 36px;
+    }
+
+    @include maxMedia(md) {
+      padding: 28px 16px 32px;
+    }
+
+    // parts come in one after another (--d), go out upwards
+    > *,
+    .capability__item {
+      opacity: 0;
+      translate: 0 25px;
+      transition: opacity 0.45s ease, translate 0.8s var(--ease-out);
+    }
+  }
+
+  &.is-active &__panel {
+    visibility: visible;
+    transition-delay: 0s;
+
+    > *,
+    .capability__item {
+      opacity: 1;
+      translate: none;
+    }
+
+    > :nth-child(1) { transition-delay: 0.25s; }
+    > :nth-child(2) { transition-delay: 0.35s; }
+    > :nth-child(3) { transition-delay: 0.75s; }
+
+    .capability__item:nth-child(1) { transition-delay: 0.5s; }
+    .capability__item:nth-child(2) { transition-delay: 0.58s; }
+    .capability__item:nth-child(3) { transition-delay: 0.66s; }
+  }
+
+  &.is-past &__panel {
+    > *,
+    .capability__item {
+      translate: 0 -25px;
+    }
+  }
+
+  &__head {
+    display: flex;
+    flex-direction: column;
+    gap: rem(24);
+  }
+
+  // number over the right end of a step line, accent bar under it (Figma 67 high)
+  &__mark {
+    position: relative;
+    height: rem(67);
+
+    .step-line {
+      position: absolute;
+      top: rem(34);
+      left: 0;
+      --step-x: 50%;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: rem(12);
+      width: rem(73);
+      height: rem(5);
+      border-radius: rem(18);
+      background: var(--clr-main);
+      box-shadow: 0 0 rem(6) rem(1) rgba(235, 235, 235, 0.15);
+    }
+
+    @include maxMedia(xl) {
+      height: 56px;
+
+      .step-line {
+        top: 26px;
+      }
+
+      &::after {
+        bottom: 9px;
+        width: 56px;
+        height: 4px;
+      }
+    }
+  }
+
+  &__num {
+    position: absolute;
+    top: rem(13);
+    right: 0;
+    font-size: max(15px, #{rem(18)});
+    line-height: 1.55;
+    color: var(--clr-accent);
+
+    @include maxMedia(xl) {
+      top: 4px;
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: rem(20);
+    max-width: rem(528);
+    margin-top: clamp(0px, 9svh - #{rem(40)}, #{rem(100)}); // + the 40 panel gap
+
+    @include maxMedia(xl) {
+      max-width: 560px;
+      margin-top: 0;
+    }
+  }
+
+  &__text {
+    max-width: rem(446);
+    color: var(--clr-text);
+
+    @include maxMedia(xl) {
+      max-width: none;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: rem(8);
+    color: var(--clr-text);
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: rem(16);
+  }
+
+  &__icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: rem(48);
+    height: rem(48);
+    border-radius: var(--rd-lg);
+    background: var(--clr-white);
+
+    @include maxMedia(xl) {
+      width: 44px;
+      height: 44px;
+    }
+
+    img {
+      width: 75%;
+      height: 75%;
+    }
+  }
+
+  &__link {
+    align-self: flex-start;
+    margin-top: auto;
+  }
+}

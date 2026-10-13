@@ -1,0 +1,180 @@
+@use "../mixins" as *;
+
+// ── Typography utilities ───────────────────────────────────────────
+// Each class = font-family + size + line-height. Color is separate
+// (.clr-*) or comes from the parent block.
+// Desktop sizes from Figma @1920 (rem → scales with the root 1200–1920),
+// px floors keep text readable on laptops, mobile values from maxMedia.
+//
+// Figma text styles: H4 42 · H5 32 · h6 23 (Plus Jakarta Sans 400)
+
+%display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--clr-black);
+}
+
+// hero — 90 / 1.1
+.h1,
+h1 {
+  @extend %display;
+  font-size: max(52px, #{rem(90)});
+  line-height: 1.1;
+
+  @include maxMedia(xl) {
+    font-size: rem(56);
+  }
+
+  @include maxMedia(md) {
+    font-size: rem(38);
+  }
+}
+
+// page title without a hero (Contacts) — Figma "H2" 70 / 1.1
+.h1--sm {
+  font-size: max(46px, #{rem(70)});
+
+  @include maxMedia(xl) {
+    font-size: rem(50);
+  }
+
+  @include maxMedia(md) {
+    font-size: rem(34);
+  }
+}
+
+// section titles — 50
+.h2,
+h2 {
+  @extend %display;
+  font-size: max(34px, #{rem(50)});
+  line-height: 1.26;
+
+  @include maxMedia(xl) {
+    font-size: rem(38);
+  }
+
+  @include maxMedia(md) {
+    font-size: rem(30);
+    line-height: 1.2;
+  }
+}
+
+// big lead (stats), article title — 42
+.h3 {
+  @extend %display;
+  font-size: max(28px, #{rem(42)});
+  line-height: 1.26;
+
+  @include maxMedia(xl) {
+    font-size: rem(32);
+  }
+
+  @include maxMedia(md) {
+    font-size: rem(26);
+    line-height: 1.25;
+  }
+}
+
+// article h2, inline "Get to know and View all" — 32
+.h4 {
+  @extend %display;
+  font-size: max(24px, #{rem(32)});
+  line-height: 1.26;
+
+  @include maxMedia(xl) {
+    font-size: rem(28);
+  }
+
+  @include maxMedia(md) {
+    font-size: rem(22);
+  }
+}
+
+// card titles, FAQ questions, stat labels — 23
+.h5 {
+  @extend %display;
+  font-size: max(19px, #{rem(23)});
+  line-height: 1.26;
+
+  @include maxMedia(md) {
+    font-size: rem(19);
+  }
+}
+
+// stats numbers — Jakarta Bold 70
+.stat-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: max(46px, #{rem(70)});
+  line-height: 1.1;
+  color: var(--clr-accent);
+
+  @include maxMedia(xl) {
+    font-size: rem(56);
+  }
+
+  @include maxMedia(md) {
+    font-size: rem(44);
+  }
+}
+
+// lead / article body — 18 / 1.55
+.text-lg {
+  font-family: var(--font-main);
+  font-size: max(16px, #{rem(18)});
+  font-weight: 300; // descriptions / body copy are Inter Light site-wide
+  line-height: 1.55;
+
+  @include maxMedia(md) {
+    font-size: rem(16);
+  }
+}
+
+// card descriptions, nav — 16 / 1.55
+.text-md {
+  font-family: var(--font-main);
+  font-size: max(15px, #{rem(16)});
+  font-weight: 300; // descriptions are Inter Light site-wide
+  line-height: 1.55;
+}
+
+// buttons, links, dates — 14
+.text-sm {
+  font-family: var(--font-main);
+  font-size: max(13px, #{rem(14)});
+  line-height: 1.25;
+}
+
+.fw-medium {
+  font-weight: 500;
+}
+
+// ── Color utilities ────────────────────────────────────────────────
+.clr-main {
+  color: var(--clr-main);
+}
+
+.clr-accent {
+  color: var(--clr-accent);
+}
+
+.clr-black {
+  color: var(--clr-black);
+}
+
+.clr-text {
+  color: var(--clr-text);
+}
+
+.clr-white {
+  color: var(--clr-white);
+}
+
+.clr-white-75 {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.text-center {
+  text-align: center;
+}

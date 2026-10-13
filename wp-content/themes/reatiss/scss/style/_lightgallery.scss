@@ -1,0 +1,140 @@
+@use "../mixins" as *;
+
+// ── Lightbox (lightGallery v2, .lg-reatiss) ── gallery strip "Technology in
+// Detail" (app-gallery.js; pattern from Ajour's product gallery).
+// Backdrop as the other popups, counter + round close on top, round arrows,
+// no thumbnail strip (manager). The vendor css is
+// loaded by the script; these rules only re-skin it.
+// the popups' backdrop (.modal__overlay): page dimmed + blurred behind
+.lg-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  &.in {
+    opacity: 1;
+  }
+}
+
+.lg-reatiss {
+  --lg-toolbar-h: #{rem(76)};
+  font-family: var(--font-main);
+
+  .lg-toolbar {
+    height: var(--lg-toolbar-h);
+    background: none;
+  }
+
+  .lg-counter {
+    height: var(--lg-toolbar-h);
+    padding: 0 0 0 var(--gutter);
+    display: inline-flex;
+    align-items: center;
+    font-size: max(14px, #{rem(16)});
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  // only close stays in the toolbar (zoom by click / pinch / double tap)
+  .lg-toolbar .lg-icon:not(.lg-close) {
+    display: none;
+  }
+
+  // close: white circle → accent, CSS ×
+  .lg-close {
+    --size: #{rem(46)};
+    position: relative;
+    float: right;
+    width: var(--size);
+    height: var(--size);
+    margin: calc((var(--lg-toolbar-h) - var(--size)) / 2) var(--gutter) 0 0;
+    padding: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--clr-white);
+    font-size: 0;
+    transition: background var(--transition-1);
+
+    @include maxMedia(xl) {
+      --size: 44px;
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 38%;
+      height: 1.5px;
+      background: currentColor;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    &::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    @include hover {
+      background: var(--clr-accent);
+      color: var(--clr-white);
+    }
+  }
+
+  // arrows: round, translucent; our arrow, turned for "prev"
+  .lg-prev,
+  .lg-next {
+    --size: #{rem(56)};
+    display: grid;
+    place-items: center;
+    width: var(--size);
+    height: var(--size);
+    margin-top: calc(var(--size) / -2);
+    padding: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--clr-white);
+    transition: background var(--transition-1);
+
+    &::before,
+    &::after {
+      content: none;
+    }
+
+    svg {
+      width: 40%;
+      height: 40%;
+    }
+
+    @include hover {
+      background: var(--clr-accent);
+    }
+  }
+
+  .lg-prev {
+    left: var(--gutter);
+
+    svg {
+      transform: scaleX(-1);
+    }
+  }
+
+  .lg-next {
+    right: var(--gutter);
+  }
+
+  .lg-img-wrap {
+    padding: 0 calc(var(--gutter) + #{rem(80)});
+
+    @include maxMedia(xl) {
+      padding: 0 var(--gutter);
+    }
+  }
+
+  .lg-image {
+    border-radius: var(--rd-lg);
+  }
+
+  .lg-sub-html {
+    display: none;
+  }
+}

@@ -1,0 +1,2749 @@
+{
+    "key": "group_rts_page_builder",
+    "title": "Конструктор сторінки",
+    "fields": [
+        {
+            "type": "flexible_content",
+            "name": "page_builder",
+            "label": "Блоки сторінки",
+            "wrapper": {
+                "width": "100"
+            },
+            "layouts": [
+                {
+                    "name": "hero",
+                    "label": "Головний банер (головна)",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "hero_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_e61c1a9cc66ad235"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "title",
+                            "label": "Заголовок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "rows": 2,
+                            "new_lines": "br",
+                            "required": 1,
+                            "default_value": "IC Reverse Engineering for IP Owners",
+                            "instructions": "Enter = перенос рядка.",
+                            "key": "field_2bac1b8d23180a78"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "text",
+                            "label": "Текст",
+                            "wrapper": {
+                                "width": "60"
+                            },
+                            "rows": 2,
+                            "new_lines": "",
+                            "key": "field_e042ba01b3f81de4"
+                        },
+                        {
+                            "type": "group",
+                            "name": "btn",
+                            "label": "Кнопка",
+                            "wrapper": {
+                                "width": "40"
+                            },
+                            "layout": "block",
+                            "sub_fields": [
+                                {
+                                    "type": "text",
+                                    "name": "label",
+                                    "label": "Текст кнопки",
+                                    "wrapper": {
+                                        "width": "30"
+                                    },
+                                    "key": "field_c2809c1ca25d5091"
+                                },
+                                {
+                                    "type": "select",
+                                    "name": "type",
+                                    "label": "Тип посилання",
+                                    "wrapper": {
+                                        "width": "20"
+                                    },
+                                    "ui": 1,
+                                    "return_format": "value",
+                                    "default_value": "none",
+                                    "choices": {
+                                        "none": "Без посилання",
+                                        "page": "Сторінка сайту",
+                                        "custom": "Своє посилання",
+                                        "modal": "Попап «Консультація»"
+                                    },
+                                    "key": "field_de5db327c8968858"
+                                },
+                                {
+                                    "type": "page_link",
+                                    "name": "page",
+                                    "label": "Сторінка",
+                                    "wrapper": {
+                                        "width": "50"
+                                    },
+                                    "post_type": [
+                                        "page",
+                                        "post",
+                                        "rts_service",
+                                        "rts_lab",
+                                        "rts_expertise",
+                                        "rts_event"
+                                    ],
+                                    "allow_null": 0,
+                                    "allow_archives": 1,
+                                    "multiple": 0,
+                                    "required": 1,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_de5db327c8968858",
+                                                "operator": "==",
+                                                "value": "page"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_40feb13a462706b8"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "url",
+                                    "label": "Посилання",
+                                    "wrapper": {
+                                        "width": "35"
+                                    },
+                                    "required": 1,
+                                    "placeholder": "https://… або #anchor",
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_de5db327c8968858",
+                                                "operator": "==",
+                                                "value": "custom"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_842d7d65fb6749ca"
+                                },
+                                {
+                                    "type": "true_false",
+                                    "name": "new_tab",
+                                    "label": "У новій вкладці",
+                                    "wrapper": {
+                                        "width": "15"
+                                    },
+                                    "ui": 1,
+                                    "default_value": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_de5db327c8968858",
+                                                "operator": "==",
+                                                "value": "custom"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_a8316db304494a41"
+                                }
+                            ],
+                            "key": "field_073c8beafd6c6d02"
+                        },
+                        {
+                            "type": "select",
+                            "name": "media_type",
+                            "label": "Фон",
+                            "wrapper": {
+                                "width": "25"
+                            },
+                            "ui": 1,
+                            "return_format": "value",
+                            "choices": {
+                                "image": "Зображення",
+                                "video": "Відео"
+                            },
+                            "default_value": "image",
+                            "key": "field_72bf168a4791ae13"
+                        },
+                        {
+                            "type": "number",
+                            "name": "overlay",
+                            "label": "Затемнення, %",
+                            "wrapper": {
+                                "width": "25"
+                            },
+                            "default_value": 30,
+                            "min": 0,
+                            "max": 90,
+                            "step": 5,
+                            "instructions": "Чорний шар над фото/відео. Під час прокрутки він темнішає до 75%.",
+                            "key": "field_ab34284a94996d98"
+                        },
+                        {
+                            "type": "image",
+                            "name": "image",
+                            "label": "Зображення",
+                            "wrapper": {
+                                "width": "25"
+                            },
+                            "return_format": "array",
+                            "preview_size": "medium",
+                            "library": "all",
+                            "mime_types": "jpg,jpeg,png,webp",
+                            "required": 1,
+                            "instructions": "2400×1320 px. Також постер для відео.",
+                            "key": "field_1dad6a09c5782abf"
+                        },
+                        {
+                            "type": "image",
+                            "name": "image_mobile",
+                            "label": "Зображення (мобільне)",
+                            "wrapper": {
+                                "width": "25"
+                            },
+                            "return_format": "array",
+                            "preview_size": "medium",
+                            "library": "all",
+                            "mime_types": "jpg,jpeg,png,webp",
+                            "instructions": "Необов’язково: 750×1334 px. Порожньо — основне зображення.",
+                            "key": "field_0b8505fc54a514d6"
+                        },
+                        {
+                            "type": "file",
+                            "name": "video",
+                            "label": "Відео (десктоп)",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "return_format": "url",
+                            "library": "all",
+                            "mime_types": "mp4",
+                            "instructions": "MP4 (H.264, faststart, без звуку), 1920 px, до ~8 МБ.",
+                            "key": "field_25a8286588fcbd09"
+                        },
+                        {
+                            "type": "file",
+                            "name": "video_mobile",
+                            "label": "Відео (мобільне)",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "return_format": "url",
+                            "library": "all",
+                            "mime_types": "mp4",
+                            "instructions": "Необов’язково: MP4 720×1280.",
+                            "key": "field_2021b27403f97696"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_23c4f8cf3555ea5f"
+                },
+                {
+                    "name": "expertise_cards",
+                    "label": "Картки експертиз",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "expertise_cards_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_82bf1d3634c4de93"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "title",
+                            "label": "Заголовок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "rows": 2,
+                            "new_lines": "br",
+                            "required": 1,
+                            "default_value": "Deep Technical Expertise",
+                            "instructions": "Enter = перенос рядка.",
+                            "key": "field_29ac7a9591c303a5"
+                        },
+                        {
+                            "type": "relationship",
+                            "name": "items",
+                            "label": "Експертизи",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "return_format": "id",
+                            "post_type": [
+                                "rts_expertise"
+                            ],
+                            "filters": [
+                                "search"
+                            ],
+                            "elements": [
+                                "featured_image"
+                            ],
+                            "min": "",
+                            "max": "",
+                            "instructions": "Порожньо — всі експертизи за порядком. На десктопі сітка 2 колонки.",
+                            "key": "field_5ff31932e12751f3"
+                        },
+                        {
+                            "type": "text",
+                            "name": "more_before",
+                            "label": "Рядок під картками: текст до посилання",
+                            "wrapper": {
+                                "width": "33"
+                            },
+                            "default_value": "Get to know and",
+                            "key": "field_b8f9e9a9b0cd6d01"
+                        },
+                        {
+                            "type": "group",
+                            "name": "more_link",
+                            "label": "Посилання",
+                            "wrapper": {
+                                "width": "34"
+                            },
+                            "layout": "block",
+                            "sub_fields": [
+                                {
+                                    "type": "text",
+                                    "name": "label",
+                                    "label": "Текст кнопки",
+                                    "wrapper": {
+                                        "width": "30"
+                                    },
+                                    "key": "field_4e4cbef90fb35791"
+                                },
+                                {
+                                    "type": "select",
+                                    "name": "type",
+                                    "label": "Тип посилання",
+                                    "wrapper": {
+                                        "width": "20"
+                                    },
+                                    "ui": 1,
+                                    "return_format": "value",
+                                    "default_value": "none",
+                                    "choices": {
+                                        "none": "Без посилання",
+                                        "page": "Сторінка сайту",
+                                        "custom": "Своє посилання",
+                                        "modal": "Попап «Консультація»"
+                                    },
+                                    "key": "field_e1b208e78febb532"
+                                },
+                                {
+                                    "type": "page_link",
+                                    "name": "page",
+                                    "label": "Сторінка",
+                                    "wrapper": {
+                                        "width": "50"
+                                    },
+                                    "post_type": [
+                                        "page",
+                                        "post",
+                                        "rts_service",
+                                        "rts_lab",
+                                        "rts_expertise",
+                                        "rts_event"
+                                    ],
+                                    "allow_null": 0,
+                                    "allow_archives": 1,
+                                    "multiple": 0,
+                                    "required": 1,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_e1b208e78febb532",
+                                                "operator": "==",
+                                                "value": "page"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_4e71f1fecfb272a0"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "url",
+                                    "label": "Посилання",
+                                    "wrapper": {
+                                        "width": "35"
+                                    },
+                                    "required": 1,
+                                    "placeholder": "https://… або #anchor",
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_e1b208e78febb532",
+                                                "operator": "==",
+                                                "value": "custom"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_356e68688048bff1"
+                                },
+                                {
+                                    "type": "true_false",
+                                    "name": "new_tab",
+                                    "label": "У новій вкладці",
+                                    "wrapper": {
+                                        "width": "15"
+                                    },
+                                    "ui": 1,
+                                    "default_value": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_e1b208e78febb532",
+                                                "operator": "==",
+                                                "value": "custom"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_abca78969937afbf"
+                                }
+                            ],
+                            "key": "field_c0c0d24e3178012a"
+                        },
+                        {
+                            "type": "text",
+                            "name": "more_after",
+                            "label": "Текст після посилання",
+                            "wrapper": {
+                                "width": "33"
+                            },
+                            "default_value": "our expertise",
+                            "key": "field_dbb1bd98c2955183"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_3667fbfe1b996d4b"
+                },
+                {
+                    "name": "solutions",
+                    "label": "Advanced Engineering Solutions (сцена з чипом)",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "solutions_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_57c9bd67e92b135c"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "title",
+                            "label": "Заголовок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "rows": 2,
+                            "new_lines": "br",
+                            "required": 1,
+                            "default_value": "Advanced Engineering Solutions",
+                            "instructions": "Enter = перенос рядка.",
+                            "key": "field_c2608c135bd4d6a7"
+                        },
+                        {
+                            "type": "message",
+                            "name": "solutions_message",
+                            "label": "Як працює",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "message": "На десктопі прокрутка відкриває чип шар за шаром (відео в темі), і для кожного шару з’являється пункт зі списку. Шарів 4 — пунктів теж до 4. Текст пункту — до ~250 символів.",
+                            "key": "field_9aaccb239f2353b8"
+                        },
+                        {
+                            "type": "repeater",
+                            "name": "items",
+                            "label": "Пункти",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "layout": "block",
+                            "button_label": "Додати пункт",
+                            "min": 1,
+                            "max": 4,
+                            "sub_fields": [
+                                {
+                                    "type": "text",
+                                    "name": "num",
+                                    "label": "Номер",
+                                    "wrapper": {
+                                        "width": "10"
+                                    },
+                                    "default_value": "01",
+                                    "required": 1,
+                                    "key": "field_8423721c198dd169"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "title",
+                                    "label": "Заголовок",
+                                    "wrapper": {
+                                        "width": "40"
+                                    },
+                                    "required": 1,
+                                    "key": "field_03017f34eb057cfd"
+                                },
+                                {
+                                    "type": "image",
+                                    "name": "image",
+                                    "label": "Ілюстрація",
+                                    "wrapper": {
+                                        "width": "25"
+                                    },
+                                    "return_format": "array",
+                                    "preview_size": "medium",
+                                    "library": "all",
+                                    "mime_types": "png,webp,svg",
+                                    "required": 1,
+                                    "instructions": "Лінійний малюнок 536×357 px (PNG з прозорістю).",
+                                    "key": "field_b6feb6200699081d"
+                                },
+                                {
+                                    "type": "select",
+                                    "name": "side",
+                                    "label": "Сторона",
+                                    "wrapper": {
+                                        "width": "25"
+                                    },
+                                    "ui": 1,
+                                    "return_format": "value",
+                                    "choices": {
+                                        "right": "Праворуч",
+                                        "left": "Ліворуч"
+                                    },
+                                    "default_value": "right",
+                                    "key": "field_d3c375fcfe9d204b"
+                                },
+                                {
+                                    "type": "textarea",
+                                    "name": "text",
+                                    "label": "Текст",
+                                    "wrapper": {
+                                        "width": "60"
+                                    },
+                                    "rows": 3,
+                                    "new_lines": "",
+                                    "required": 1,
+                                    "key": "field_bd74c0dd3cc3cba8"
+                                },
+                                {
+                                    "type": "number",
+                                    "name": "top",
+                                    "label": "Висота блоку, %",
+                                    "wrapper": {
+                                        "width": "20"
+                                    },
+                                    "default_value": 20,
+                                    "min": 0,
+                                    "max": 80,
+                                    "instructions": "Бажане положення по вертикалі (скрипт утримає блок на екрані).",
+                                    "key": "field_4b89cc4e27167167"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "aim",
+                                    "label": "Ціль лінії (x,y)",
+                                    "wrapper": {
+                                        "width": "20"
+                                    },
+                                    "default_value": "0.78,0.24",
+                                    "instructions": "Куди веде лінія від номера: частки кадру відео, 0,0 — лівий верх, 1,1 — правий низ.",
+                                    "key": "field_fada0e6553ed58d1"
+                                }
+                            ],
+                            "key": "field_920abab497a2985d"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_fc6db5ad102bf0ed"
+                },
+                {
+                    "name": "left_right",
+                    "label": "Текст + фото",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "left_right_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_93da41210c41f6a9"
+                        },
+                        {
+                            "type": "select",
+                            "name": "variant",
+                            "label": "Розташування",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "ui": 1,
+                            "return_format": "value",
+                            "default_value": "text-media",
+                            "choices": {
+                                "text-media": "Текст | фото",
+                                "media-text": "Фото | текст (як «Let’s work together»)",
+                                "media-left": "Фото | текст (пропорції About)"
+                            },
+                            "key": "field_e9ee59110511ec6a"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "title",
+                            "label": "Заголовок",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "rows": 2,
+                            "new_lines": "br",
+                            "required": 1,
+                            "default_value": "",
+                            "instructions": "Enter = перенос рядка.",
+                            "key": "field_608dfa3ca0b17241"
+                        },
+                        {
+                            "type": "wysiwyg",
+                            "name": "text",
+                            "label": "Текст",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "toolbar": "basic",
+                            "media_upload": 0,
+                            "tabs": "all",
+                            "required": 1,
+                            "key": "field_ed837a71e7fe4c7b"
+                        },
+                        {
+                            "type": "group",
+                            "name": "btn",
+                            "label": "Кнопка",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "layout": "block",
+                            "sub_fields": [
+                                {
+                                    "type": "text",
+                                    "name": "label",
+                                    "label": "Текст кнопки",
+                                    "wrapper": {
+                                        "width": "30"
+                                    },
+                                    "key": "field_cbf6aec48f196ecc"
+                                },
+                                {
+                                    "type": "select",
+                                    "name": "type",
+                                    "label": "Тип посилання",
+                                    "wrapper": {
+                                        "width": "20"
+                                    },
+                                    "ui": 1,
+                                    "return_format": "value",
+                                    "default_value": "none",
+                                    "choices": {
+                                        "none": "Без посилання",
+                                        "page": "Сторінка сайту",
+                                        "custom": "Своє посилання",
+                                        "modal": "Попап «Консультація»"
+                                    },
+                                    "key": "field_ee341866f98fe659"
+                                },
+                                {
+                                    "type": "page_link",
+                                    "name": "page",
+                                    "label": "Сторінка",
+                                    "wrapper": {
+                                        "width": "50"
+                                    },
+                                    "post_type": [
+                                        "page",
+                                        "post",
+                                        "rts_service",
+                                        "rts_lab",
+                                        "rts_expertise",
+                                        "rts_event"
+                                    ],
+                                    "allow_null": 0,
+                                    "allow_archives": 1,
+                                    "multiple": 0,
+                                    "required": 1,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_ee341866f98fe659",
+                                                "operator": "==",
+                                                "value": "page"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_379cb3b3b3e22289"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "url",
+                                    "label": "Посилання",
+                                    "wrapper": {
+                                        "width": "35"
+                                    },
+                                    "required": 1,
+                                    "placeholder": "https://… або #anchor",
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_ee341866f98fe659",
+                                                "operator": "==",
+                                                "value": "custom"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_ef6d8bd3f28446d8"
+                                },
+                                {
+                                    "type": "true_false",
+                                    "name": "new_tab",
+                                    "label": "У новій вкладці",
+                                    "wrapper": {
+                                        "width": "15"
+                                    },
+                                    "ui": 1,
+                                    "default_value": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_ee341866f98fe659",
+                                                "operator": "==",
+                                                "value": "custom"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_8f8e9ca87b9f2919"
+                                }
+                            ],
+                            "key": "field_cd535156cfe05833"
+                        },
+                        {
+                            "type": "image",
+                            "name": "image",
+                            "label": "Фото",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "return_format": "array",
+                            "preview_size": "medium",
+                            "library": "all",
+                            "mime_types": "jpg,jpeg,png,webp",
+                            "required": 1,
+                            "instructions": "1700×1400 px.",
+                            "key": "field_7513e65da271c3f9"
+                        },
+                        {
+                            "type": "image",
+                            "name": "image_mobile",
+                            "label": "Зображення (мобільне)",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "return_format": "array",
+                            "preview_size": "medium",
+                            "library": "all",
+                            "mime_types": "jpg,jpeg,png,webp",
+                            "instructions": "Необов’язково: квадрат 1000×1000 px. Порожньо — основне фото.",
+                            "key": "field_95b2f07f627763e5"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_c35889068e3c781f"
+                },
+                {
+                    "name": "labs_cards",
+                    "label": "Картки лабораторій",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "labs_cards_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_a4bab250ae078b03"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "title",
+                            "label": "Заголовок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "rows": 2,
+                            "new_lines": "br",
+                            "required": 1,
+                            "default_value": "Advanced Laboratories for Discovery",
+                            "instructions": "Enter = перенос рядка.",
+                            "key": "field_fccb45786c60b965"
+                        },
+                        {
+                            "type": "relationship",
+                            "name": "items",
+                            "label": "Лабораторії",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "return_format": "id",
+                            "post_type": [
+                                "rts_lab"
+                            ],
+                            "filters": [
+                                "search"
+                            ],
+                            "elements": [
+                                "featured_image"
+                            ],
+                            "min": "",
+                            "max": "",
+                            "instructions": "Порожньо — всі лабораторії за порядком. На десктопі 3 в ряд, нижче 1200 — слайдер.",
+                            "key": "field_49d1dca3c892c3b5"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_00814449ca9a52dc"
+                },
+                {
+                    "name": "stats",
+                    "label": "Цифри (темний блок)",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "stats_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_066031ac4ea8f819"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "lead",
+                            "label": "Вступний текст",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "rows": 3,
+                            "new_lines": "",
+                            "required": 1,
+                            "key": "field_92baa249f33d825f"
+                        },
+                        {
+                            "type": "repeater",
+                            "name": "items",
+                            "label": "Картки",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "layout": "block",
+                            "button_label": "Додати картку",
+                            "min": 1,
+                            "max": 3,
+                            "sub_fields": [
+                                {
+                                    "type": "text",
+                                    "name": "value",
+                                    "label": "Число",
+                                    "wrapper": {
+                                        "width": "20"
+                                    },
+                                    "required": 1,
+                                    "placeholder": "30+",
+                                    "instructions": "Число з будь-яким текстом навколо: «30+», «2 000+», «>50%». Анімується від нуля.",
+                                    "key": "field_9997bac1896b6219"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "label",
+                                    "label": "Підпис",
+                                    "wrapper": {
+                                        "width": "30"
+                                    },
+                                    "required": 1,
+                                    "key": "field_12ee43035af864d0"
+                                },
+                                {
+                                    "type": "image",
+                                    "name": "image",
+                                    "label": "Ілюстрація",
+                                    "wrapper": {
+                                        "width": "25"
+                                    },
+                                    "return_format": "array",
+                                    "preview_size": "medium",
+                                    "library": "all",
+                                    "mime_types": "png,webp,svg",
+                                    "required": 0,
+                                    "instructions": "Лінійний малюнок 600×500 px (PNG з прозорістю).",
+                                    "key": "field_7b1978bf864eb89a"
+                                },
+                                {
+                                    "type": "textarea",
+                                    "name": "text",
+                                    "label": "Текст",
+                                    "wrapper": {
+                                        "width": "25"
+                                    },
+                                    "rows": 2,
+                                    "new_lines": "",
+                                    "key": "field_df7184d10463c86a"
+                                }
+                            ],
+                            "key": "field_f2810916616ab9cd"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_499a327d115ddaa0"
+                },
+                {
+                    "name": "news_cards",
+                    "label": "Останні статті блогу",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "news_cards_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_4ae020ec6d883f3f"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "title",
+                            "label": "Заголовок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "rows": 2,
+                            "new_lines": "br",
+                            "required": 1,
+                            "default_value": "Research, Technology, and Engineering Insights",
+                            "instructions": "Enter = перенос рядка.",
+                            "key": "field_3dc1a5b978d26203"
+                        },
+                        {
+                            "type": "group",
+                            "name": "link",
+                            "label": "Посилання біля заголовка",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "layout": "block",
+                            "sub_fields": [
+                                {
+                                    "type": "text",
+                                    "name": "label",
+                                    "label": "Текст кнопки",
+                                    "wrapper": {
+                                        "width": "30"
+                                    },
+                                    "key": "field_09c4eea5b3a1d2b5"
+                                },
+                                {
+                                    "type": "select",
+                                    "name": "type",
+                                    "label": "Тип посилання",
+                                    "wrapper": {
+                                        "width": "20"
+                                    },
+                                    "ui": 1,
+                                    "return_format": "value",
+                                    "default_value": "none",
+                                    "choices": {
+                                        "none": "Без посилання",
+                                        "page": "Сторінка сайту",
+                                        "custom": "Своє посилання",
+                                        "modal": "Попап «Консультація»"
+                                    },
+                                    "key": "field_57bbe6dda81e4416"
+                                },
+                                {
+                                    "type": "page_link",
+                                    "name": "page",
+                                    "label": "Сторінка",
+                                    "wrapper": {
+                                        "width": "50"
+                                    },
+                                    "post_type": [
+                                        "page",
+                                        "post",
+                                        "rts_service",
+                                        "rts_lab",
+                                        "rts_expertise",
+                                        "rts_event"
+                                    ],
+                                    "allow_null": 0,
+                                    "allow_archives": 1,
+                                    "multiple": 0,
+                                    "required": 1,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_57bbe6dda81e4416",
+                                                "operator": "==",
+                                                "value": "page"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_d2e9a232f6351c9f"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "url",
+                                    "label": "Посилання",
+                                    "wrapper": {
+                                        "width": "35"
+                                    },
+                                    "required": 1,
+                                    "placeholder": "https://… або #anchor",
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_57bbe6dda81e4416",
+                                                "operator": "==",
+                                                "value": "custom"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_dc23f909946b4bd1"
+                                },
+                                {
+                                    "type": "true_false",
+                                    "name": "new_tab",
+                                    "label": "У новій вкладці",
+                                    "wrapper": {
+                                        "width": "15"
+                                    },
+                                    "ui": 1,
+                                    "default_value": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_57bbe6dda81e4416",
+                                                "operator": "==",
+                                                "value": "custom"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_c3db652a1d430126"
+                                }
+                            ],
+                            "key": "field_771e4fe7f5b60baa"
+                        },
+                        {
+                            "type": "relationship",
+                            "name": "items",
+                            "label": "Статті",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "return_format": "id",
+                            "post_type": [
+                                "post"
+                            ],
+                            "filters": [
+                                "search"
+                            ],
+                            "elements": [
+                                "featured_image"
+                            ],
+                            "min": "",
+                            "max": 6,
+                            "instructions": "Порожньо — 3 останні статті.",
+                            "key": "field_68643a84253f1cad"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_e17d2fa6d3d38945"
+                },
+                {
+                    "name": "video_banner",
+                    "label": "Відеобанер на всю ширину",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "video_banner_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_c7bec681390c56b3"
+                        },
+                        {
+                            "type": "image",
+                            "name": "poster",
+                            "label": "Постер",
+                            "wrapper": {
+                                "width": "25"
+                            },
+                            "return_format": "array",
+                            "preview_size": "medium",
+                            "library": "all",
+                            "mime_types": "jpg,jpeg,png,webp",
+                            "required": 1,
+                            "instructions": "1920×1100 px. Видно, поки відео не запустилось.",
+                            "key": "field_adcff1f839a8ba57"
+                        },
+                        {
+                            "type": "image",
+                            "name": "poster_mobile",
+                            "label": "Постер (мобільний)",
+                            "wrapper": {
+                                "width": "25"
+                            },
+                            "return_format": "array",
+                            "preview_size": "medium",
+                            "library": "all",
+                            "mime_types": "jpg,jpeg,png,webp",
+                            "required": 0,
+                            "instructions": "Необов’язково: 750×1000 px.",
+                            "key": "field_9d68a0aa7f86e4c8"
+                        },
+                        {
+                            "type": "file",
+                            "name": "video",
+                            "label": "Фонове відео (десктоп)",
+                            "wrapper": {
+                                "width": "25"
+                            },
+                            "return_format": "url",
+                            "library": "all",
+                            "mime_types": "mp4",
+                            "instructions": "MP4 без звуку, 1920 px, коротка петля.",
+                            "key": "field_8fcf1b9a98e8137a"
+                        },
+                        {
+                            "type": "file",
+                            "name": "video_mobile",
+                            "label": "Фонове відео (мобільне)",
+                            "wrapper": {
+                                "width": "25"
+                            },
+                            "return_format": "url",
+                            "library": "all",
+                            "mime_types": "mp4",
+                            "instructions": "Необов’язково: MP4 720×1280.",
+                            "key": "field_ca00bfa2f9c7e933"
+                        },
+                        {
+                            "type": "file",
+                            "name": "full_video",
+                            "label": "Повне відео (попап)",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "return_format": "url",
+                            "library": "all",
+                            "mime_types": "mp4",
+                            "instructions": "MP4 зі звуком — відкривається на весь екран по кнопці. Порожньо — кнопки немає.",
+                            "key": "field_e63e4e42aee2ed76"
+                        },
+                        {
+                            "type": "text",
+                            "name": "label",
+                            "label": "Текст кнопки",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "default_value": "Watch full video",
+                            "key": "field_ef6d73a150493bef"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_ebc32dfa85d72a9b"
+                },
+                {
+                    "name": "event_cards",
+                    "label": "Найближчі події",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "event_cards_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_b14f920d09edc194"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "title",
+                            "label": "Заголовок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "rows": 2,
+                            "new_lines": "br",
+                            "required": 1,
+                            "default_value": "Meet Our Experts Around the World",
+                            "instructions": "Enter = перенос рядка.",
+                            "key": "field_2a62aa10b5f2a116"
+                        },
+                        {
+                            "type": "group",
+                            "name": "link",
+                            "label": "Посилання біля заголовка",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "layout": "block",
+                            "sub_fields": [
+                                {
+                                    "type": "text",
+                                    "name": "label",
+                                    "label": "Текст кнопки",
+                                    "wrapper": {
+                                        "width": "30"
+                                    },
+                                    "key": "field_a1189c95e45edae8"
+                                },
+                                {
+                                    "type": "select",
+                                    "name": "type",
+                                    "label": "Тип посилання",
+                                    "wrapper": {
+                                        "width": "20"
+                                    },
+                                    "ui": 1,
+                                    "return_format": "value",
+                                    "default_value": "none",
+                                    "choices": {
+                                        "none": "Без посилання",
+                                        "page": "Сторінка сайту",
+                                        "custom": "Своє посилання",
+                                        "modal": "Попап «Консультація»"
+                                    },
+                                    "key": "field_1e49f9d1877d38a5"
+                                },
+                                {
+                                    "type": "page_link",
+                                    "name": "page",
+                                    "label": "Сторінка",
+                                    "wrapper": {
+                                        "width": "50"
+                                    },
+                                    "post_type": [
+                                        "page",
+                                        "post",
+                                        "rts_service",
+                                        "rts_lab",
+                                        "rts_expertise",
+                                        "rts_event"
+                                    ],
+                                    "allow_null": 0,
+                                    "allow_archives": 1,
+                                    "multiple": 0,
+                                    "required": 1,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_1e49f9d1877d38a5",
+                                                "operator": "==",
+                                                "value": "page"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_85065341e6d02d51"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "url",
+                                    "label": "Посилання",
+                                    "wrapper": {
+                                        "width": "35"
+                                    },
+                                    "required": 1,
+                                    "placeholder": "https://… або #anchor",
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_1e49f9d1877d38a5",
+                                                "operator": "==",
+                                                "value": "custom"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_8e97a9eca7e79d8b"
+                                },
+                                {
+                                    "type": "true_false",
+                                    "name": "new_tab",
+                                    "label": "У новій вкладці",
+                                    "wrapper": {
+                                        "width": "15"
+                                    },
+                                    "ui": 1,
+                                    "default_value": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_1e49f9d1877d38a5",
+                                                "operator": "==",
+                                                "value": "custom"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_3730ad5f09baa9cf"
+                                }
+                            ],
+                            "key": "field_196c39502bc492ac"
+                        },
+                        {
+                            "type": "relationship",
+                            "name": "items",
+                            "label": "Події",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "return_format": "id",
+                            "post_type": [
+                                "rts_event"
+                            ],
+                            "filters": [
+                                "search"
+                            ],
+                            "elements": [
+                                "featured_image"
+                            ],
+                            "min": "",
+                            "max": 6,
+                            "instructions": "Порожньо — 3 найближчі події (за датою початку).",
+                            "key": "field_c9ff908b6dc5fae0"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_f5f6ecbf37ece2c6"
+                },
+                {
+                    "name": "faq",
+                    "label": "Питання та відповіді",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "faq_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_d2e44955d9e615f4"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "title",
+                            "label": "Заголовок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "rows": 2,
+                            "new_lines": "br",
+                            "required": 1,
+                            "default_value": "Common Questions About Our Services",
+                            "instructions": "Enter = перенос рядка.",
+                            "key": "field_cd9b1d34d3406930"
+                        },
+                        {
+                            "type": "group",
+                            "name": "link",
+                            "label": "Посилання під заголовком",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "layout": "block",
+                            "sub_fields": [
+                                {
+                                    "type": "text",
+                                    "name": "label",
+                                    "label": "Текст кнопки",
+                                    "wrapper": {
+                                        "width": "30"
+                                    },
+                                    "key": "field_28affb993b64cfe2"
+                                },
+                                {
+                                    "type": "select",
+                                    "name": "type",
+                                    "label": "Тип посилання",
+                                    "wrapper": {
+                                        "width": "20"
+                                    },
+                                    "ui": 1,
+                                    "return_format": "value",
+                                    "default_value": "none",
+                                    "choices": {
+                                        "none": "Без посилання",
+                                        "page": "Сторінка сайту",
+                                        "custom": "Своє посилання",
+                                        "modal": "Попап «Консультація»"
+                                    },
+                                    "key": "field_9be2fcd4270428d7"
+                                },
+                                {
+                                    "type": "page_link",
+                                    "name": "page",
+                                    "label": "Сторінка",
+                                    "wrapper": {
+                                        "width": "50"
+                                    },
+                                    "post_type": [
+                                        "page",
+                                        "post",
+                                        "rts_service",
+                                        "rts_lab",
+                                        "rts_expertise",
+                                        "rts_event"
+                                    ],
+                                    "allow_null": 0,
+                                    "allow_archives": 1,
+                                    "multiple": 0,
+                                    "required": 1,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_9be2fcd4270428d7",
+                                                "operator": "==",
+                                                "value": "page"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_a33447f1854fcf7a"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "url",
+                                    "label": "Посилання",
+                                    "wrapper": {
+                                        "width": "35"
+                                    },
+                                    "required": 1,
+                                    "placeholder": "https://… або #anchor",
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_9be2fcd4270428d7",
+                                                "operator": "==",
+                                                "value": "custom"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_4879645982f6e0bf"
+                                },
+                                {
+                                    "type": "true_false",
+                                    "name": "new_tab",
+                                    "label": "У новій вкладці",
+                                    "wrapper": {
+                                        "width": "15"
+                                    },
+                                    "ui": 1,
+                                    "default_value": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_9be2fcd4270428d7",
+                                                "operator": "==",
+                                                "value": "custom"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_458bc1059716d5fc"
+                                }
+                            ],
+                            "key": "field_71dabb6dd2b6c2b4"
+                        },
+                        {
+                            "type": "select",
+                            "name": "source",
+                            "label": "Питання",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "ui": 1,
+                            "return_format": "value",
+                            "default_value": "global",
+                            "choices": {
+                                "global": "Загальні (Налаштування сайту → FAQ)",
+                                "own": "Свої для цієї сторінки"
+                            },
+                            "key": "field_5dd95b1cf8d7db20"
+                        },
+                        {
+                            "type": "repeater",
+                            "name": "items",
+                            "label": "Питання",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "layout": "block",
+                            "button_label": "Додати питання",
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_5dd95b1cf8d7db20",
+                                        "operator": "==",
+                                        "value": "own"
+                                    }
+                                ]
+                            ],
+                            "sub_fields": [
+                                {
+                                    "type": "text",
+                                    "name": "question",
+                                    "label": "Питання",
+                                    "wrapper": {
+                                        "width": "80"
+                                    },
+                                    "required": 1,
+                                    "key": "field_a38626ff8ea8b2fc"
+                                },
+                                {
+                                    "type": "true_false",
+                                    "name": "open",
+                                    "label": "Відкрите",
+                                    "wrapper": {
+                                        "width": "20"
+                                    },
+                                    "ui": 1,
+                                    "default_value": 0,
+                                    "instructions": "Розгорнуте при завантаженні.",
+                                    "key": "field_166f417b410bdd8a"
+                                },
+                                {
+                                    "type": "wysiwyg",
+                                    "name": "answer",
+                                    "label": "Відповідь",
+                                    "wrapper": {
+                                        "width": "100"
+                                    },
+                                    "toolbar": "full",
+                                    "media_upload": 0,
+                                    "tabs": "all",
+                                    "required": 1,
+                                    "key": "field_b26903273a7f7ead"
+                                }
+                            ],
+                            "key": "field_42fc30f42770c77b"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_acd6342050434865"
+                },
+                {
+                    "name": "seo",
+                    "label": "SEO-текст",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "seo_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_997db31c8da98f2c"
+                        },
+                        {
+                            "type": "text",
+                            "name": "title",
+                            "label": "Заголовок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "required": 1,
+                            "key": "field_e40ee037112a0986"
+                        },
+                        {
+                            "type": "wysiwyg",
+                            "name": "text",
+                            "label": "Текст (видимий)",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "toolbar": "full",
+                            "media_upload": 0,
+                            "tabs": "all",
+                            "required": 1,
+                            "instructions": "Перший абзац на телефонах обрізається до 5 рядків.",
+                            "key": "field_d3b77932bf84f475"
+                        },
+                        {
+                            "type": "wysiwyg",
+                            "name": "more",
+                            "label": "Текст під «Read more»",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "toolbar": "full",
+                            "media_upload": 1,
+                            "tabs": "all",
+                            "instructions": "Порожньо — кнопки «Read more» немає.",
+                            "key": "field_0ecbaf12cb590d8f"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_7ab0813550afd93e"
+                },
+                {
+                    "name": "page_banner",
+                    "label": "Банер сторінки (темний, на весь екран)",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "page_banner_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_aa701898a543b4ad"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "title",
+                            "label": "Заголовок",
+                            "wrapper": {
+                                "width": "70"
+                            },
+                            "rows": 2,
+                            "new_lines": "br",
+                            "instructions": "Порожньо — назва сторінки. Enter = перенос рядка.",
+                            "key": "field_1fbb963ae383b3d9"
+                        },
+                        {
+                            "type": "number",
+                            "name": "title_width",
+                            "label": "Макс. ширина заголовка, em",
+                            "wrapper": {
+                                "width": "30"
+                            },
+                            "min": 5,
+                            "max": 40,
+                            "step": 0.5,
+                            "instructions": "Необов’язково: де ламати довгий заголовок на десктопі (напр. 15).",
+                            "key": "field_2711cc671b25f262"
+                        },
+                        {
+                            "type": "select",
+                            "name": "media_type",
+                            "label": "Фон",
+                            "wrapper": {
+                                "width": "25"
+                            },
+                            "ui": 1,
+                            "return_format": "value",
+                            "choices": {
+                                "image": "Зображення",
+                                "video": "Відео"
+                            },
+                            "default_value": "image",
+                            "key": "field_804e2e78805feccd"
+                        },
+                        {
+                            "type": "number",
+                            "name": "overlay",
+                            "label": "Затемнення, %",
+                            "wrapper": {
+                                "width": "25"
+                            },
+                            "default_value": 30,
+                            "min": 0,
+                            "max": 90,
+                            "step": 5,
+                            "key": "field_de9bcbee49e0c35c"
+                        },
+                        {
+                            "type": "image",
+                            "name": "image",
+                            "label": "Зображення",
+                            "wrapper": {
+                                "width": "25"
+                            },
+                            "return_format": "array",
+                            "preview_size": "medium",
+                            "library": "all",
+                            "mime_types": "jpg,jpeg,png,webp",
+                            "required": 1,
+                            "instructions": "1920×1080 px. Також постер для відео.",
+                            "key": "field_dbf21f6996542205"
+                        },
+                        {
+                            "type": "image",
+                            "name": "image_mobile",
+                            "label": "Зображення (мобільне)",
+                            "wrapper": {
+                                "width": "25"
+                            },
+                            "return_format": "array",
+                            "preview_size": "medium",
+                            "library": "all",
+                            "mime_types": "jpg,jpeg,png,webp",
+                            "instructions": "Необов’язково: 750×1000 px. Порожньо — основне зображення.",
+                            "key": "field_8f34c6ad93d77be5"
+                        },
+                        {
+                            "type": "file",
+                            "name": "video",
+                            "label": "Відео (десктоп)",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "return_format": "url",
+                            "library": "all",
+                            "mime_types": "mp4",
+                            "instructions": "MP4 (H.264, faststart, без звуку), 1920 px.",
+                            "key": "field_515e0bb27b6381c8"
+                        },
+                        {
+                            "type": "file",
+                            "name": "video_mobile",
+                            "label": "Відео (мобільне)",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "return_format": "url",
+                            "library": "all",
+                            "mime_types": "mp4",
+                            "instructions": "Необов’язково: MP4 720×1280.",
+                            "key": "field_1f795f799f31b1be"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_a13cbb968f44d25b"
+                },
+                {
+                    "name": "about_intro",
+                    "label": "Інтро з двома фото",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "about_intro_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_04e1e55010334663"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "title",
+                            "label": "Заголовок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "rows": 2,
+                            "new_lines": "br",
+                            "required": 1,
+                            "default_value": "Deep Technical Expertise",
+                            "instructions": "Enter = перенос рядка.",
+                            "key": "field_d4a50090b561e98c"
+                        },
+                        {
+                            "type": "wysiwyg",
+                            "name": "text",
+                            "label": "Текст",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "toolbar": "basic",
+                            "media_upload": 0,
+                            "tabs": "all",
+                            "required": 1,
+                            "key": "field_6de02613de9439e1"
+                        },
+                        {
+                            "type": "group",
+                            "name": "btn",
+                            "label": "Кнопка",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "layout": "block",
+                            "sub_fields": [
+                                {
+                                    "type": "text",
+                                    "name": "label",
+                                    "label": "Текст кнопки",
+                                    "wrapper": {
+                                        "width": "30"
+                                    },
+                                    "key": "field_23f39ed71f1cb82a"
+                                },
+                                {
+                                    "type": "select",
+                                    "name": "type",
+                                    "label": "Тип посилання",
+                                    "wrapper": {
+                                        "width": "20"
+                                    },
+                                    "ui": 1,
+                                    "return_format": "value",
+                                    "default_value": "none",
+                                    "choices": {
+                                        "none": "Без посилання",
+                                        "page": "Сторінка сайту",
+                                        "custom": "Своє посилання",
+                                        "modal": "Попап «Консультація»"
+                                    },
+                                    "key": "field_aa599f5d65c066d4"
+                                },
+                                {
+                                    "type": "page_link",
+                                    "name": "page",
+                                    "label": "Сторінка",
+                                    "wrapper": {
+                                        "width": "50"
+                                    },
+                                    "post_type": [
+                                        "page",
+                                        "post",
+                                        "rts_service",
+                                        "rts_lab",
+                                        "rts_expertise",
+                                        "rts_event"
+                                    ],
+                                    "allow_null": 0,
+                                    "allow_archives": 1,
+                                    "multiple": 0,
+                                    "required": 1,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_aa599f5d65c066d4",
+                                                "operator": "==",
+                                                "value": "page"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_300afdef73819cd3"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "url",
+                                    "label": "Посилання",
+                                    "wrapper": {
+                                        "width": "35"
+                                    },
+                                    "required": 1,
+                                    "placeholder": "https://… або #anchor",
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_aa599f5d65c066d4",
+                                                "operator": "==",
+                                                "value": "custom"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_8a805fb48302ef68"
+                                },
+                                {
+                                    "type": "true_false",
+                                    "name": "new_tab",
+                                    "label": "У новій вкладці",
+                                    "wrapper": {
+                                        "width": "15"
+                                    },
+                                    "ui": 1,
+                                    "default_value": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_aa599f5d65c066d4",
+                                                "operator": "==",
+                                                "value": "custom"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_98377d87a6e9c3ba"
+                                }
+                            ],
+                            "key": "field_4fe79f433fc9689a"
+                        },
+                        {
+                            "type": "image",
+                            "name": "image_1",
+                            "label": "Фото 1 (зліва вгорі)",
+                            "wrapper": {
+                                "width": "25"
+                            },
+                            "return_format": "array",
+                            "preview_size": "medium",
+                            "library": "all",
+                            "mime_types": "jpg,jpeg,png,webp",
+                            "required": 1,
+                            "instructions": "1400×1080 px.",
+                            "key": "field_83a6ca1117098ccb"
+                        },
+                        {
+                            "type": "image",
+                            "name": "image_1_mobile",
+                            "label": "Фото 1 (мобільне)",
+                            "wrapper": {
+                                "width": "25"
+                            },
+                            "return_format": "array",
+                            "preview_size": "medium",
+                            "library": "all",
+                            "mime_types": "jpg,jpeg,png,webp",
+                            "required": 0,
+                            "instructions": "Необов’язково: 750×580 px.",
+                            "key": "field_5d1cf57dbd27a47f"
+                        },
+                        {
+                            "type": "image",
+                            "name": "image_2",
+                            "label": "Фото 2 (справа внизу)",
+                            "wrapper": {
+                                "width": "25"
+                            },
+                            "return_format": "array",
+                            "preview_size": "medium",
+                            "library": "all",
+                            "mime_types": "jpg,jpeg,png,webp",
+                            "required": 1,
+                            "instructions": "1280×850 px.",
+                            "key": "field_08fbf962c56f127c"
+                        },
+                        {
+                            "type": "image",
+                            "name": "image_2_mobile",
+                            "label": "Фото 2 (мобільне)",
+                            "wrapper": {
+                                "width": "25"
+                            },
+                            "return_format": "array",
+                            "preview_size": "medium",
+                            "library": "all",
+                            "mime_types": "jpg,jpeg,png,webp",
+                            "required": 0,
+                            "instructions": "Необов’язково: 750×500 px.",
+                            "key": "field_9a31d72cd50771c8"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_85adf062ca9bf9ae"
+                },
+                {
+                    "name": "offer_cards",
+                    "label": "Картки переваг (темний блок)",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "offer_cards_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_835bcb654cf7ae62"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "title",
+                            "label": "Заголовок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "rows": 2,
+                            "new_lines": "br",
+                            "required": 1,
+                            "default_value": "What Reatiss could offer you",
+                            "instructions": "Enter = перенос рядка.",
+                            "key": "field_f2efedc711596690"
+                        },
+                        {
+                            "type": "repeater",
+                            "name": "items",
+                            "label": "Картки",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "layout": "block",
+                            "button_label": "Додати картку",
+                            "min": 1,
+                            "max": 3,
+                            "sub_fields": [
+                                {
+                                    "type": "image",
+                                    "name": "image",
+                                    "label": "Ілюстрація",
+                                    "wrapper": {
+                                        "width": "25"
+                                    },
+                                    "return_format": "array",
+                                    "preview_size": "medium",
+                                    "library": "all",
+                                    "mime_types": "png,webp,svg",
+                                    "required": 0,
+                                    "instructions": "Лінійний малюнок 650×470 px (PNG з прозорістю).",
+                                    "key": "field_989e95e8ecab222c"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "title",
+                                    "label": "Заголовок",
+                                    "wrapper": {
+                                        "width": "25"
+                                    },
+                                    "required": 1,
+                                    "key": "field_197df20d6dbbc2b5"
+                                },
+                                {
+                                    "type": "textarea",
+                                    "name": "text",
+                                    "label": "Текст",
+                                    "wrapper": {
+                                        "width": "50"
+                                    },
+                                    "rows": 3,
+                                    "new_lines": "",
+                                    "key": "field_c14482f210db4869"
+                                }
+                            ],
+                            "key": "field_75c19df6105d5eb6"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_2c20f80d447ad028"
+                },
+                {
+                    "name": "history",
+                    "label": "Історія компанії (таймлайн)",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "history_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_8153190eec5b31d2"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "title",
+                            "label": "Заголовок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "rows": 2,
+                            "new_lines": "br",
+                            "required": 1,
+                            "default_value": "Company Background and History",
+                            "instructions": "Enter = перенос рядка.",
+                            "key": "field_9e2bea860117bf46"
+                        },
+                        {
+                            "type": "repeater",
+                            "name": "items",
+                            "label": "Роки",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "layout": "block",
+                            "button_label": "Додати рік",
+                            "min": 1,
+                            "instructions": "Порядок як на сайті: перший рік відкритий за замовчуванням.",
+                            "sub_fields": [
+                                {
+                                    "type": "text",
+                                    "name": "year",
+                                    "label": "Рік",
+                                    "wrapper": {
+                                        "width": "20"
+                                    },
+                                    "required": 1,
+                                    "placeholder": "2022",
+                                    "key": "field_97510530875ede22"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "title",
+                                    "label": "Заголовок",
+                                    "wrapper": {
+                                        "width": "40"
+                                    },
+                                    "required": 1,
+                                    "key": "field_047361d4f9fb2db7"
+                                },
+                                {
+                                    "type": "image",
+                                    "name": "image",
+                                    "label": "Фото",
+                                    "wrapper": {
+                                        "width": "40"
+                                    },
+                                    "return_format": "array",
+                                    "preview_size": "medium",
+                                    "library": "all",
+                                    "mime_types": "jpg,jpeg,png,webp",
+                                    "required": 1,
+                                    "instructions": "1200×1100 px.",
+                                    "key": "field_bb1e0bb0e927497b"
+                                },
+                                {
+                                    "type": "textarea",
+                                    "name": "text",
+                                    "label": "Текст",
+                                    "wrapper": {
+                                        "width": "100"
+                                    },
+                                    "rows": 3,
+                                    "new_lines": "",
+                                    "required": 1,
+                                    "key": "field_981afe8ea13f2cab"
+                                }
+                            ],
+                            "key": "field_ec00f9695b02552d"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_ec9cb122e07cb58a"
+                },
+                {
+                    "name": "reveals",
+                    "label": "Картки з малюнками між лініями",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "reveals_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_b422605b566a2eb9"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "title",
+                            "label": "Заголовок",
+                            "wrapper": {
+                                "width": "70"
+                            },
+                            "rows": 2,
+                            "new_lines": "br",
+                            "required": 1,
+                            "default_value": "What Drives Our Expertise",
+                            "instructions": "Enter = перенос рядка.",
+                            "key": "field_ae1bc76c1da7dfd3"
+                        },
+                        {
+                            "type": "number",
+                            "name": "title_width",
+                            "label": "Макс. ширина заголовка, em",
+                            "wrapper": {
+                                "width": "30"
+                            },
+                            "default_value": 18,
+                            "min": 5,
+                            "max": 40,
+                            "step": 0.5,
+                            "key": "field_a4ebb52193039b51"
+                        },
+                        {
+                            "type": "true_false",
+                            "name": "line",
+                            "label": "Декоративна лінія з блоку вище (як на About)",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_6b739ee9633f55e9"
+                        },
+                        {
+                            "type": "repeater",
+                            "name": "items",
+                            "label": "Картки",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "layout": "block",
+                            "button_label": "Додати картку",
+                            "min": 1,
+                            "instructions": "4 в ряд на десктопі, нижче 1200 — слайдер.",
+                            "sub_fields": [
+                                {
+                                    "type": "image",
+                                    "name": "image",
+                                    "label": "Малюнок",
+                                    "wrapper": {
+                                        "width": "25"
+                                    },
+                                    "return_format": "array",
+                                    "preview_size": "medium",
+                                    "library": "all",
+                                    "mime_types": "png,webp,svg",
+                                    "required": 0,
+                                    "instructions": "Лінійний малюнок 560×420 px (PNG з прозорістю).",
+                                    "key": "field_9e217666e86e17c1"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "title",
+                                    "label": "Заголовок",
+                                    "wrapper": {
+                                        "width": "25"
+                                    },
+                                    "required": 1,
+                                    "key": "field_296d8714998c7a55"
+                                },
+                                {
+                                    "type": "textarea",
+                                    "name": "text",
+                                    "label": "Текст",
+                                    "wrapper": {
+                                        "width": "50"
+                                    },
+                                    "rows": 2,
+                                    "new_lines": "",
+                                    "key": "field_3e93001476b89295"
+                                }
+                            ],
+                            "key": "field_3f17cf73a978c339"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_fff759331ad01b30"
+                },
+                {
+                    "name": "about_stats",
+                    "label": "Цифри з картою (композиція)",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "about_stats_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_0fa6e90b38560b52"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "title",
+                            "label": "Заголовок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "rows": 2,
+                            "new_lines": "br",
+                            "required": 1,
+                            "default_value": "Scientific research shaping the future of semiconductors.",
+                            "instructions": "Enter = перенос рядка.",
+                            "key": "field_fa859da99d03b920"
+                        },
+                        {
+                            "type": "message",
+                            "name": "about_stats_message",
+                            "label": "Як працює",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "message": "Три цифри у вільній композиції. Число — з будь-яким текстом навколо («30+», «2000+»), анімується від нуля. У другої цифри замість фото — контур карти України.",
+                            "key": "field_4e86314f2b16d70f"
+                        },
+                        {
+                            "type": "group",
+                            "name": "item_1",
+                            "label": "Цифра 1 (з фото)",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "layout": "block",
+                            "sub_fields": [
+                                {
+                                    "type": "text",
+                                    "name": "value",
+                                    "label": "Число",
+                                    "wrapper": {
+                                        "width": "20"
+                                    },
+                                    "required": 1,
+                                    "key": "field_a0168f4eb39a7f22"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "lead",
+                                    "label": "Головний текст",
+                                    "wrapper": {
+                                        "width": "40"
+                                    },
+                                    "key": "field_3860222ef5bfd8c7"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "note",
+                                    "label": "Підпис",
+                                    "wrapper": {
+                                        "width": "40"
+                                    },
+                                    "key": "field_8f6ec9716d1dbc2a"
+                                },
+                                {
+                                    "type": "image",
+                                    "name": "image",
+                                    "label": "Фото",
+                                    "wrapper": {
+                                        "width": "100"
+                                    },
+                                    "return_format": "array",
+                                    "preview_size": "medium",
+                                    "library": "all",
+                                    "mime_types": "jpg,jpeg,png,webp",
+                                    "required": 0,
+                                    "instructions": "1280×850 px.",
+                                    "key": "field_ed9a5a2e358c4ad0"
+                                }
+                            ],
+                            "key": "field_4643b1c775e2dff7"
+                        },
+                        {
+                            "type": "group",
+                            "name": "item_2",
+                            "label": "Цифра 2 (з картою)",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "layout": "block",
+                            "sub_fields": [
+                                {
+                                    "type": "text",
+                                    "name": "value",
+                                    "label": "Число",
+                                    "wrapper": {
+                                        "width": "20"
+                                    },
+                                    "required": 1,
+                                    "key": "field_d6f253044fde02c4"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "lead",
+                                    "label": "Головний текст",
+                                    "wrapper": {
+                                        "width": "40"
+                                    },
+                                    "key": "field_07a27d57bae2dbc0"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "note",
+                                    "label": "Підпис",
+                                    "wrapper": {
+                                        "width": "40"
+                                    },
+                                    "key": "field_fa88c4f4ec25e4c9"
+                                },
+                                {
+                                    "type": "true_false",
+                                    "name": "map",
+                                    "label": "Показувати карту",
+                                    "wrapper": {
+                                        "width": "100"
+                                    },
+                                    "ui": 1,
+                                    "default_value": 1,
+                                    "key": "field_edbc08198c905909"
+                                }
+                            ],
+                            "key": "field_fcd33a093b7e76ec"
+                        },
+                        {
+                            "type": "group",
+                            "name": "item_3",
+                            "label": "Цифра 3 (з фото)",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "layout": "block",
+                            "sub_fields": [
+                                {
+                                    "type": "text",
+                                    "name": "value",
+                                    "label": "Число",
+                                    "wrapper": {
+                                        "width": "20"
+                                    },
+                                    "required": 1,
+                                    "key": "field_2e13c2e894686971"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "lead",
+                                    "label": "Головний текст",
+                                    "wrapper": {
+                                        "width": "40"
+                                    },
+                                    "key": "field_d62c5bbdd1fc4e33"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "note",
+                                    "label": "Підпис",
+                                    "wrapper": {
+                                        "width": "40"
+                                    },
+                                    "key": "field_8240be548b59a4bb"
+                                },
+                                {
+                                    "type": "image",
+                                    "name": "image",
+                                    "label": "Фото",
+                                    "wrapper": {
+                                        "width": "100"
+                                    },
+                                    "return_format": "array",
+                                    "preview_size": "medium",
+                                    "library": "all",
+                                    "mime_types": "jpg,jpeg,png,webp",
+                                    "required": 0,
+                                    "instructions": "1280×850 px.",
+                                    "key": "field_b65a96c00a7f9cc7"
+                                }
+                            ],
+                            "key": "field_c49c48d45c439900"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_126b078b8ee05a12"
+                },
+                {
+                    "name": "clients",
+                    "label": "Логотипи клієнтів",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "clients_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_e3b7fa6fcec9a898"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "title",
+                            "label": "Заголовок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "rows": 2,
+                            "new_lines": "br",
+                            "required": 1,
+                            "default_value": "Trusted by Leading Technology Companies",
+                            "instructions": "Enter = перенос рядка.",
+                            "key": "field_d01ccd83959df531"
+                        },
+                        {
+                            "type": "repeater",
+                            "name": "items",
+                            "label": "Логотипи",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "layout": "table",
+                            "button_label": "Додати логотип",
+                            "min": 1,
+                            "max": 15,
+                            "instructions": "Сітка 5 у ряд, оптимально 15 (3 ряди). Логотип — одноколірний PNG/SVG на прозорому фоні: його перефарбовує дизайн.",
+                            "sub_fields": [
+                                {
+                                    "type": "image",
+                                    "name": "logo",
+                                    "label": "Логотип",
+                                    "wrapper": {
+                                        "width": "20"
+                                    },
+                                    "return_format": "array",
+                                    "preview_size": "medium",
+                                    "library": "all",
+                                    "mime_types": "png,svg,webp",
+                                    "required": 1,
+                                    "instructions": "PNG/SVG, ~400 px завширшки.",
+                                    "key": "field_a8e5a1d443977f7e"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "name",
+                                    "label": "Назва",
+                                    "wrapper": {
+                                        "width": "25"
+                                    },
+                                    "required": 1,
+                                    "key": "field_07d18cdbfe3f4240"
+                                },
+                                {
+                                    "type": "url",
+                                    "name": "link",
+                                    "label": "Сайт",
+                                    "wrapper": {
+                                        "width": "35"
+                                    },
+                                    "key": "field_fa0299d8464cca6b"
+                                },
+                                {
+                                    "type": "number",
+                                    "name": "width",
+                                    "label": "Ширина, px",
+                                    "wrapper": {
+                                        "width": "20"
+                                    },
+                                    "default_value": 200,
+                                    "min": 40,
+                                    "max": 300,
+                                    "instructions": "На десктопі (комірка 360 px).",
+                                    "key": "field_2c664a26daf6923d"
+                                }
+                            ],
+                            "key": "field_689416e9e727429b"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_9cf3a5f706a94e13"
+                },
+                {
+                    "name": "team",
+                    "label": "Команда",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "team_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_a58d7d429e433ef5"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "title",
+                            "label": "Заголовок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "rows": 2,
+                            "new_lines": "br",
+                            "required": 1,
+                            "default_value": "The People Behind the Expertise",
+                            "instructions": "Enter = перенос рядка.",
+                            "key": "field_b84feb4480ab436d"
+                        },
+                        {
+                            "type": "relationship",
+                            "name": "items",
+                            "label": "Люди",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "return_format": "id",
+                            "post_type": [
+                                "rts_team"
+                            ],
+                            "filters": [
+                                "search"
+                            ],
+                            "elements": [
+                                "featured_image"
+                            ],
+                            "min": "",
+                            "max": "",
+                            "instructions": "Порожньо — вся команда за порядком. Картка відкриває попап з біографією.",
+                            "key": "field_566bf19b1f3ead2d"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_cb4253058175fce9"
+                },
+                {
+                    "name": "gallery",
+                    "label": "Галерея (стрічка)",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "gallery_hide",
+                            "label": "Приховати блок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_99c4294bcd5c8e4a"
+                        },
+                        {
+                            "type": "text",
+                            "name": "title",
+                            "label": "Заголовок",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "default_value": "Technology in Detail",
+                            "key": "field_ef49127add56bdfb"
+                        },
+                        {
+                            "type": "gallery",
+                            "name": "images",
+                            "label": "Фото",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "return_format": "array",
+                            "preview_size": "medium",
+                            "library": "all",
+                            "required": 1,
+                            "min": 3,
+                            "mime_types": "jpg,jpeg,png,webp",
+                            "instructions": "Від 3 фото, ~1200×1100 px. Клік відкриває фото на весь екран.",
+                            "key": "field_5d9e9e18ed9cff17"
+                        }
+                    ],
+                    "min": "",
+                    "max": "",
+                    "key": "layout_e98186cc65e648a3"
+                }
+            ],
+            "button_label": "Додати блок",
+            "key": "field_24a750c4f8d56c73"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            },
+            {
+                "param": "page_type",
+                "operator": "!=",
+                "value": "posts_page"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "rts_service"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "rts_lab"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "rts_expertise"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Блоки сторінки у порядку виводу. Якщо блоків немає — сторінка показує заголовок і текст із редактора (текстова сторінка).",
+    "show_in_rest": 0,
+    "modified": 1791897142
+}

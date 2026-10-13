@@ -1,0 +1,65 @@
+@use "../mixins" as *;
+
+// ── Grid → slider ──────────────────────────────────────────────────
+// Card grid on desktop, Swiper below the breakpoint (app-swiper.js).
+// Columns: --cols (default 3). Gap: 10 as in the mockups.
+.grid-slider {
+  --cols: 3;
+  // Inside a flex/grid parent a Swiper must be allowed to shrink below its
+  // content width — otherwise it sizes slides from its own growing width
+  // and the page height runs away (feedback loop).
+  width: 100%;
+  min-width: 0;
+
+  // Slides peek past the container edge on mobile; <main> clips overflow-x.
+  &.swiper {
+    overflow: visible;
+  }
+
+  &:not(.swiper-initialized) {
+    .swiper-wrapper {
+      display: grid;
+      grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+      gap: var(--sp-2xs);
+    }
+
+    .swiper-slide {
+      width: auto;
+      height: auto;
+    }
+
+    .grid-slider__pagination {
+      display: none;
+    }
+  }
+
+  .swiper-slide {
+    height: auto;
+  }
+
+  &__pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+
+    &.swiper-pagination-lock {
+      display: none;
+    }
+
+    .swiper-pagination-bullet {
+      width: 8px;
+      height: 8px;
+      margin: 0 !important;
+      border-radius: 4px;
+      background: var(--clr-line);
+      opacity: 1;
+      transition: width 0.3s ease, background 0.3s ease;
+    }
+
+    .swiper-pagination-bullet-active {
+      width: 24px;
+      background: var(--clr-main);
+    }
+  }
+}

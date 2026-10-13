@@ -1,0 +1,24 @@
+@use "../../mixins" as *;
+
+// ── Home: Research insights ── Figma 7967:9040 (+ line 7967:8882)
+// Line: its top is 330px (at 1920) above the cards' bottom edge; it runs
+// behind the cards, drops into the gap before the video banner and ends
+// under the banner (.home-video is z-index 2).
+.home-news {
+  position: relative;
+
+  &__line {
+    z-index: 0;
+    top: calc(100% - 330 / 1920 * 100vw);
+    aspect-ratio: 1920 / 697;
+
+    @include maxMedia(lg) {
+      display: none;
+    }
+  }
+
+  > .container {
+    position: relative;
+    z-index: 1;
+  }
+}

@@ -1,0 +1,170 @@
+@use "../mixins" as *;
+
+// ── FAQ accordion ──────────────────────────────────────────────────
+// Figma: 7967:9190 — items separated by step lines; the open item turns
+// main-blue, shows the answer, and its top line gets a blue accent bar.
+.faq {
+  border-bottom: 0;
+
+  &__item {
+    position: relative;
+
+    // accent bar on the lower (right) segment of the item's top line
+    &::before {
+      content: "";
+      position: absolute;
+      top: rem(14);
+      right: 0;
+      width: rem(80);
+      height: rem(5);
+      border-radius: rem(18);
+      background: var(--clr-main);
+      transform: scaleX(0);
+      transform-origin: right center;
+      transition: transform 0.5s var(--ease-out);
+      z-index: 3;
+    }
+
+    &.is-open::before {
+      transform: scaleX(1);
+    }
+  }
+
+  // closing line under the last item
+  &__end {
+    display: block;
+  }
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: rem(24);
+    width: 100%;
+    // Figma: question 27 below the line, next line 40 below it
+    padding: rem(27) rem(15) rem(40) rem(30);
+    text-align: left;
+    color: var(--clr-black);
+    transition: color var(--transition-1), padding 0.5s var(--ease-out);
+
+    @include maxMedia(xl) {
+      padding: 22px 12px 26px 16px;
+    }
+
+    @include maxMedia(md) {
+      padding: 18px 0 20px;
+    }
+
+    @include hover {
+      color: var(--clr-main);
+    }
+  }
+
+  &__icon {
+    position: relative;
+    flex: none;
+    width: rem(27);
+    height: rem(27);
+    color: var(--clr-text);
+    transition: color var(--transition-1);
+
+    @include maxMedia(xl) {
+      width: 24px;
+      height: 24px;
+    }
+
+    svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transition: opacity 0.3s ease, transform 0.4s var(--ease-out);
+    }
+
+    svg + svg {
+      opacity: 0;
+      transform: rotate(-90deg);
+    }
+  }
+
+  &__head:hover &__icon {
+    color: var(--clr-main);
+  }
+
+  &__body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s var(--ease-out);
+  }
+
+  &__body-inner {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  // open: 20 from the question, 35 to the next line
+  &__answer {
+    max-width: rem(775); // 715 of text + 30 side paddings
+    padding: 0 rem(30) rem(35);
+    color: var(--clr-text);
+
+    @include maxMedia(xl) {
+      padding: 0 16px 24px;
+    }
+
+    @include maxMedia(md) {
+      padding: 0 0 20px;
+    }
+  }
+
+  &__item.is-open &__head {
+    padding-bottom: rem(20);
+
+    @include maxMedia(xl) {
+      padding-bottom: 14px;
+    }
+  }
+
+  &__item.is-open &__head {
+    color: var(--clr-main);
+  }
+
+  &__item.is-open &__icon {
+    color: var(--clr-main);
+
+    svg:first-child {
+      opacity: 0;
+      transform: rotate(90deg);
+    }
+
+    svg + svg {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  &__item.is-open &__body {
+    grid-template-rows: 1fr;
+  }
+}
+
+// answers with editor content across the whole row (service levels 8271:41378:
+// paragraphs, bold sub-titles, lists, two-image gallery — all 20 apart)
+.faq--wide .faq__answer {
+  max-width: none;
+}
+
+.faq__answer--rich.rich-text {
+  > * + * {
+    margin-top: rem(20);
+  }
+
+  // a bold line used as a sub-title sits 8 above its list
+  > p:has(> strong:only-child) + :is(ul, ol) {
+    margin-top: rem(8);
+  }
+
+  :where(strong) {
+    color: var(--clr-black);
+  }
+}

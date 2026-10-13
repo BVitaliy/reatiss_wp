@@ -1,0 +1,51 @@
+@use "../mixins" as *;
+
+// ── Gallery strip ── Figma 8271:41552 "Technology in Detail"
+// Full-width Swiper (app-gallery.js): autoplay + loop + drag, centred.
+// Slides 457×458 r10, gap 11 → 3 whole images in the middle of a 1920
+// screen and parts of the next ones at the edges; phones: one whole image
+// with its neighbours peeking in.
+.gallery-strip {
+  &__title {
+    margin-bottom: var(--sp-sm);
+    text-align: center;
+  }
+
+  &__slider {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  // no JS yet: one row, scrolls sideways
+  &__slider:not(.swiper-initialized) .swiper-wrapper {
+    gap: rem(11);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  &__slide {
+    flex: none;
+    width: rem(457);
+    aspect-ratio: 457 / 458;
+    border-radius: var(--rd-lg);
+    overflow: hidden;
+    background: var(--bg-1);
+
+    @include maxMedia(xl) {
+      width: 38vw;
+    }
+
+    @include maxMedia(md) {
+      width: 78vw;
+    }
+
+    picture {
+      height: 100%;
+    }
+
+    img {
+      @include cover;
+      pointer-events: none;
+    }
+  }
+}

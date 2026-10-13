@@ -1,0 +1,276 @@
+@use "../mixins" as *;
+
+// ── Form fields ────────────────────────────────────────────────────
+// Figma: modal form 7976:18077 — label 16/1.55 black, gap 10,
+// field #F8F9FA 50px (textarea 85px), radius 6, padding 0 20.
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: rem(20);
+
+  @include maxMedia(md) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .field--full {
+    grid-column: 1 / -1;
+  }
+
+  // white fields on a light-grey box (contacts form)
+  &--white .field__input {
+    background: var(--clr-white);
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: rem(10);
+  min-width: 0;
+
+  @include maxMedia(xl) {
+    gap: 8px;
+  }
+
+  &__label {
+    font-size: max(15px, #{rem(16)});
+    line-height: 1.55;
+    color: var(--clr-black);
+  }
+
+  &__input {
+    width: 100%;
+    height: rem(50);
+    padding: 0 rem(20);
+    border: 1px solid transparent;
+    border-radius: var(--rd-md);
+    background: var(--bg-1);
+    color: var(--clr-black);
+    font-size: max(15px, #{rem(16)});
+    line-height: 1.55;
+    outline: 0;
+    transition: border-color var(--transition-1), background var(--transition-1);
+
+    @include maxMedia(xl) {
+      height: 48px;
+      padding: 0 16px;
+    }
+
+    &::placeholder {
+      color: var(--clr-text);
+      opacity: 1;
+    }
+
+    &:focus {
+      border-color: var(--clr-main);
+      background: var(--clr-white);
+    }
+
+    &.is-error {
+      border-color: var(--clr-error);
+    }
+  }
+
+  textarea.field__input {
+    height: rem(85);
+    min-height: rem(85);
+    padding-top: rem(12);
+    padding-bottom: rem(12);
+    resize: vertical;
+
+    @include maxMedia(xl) {
+      height: 96px;
+      min-height: 96px;
+      padding-top: 12px;
+    }
+  }
+
+  &__error {
+    display: none;
+    font-size: 13px;
+    color: var(--clr-error);
+  }
+
+  &__input.is-error + &__error {
+    display: block;
+  }
+}
+
+// <select> with the Figma chevron (8233:39068) — maps 1:1 to CF7/ACF.
+// app-select.js hides the native control and adds a combobox trigger +
+// a listbox (rendered in <body>, see .select__list). Without JS the native
+// select shows, styled as a field.
+.field__select {
+  position: relative;
+  display: block;
+
+  select {
+    padding-right: rem(52);
+    appearance: none;
+    cursor: pointer;
+
+    // placeholder option (disabled + selected) reads grey like other placeholders
+    &:invalid,
+    &:has(option[value=""]:checked) {
+      color: var(--clr-text);
+    }
+  }
+
+  // enhanced: the native control stays in the form but out of sight
+  &.is-enhanced select {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  > svg {
+    position: absolute;
+    top: 50%;
+    right: rem(20);
+    width: rem(14);
+    height: auto;
+    color: var(--clr-text);
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition: transform 0.4s var(--ease-out), color var(--transition-1);
+
+    @include maxMedia(xl) {
+      right: 16px;
+      width: 14px;
+    }
+  }
+
+  &:not(.is-enhanced) select:focus ~ svg,
+  &.is-open > svg {
+    color: var(--clr-main);
+    transform: translateY(-50%) rotate(180deg);
+  }
+}
+
+.select__trigger {
+  display: flex;
+  align-items: center;
+  padding-right: rem(52);
+  text-align: left;
+  cursor: pointer;
+
+  @include maxMedia(xl) {
+    padding-right: 44px;
+  }
+
+  &.is-placeholder {
+    color: var(--clr-text);
+  }
+
+  .field__select.is-open & {
+    border-color: var(--clr-main);
+  }
+
+  @include hover {
+    border-color: var(--clr-line);
+  }
+
+  // native select marked invalid by app-form.js
+  select.is-error + & {
+    border-color: var(--clr-error);
+  }
+}
+
+.select__value {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// the list: white card under the field, soft shadow (as the header search
+// results), fades + slides in; the chosen option carries the blue running-dot
+// dash on the left
+.select__list {
+  position: absolute;
+  z-index: 300;
+  display: none;
+  max-height: min(#{rem(292)}, 60vh);
+  padding: rem(6);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--clr-line);
+  border-radius: var(--rd-md);
+  background: var(--clr-white);
+  box-shadow: 0 rem(20) rem(40) rgba(2, 16, 22, 0.1);
+  opacity: 0;
+  transform: translateY(#{rem(-6)});
+  transition: opacity 0.25s ease, transform 0.35s var(--ease-out);
+  scrollbar-width: thin;
+  scrollbar-color: var(--clr-line) transparent;
+
+  &.is-up {
+    transform: translateY(#{rem(6)});
+  }
+
+  &.is-open {
+    opacity: 1;
+    transform: none;
+  }
+
+  @include maxMedia(xl) {
+    padding: 6px;
+  }
+}
+
+.select__option {
+  position: relative;
+  padding: rem(10) rem(14);
+  border-radius: var(--rd-sm);
+  font-size: max(15px, #{rem(16)});
+  line-height: 1.55;
+  color: var(--clr-black);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, padding 0.35s var(--ease-out);
+
+  @include maxMedia(xl) {
+    padding: 10px 14px;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: rem(14);
+    width: rem(14);
+    height: rem(3);
+    margin-top: rem(-1.5);
+    border-radius: rem(3);
+    background: var(--clr-accent);
+    box-shadow: 0 0 rem(6) rgba(35, 88, 252, 0.35);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.35s var(--ease-out);
+
+    @include maxMedia(xl) {
+      left: 14px;
+      width: 14px;
+      height: 3px;
+    }
+  }
+
+  &.is-active {
+    background: var(--bg-1);
+    color: var(--clr-main);
+  }
+
+  &.is-selected {
+    padding-left: rem(38);
+    color: var(--clr-main);
+
+    @include maxMedia(xl) {
+      padding-left: 38px;
+    }
+
+    &::before {
+      transform: scaleX(1);
+    }
+  }
+}

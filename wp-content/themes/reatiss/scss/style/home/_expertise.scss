@@ -1,0 +1,33 @@
+@use "../../mixins" as *;
+
+// ── Home: Deep Technical Expertise ── Figma 7967:8886
+.home-expertise {
+  position: relative;
+
+  // the stepped line begins on the hero, 88px above its bottom edge
+  &__line {
+    top: calc(-1 * var(--sp-xl) - 4.6vw);
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__more {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: center;
+    gap: rem(10) rem(16);
+    margin-top: var(--sp-md);
+    text-align: center;
+
+    // phones: three lines — text / link / text
+    @include maxMedia(md) {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+}

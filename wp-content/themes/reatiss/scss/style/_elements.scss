@@ -1,0 +1,81 @@
+@use "../mixins" as *;
+
+// elements.php — dev showcase of the design system (not a real page)
+.elements {
+  padding-top: calc(var(--header-h) + #{rem(20)});
+  padding-bottom: var(--sp-xl);
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-xs);
+    padding-block: var(--sp-sm);
+    border-bottom: 1px solid var(--clr-line);
+  }
+
+  &__label {
+    font-family: var(--font-main);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--clr-accent);
+  }
+
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--sp-xs);
+  }
+
+  &__row--center {
+    align-items: center;
+  }
+
+  &__cuts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--sp-2xs);
+
+    @include maxMedia(md) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__cut {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 16 / 10;
+    background: linear-gradient(135deg, var(--clr-main), var(--clr-accent));
+    color: var(--clr-white);
+
+    @include hover {
+      --cut-x: 65%;
+    }
+  }
+
+  &__faq,
+  &__form {
+    max-width: rem(1027);
+  }
+
+  &__swatch {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: rem(140);
+    font-size: 13px;
+
+    span {
+      height: rem(70);
+      border: 1px solid var(--clr-line);
+      border-radius: var(--rd-lg);
+    }
+  }
+
+  &__dark {
+    padding: var(--sp-xs);
+    border-radius: var(--rd-lg);
+  }
+}

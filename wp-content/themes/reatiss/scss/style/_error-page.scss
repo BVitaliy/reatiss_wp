@@ -1,0 +1,109 @@
+@use "../mixins" as *;
+
+// ── 404 ── Figma 8038:21975
+// Text (457, from x187, y341) | "4 mark 4" art (733×577, from x1011, y159);
+// the page ends at 960 where the footer starts. Two stepped running lines.
+.error-page {
+  position: relative;
+  min-height: rem(960);
+  overflow: hidden;
+
+  @include maxMedia(xl) {
+    min-height: 0;
+  }
+
+  // lines are placed in page coordinates from the mockup (the section starts
+  // at the top of the page, under the fixed header)
+  &__line {
+    z-index: 0;
+
+    // never under the fixed header (its height doesn't follow vw below 1440)
+    &--top {
+      top: max(calc(117 / 1920 * 100vw), calc(var(--header-h) + 10px));
+      aspect-ratio: 1920 / 314;
+    }
+
+    &--bottom {
+      top: calc(539.565 / 1920 * 100vw);
+      aspect-ratio: 1920 / 462;
+    }
+
+    @include maxMedia(lg) {
+      display: none;
+    }
+  }
+
+  &__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    // 457 | 367 | 733 at 1920; below that the text keeps its width and the
+    // gap + art give way (a plain column-gap would squeeze the title)
+    grid-template-columns: minmax(#{rem(457)}, 457fr) minmax(0, 367fr) minmax(0, 733fr);
+    align-items: start;
+    padding-top: rem(159);
+    // text from x187, art ends at 1744 (gutter + 157 / 146)
+    padding-inline: calc(var(--gutter) + #{rem(157)}) calc(var(--gutter) + #{rem(146)});
+    padding-bottom: var(--sp-lg);
+
+    @include maxMedia(xl) {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+      row-gap: 40px;
+      padding-top: calc(var(--header-h) + 50px);
+      padding-inline: var(--gutter);
+      text-align: center;
+    }
+  }
+
+  // title → 24 → text → 50 → button
+  &__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: rem(182); // Figma: text 182 below the top of the art
+
+    @include maxMedia(xl) {
+      align-items: center;
+      max-width: 520px;
+      margin-top: 0;
+    }
+  }
+
+  &__lead {
+    margin: rem(24) 0 var(--sp-sm);
+    color: var(--clr-text);
+  }
+
+  &__art {
+    grid-column: 3;
+    color: var(--clr-main);
+
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    @include maxMedia(xl) {
+      grid-column: auto;
+      order: -1;
+      width: min(100%, 440px);
+    }
+
+    // drawn in by app-error.js: hidden until it takes over (no flash of the
+    // filled art), shown anyway after 3s if the script never runs
+    @media (prefers-reduced-motion: no-preference) {
+      html.js &.js-error-art:not(.is-ready) svg {
+        opacity: 0;
+        animation: error-art-failsafe 0s 3s forwards;
+      }
+    }
+  }
+}
+
+@keyframes error-art-failsafe {
+  to {
+    opacity: 1;
+  }
+}

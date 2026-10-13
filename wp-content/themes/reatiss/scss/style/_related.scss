@@ -1,0 +1,19 @@
+@use "../mixins" as *;
+
+// ── Related row ── Figma 8054:19086 (article: Discover More Articles),
+// 8054:19345 (event: Explore More Upcoming Events)
+// Title left + .link-line right → 80 → .grid-slider of cards (slider < 1200).
+.related {
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: rem(24);
+    margin-bottom: var(--sp-md);
+
+    @include maxMedia(md) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+}

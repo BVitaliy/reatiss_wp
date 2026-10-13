@@ -1,0 +1,19 @@
+@use "../../mixins" as *;
+
+// ── Home: Advanced Laboratories for Discovery ── Figma 7967:9021
+.home-labs {
+  position: relative;
+
+  // line 7967:8876 starts 84px above the About photo's bottom edge and
+  // runs behind this section's content
+  &__line {
+    z-index: 0;
+    top: calc(-1 * var(--sp-xl) - 4.375vw);
+    aspect-ratio: 1920 / 649;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+}

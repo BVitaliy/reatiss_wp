@@ -1,0 +1,92 @@
+@use "../mixins" as *;
+
+// ── Breadcrumbs ── Figma 7999:18685 (article)
+// Inner pages: first child of <main> inside .page-top (clears the fixed
+// header). Centred, 14/1.55 grey, current page black, 4px dot separators.
+.page-top {
+  position: relative;
+  z-index: 2;
+  padding-top: calc(var(--header-h) + #{rem(6)}); // 112 at 1920
+}
+
+.breadcrumbs {
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: rem(4) rem(12);
+
+    // phones: one swipeable line, edge to edge
+    @include maxMedia(md) {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      margin-inline: calc(var(--gutter) * -1);
+      padding-inline: var(--gutter);
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+  // left-aligned variant (author page)
+  &--left &__list {
+    justify-content: flex-start;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: rem(12);
+    font-size: max(13px, #{rem(14)});
+    line-height: 1.55;
+    color: var(--clr-text);
+    white-space: nowrap;
+
+    & + &::before {
+      content: "";
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    a {
+      transition: color var(--transition-1);
+
+      @include hover {
+        color: var(--clr-main);
+      }
+    }
+
+    &:last-child {
+      color: var(--clr-black);
+      white-space: normal;
+
+      @include maxMedia(md) {
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+// on a dark photo (page banner, Figma 8271:41302): white 50%, current white
+.breadcrumbs--light .breadcrumbs__item {
+  color: rgba(255, 255, 255, 0.5);
+
+  a {
+    color: inherit;
+
+    @include hover {
+      color: var(--clr-white);
+    }
+  }
+
+  &:last-child {
+    color: var(--clr-white);
+  }
+}

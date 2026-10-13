@@ -1,0 +1,44 @@
+@use "../mixins" as *;
+
+// ── List page (blog, events) ── Figma blog 7989:32257 · events 8028:20020
+// Title (h2, 614) → 50 → filter chips → 80 → .cards-grid of .news-card
+// → 80 → "Show more" + pagination. The home stepped line
+// (7989:32279) wraps the title.
+.list-page {
+  position: relative;
+  margin-top: rem(80); // breadcrumbs → title (Figma 134 → 214)
+
+  @include maxMedia(xl) {
+    margin-top: 40px;
+  }
+
+  // same line as under the home hero; its top is 283 above the title
+  &__line {
+    z-index: 0;
+    top: calc(-283 / 1920 * 100vw);
+    aspect-ratio: 1920 / 404;
+
+    @include maxMedia(lg) {
+      display: none;
+    }
+  }
+
+  > .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-head {
+    gap: var(--sp-sm);
+  }
+
+  // the chip row must not grow past the screen (it scrolls on phones)
+  &__filter {
+    width: 100%;
+    min-width: 0;
+  }
+
+  &__pager {
+    margin-top: var(--sp-md);
+  }
+}

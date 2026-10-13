@@ -1,0 +1,866 @@
+@use "../mixins" as *;
+
+// ── About page ── Figma 8271:40167
+// Shared blocks (banner, left-right, reveals, video, lab cards, gallery, FAQ,
+// work together) keep their partials; here the about-only blocks.
+// Free compositions (intro, stats) are positioned in % of their mockup frame
+// at ≥1200 and fall back to a plain column below.
+
+// ── Intro: two photos + panel (8271:40187, frame 1860 × 951) ──
+.about-intro {
+  &__stage {
+    position: relative;
+    aspect-ratio: 1860 / 951;
+
+    // below 1200: a column — photo, panel, photo
+    @include maxMedia(xl) {
+      aspect-ratio: auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--sp-2xs);
+    }
+  }
+
+  &__photo {
+    position: absolute;
+    border-radius: var(--rd-lg);
+    overflow: hidden;
+    background: var(--bg-1);
+
+    picture {
+      height: 100%;
+    }
+
+    img {
+      @include cover;
+    }
+
+    &--1 {
+      top: 0;
+      left: 0;
+      width: 36.935%; // 687
+      aspect-ratio: 687 / 577;
+    }
+
+    &--2 {
+      right: 0;
+      bottom: 0;
+      width: 36.398%; // 677
+      aspect-ratio: 677 / 568;
+    }
+
+    // stacked: the desktop proportions (687×577 / 677×568), first photo
+    // above the panel, second under it
+    @include maxMedia(xl) {
+      position: static;
+      width: auto;
+    }
+
+    &--2 {
+      @include maxMedia(xl) {
+        order: 2;
+      }
+    }
+  }
+
+  // light panel with the bottom step (right part raised 33)
+  &__panel {
+    --cut-x: 57%; // diagonal 430 → 470 of 754
+    --cut-h: #{rem(33)};
+    --cut-w: #{rem(40)};
+    position: absolute;
+    z-index: 1;
+    top: 17.876%; // 170
+    left: 29.355%; // 546
+    width: 40.538%; // 754
+    min-height: 64.248%; // 611
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: rem(40);
+    padding: rem(69) rem(65) calc(#{rem(36)} + var(--cut-h)) rem(72); // button 69 above the bottom
+    background: var(--bg-1);
+
+    @include maxMedia(xl) {
+      position: relative;
+      inset: auto;
+      width: auto;
+      min-height: 0;
+      padding: 48px 32px calc(40px + var(--cut-h));
+      order: 1;
+    }
+
+    @include maxMedia(md) {
+      padding: 32px 20px calc(28px + var(--cut-h));
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: rem(40);
+    width: 100%;
+
+    @include maxMedia(xl) {
+      gap: 28px;
+    }
+  }
+
+  &__text.rich-text > * + * {
+    margin-top: rem(20);
+  }
+}
+
+// ── What Reatiss could offer you (dark, 8271:40201) ──
+// padding 150 / 198, title → 90 → cards (928, 10 apart)
+.about-offer {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--sp-xl) rem(198);
+
+  @include maxMedia(xl) {
+    padding-block: var(--sp-xl);
+  }
+
+  // two hexagon outlines (white 10%), from 553 above the section
+  &__bg {
+    position: absolute;
+    top: rem(-553);
+    left: 50%;
+    width: rem(1795);
+    max-width: none;
+    height: auto;
+    translate: -50% 0;
+    stroke: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+
+    path {
+      vector-effect: non-scaling-stroke;
+    }
+
+    // below 1200 only their lower ends showed (the tops start above the
+    // section, behind the block before it) — off there (manager)
+    @include maxMedia(xl) {
+      display: none;
+    }
+  }
+
+  &__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2xs);
+    max-width: rem(928);
+    margin: rem(90) auto 0;
+
+    @include maxMedia(xl) {
+      margin-top: var(--sp-md);
+    }
+  }
+}
+
+// card: icon 145 · 32 · title (h5) · 24 · text (18, white 60%)
+.offer-card {
+  display: grid;
+  grid-template-columns: rem(145) minmax(0, 1fr);
+  align-items: center;
+  gap: rem(32);
+  padding: rem(24);
+  border-radius: var(--rd-lg);
+  // the mockup's white 5% as a solid colour: the cursor dots stay under the
+  // cards, not seen through them (and no hover — manager)
+  background: color-mix(in srgb, #fff 5%, var(--bg-dark));
+
+  @include maxMedia(md) {
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 16px;
+    padding: 16px;
+  }
+
+  // the drawing in white (the files are dark lines on transparent)
+  &__icon {
+    aspect-ratio: 1;
+
+    picture {
+      height: 100%;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: invert(1) brightness(1.4);
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: rem(24);
+
+    @include maxMedia(md) {
+      gap: 10px;
+    }
+  }
+
+  &__text {
+    color: rgba(255, 255, 255, 0.6);
+  }
+}
+
+// ── Company Background and History (8271:40213) ──
+// 1236 column: title → 50 → year bar → 50 → panel (text 610 | photo 577)
+.about-history {
+  &__inner {
+    max-width: rem(1236);
+    margin-inline: auto;
+  }
+
+  &__bar {
+    position: relative;
+    margin-top: var(--sp-sm);
+
+    // phones: the years and the line run edge to edge of the screen
+    @include maxMedia(md) {
+      margin-inline: calc(var(--gutter) * -1);
+    }
+  }
+
+  // years + the line, scrolls sideways when the row is wider (swipe, or drag
+  // with the mouse — app-about.js); scrolled: the first years fade out left
+  &__years-wrap {
+    display: grid;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    cursor: grab;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    // fades on the cut sides: left once scrolled, right (phones — no
+    // arrows there) while more years follow
+    --fade-l: 0px;
+    --fade-r: 0px;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent);
+    mask-image: linear-gradient(to right, transparent, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent);
+
+    &.is-scrolled {
+      --fade-l: #{rem(80)};
+
+      @include maxMedia(md) {
+        --fade-l: 48px;
+      }
+    }
+
+    &.has-more {
+      @include maxMedia(md) {
+        --fade-r: 48px;
+      }
+    }
+
+    &.is-dragging {
+      cursor: grabbing;
+      user-select: none;
+    }
+  }
+
+  &__years {
+    display: flex;
+    gap: rem(32);
+    padding-bottom: rem(14);
+    padding-right: rem(252); // = the arrows block: the last year can scroll out from under it
+
+    @include maxMedia(md) {
+      gap: 16px;
+      padding-inline: var(--gutter);
+    }
+  }
+
+  &__year {
+    flex: none;
+    min-width: rem(120); // long labels ("1960–80s") grow, never spill
+    white-space: nowrap;
+    text-align: center;
+    color: color-mix(in srgb, var(--clr-black) 20%, transparent);
+    transition: color var(--transition-1);
+
+    @include maxMedia(xl) {
+      min-width: 96px;
+    }
+
+    &.is-active {
+      color: var(--clr-main);
+    }
+
+    @include hover {
+      color: var(--clr-main);
+    }
+  }
+
+  // the rule under the years; the notch sits under the active one
+  &__line {
+    position: relative;
+    height: rem(16);
+    background: linear-gradient(var(--clr-line), var(--clr-line)) left top / 100% 1px no-repeat;
+
+    @include maxMedia(xl) {
+      height: 16px;
+    }
+  }
+
+  &__notch {
+    position: absolute;
+    top: 0;
+    left: var(--notch-x, 0);
+    width: rem(112);
+    height: 100%;
+    overflow: visible;
+    background: var(--page-bg); // hides the straight rule under the dip
+    fill: none;
+    stroke: var(--clr-line);
+    transition: left 0.5s var(--ease-out);
+
+    @include maxMedia(xl) {
+      width: 112px;
+    }
+
+    path {
+      vector-effect: non-scaling-stroke;
+    }
+  }
+
+  // ← → at the right end, over a white fade that hides the cut year
+  &__nav {
+    position: absolute;
+    top: rem(-10);
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: rem(8);
+    width: rem(252);
+    height: rem(56);
+    background: linear-gradient(to left, var(--page-bg) 45%, transparent);
+    pointer-events: none;
+
+    @include maxMedia(xl) {
+      top: -8px;
+      gap: 6px;
+    }
+
+    // phones: no arrows — the row is swiped / dragged, a year is tapped
+    @include maxMedia(md) {
+      display: none;
+    }
+  }
+
+  // the button tile (.btn__tile): blue square, white arrow
+  &__arrow {
+    display: grid;
+    place-items: center;
+    width: rem(46);
+    height: rem(46);
+    border-radius: var(--rd-sm);
+    background: var(--clr-main);
+    color: var(--clr-white);
+    pointer-events: auto;
+    transition: background-color var(--transition-1), opacity var(--transition-1);
+
+    @include maxMedia(xl) {
+      width: 40px;
+      height: 40px;
+    }
+
+    svg {
+      width: rem(23);
+      height: rem(23);
+      transition: translate 0.4s var(--ease-out);
+
+      @include maxMedia(xl) {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    &--prev svg {
+      transform: scaleX(-1);
+    }
+
+    &:disabled {
+      opacity: 0.2;
+      pointer-events: none;
+    }
+
+    @include hover {
+      background: var(--clr-accent);
+
+      svg {
+        translate: 3px 0;
+      }
+
+      &.about-history__arrow--prev svg {
+        translate: -3px 0;
+      }
+    }
+  }
+
+  &__panels {
+    margin-top: var(--sp-sm);
+  }
+
+  &__panel {
+    display: grid;
+
+    &[hidden] {
+      display: none;
+    }
+
+    grid-template-columns: minmax(0, 610fr) minmax(0, 577fr);
+    align-items: center;
+    gap: rem(49);
+
+    @include maxMedia(lg) {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+    }
+  }
+
+  &__copy {
+    display: flex;
+    flex-direction: column;
+    gap: rem(24);
+
+    @include maxMedia(lg) {
+      order: 2;
+      gap: 12px;
+    }
+  }
+
+  &__text {
+    color: var(--clr-text);
+  }
+
+  &__media {
+    aspect-ratio: 577 / 422;
+    border-radius: var(--rd-lg);
+    overflow: hidden;
+    isolation: isolate; // keeps the radius while the photo scales (Safari)
+    background: var(--bg-1);
+
+    picture {
+      height: 100%;
+    }
+
+    img {
+      @include cover;
+    }
+  }
+}
+
+// ── What Drives Our Expertise: the reveals block + own line (8278:46390) ──
+// the line starts 608 above the title, behind the left-right block above
+.about-drives {
+  position: relative;
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__line {
+    z-index: 0;
+    top: calc(-608 / 1920 * 100vw);
+    aspect-ratio: 1920 / 624;
+
+    @include maxMedia(md) {
+      display: none;
+    }
+  }
+}
+
+// ── Stats composition (8271:40267, frame 1746 × 2094 at x57) ──
+.about-stats {
+  overflow-x: clip;
+
+  &__stage {
+    position: relative;
+    aspect-ratio: 1746 / 2094;
+    width: 93.871%; // 1746 of 1860
+    margin-left: 3.065%; // 57
+
+    @include maxMedia(xl) {
+      aspect-ratio: auto;
+      width: auto;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-lg);
+    }
+  }
+
+  &__title {
+    position: absolute;
+    top: 0;
+    left: 64.261%; // 1122
+    width: 35.739%; // 624
+    z-index: 2;
+
+    @include maxMedia(xl) {
+      position: static;
+      width: auto;
+      max-width: 640px;
+    }
+  }
+
+  // children are placed on the stage directly at ≥1200
+  &__item {
+    display: contents;
+
+    @include maxMedia(xl) {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: end;
+      gap: 24px 32px;
+    }
+
+    @include maxMedia(md) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  &__num,
+  &__photo,
+  &__copy,
+  &__map {
+    position: absolute;
+
+    @include maxMedia(xl) {
+      position: relative;
+      inset: auto;
+      width: auto;
+    }
+  }
+
+  // Jakarta Bold 231, accent
+  &__num {
+    z-index: 2;
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: rem(231);
+    line-height: 1.26;
+    color: var(--clr-accent);
+    white-space: nowrap;
+    pointer-events: none;
+
+    @include maxMedia(xl) {
+      grid-column: 1 / -1;
+      font-size: 120px;
+      line-height: 1;
+    }
+
+    @include maxMedia(md) {
+      font-size: 84px;
+    }
+  }
+
+  &__photo {
+    z-index: 1;
+    width: 36.884%; // 644
+    aspect-ratio: 644 / 388;
+    border-radius: var(--rd-lg);
+    overflow: hidden;
+    background: var(--bg-1);
+
+    picture {
+      height: 100%;
+    }
+
+    img {
+      @include cover;
+    }
+  }
+
+  &__copy {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: rem(20);
+    width: 20.79%; // 363
+
+    @include maxMedia(xl) {
+      gap: 12px;
+    }
+  }
+
+  &__note {
+    color: var(--clr-text);
+  }
+
+  // the outline of Ukraine — drawn by app-about.js (DrawSVG)
+  &__map {
+    z-index: 0;
+    color: var(--clr-black);
+
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+
+    @include maxMedia(xl) {
+      grid-column: 1 / -1;
+      max-width: 640px;
+      width: 100%;
+    }
+  }
+
+  // positions (% of the 1746 × 2094 frame)
+  &__item--1 &__num { left: 1.203%; top: 4.155%; }
+  &__item--1 &__photo { left: 16.151%; top: 11.796%; }
+  &__item--1 &__copy { left: 26.46%; top: 31.996%; width: 22.68%; }
+
+  &__item--2 &__map { left: 2.463%; top: 43.5%; width: 57.216%; } // 60 lower than the mockup: clear of the 30+ note
+  &__item--2 &__num { left: 56.472%; top: 38.157%; }
+  &__item--2 &__copy { left: 64.777%; top: 51.91%; }
+
+  &__item--3 &__num { left: 0; top: 70.583%; }
+  &__item--3 &__photo { left: 15.979%; top: 81.471%; }
+  &__item--3 &__copy { left: 54.181%; top: 91.404%; }
+
+  @include maxMedia(xl) {
+    &__item &__num,
+    &__item &__photo,
+    &__item &__copy,
+    &__item &__map {
+      inset: auto;
+      width: auto;
+    }
+
+    &__item &__map {
+      width: 100%;
+    }
+  }
+}
+
+// ── Clients: logo grid with drawn lines (8347:73455) ──
+// grid 1840 inset 10 in the 1860 frame: 5 × 3 cells 360 × 252, gap 10;
+// vertical step lines over the full frame (svg), rules over / under cells
+.about-clients {
+  padding-bottom: rem(92); // Figma frame: 92 under the grid before the video
+
+  @include maxMedia(xl) {
+    padding-bottom: 0;
+  }
+
+  .section-head {
+    margin-bottom: var(--sp-sm);
+  }
+
+  &__grid {
+    position: relative;
+    padding-inline: rem(10);
+
+    // below 1200 each cell draws its own step lines: the left one reaches
+    // 20 past the cell (gap half + the 16 step), the right one only ~5 —
+    // pad each side by that, so both outer lines sit on the content edge
+    @include maxMedia(xl) {
+      padding: 0 6px 0 20px;
+    }
+  }
+
+  &__lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    stroke: var(--clr-line);
+    pointer-events: none;
+
+    path {
+      vector-effect: non-scaling-stroke;
+    }
+
+    @include maxMedia(xl) {
+      display: none;
+    }
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--sp-2xs);
+
+    @include maxMedia(xl) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @include maxMedia(md) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
+
+.client-card {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 360 / 252;
+  padding: rem(30);
+  border-radius: var(--rd-lg);
+
+  @include maxMedia(md) {
+    padding: 16px;
+  }
+
+  // the short rules over / under the cell (in the middle of the gaps)
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    width: 78%; // 281 of 360
+    height: 1px;
+    background: var(--clr-line);
+    translate: -50% 0;
+    transition: scale 0.9s var(--ease-out); // the draw-in only
+  }
+
+  &::before {
+    top: calc(var(--sp-2xs) / -2);
+  }
+
+  &::after {
+    bottom: calc(var(--sp-2xs) / -2);
+  }
+
+  // drawn in when the grid scrolls in (app-about.js adds .is-drawn)
+  .js-clients:not(.is-drawn) &::before,
+  .js-clients:not(.is-drawn) &::after {
+    scale: 0 1;
+  }
+
+  &::before,
+  &::after {
+    transition-delay: calc(var(--i, 0) * 60ms);
+  }
+
+  // the whole cell is the link
+  &__link {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: inherit;
+    border-radius: inherit;
+
+    // below 1200 the grid svg is off: each cell draws its own vertical step
+    // lines (left; the last column also right), in the middle of the gap —
+    // the desktop motif: down, a 16 step at mid-height, down
+    @include maxMedia(xl) {
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        top: calc(var(--sp-2xs) / -2);
+        bottom: calc(var(--sp-2xs) / -2);
+        left: calc(var(--sp-2xs) / -2 - 15.5px);
+        width: 16px;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 100' preserveAspectRatio='none'%3E%3Cpath d='M15.5 0V45L0.5 51V100' fill='none' stroke='%23EEEFF0' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+        pointer-events: none;
+        transform-origin: top;
+        transition: scale 0.9s var(--ease-out);
+        transition-delay: calc(var(--i, 0) * 60ms);
+      }
+
+      &::after {
+        display: none;
+        left: auto;
+        right: calc(var(--sp-2xs) / -2 - 0.5px);
+      }
+
+      .js-clients:not(.is-drawn) &::before,
+      .js-clients:not(.is-drawn) &::after {
+        scale: 1 0;
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--clr-accent);
+      outline-offset: 2px;
+    }
+  }
+
+  // last column: the closing line on the right too
+  @include maxMedia(xl) {
+    &:nth-child(3n) .client-card__link::after {
+      display: block;
+    }
+  }
+
+  @include maxMedia(md) {
+    &:nth-child(3n) .client-card__link::after {
+      display: none;
+    }
+
+    &:nth-child(2n) .client-card__link::after {
+      display: block;
+    }
+  }
+
+  &__logo {
+    display: block;
+    width: min(100%, calc(var(--logo-w) * 1rem / 16));
+    aspect-ratio: var(--logo-ratio);
+    background: var(--clr-text);
+    -webkit-mask: var(--logo) center / contain no-repeat;
+    mask: var(--logo) center / contain no-repeat;
+    transition: scale 0.6s var(--ease-out);
+    will-change: scale; // own layer: rasterised once, no flicker while it scales
+
+    @include maxMedia(xl) {
+      width: min(80%, calc(var(--logo-w) * 1px * 0.8));
+    }
+  }
+
+  // hover: a light zoom of the logo only (manager; rules stay put)
+  @include hover {
+    .client-card__logo {
+      scale: 1.08;
+    }
+  }
+}
+
+// ── Team (8271:40288): the lab card with a shorter panel + own line ──
+.about-team {
+  position: relative;
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__line {
+    z-index: 0;
+    top: calc(-78 / 1920 * 100vw); // Figma: 78 above the title
+    aspect-ratio: 1920 / 1701;
+
+    @include maxMedia(md) {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,212 @@
+@use "../mixins" as *;
+
+// ── Result list ── Figma search 7982:27491 · on shelf 8271:41619
+// Rows between step lines: line → 20 → row → 32 → next line; a closing
+// .step-line after the list. Width comes from the parent (925 / 1236).
+.result-list {
+  display: flex;
+  flex-direction: column;
+  gap: rem(32);
+  margin-bottom: rem(32);
+
+  @include maxMedia(md) {
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  .step-line {
+    margin-bottom: rem(19); // Figma 20 from a 16-high line; ours is 17
+
+    @include maxMedia(md) {
+      margin-bottom: 16px;
+    }
+  }
+}
+
+// a row: title (+ description) and a grey ↘ that turns → on hover
+// .result-row--desc — title + text block (867 of 1236), flush with the line
+.result-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(24);
+  width: 100%;
+  padding: 0 rem(20);
+  color: var(--clr-black);
+  text-align: left;
+  transition: color var(--transition-1);
+
+  @include maxMedia(md) {
+    gap: 16px;
+    padding: 0;
+  }
+
+  &__title {
+    min-width: 0;
+    transition: color var(--transition-1);
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: rem(12);
+    min-width: 0;
+    max-width: rem(867);
+
+    @include maxMedia(md) {
+      gap: 8px;
+    }
+  }
+
+  &__text {
+    color: var(--clr-text);
+  }
+
+  > svg {
+    flex: none;
+    width: rem(18);
+    height: rem(18);
+    color: var(--clr-text);
+    transform: rotate(45deg);
+    transition: transform 0.4s var(--ease-out), color var(--transition-1);
+
+    @include maxMedia(xl) {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &--desc {
+    padding: 0;
+  }
+
+  // icon on the left (service reports: file / link) — light square, the
+  // icon main blue; on hover the square fills
+  &__icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: rem(56);
+    height: rem(56);
+    border-radius: var(--rd-md);
+    background: var(--bg-1);
+    color: var(--clr-main);
+    transition: background var(--transition-1), color var(--transition-1);
+
+    @include maxMedia(md) {
+      width: 44px;
+      height: 44px;
+    }
+
+    svg {
+      width: rem(24);
+      height: rem(24);
+
+      @include maxMedia(xl) {
+        width: 22px;
+        height: 22px;
+      }
+    }
+  }
+
+  &--icon {
+    justify-content: flex-start;
+
+    // the arrow keeps to the right end (the text column is capped at 867)
+    > svg {
+      margin-left: auto;
+    }
+
+    @include hover {
+      .result-row__icon {
+        background: var(--clr-main);
+        color: var(--clr-white);
+      }
+    }
+  }
+
+  @include hover {
+    color: var(--clr-main);
+
+    .result-row__title {
+      color: var(--clr-main);
+    }
+
+    > svg {
+      color: var(--clr-main);
+      transform: rotate(0);
+    }
+  }
+}
+
+// report files (service 8271:41477): line · 24 · row · 24 · line, the title
+// (18 grey) opens the PDF, the icon downloads it
+.result-list--files {
+  gap: rem(24);
+  margin-bottom: rem(24);
+
+  @include maxMedia(md) {
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+
+  .step-line {
+    margin-bottom: rem(23);
+
+    @include maxMedia(md) {
+      margin-bottom: 18px;
+    }
+  }
+}
+
+.result-row--file {
+  padding: 0;
+
+  // no hover on the row as a whole — the title and the icon have their own
+  @include hover {
+    .result-row__title {
+      color: var(--clr-text);
+    }
+  }
+
+  .result-row__title {
+    color: var(--clr-text);
+
+    @include hover {
+      color: var(--clr-main);
+    }
+  }
+
+  .result-row__file {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: rem(36);
+    height: rem(36);
+    margin: rem(-6) rem(-7) rem(-6) 0;
+    border-radius: 50%;
+    color: var(--clr-main);
+    transition: background var(--transition-1), color var(--transition-1);
+
+    @include maxMedia(xl) {
+      width: 36px;
+      height: 36px;
+      margin: -6px -7px -6px 0;
+    }
+
+    svg {
+      width: rem(23);
+      height: rem(24);
+
+      @include maxMedia(xl) {
+        width: 22px;
+        height: 23px;
+      }
+    }
+
+    @include hover {
+      background: var(--clr-main);
+      color: var(--clr-white);
+    }
+  }
+}

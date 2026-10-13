@@ -1,0 +1,135 @@
+@use "../mixins" as *;
+
+// ── 3D model ── Figma 8275:46370: stage 842 high (container wide), caption 23 below
+// (Inter 16 grey). The poster picture lies under the <model-viewer> and fades
+// out once the model has loaded (app-model.js).
+.model-3d {
+  padding-bottom: rem(60); // Figma frame 950 = 842 stage + caption + 60
+
+  @include maxMedia(xl) {
+    padding-bottom: 0;
+  }
+
+  // the whole container width (room to turn / zoom), mockup height 842;
+  // the camera frames the model by height, so it keeps the mockup size
+  &__stage {
+    position: relative;
+    width: 100%;
+    height: rem(842);
+
+    @include maxMedia(xl) {
+      height: 600px;
+    }
+
+    @include maxMedia(md) {
+      height: auto;
+      aspect-ratio: 1;
+    }
+  }
+
+  &__poster {
+    position: absolute;
+    inset: 0;
+    transition: opacity 0.6s ease;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &__stage.is-loaded &__poster {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &__viewer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    --poster-color: transparent;
+    --progress-bar-color: transparent;
+    background: transparent;
+    cursor: grab;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+
+    &:active {
+      cursor: grabbing;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--clr-accent);
+      outline-offset: 4px;
+      border-radius: var(--rd-lg);
+    }
+  }
+
+  &__stage.is-loaded &__viewer {
+    opacity: 1;
+  }
+
+  &__hint {
+    margin-top: rem(23);
+    text-align: center;
+    color: var(--clr-text);
+
+    @include maxMedia(xl) {
+      margin-top: 16px;
+    }
+  }
+
+  // touch screens: a vertical swipe scrolls the page (touch-action: pan-y),
+  // only a sideways one turns the model — say so
+  &__hint-touch {
+    display: none;
+  }
+
+  @media (hover: none) and (pointer: coarse) {
+    &__hint-mouse {
+      display: none;
+    }
+
+    &__hint-touch {
+      display: inline;
+    }
+  }
+}
+
+// zoom buttons (+ / −), bottom-right of the stage; shown once the model is
+// there (without it there is nothing to zoom)
+.model-3d__zoom {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: rem(20);
+  display: flex;
+  flex-direction: column;
+  gap: rem(8);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s;
+
+  @include maxMedia(xl) {
+    gap: 8px;
+  }
+
+  .model-3d__stage.is-loaded & {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.model-3d__zoom-btn {
+  &:disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  @include hover {
+    background: var(--clr-main);
+    color: var(--clr-white);
+  }
+}

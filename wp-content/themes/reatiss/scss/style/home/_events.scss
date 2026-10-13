@@ -1,0 +1,26 @@
+@use "../../mixins" as *;
+
+// ── Home: Meet Our Experts (events) ── Figma 7967:9118 (+ line 7967:8879)
+// Line: starts 94px (at 1920) above the bottom of the "Let's work together"
+// block, 118px from the left; passes under that photo (.left-right is
+// z-index 1), frames the title and drops behind the first event card.
+.home-events {
+  position: relative;
+
+  &__line {
+    z-index: 0;
+    top: calc(-1 * var(--sp-xl) - 94 / 1920 * 100vw);
+    left: calc(118 / 1920 * 100%);
+    width: calc(1803 / 1920 * 100%);
+    aspect-ratio: 1803 / 765;
+
+    @include maxMedia(lg) {
+      display: none;
+    }
+  }
+
+  > .container {
+    position: relative;
+    z-index: 1;
+  }
+}

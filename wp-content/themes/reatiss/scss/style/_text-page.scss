@@ -1,0 +1,30 @@
+@use "../mixins" as *;
+
+// ── Text page ── Figma 8031:21592 (Privacy policy; also Terms, Public offer)
+// Title (h2, centred) → 50 → .rich-text column 1236; parts 50 apart.
+.text-page {
+  margin-top: rem(80); // breadcrumbs → title, as the blog
+  padding-bottom: rem(28); // + spacer-xl = Figma's 178 to the footer
+
+  @include maxMedia(xl) {
+    margin-top: 40px;
+    padding-bottom: 0;
+  }
+
+  &__head {
+    margin-bottom: var(--sp-sm);
+  }
+
+  &__content {
+    max-width: rem(1236);
+    margin-inline: auto;
+
+    > h2 {
+      margin-top: var(--sp-sm);
+    }
+
+    > :first-child {
+      margin-top: 0;
+    }
+  }
+}

@@ -1,0 +1,187 @@
+@use "../mixins" as *;
+
+// Figma: 4sxPGX3VJ9QM2t9hoBh1qJ — Reatiss (home 7967:8851, article 7999:18510)
+// All colors / sizes / spacings live here — change once, applies site-wide.
+:root {
+  // ── Fonts ──
+  --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-main: "Inter", system-ui, sans-serif;
+
+  // ── Colors (Figma variables: main, text, bg, line, black) ──
+  --clr-main: #001d77; // buttons, links, active states
+  --clr-accent: #2358fc; // stat numbers, running dots, lines
+  --clr-black: #021016; // headings
+  --clr-text: #636363; // body copy
+  --clr-white: #fff;
+  --clr-line: #eeeff0;
+  --clr-error: #ff4747;
+  --bg-1: #f8f9fa; // cards, inputs, seo block
+  --bg-dark: #0a0a2a; // solutions, stats, footer
+  --page-bg: #fff; // page background (turns dark around dark sections — app-page-theme.js)
+
+  // ── Spacing scale (1920 → mobile) ──
+  // xl: between sections (150 @1920) · lg: large inner gap
+  // md: section title → content (80) · sm: title → link / small blocks (50→30)
+  // xs: gaps inside cards (30) · 2xs: grid gaps (10)
+  --sp-xl: #{rem(150)};
+  --sp-lg: #{rem(100)};
+  --sp-md: #{rem(80)};
+  --sp-sm: #{rem(50)};
+  --sp-xs: #{rem(30)};
+  --sp-2xs: #{rem(10)};
+
+  // ── Layout ──
+  --gutter: #{rem(30)}; // 1860 content inside 1920
+  --header-h: #{rem(96)}; // 10 top + 76 bar + 10
+
+  // ── Radius ──
+  --rd-sm: #{rem(3)};
+  --rd-md: #{rem(6)};
+  --rd-lg: #{rem(10)};
+
+  // ── Motion ──
+  --transition-1: 0.3s ease;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  @include maxMedia(xl) {
+    --sp-xl: #{rem(100)};
+    --sp-lg: #{rem(70)};
+    --sp-md: #{rem(50)};
+    --sp-sm: #{rem(36)};
+    --sp-xs: #{rem(24)};
+    --gutter: #{rem(20)};
+    --header-h: #{rem(86)};
+  }
+
+  @include maxMedia(md) {
+    --sp-xl: #{rem(80)};
+    --sp-lg: #{rem(50)};
+    --sp-md: #{rem(36)};
+    --sp-sm: #{rem(30)};
+    --sp-xs: #{rem(20)};
+    --gutter: #{rem(16)};
+    --header-h: #{rem(72)};
+  }
+}
+
+// ── Root scale ─────────────────────────────────────────────────────
+// Layout is authored in rem at 1920 / 16px. Between 1440 and 1920 the
+// root follows the viewport (16px → 12px) so the layout scales
+// proportionally; 1200–1440 holds at 12px so controls stay usable —
+// safe because layout widths are fluid (grid / %), never fixed rem.
+// Below 1200 the layout reflows at 16px.
+html {
+  font-size: 16px;
+
+  @media (min-width: 1200px) and (max-width: 1919.98px) {
+    font-size: max(12px, calc(100vw / 120));
+  }
+
+  @media (min-width: 2100px) {
+    font-size: calc(100vw / 120);
+  }
+}
+
+// ── Page theme shift (home, app-page-theme.js) ──────────────────────
+// The page colours are registered so they can transition: while a dark
+// section holds the middle of the screen, html.is-page-dark swaps them and
+// the whole page — the blocks before and after included — goes dark with it
+// (ref. hinaus.art). Only inside <main>; white surfaces (lab info panels)
+// keep their own colours.
+@property --page-bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fff;
+}
+
+@property --clr-black {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #021016;
+}
+
+@property --clr-text {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #636363;
+}
+
+@property --clr-line {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #eeeff0;
+}
+
+@property --bg-1 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f8f9fa;
+}
+
+// the dark page colours: the whole page while html.is-page-dark is on, and
+// the dark sections' own colours elsewhere
+@mixin page-dark {
+  --page-bg: #0a0a2a;
+  --clr-black: #fff;
+  --clr-text: rgba(255, 255, 255, 0.72);
+  --clr-line: rgba(255, 255, 255, 0.14);
+  --bg-1: rgba(255, 255, 255, 0.06);
+}
+
+// A dark section (home solutions + stats) is dark on its own: its content is
+// coloured with the page tokens, so it reads the same here and on a theme page.
+// On the home page app-page-theme.js adds html.has-page-theme and the section
+// takes the page colours instead — no own background, no seam: the whole page
+// changes colour when it comes (ref. lxlcreative.co.uk, PEK).
+[data-page-theme="dark"] {
+  @include page-dark;
+  background: var(--page-bg);
+  color: var(--clr-black);
+}
+
+html.has-page-theme main [data-page-theme="dark"] {
+  --page-bg: inherit;
+  --clr-black: inherit;
+  --clr-text: inherit;
+  --clr-line: inherit;
+  --bg-1: inherit;
+}
+
+// scoped to <main>: the header, footer and popups keep their own colours
+main {
+  transition:
+    --page-bg 0.7s ease,
+    --clr-black 0.7s ease,
+    --clr-text 0.7s ease,
+    --clr-line 0.7s ease,
+    --bg-1 0.7s ease;
+}
+
+html.is-page-dark main {
+  @include page-dark;
+
+  // links are main-blue on white — light on the dark page
+  :is(.link-arrow, .link-line, .link-inline) {
+    color: var(--clr-white);
+  }
+
+  // white panels stay light
+  .lab-card__panel {
+    --clr-black: #021016;
+    --clr-text: #636363;
+    --clr-line: #eeeff0;
+  }
+
+  // dark line drawings on the dark page → light lines
+  .expertise-card__media img {
+    filter: invert(1) hue-rotate(180deg) brightness(1.15);
+  }
+}
+
+main :is(.link-arrow, .link-line, .link-inline) {
+  transition: color 0.7s ease;
+}
+
+.expertise-card__media img {
+  transition: filter 0.7s ease, transform 1.2s var(--ease-out);
+}

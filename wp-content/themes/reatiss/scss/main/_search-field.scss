@@ -1,0 +1,88 @@
+@use "../mixins" as *;
+
+// ── Search field ── header 7982:27375 · search page 8017:19245
+// icon · input · round-less icon button (close in the header, clear on the
+// search page). 46 high, 24 left padding, 24 gap.
+// .search-field--grey — light-grey fill, button 6 from the edge (search page)
+.search-field {
+  display: flex;
+  align-items: center;
+  gap: rem(24);
+  height: rem(46);
+  padding: 0 rem(17) 0 rem(24);
+  border-radius: var(--rd-md);
+  background: var(--clr-white);
+  color: var(--clr-black);
+
+  @include maxMedia(xl) {
+    height: 44px;
+    gap: 12px;
+    padding: 0 10px 0 14px;
+  }
+
+  > svg {
+    width: rem(20);
+    height: rem(20);
+    flex: none;
+    color: var(--clr-main);
+
+    @include maxMedia(xl) {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &__input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    border: 0;
+    outline: 0;
+    background: none;
+    font-size: max(15px, #{rem(16)});
+
+    &::placeholder {
+      color: var(--clr-text);
+    }
+
+    &::-webkit-search-cancel-button {
+      display: none;
+    }
+  }
+
+  &__btn {
+    flex: none;
+    display: flex;
+    color: var(--clr-text);
+    transition: color var(--transition-1), opacity 0.3s ease;
+
+    svg {
+      width: rem(24);
+      height: rem(24);
+
+      @include maxMedia(xl) {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    @include hover {
+      color: var(--clr-main);
+    }
+  }
+
+  &--grey {
+    padding-right: rem(6);
+    background: var(--bg-1);
+
+    @include maxMedia(xl) {
+      padding-right: 10px;
+    }
+  }
+
+  // clear button only while there is something to clear
+  &__input:placeholder-shown + .js-search-clear {
+    opacity: 0;
+    pointer-events: none;
+  }
+}

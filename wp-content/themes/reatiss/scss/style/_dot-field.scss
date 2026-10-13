@@ -1,0 +1,20 @@
+@use "../mixins" as *;
+
+// ── Dot field ── cursor-reactive dot grid on a dark block (app-stats.js
+// AREAS, as the home solutions scene: invisible at rest, dots swell and light
+// up in accent around the cursor). Markup: the block's first child
+//   <div class="dot-field js-dot-field" aria-hidden="true"></div>
+// The block needs position (relative / sticky) and its content above
+// (z-index 1). Used by the expertise stat rows and the footer.
+.dot-field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}

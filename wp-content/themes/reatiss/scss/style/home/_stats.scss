@@ -1,0 +1,195 @@
+@use "../../mixins" as *;
+
+// ── Home: expertise statement + stats ── Figma 7967:9028
+// Dark, 1100 tall at 1920: lead text on the right (from x 882), three stat
+// cards 513×580 (gap 60) in a 1660 row, each over a 25px dot grid.
+.home-stats {
+  position: relative;
+  overflow-x: clip; // the line's top runs out above the section
+  padding: rem(130) 0 rem(128);
+
+  @include maxMedia(xl) {
+    padding: 96px 0;
+  }
+
+  @include maxMedia(md) {
+    padding: 72px 0;
+  }
+
+  // line 7976:18082 — top-left corner, runs off the left edge. In Figma its
+  // vertical is cut by the frame top; here it starts 150 higher (viewBox
+  // 823×520 = the mockup's 370 + 150) and fades in, so there is no cut edge
+  &__line {
+    top: calc(-150 / 1920 * 100vw);
+    aspect-ratio: 823 / 520;
+    width: calc(823 / 1920 * 100%);
+    -webkit-mask-image: linear-gradient(transparent, #000 29%);
+    mask-image: linear-gradient(transparent, #000 29%);
+
+    @include maxMedia(md) {
+      top: calc(-0.7 * 150 / 823 * 100vw);
+      aspect-ratio: 823 / 520;
+      height: auto;
+      width: 70%;
+    }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__lead {
+    max-width: rem(1008);
+    margin-left: auto;
+
+    @include maxMedia(lg) {
+      max-width: 720px;
+      margin-left: 0;
+      padding-top: 72px; // clear the corner line
+    }
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: rem(60);
+    max-width: rem(1660);
+    margin: rem(50) auto 0;
+
+    @include maxMedia(xl) {
+      gap: 20px;
+      margin-top: 48px;
+    }
+
+    @include maxMedia(lg) {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      max-width: 640px;
+      margin-top: 40px;
+      margin-left: 0;
+    }
+  }
+}
+
+// ── Stat card ──
+.stat-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: rem(580);
+  padding: rem(20) rem(40);
+  isolation: isolate;
+
+  @include maxMedia(xl) {
+    min-height: 0;
+    padding: 16px 20px 24px;
+  }
+
+  // below 992: horizontal card — illustration left, figures right
+  @include maxMedia(lg) {
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+    padding: 20px;
+  }
+
+  @include maxMedia(md) {
+    gap: 16px;
+    padding: 16px 12px;
+  }
+
+  // Figma "Frame 127": 5px white dots every 25px, ~5% — CSS fallback;
+  // app-stats.js swaps in a canvas that reacts to the cursor
+  &__dots {
+    position: absolute;
+    z-index: -1;
+    inset: rem(25) rem(8) 0 0;
+    // dot in the middle of each 25 cell, cells spread edge to edge
+    // (repeat: space) — the same margin on both sides, as the canvas grid
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.05) #{rem(2.5)}, transparent #{rem(2.6)}) 0 0 / #{rem(25)} #{rem(25)} space;
+
+    @include maxMedia(xl) {
+      right: 0; // the whole card width
+    }
+
+    &.is-live {
+      background: none;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__media {
+    width: rem(300);
+    max-width: 70%;
+    aspect-ratio: 300 / 249;
+
+    @include maxMedia(xl) {
+      width: 220px;
+    }
+
+    @include maxMedia(lg) {
+      flex: none;
+      width: 170px;
+    }
+
+    @include maxMedia(md) {
+      width: 110px;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    padding-top: rem(78); // media bottom 269 → number 347
+
+    // fixed-height cards (desktop): figures sit on the card bottom like the
+    // mockup; below xl heights vary, so keep numbers aligned from the top
+    @include minMedia(xl) {
+      margin-top: auto;
+    }
+
+    @include maxMedia(xl) {
+      padding-top: 28px;
+    }
+
+    @include maxMedia(lg) {
+      min-width: 0;
+      padding-top: 0;
+    }
+  }
+
+  &__num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__label {
+    margin-top: rem(8);
+  }
+
+  &__text {
+    max-width: rem(433);
+    margin-top: rem(32);
+    color: var(--clr-black); // white on the dark tokens
+
+    @include maxMedia(xl) {
+      margin-top: 16px;
+    }
+
+    @include maxMedia(md) {
+      margin-top: 8px;
+      font-size: 15px;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+@use "../mixins" as *;
+
+// ── On Shelf ── Figma 8271:41619
+// Title → 80 → reports list 1236 wide → 50 → pager. Own stepped line
+// (8356:36530): starts 54 above the title, drops down the left at x194.
+.shelf {
+  &__line {
+    top: calc(-54 / 1920 * 100vw);
+    aspect-ratio: 1920 / 545;
+  }
+
+  &__inner {
+    max-width: rem(1236);
+    margin-inline: auto;
+  }
+
+  &__pager {
+    margin-top: var(--sp-sm);
+  }
+}
+

@@ -1,0 +1,36 @@
+@use "../mixins" as *;
+
+// ── SEO text block ── Figma 7967:9222 (structure as Ajour's seo-block)
+// Light box r10, padding 50/30; title 23 → 20 → text (.more-text: visible +
+// hidden editor text, "Read more ↓" 30 below).
+.seo-block {
+  &__box {
+    padding: rem(50) rem(30);
+    border-radius: var(--rd-lg);
+    background: var(--bg-1);
+
+    @include maxMedia(xl) {
+      padding: 32px 24px;
+    }
+
+    @include maxMedia(md) {
+      padding: 24px 16px;
+    }
+  }
+
+  .more-text {
+    margin-top: rem(20);
+
+    @include maxMedia(xl) {
+      margin-top: 14px;
+    }
+  }
+
+  // the box is already --bg-1: the quote goes white to stay visible; the
+  // table gets a white body so it looks exactly like in the article
+  // (light head row on white cells)
+  .rich-text :where(blockquote),
+  .rich-text :where(table) {
+    background: var(--clr-white);
+  }
+}

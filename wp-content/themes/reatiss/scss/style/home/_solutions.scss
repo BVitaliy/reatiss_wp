@@ -1,0 +1,274 @@
+@use "../../mixins" as *;
+
+// ── Home — Advanced Engineering Solutions ── Figma 7967:8984
+// Scroll scene (Oleg's prototype, app-solutions.js). Layout from ≥1200:
+//   .home-solutions (grid) ── one cell holds three layers:
+//     __bg     sticky 100svh, the two clips, blended into the dark section
+//     __stage  sticky 100svh, title + services + lead lines (not blended)
+//     __track  gives the section its scroll length (--sol-step per phase)
+// Below 1200: normal flow — title, looping clip, list of services.
+.home-solutions {
+  --sol-step: 90svh; // scroll per phase (× 12 = section length)
+  --sol-fade: 0.55s;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  color: var(--clr-black); // tokens: white on the dark page (global-settings)
+  overflow: clip; // the clip's glow must not widen the page
+
+  &__dots,
+  &__bg,
+  &__stage,
+  &__track {
+    grid-area: 1 / 1;
+  }
+
+  // under the clips: the lighten blend of __bg lets the dots through the
+  // video's black backdrop but not through the chip
+  // the clips blend with "lighten", so bright blue dots would still show
+  // through the darker chip — fade the grid out around the chip (it sits
+  // centred, ~58% down) so the dots stay a background
+  &__dots {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100svh;
+    pointer-events: none;
+    $chip-hole: radial-gradient(ellipse min(#{rem(560)}, 34vw) 36svh at 50% 58%, transparent 55%, #000 100%);
+    -webkit-mask-image: $chip-hole;
+    mask-image: $chip-hole;
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__track {
+    height: calc(var(--sol-step) * 12);
+  }
+
+  &__bg,
+  &__stage {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100svh;
+  }
+
+  &__bg {
+    mix-blend-mode: lighten; // the clips' black backdrop disappears into the section
+    pointer-events: none;
+  }
+
+  // Figma: chip centred, its middle ~60% down the frame
+  &__video {
+    position: absolute;
+    top: 58%;
+    left: 50%;
+    width: min(#{rem(1240)}, 125svh, 100%);
+    height: auto;
+    translate: -50% -50%;
+    filter: brightness(1.12) contrast(1.06) saturate(1.15);
+  }
+
+  &__video--layers {
+    opacity: 0; // app-solutions.js swaps the clips at the end of the reveal
+  }
+
+  &__inner {
+    position: relative;
+    height: 100%;
+  }
+
+  // Figma: 90 from the top of the frame, two lines (519)
+  // Figma: 90 from the top of the frame — the fixed header stays over the
+  // pinned scene, so never less than its height + 20
+  &__title {
+    position: relative;
+    z-index: 1;
+    max-width: rem(560);
+    padding-top: max(#{rem(90)}, calc(var(--header-h) + #{rem(20)}));
+  }
+
+  // lines from a number to its layer, drawn in CSS px by app-solutions.js
+  &__leads {
+    position: absolute;
+    inset: 0;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  // Figma 7967:8988: white 0.5 — horizontal, step, horizontal
+  .home-solutions__lead {
+    fill: none;
+    stroke: color-mix(in srgb, var(--clr-black) 60%, transparent);
+    stroke-width: 1;
+    opacity: 0;
+    transition: opacity var(--sol-fade) ease;
+
+    &.is-active {
+      opacity: 1;
+    }
+  }
+
+  // a service: number pill, illustration, title + text (Figma 01 / 02)
+  &__item {
+    position: absolute;
+    width: rem(484);
+    opacity: 0;
+    transition: opacity var(--sol-fade) ease;
+
+    &.is-active {
+      opacity: 1;
+    }
+
+    // set by app-solutions.js when a block can't fit the screen otherwise
+    &.is-compact .home-solutions__art {
+      display: none;
+    }
+
+    // side from the markup; height = --sol-top (Figma 01: 20% of the frame),
+    // app-solutions.js then clamps it so the block fits under the header
+    top: var(--sol-top, 20%);
+
+    &--right {
+      right: 0;
+    }
+
+    &--left {
+      left: rem(95); // Figma: art at x125
+    }
+  }
+
+  // Figma: #2358FC pill, Inter 18, padding 10
+  &__num {
+    display: grid;
+    place-items: center;
+    width: rem(42);
+    height: rem(42);
+    margin-left: rem(36);
+    border-radius: 50%;
+    background: var(--clr-accent);
+    color: var(--clr-white);
+    font-size: max(15px, #{rem(18)});
+    line-height: 1;
+  }
+
+  // shrinks on low screens so a block keeps fitting
+  &__art {
+    display: block;
+    width: min(#{rem(268)}, 27svh);
+    margin-top: rem(14);
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  // title → 20 → text, indented under the number
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: rem(20);
+    margin-top: rem(20);
+    padding-left: rem(50);
+  }
+
+  &__item-text {
+    color: color-mix(in srgb, var(--clr-black) 85%, transparent);
+  }
+
+  // ── tablet / phone: plain flow ──
+  @include maxMedia(xl) {
+    display: block;
+    padding-block: var(--sp-xl);
+
+    &__track,
+    &__leads,
+    &__dots,
+    &__video--reveal {
+      display: none;
+    }
+
+    &__bg,
+    &__stage {
+      position: static;
+      height: auto;
+    }
+
+    // title first, the clip under it, then the services
+    & {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__stage {
+      display: contents;
+    }
+
+    &__inner {
+      display: contents;
+    }
+
+    &__title {
+      order: 1;
+      max-width: none;
+      padding: 0 var(--gutter);
+    }
+
+    &__bg {
+      order: 2;
+      margin: 24px 0;
+    }
+
+    &__video {
+      position: static;
+      width: min(100%, 760px);
+      margin: 0 auto;
+      translate: none;
+    }
+
+    &__video--layers {
+      opacity: 1;
+    }
+
+    &__list {
+      order: 3;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 50px 30px;
+      padding: 0 var(--gutter);
+
+      @include maxMedia(md) {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 40px;
+      }
+    }
+
+    &__item {
+      position: static;
+      width: auto;
+      opacity: 1;
+    }
+
+    &__num {
+      margin-left: 0;
+      width: 38px;
+      height: 38px;
+    }
+
+    &__art {
+      width: 200px;
+      margin-top: 12px;
+    }
+
+    &__body {
+      gap: 12px;
+      margin-top: 12px;
+      padding-left: 0;
+    }
+  }
+}

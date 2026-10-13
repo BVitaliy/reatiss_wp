@@ -1,0 +1,62 @@
+{
+    "key": "group_rts_event",
+    "title": "Подія",
+    "fields": [
+        {
+            "type": "date_picker",
+            "name": "date_start",
+            "label": "Дата початку",
+            "wrapper": {
+                "width": "33"
+            },
+            "required": 1,
+            "display_format": "d.m.Y",
+            "return_format": "Ymd",
+            "first_day": 1,
+            "key": "field_cd6ab46b55a032bb"
+        },
+        {
+            "type": "date_picker",
+            "name": "date_end",
+            "label": "Дата завершення",
+            "wrapper": {
+                "width": "33"
+            },
+            "display_format": "d.m.Y",
+            "return_format": "Ymd",
+            "first_day": 1,
+            "instructions": "Порожньо — одноденна подія.",
+            "key": "field_b157bec1ff412aa4"
+        },
+        {
+            "type": "text",
+            "name": "location",
+            "label": "Місце",
+            "wrapper": {
+                "width": "34"
+            },
+            "required": 1,
+            "placeholder": "Kyiv, Ukraine",
+            "key": "field_81e47faa6f488ca3"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "rts_event"
+            }
+        ]
+    ],
+    "menu_order": -1,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791897142
+}

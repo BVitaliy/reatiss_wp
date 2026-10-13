@@ -1,0 +1,8 @@
+@use "../mixins" as *;
+
+// ── Services ── Figma 8271:41098: own line (8356:17082) — starts 26 above
+// the title on the right, runs down at x1147 between the cards
+.services__line {
+  top: calc(-26.5 / 1920 * 100vw);
+  aspect-ratio: 1920 / 1727;
+}

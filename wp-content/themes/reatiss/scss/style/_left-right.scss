@@ -1,0 +1,175 @@
+@use "../mixins" as *;
+
+// ── Left-right: text column + photo ────────────────────────────────
+// Home "Scientific research" (7967:9007) and "Let's work together" (7967:9105).
+// Text column: title → step line → text on top, button pinned to the bottom
+// (the column is as tall as the photo). Stacks below 992.
+//   default     text | photo   624 · 76 · 1160, photo 1160×789, step 51%
+//   --reverse   photo | text   1065 · 188 · 607, photo 1065×633, step 52.6%
+// Sits above running lines that pass under the photo (z-index 1).
+.left-right {
+  --lr-text: 624fr;
+  --lr-media: 1160fr;
+  --lr-gap: #{rem(76)};
+  --lr-ratio: 1160 / 789;
+  --lr-title-w: #{rem(624)};
+  --lr-step: 51%;
+  position: relative;
+  z-index: 1;
+
+  &--reverse {
+    --lr-text: 607fr;
+    --lr-media: 1065fr;
+    --lr-gap: #{rem(188)};
+    --lr-ratio: 1065 / 633;
+    --lr-title-w: #{rem(607)};
+    --lr-step: 52.6%;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: minmax(0, var(--lr-text)) minmax(0, var(--lr-media));
+    column-gap: var(--lr-gap);
+
+    @include maxMedia(lg) {
+      grid-template-columns: 1fr;
+      row-gap: 40px;
+    }
+  }
+
+  // About proportions, photo on the left (Laboratories intro 8069:23725)
+  &--media-left &__grid {
+    grid-template-columns: minmax(0, var(--lr-media)) minmax(0, var(--lr-text));
+
+    @include maxMedia(lg) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &--media-left &__media {
+    order: -1;
+  }
+
+  &--reverse &__grid {
+    grid-template-columns: minmax(0, var(--lr-media)) minmax(0, var(--lr-text));
+
+    @include maxMedia(lg) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // photo first on desktop (stacked: first everywhere)
+  &--reverse &__media {
+    order: -1;
+  }
+
+  // stacked (< 992): the photo always comes first, above the title
+  &__media {
+    @include maxMedia(lg) {
+      order: -1;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &__title {
+    max-width: var(--lr-title-w);
+
+    @include maxMedia(lg) {
+      max-width: 640px;
+    }
+  }
+
+  // Figma "Vector 156" under the title (step position differs per block)
+  &__line {
+    --step-x: var(--lr-step);
+    margin-top: rem(60);
+
+    @include maxMedia(xl) {
+      margin-top: 32px;
+    }
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: rem(20);
+    max-width: rem(446);
+    margin-top: rem(54);
+    margin-bottom: 32px; // min gap to the pinned button
+    color: var(--clr-text);
+
+    @include maxMedia(xl) {
+      max-width: 560px;
+      margin-top: 28px;
+      gap: 14px;
+    }
+
+    @include maxMedia(lg) {
+      margin-bottom: 0;
+    }
+  }
+
+  // editor text (.rich-text: paragraphs, lists): the column gap spaces it
+  &__text.rich-text > * + * {
+    margin-top: 0;
+  }
+
+  // a list of report files instead of the button (service "Process Report
+  // Example" 8271:41477), pinned to the bottom the same way
+  &__files {
+    width: 100%;
+    margin-top: auto;
+
+    @include maxMedia(lg) {
+      margin-top: 32px;
+    }
+  }
+
+  &__files + .step-line {
+    flex: none;
+  }
+
+  // pinned to the bottom of the column
+  &__btn {
+    margin-top: auto;
+
+    @include maxMedia(lg) {
+      margin-top: 32px;
+    }
+  }
+
+  // photo drifts inside its frame on scroll (app-parallax.js, as Ajour's
+  // collection image): the picture is taller than the frame by --parallax-room
+  &__media {
+    --parallax-room: #{rem(140)};
+    position: relative;
+    aspect-ratio: var(--lr-ratio);
+    border-radius: var(--rd-lg);
+    overflow: hidden;
+
+    @include maxMedia(xl) {
+      --parallax-room: 90px;
+    }
+
+    // small laptops / tablets landscape: the text column can be taller than
+    // the photo's ratio — let the photo fill the row instead
+    @media (min-width: 992px) and (max-width: 1199.98px) {
+      aspect-ratio: auto;
+    }
+
+    picture {
+      position: absolute;
+      inset: calc(var(--parallax-room) * -0.5) 0;
+    }
+
+    img {
+      @include cover;
+      object-position: 50% 30%;
+    }
+  }
+}

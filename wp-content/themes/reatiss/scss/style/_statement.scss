@@ -1,0 +1,84 @@
+@use "../mixins" as *;
+
+// ── Statement ── Figma 8335:48090 (service page, + line 8335:48094)
+// Big text (h3, 42) in a 925 column. Scroll fill (app-statement.js): words
+// wait pale, the front word lights up in accent, read words turn black.
+.statement {
+  position: relative;
+
+  // the line drops out of the banner on the left, 97 above the text's
+  // first line runs out to the left edge
+  &__line {
+    z-index: 0;
+    top: calc(-293 / 1920 * 100vw);
+    aspect-ratio: 1920 / 391;
+
+    // phones: the sliced line would only show a stray stub
+    @include maxMedia(md) {
+      display: none;
+    }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__text {
+    max-width: rem(925);
+    margin-inline: auto;
+    color: var(--clr-black);
+
+    @include maxMedia(xl) {
+      max-width: 720px;
+    }
+  }
+
+  // text in the right half (expertise 8271:40632: x965, flush with the
+  // container's right edge)
+  &--right &__text {
+    margin-right: 0;
+
+    @include maxMedia(lg) {
+      margin-right: auto;
+    }
+  }
+
+  --statement-pale: color-mix(in srgb, var(--clr-black) 20%, var(--page-bg));
+
+  // split by app-statement.js — word fill
+  &__word {
+    color: var(--statement-pale);
+    transition: color 0.35s ease;
+
+    &.is-lit {
+      color: var(--clr-accent);
+    }
+
+    &.is-on {
+      color: var(--clr-black);
+    }
+  }
+
+  // decode variant: letters, each locked to its glyph width (em)
+  &--decode &__word {
+    color: inherit;
+    white-space: nowrap;
+    transition: none;
+  }
+
+  &__char {
+    display: inline-block;
+    text-align: center;
+    color: var(--statement-pale);
+
+    &.is-bit {
+      color: var(--clr-accent);
+    }
+
+    &.is-on {
+      color: var(--clr-black);
+      transition: color 0.3s ease;
+    }
+  }
+}

@@ -1,0 +1,64 @@
+@use "../mixins" as *;
+
+// ── Chips (tags / filters) ── Figma 8054:18832 (blog filter), 8099:23174 (article tags)
+// Pill 32 tall, padding 0 12, r40, Inter 14/1.55 black; active / hover = main.
+//   .chip          light pill (on white)
+//   .chip--white   white pill (on light boxes: article share row)
+// Row: .chips (wraps and centres; phones → one swipeable line with .chips--scroll).
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: rem(10);
+
+  @include maxMedia(md) {
+    gap: 8px;
+  }
+
+  &--scroll {
+    @include maxMedia(md) {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      margin-inline: calc(var(--gutter) * -1);
+      padding-inline: var(--gutter);
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  height: 32px;
+  padding: 0 rem(12);
+  border-radius: rem(40);
+  background: var(--bg-1);
+  font-size: max(13px, #{rem(14)});
+  line-height: 1.55;
+  color: var(--clr-black);
+  white-space: nowrap;
+  transition: color var(--transition-1), background var(--transition-1);
+
+  @include maxMedia(xl) {
+    padding: 0 12px;
+  }
+
+  &.is-active {
+    color: var(--clr-main);
+  }
+
+  @include hover {
+    color: var(--clr-main);
+  }
+
+  &--white {
+    background: var(--clr-white);
+  }
+}
