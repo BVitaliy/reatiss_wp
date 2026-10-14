@@ -1078,3 +1078,27 @@ msgstr "Назва мережі"
 
 msgid "A network without a link is not shown; with none, the “Social Media” block is hidden. For a network missing from the list pick “Custom icon” and upload it."
 msgstr "Соцмережа без посилання не виводиться; без жодної — блок «Social Media» прихований. Для мережі, якої немає у списку, оберіть «Своя іконка» і завантажте її."
+
+msgid "On desktop the scroll plays two videos: “Video 1” opens the chip into layers, “Video 2” zooms to each layer and back. Each item below is one zoom: set the second of Video 2 where its zoom-in ends and where the zoom-out ends (open the video in a player and note the time). Empty videos / timings — the theme’s own chip videos and their timings. Encode both as H.264 MP4 without audio, all-intra (ffmpeg -g 1), black background; the last frame of Video 1 must equal the first frame of Video 2."
+msgstr "На десктопі прокрутка програє два відео: «Відео 1» розкриває чип на шари, «Відео 2» наближається до кожного шару і віддаляється. Кожен пункт нижче — одне наближення: вкажіть секунду Відео 2, де закінчується наближення, і де закінчується віддалення (відкрийте відео в плеєрі й подивіться час). Порожні відео / таймінги — відео чипа з теми та їхні таймінги. Обидва ролики — H.264 MP4 без звуку, all-intra (ffmpeg -g 1), чорний фон; останній кадр Відео 1 має збігатися з першим кадром Відео 2. Текст пункту — до ~250 символів."
+
+msgid "Video 1 — chip opens"
+msgstr "Відео 1 — чип розкривається"
+
+msgid "Video 2 — zoom to the layers"
+msgstr "Відео 2 — наближення до шарів"
+
+msgid "MP4, ~1024×576, all-intra. Empty — the theme video."
+msgstr "MP4, ~1024×576, all-intra. Порожньо — відео з теми."
+
+msgid "Zoom-in ends, s"
+msgstr "Кінець наближення, с"
+
+msgid "Zoom-out ends, s"
+msgstr "Кінець віддалення, с"
+
+msgid "Second of Video 2 where the zoom to this layer ends (the item shows)."
+msgstr "Секунда Відео 2, де закінчується наближення до цього шару (з’являється пункт)."
+
+msgid "Second where the zoom back out ends."
+msgstr "Секунда, де закінчується віддалення."

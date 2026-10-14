@@ -489,8 +489,34 @@
                             "wrapper": {
                                 "width": "100"
                             },
-                            "message": "On desktop, scrolling opens the chip layer by layer (videos are part of the theme) and each layer shows one item. There are 4 layers — up to 4 items. Item text — up to ~250 characters.",
+                            "message": "On desktop the scroll plays two videos: “Video 1” opens the chip into layers, “Video 2” zooms to each layer and back. Each item below is one zoom: set the second of Video 2 where its zoom-in ends and where the zoom-out ends (open the video in a player and note the time). Empty videos / timings — the theme’s own chip videos and their timings. Encode both as H.264 MP4 without audio, all-intra (ffmpeg -g 1), black background; the last frame of Video 1 must equal the first frame of Video 2.",
                             "key": "field_9aaccb239f2353b8"
+                        },
+                        {
+                            "type": "file",
+                            "name": "video_reveal",
+                            "label": "Video 1 — chip opens",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "return_format": "url",
+                            "library": "all",
+                            "mime_types": "mp4",
+                            "instructions": "MP4, ~1024×576, all-intra. Empty — the theme video.",
+                            "key": "field_4e9cb79808b0cc02"
+                        },
+                        {
+                            "type": "file",
+                            "name": "video_layers",
+                            "label": "Video 2 — zoom to the layers",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "return_format": "url",
+                            "library": "all",
+                            "mime_types": "mp4",
+                            "instructions": "MP4, ~1024×576, all-intra. Empty — the theme video.",
+                            "key": "field_374da27e02b5ede8"
                         },
                         {
                             "type": "repeater",
@@ -502,7 +528,7 @@
                             "layout": "block",
                             "button_label": "Add item",
                             "min": 1,
-                            "max": 4,
+                            "max": 8,
                             "sub_fields": [
                                 {
                                     "type": "text",
@@ -591,6 +617,30 @@
                                     "default_value": "0.78,0.24",
                                     "instructions": "Where the line from the number points: fractions of the video frame, 0,0 — top left, 1,1 — bottom right.",
                                     "key": "field_fada0e6553ed58d1"
+                                },
+                                {
+                                    "type": "number",
+                                    "name": "zoom_in",
+                                    "label": "Zoom-in ends, s",
+                                    "wrapper": {
+                                        "width": "20"
+                                    },
+                                    "step": 0.01,
+                                    "min": 0,
+                                    "instructions": "Second of Video 2 where the zoom to this layer ends (the item shows).",
+                                    "key": "field_ad1f143cf6ad6989"
+                                },
+                                {
+                                    "type": "number",
+                                    "name": "zoom_out",
+                                    "label": "Zoom-out ends, s",
+                                    "wrapper": {
+                                        "width": "20"
+                                    },
+                                    "step": 0.01,
+                                    "min": 0,
+                                    "instructions": "Second where the zoom back out ends.",
+                                    "key": "field_9d5d5177d29137a3"
                                 }
                             ],
                             "key": "field_920abab497a2985d"
@@ -4313,5 +4363,5 @@
     "active": true,
     "description": "Page blocks in display order. With no blocks the page shows its title and editor text (a text page).",
     "show_in_rest": 0,
-    "modified": 1791962224
+    "modified": 1791970311
 }

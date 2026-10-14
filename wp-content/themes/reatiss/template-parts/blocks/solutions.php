@@ -5,8 +5,9 @@
  * scrolling opens the chip into layers (video/chip1.mp4), then zooms layer by
  * layer (video/chip2.mp4) and shows the item for each layer with a lead line
  * from its number. Below 1200 — a plain list under a looping clip.
- * The clips and their zoom timings (ZOOM in app-solutions.js) belong to the
- * theme; the items (up to 4 — one per zoom stop) are editable.
+ * Both clips and the zoom timings are editable in the block: empty videos
+ * fall back to the theme's chip clips, empty timings to the ones measured on
+ * them (ZOOM in app-solutions.js). One item = one zoom of video 2.
  *
  * @package reatiss
  *
@@ -17,22 +18,41 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$rts_items = array_slice( is_array( $args['items'] ?? null ) ? $args['items'] : [], 0, 4 );
+$rts_items = array_values( is_array( $args['items'] ?? null ) ? $args['items'] : [] );
 
 if ( empty( $rts_items ) ) {
 	return;
 }
+
+$rts_reveal = ! empty( $args['video_reveal'] ) ? (string) $args['video_reveal'] : rts_asset( 'video/chip1.mp4' );
+$rts_layers = ! empty( $args['video_layers'] ) ? (string) $args['video_layers'] : rts_asset( 'video/chip2.mp4' );
+
+// Zoom timings for app-solutions.js: [ zoom-in end, zoom-out end ] per item,
+// only when every item has both (otherwise the script keeps its own).
+$rts_zoom = [];
+
+foreach ( $rts_items as $rts_item ) {
+	$rts_in  = isset( $rts_item['zoom_in'] ) && '' !== $rts_item['zoom_in'] ? (float) $rts_item['zoom_in'] : null;
+	$rts_out = isset( $rts_item['zoom_out'] ) && '' !== $rts_item['zoom_out'] ? (float) $rts_item['zoom_out'] : null;
+
+	if ( null === $rts_in || null === $rts_out || $rts_out <= $rts_in || ( $rts_zoom && $rts_in <= end( $rts_zoom )[1] ) ) {
+		$rts_zoom = [];
+		break;
+	}
+
+	$rts_zoom[] = [ $rts_in, $rts_out ];
+}
 ?>
-<section class="home-solutions js-solutions" data-page-theme="dark">
+<section class="home-solutions js-solutions" data-page-theme="dark"<?php echo $rts_zoom ? ' data-zoom="' . esc_attr( (string) wp_json_encode( $rts_zoom ) ) . '"' : ''; ?>>
 	<?php // cursor-reactive dot grid — invisible at rest, dots light up only around the cursor (app-stats.js, ≥1200) ?>
 	<div class="home-solutions__dots js-sol-dots" aria-hidden="true"></div>
 
 	<div class="home-solutions__bg" aria-hidden="true">
 		<video class="home-solutions__video home-solutions__video--reveal js-solutions-reveal" width="1024" height="576" muted playsinline preload="metadata">
-			<source src="<?php echo esc_url( rts_asset( 'video/chip1.mp4' ) ); ?>" type="video/mp4">
+			<source src="<?php echo esc_url( $rts_reveal ); ?>" type="video/mp4">
 		</video>
 		<video class="home-solutions__video home-solutions__video--layers js-solutions-layers" width="1024" height="576" muted playsinline preload="metadata">
-			<source src="<?php echo esc_url( rts_asset( 'video/chip2.mp4' ) ); ?>" type="video/mp4">
+			<source src="<?php echo esc_url( $rts_layers ); ?>" type="video/mp4">
 		</video>
 	</div>
 

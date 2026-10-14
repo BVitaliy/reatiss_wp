@@ -60,6 +60,9 @@ logs/             — custom logs (rts_log()), gitignored
   submit = `[rts_submit "Send"]`.
 - `js/app-header.js`: the demo search code (results toggle on typing, `submit` blocked) is
   removed — live results and the real submit are `js/app-search.js`.
+- `js/app-solutions.js`: reads optional `data-zoom` (`[[in, out], …]` seconds of the layers clip,
+  one pair per item) from the section — the block's videos and zoom timings are editable; empty
+  = the theme's `video/chip1|2.mp4` and the measured `ZOOM`.
 - `js/app-wp.js`: editor links to `#consultation` / `#reports` open those popups.
 - Section partials take every text from fields; decorative run-lines (`.run-line` SVG paths)
   stay hardcoded in the block partials, as in the markup.

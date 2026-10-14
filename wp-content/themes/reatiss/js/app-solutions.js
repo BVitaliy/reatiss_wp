@@ -66,6 +66,19 @@
     { to: 7.4, w: 1, item: 3, aim: { x: 0.22, y: 0.78 } },
     { to: 8.38, w: 0.7 },
   ];
+  // WP: the block can set its own timings — data-zoom = [[in, out], …] in
+  // seconds of the layers clip, one pair per item (template-parts/blocks/solutions.php).
+  try {
+    var custom = JSON.parse(section.getAttribute("data-zoom") || "null");
+    if (Array.isArray(custom) && custom.length) {
+      ZOOM = [];
+      custom.forEach(function (pair, i) {
+        ZOOM.push({ to: +pair[0], w: 1, item: i, aim: { x: 0.5, y: 0.5 } });
+        ZOOM.push({ to: +pair[1], w: 0.7 });
+      });
+    }
+  } catch (e) {} // malformed — keep the measured timings
+
   var TOTAL = ZOOM.reduce(function (sum, seg) { return sum + seg.w; }, 0);
 
   // scroll px the sticky scene lives
