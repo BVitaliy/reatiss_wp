@@ -29,10 +29,6 @@
 }
 
 .rts-form {
-  .btn.is-loading {
-    opacity: 0.6;
-    pointer-events: none;
-  }
 
   .wpcf7-response-output {
     width: 100%;
@@ -60,10 +56,39 @@
   width: 100%;
 }
 
-// "Show more" while the next page loads (app-load-more.js)
-.pager .btn.is-loading {
-  opacity: 0.6;
+// Busy button — a form being sent (app-cf7.js) or "Show more" loading the next
+// page (app-load-more.js): the arrow in the tile turns into a spinner.
+.btn.is-loading {
   pointer-events: none;
+
+  .btn__tile svg {
+    opacity: 0;
+  }
+
+  .btn__tile::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 45%;
+    height: 45%;
+    margin: auto;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: rts-spin 0.7s linear infinite;
+  }
+}
+
+@keyframes rts-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn.is-loading .btn__tile::after {
+    animation-duration: 2s;
+  }
 }
 
 // CF7's live region for screen readers — CF7's own (disabled) CSS hid it visually
@@ -77,4 +102,147 @@
   clip: rect(0 0 0 0);
   border: 0;
   white-space: nowrap;
+}
+
+// ── Editor content: the standard elements the markup's .rich-text leaves out ──
+// (team checklist: style every element the classic editor can produce —
+// wptest.io "markup" posts). Zero specificity, so blocks can still override.
+.rich-text {
+  :where(h5, h6) {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: max(16px, #{rem(18)});
+    line-height: 1.3;
+    color: var(--clr-black);
+  }
+
+  :where(h6) {
+    font-size: max(15px, #{rem(16)});
+  }
+
+  :where(.alignleft, .alignright) {
+    max-width: 50%;
+    margin-bottom: rem(16);
+
+    @include maxMedia(md) {
+      float: none;
+      max-width: 100%;
+      margin-inline: 0;
+    }
+  }
+
+  :where(.alignleft) {
+    float: left;
+    margin-right: rem(30);
+  }
+
+  :where(.alignright) {
+    float: right;
+    margin-left: rem(30);
+  }
+
+  // floats never leak out of the content column
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  // a new section starts below floated images
+  :where(hr, h2, h3, h4) {
+    clear: both;
+  }
+
+  :where(hr) {
+    height: 1px;
+    border: 0;
+    background: var(--clr-line);
+  }
+
+  :where(code, kbd, pre) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.9em;
+  }
+
+  :where(code, kbd) {
+    padding: 0.1em 0.35em;
+    border-radius: var(--rd-sm);
+    background: var(--bg-1);
+    color: var(--clr-black);
+  }
+
+  :where(pre) {
+    overflow-x: auto;
+    padding: rem(20);
+    border-radius: var(--rd-md);
+    background: var(--bg-1);
+    color: var(--clr-black);
+    white-space: pre;
+
+    code {
+      padding: 0;
+      background: none;
+    }
+  }
+
+  :where(sup, sub) {
+    font-size: 0.7em;
+    line-height: 0;
+  }
+
+  :where(dl) {
+    margin: 0;
+  }
+
+  :where(dt) {
+    font-weight: 500;
+    color: var(--clr-black);
+  }
+
+  :where(dd) {
+    margin: rem(4) 0 rem(12) rem(20);
+  }
+
+  :where(abbr[title]) {
+    text-decoration: underline dotted;
+    cursor: help;
+  }
+
+  :where(mark) {
+    padding: 0 0.15em;
+    background: rgba(35, 88, 252, 0.15);
+    color: inherit;
+  }
+
+  :where(del, s) {
+    color: var(--clr-text);
+  }
+
+  :where(cite) {
+    font-style: normal;
+    color: var(--clr-black);
+  }
+
+  // the quote's author line under the markup's big quote text
+  :where(blockquote cite) {
+    display: block;
+    font-family: var(--font-main);
+    font-size: max(14px, #{rem(16)});
+    line-height: 1.55;
+    color: var(--clr-text);
+  }
+
+  // editor embeds (YouTube / Vimeo pasted as a URL → oEmbed iframe)
+  :where(iframe, embed, object, video) {
+    display: block;
+    max-width: 100%;
+  }
+
+  :where(.wp-embed-responsive .wp-has-aspect-ratio iframe, p > iframe) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    border-radius: var(--rd-lg);
+  }
 }

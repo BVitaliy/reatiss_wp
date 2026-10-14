@@ -183,14 +183,14 @@
             },
             "layout": "table",
             "button_label": "Add network",
-            "instructions": "A network without a link is not shown; with none, the “Social Media” block is hidden.",
+            "instructions": "A network without a link is not shown; with none, the “Social Media” block is hidden. For a network missing from the list pick “Custom icon” and upload it.",
             "sub_fields": [
                 {
                     "type": "select",
                     "name": "icon",
                     "label": "Network",
                     "wrapper": {
-                        "width": "30"
+                        "width": "25"
                     },
                     "ui": 1,
                     "return_format": "value",
@@ -200,16 +200,62 @@
                         "instagram": "Instagram",
                         "tiktok": "TikTok",
                         "linkedin": "LinkedIn",
-                        "x": "X (Twitter)"
+                        "x": "X (Twitter)",
+                        "custom": "Custom icon"
                     },
                     "key": "field_f4134dd01046d82a"
+                },
+                {
+                    "type": "image",
+                    "name": "custom_icon",
+                    "label": "Custom icon",
+                    "wrapper": {
+                        "width": "20"
+                    },
+                    "return_format": "array",
+                    "preview_size": "thumbnail",
+                    "library": "all",
+                    "mime_types": "svg,png,webp",
+                    "required": 1,
+                    "instructions": "SVG 30×30 (fill=\"currentColor\" — recoloured on hover) or PNG 60×60.",
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_f4134dd01046d82a",
+                                "operator": "==",
+                                "value": "custom"
+                            }
+                        ]
+                    ],
+                    "key": "field_907835de806e40fb"
+                },
+                {
+                    "type": "text",
+                    "name": "label",
+                    "label": "Network name",
+                    "wrapper": {
+                        "width": "20"
+                    },
+                    "required": 1,
+                    "placeholder": "YouTube",
+                    "instructions": "For screen readers.",
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_f4134dd01046d82a",
+                                "operator": "==",
+                                "value": "custom"
+                            }
+                        ]
+                    ],
+                    "key": "field_334ae39c6eb2307d"
                 },
                 {
                     "type": "url",
                     "name": "link",
                     "label": "Link",
                     "wrapper": {
-                        "width": "70"
+                        "width": "35"
                     },
                     "required": 1,
                     "key": "field_c8fbe91a0e5ee351"
@@ -1204,5 +1250,5 @@
     "active": true,
     "description": "Global settings: header, contacts, footer, popups, forms.",
     "show_in_rest": 0,
-    "modified": 1791962224
+    "modified": 1791963944
 }

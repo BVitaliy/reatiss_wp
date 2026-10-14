@@ -85,3 +85,35 @@ function rts_picture( $image, $mobile = null, array $attrs = [], string $size = 
 	</picture>
 	<?php
 }
+
+/**
+ * Inline an uploaded SVG (sanitized) so CSS can recolour it via currentColor;
+ * raster icons fall back to <img>.
+ *
+ * @param mixed $image ACF image array or attachment ID.
+ * @param array $attrs Attributes for the <img> fallback.
+ */
+function rts_inline_icon( $image, array $attrs = [] ): void {
+	$id = rts_image_id( $image );
+
+	if ( ! $id ) {
+		return;
+	}
+
+	if ( 'image/svg+xml' === get_post_mime_type( $id ) ) {
+		$path = get_attached_file( $id );
+		$raw  = $path && is_readable( $path ) ? file_get_contents( $path ) : false; // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- local upload.
+
+		if ( false !== $raw ) {
+			$clean = ( new RTS_Svg_Sanitizer() )->sanitize( $raw );
+
+			if ( '' !== $clean ) {
+				echo preg_replace( '/<svg\b/', '<svg focusable="false" aria-hidden="true"', $clean, 1 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitized against an allow-list.
+
+				return;
+			}
+		}
+	}
+
+	rts_image( $id, $attrs, 'thumbnail' );
+}

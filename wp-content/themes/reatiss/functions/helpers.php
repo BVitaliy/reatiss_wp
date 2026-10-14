@@ -261,9 +261,9 @@ function rts_title_separator(): string {
 }
 
 /**
- * Filled social links from Site Settings → Footer.
+ * Filled social links from Site Settings → Footer (custom networks included).
  *
- * @return array<int, array{icon:string,url:string,label:string}>
+ * @return array<int, array{icon:string,url:string,label:string,image:int}>
  */
 function rts_socials(): array {
 	$labels = [
@@ -277,20 +277,46 @@ function rts_socials(): array {
 	$rows   = rts_option( 'socials' );
 
 	foreach ( is_array( $rows ) ? $rows : [] as $row ) {
-		$icon = (string) ( $row['icon'] ?? '' );
+		$icon  = (string) ( $row['icon'] ?? '' );
+		$image = 'custom' === $icon ? rts_image_id( $row['custom_icon'] ?? 0 ) : 0;
 
-		if ( empty( $row['link'] ) || ! isset( $labels[ $icon ] ) ) {
+		if ( empty( $row['link'] ) || ( ! isset( $labels[ $icon ] ) && ! $image ) ) {
 			continue;
 		}
 
 		$list[] = [
 			'icon'  => $icon,
 			'url'   => (string) $row['link'],
-			'label' => $labels[ $icon ],
+			'label' => $image ? (string) ( $row['label'] ?? '' ) : $labels[ $icon ],
+			'image' => $image,
 		];
 	}
 
 	return $list;
+}
+
+/**
+ * A social network's icon: the theme SVG for a known network (footer set or
+ * the round "share" set), the uploaded one for a custom network.
+ *
+ * @param array  $social From rts_socials().
+ * @param string $set    'footer' | 'round'.
+ */
+function rts_social_icon( array $social, string $set = 'footer' ): void {
+	if ( ! empty( $social['image'] ) ) {
+		rts_inline_icon( $social['image'], [ 'alt' => '' ] );
+
+		return;
+	}
+
+	$round = [
+		'facebook'  => 'share-facebook.svg',
+		'instagram' => 'share-instagram.svg',
+		'x'         => 'share-x.svg',
+	];
+	$file  = 'round' === $set && isset( $round[ $social['icon'] ] ) ? $round[ $social['icon'] ] : $social['icon'] . '.svg';
+
+	rts_icon( 'icons/' . $file );
 }
 
 /**

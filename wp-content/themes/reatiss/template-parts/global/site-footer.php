@@ -46,7 +46,7 @@ foreach ( [ 1, 2, 3, 4, 5 ] as $rts_n ) {
 							<?php foreach ( $rts_socials as $rts_social ) { ?>
 								<li>
 									<a href="<?php echo esc_url( $rts_social['url'] ); ?>" class="footer__social-link" aria-label="<?php echo esc_attr( $rts_social['label'] ); ?>" target="_blank" rel="noopener">
-										<?php rts_icon( 'icons/' . $rts_social['icon'] . '.svg' ); ?>
+										<?php rts_social_icon( $rts_social ); ?>
 									</a>
 								</li>
 							<?php } ?>

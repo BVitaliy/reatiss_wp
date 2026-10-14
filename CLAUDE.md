@@ -29,7 +29,7 @@
 5. Blog / Events / Authors ✅
 6. On Shelf + forms (reCAPTCHA keys later) ✅
 7. Search (live + results page), Contacts, map ✅
-8. Content seed, Yoast, performance, team checklist, adaptive QA
+8. Content seed, Yoast, performance, team checklist, adaptive QA ✅
 
 ## Project structure
 ```
@@ -105,6 +105,12 @@ logs/             — custom logs (rts_log()), gitignored
 - ACF fields are edited straight in `acf-json/` now (deterministic `field_` keys = sha1 of the
   field path, first 16 hex). Translations: add to `languages/uk.po`, then
   `wp i18n make-mo uk.po . && wp i18n make-php uk.po .` in `languages/`.
+- Scripts / Swiper CSS load only where needed: `RTS_Theme::conditions()` in `functions/init.php`
+  maps builder layouts / templates to script groups. **A new block with JS → add it there.**
+- Busy buttons (`.btn.is-loading`, CF7 send + "Show more") show a spinner in the tile (`_wp.scss`).
+- Socials accept "Custom icon" (uploaded SVG/PNG, `rts_social_icon()`).
+- Editor content: `_wp.scss` styles the elements `.rich-text` leaves out (h5/h6, alignleft/right,
+  hr, code/pre, dl, sup/sub, mark, abbr, embeds).
 - Admin list rows of pages, posts and every theme post type have **Duplicate** (draft copy with
   all fields, image, terms) — `functions/admin-duplicate.php`.
 - Buttons / links: group { label, type: none|page|custom|modal, page, url, new_tab } →

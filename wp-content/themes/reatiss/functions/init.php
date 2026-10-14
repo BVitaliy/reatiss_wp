@@ -16,57 +16,59 @@ if ( ! defined( 'ABSPATH' ) ) {
 class RTS_Theme {
 
 	/**
-	 * Vendor scripts (inc/_bottom.php order). The theme's own jQuery build
+	 * Vendor scripts (inc/_bottom.php order) => where they are needed
+	 * ('all' or a condition key of conditions()). The theme's own jQuery build
 	 * replaces the core one — the markup was written and tested against it.
-	 * lightGallery and model-viewer are not here: app-gallery.js / app-model.js
-	 * fetch them on demand.
+	 * lightGallery and model-viewer are fetched on demand by their modules.
 	 */
 	private const VENDORS = [
-		'jquery'             => 'js/vendors/jquery.min.js',
-		'rts-swiper'         => 'js/vendors/swiper-bundle.min.js',
-		'rts-gsap'           => 'js/vendors/gsap.min.js',
-		'rts-scroll-trigger' => 'js/vendors/ScrollTrigger.min.js',
-		'rts-split-text'     => 'js/vendors/SplitText.min.js',
-		'rts-motion-path'    => 'js/vendors/MotionPathPlugin.min.js',
-		'rts-draw-svg'       => 'js/vendors/DrawSVGPlugin.min.js',
-		'rts-lenis'          => 'js/vendors/lenis.min.js',
+		'jquery'             => [ 'js/vendors/jquery.min.js', 'all' ],
+		'rts-swiper'         => [ 'js/vendors/swiper-bundle.min.js', 'swiper' ],
+		'rts-gsap'           => [ 'js/vendors/gsap.min.js', 'all' ],
+		'rts-scroll-trigger' => [ 'js/vendors/ScrollTrigger.min.js', 'all' ],
+		'rts-split-text'     => [ 'js/vendors/SplitText.min.js', 'all' ],
+		'rts-motion-path'    => [ 'js/vendors/MotionPathPlugin.min.js', 'all' ],
+		'rts-draw-svg'       => [ 'js/vendors/DrawSVGPlugin.min.js', 'draw_svg' ],
+		'rts-lenis'          => [ 'js/vendors/lenis.min.js', 'all' ],
 	];
 
 	/**
-	 * App scripts (inc/_bottom.php order).
+	 * App scripts (inc/_bottom.php order) => where they are needed. Each module
+	 * also bails out by itself when its block is missing; loading it only where
+	 * the block is keeps every other page lighter (team checklist #53).
 	 */
 	private const SCRIPTS = [
-		'rts-global'      => 'js/app-global.js',
-		'rts-modals'      => 'js/app-modals.js',
-		'rts-header'      => 'js/app-header.js',
-		'rts-swiper-init' => 'js/app-swiper.js',
-		'rts-faq'         => 'js/app-faq.js',
-		'rts-form'        => 'js/app-form.js',
-		'rts-cf7'         => 'js/app-cf7.js',
-		'rts-wp'          => 'js/app-wp.js',
-		'rts-load-more'   => 'js/app-load-more.js',
-		'rts-reports'     => 'js/app-reports.js',
-		'rts-search'      => 'js/app-search.js',
-		'rts-select'      => 'js/app-select.js',
-		'rts-hero'        => 'js/app-hero.js',
-		'rts-lines'       => 'js/app-lines.js',
-		'rts-stats'       => 'js/app-stats.js',
-		'rts-solutions'   => 'js/app-solutions.js',
-		'rts-titles'      => 'js/app-titles.js',
-		'rts-draw'        => 'js/app-draw.js',
-		'rts-page-theme'  => 'js/app-page-theme.js',
-		'rts-video'       => 'js/app-video.js',
-		'rts-parallax'    => 'js/app-parallax.js',
-		'rts-more-text'   => 'js/app-more-text.js',
-		'rts-article'     => 'js/app-article.js',
-		'rts-map'         => 'js/app-map.js',
-		'rts-statement'   => 'js/app-statement.js',
-		'rts-gallery'     => 'js/app-gallery.js',
-		'rts-model'       => 'js/app-model.js',
-		'rts-about'       => 'js/app-about.js',
-		'rts-lab'         => 'js/app-lab.js',
-		'rts-error'       => 'js/app-error.js',
-		'rts-animations'  => 'js/app-animations.js',
+		'rts-global'      => [ 'js/app-global.js', 'all' ],
+		'rts-modals'      => [ 'js/app-modals.js', 'all' ],
+		'rts-header'      => [ 'js/app-header.js', 'all' ],
+		'rts-swiper-init' => [ 'js/app-swiper.js', 'swiper' ],
+		'rts-faq'         => [ 'js/app-faq.js', 'faq' ],
+		'rts-form'        => [ 'js/app-form.js', 'all' ],
+		'rts-cf7'         => [ 'js/app-cf7.js', 'all' ],
+		'rts-wp'          => [ 'js/app-wp.js', 'all' ],
+		'rts-load-more'   => [ 'js/app-load-more.js', 'lists' ],
+		'rts-reports'     => [ 'js/app-reports.js', 'reports' ],
+		'rts-search'      => [ 'js/app-search.js', 'all' ],
+		'rts-select'      => [ 'js/app-select.js', 'select' ],
+		'rts-hero'        => [ 'js/app-hero.js', 'hero' ],
+		'rts-lines'       => [ 'js/app-lines.js', 'all' ],
+		'rts-stats'       => [ 'js/app-stats.js', 'all' ], // the footer dot grid too
+		'rts-solutions'   => [ 'js/app-solutions.js', 'solutions' ],
+		'rts-titles'      => [ 'js/app-titles.js', 'all' ],
+		'rts-draw'        => [ 'js/app-draw.js', 'draw' ],
+		'rts-page-theme'  => [ 'js/app-page-theme.js', 'front' ],
+		'rts-video'       => [ 'js/app-video.js', 'video' ],
+		'rts-parallax'    => [ 'js/app-parallax.js', 'parallax' ],
+		'rts-more-text'   => [ 'js/app-more-text.js', 'more_text' ],
+		'rts-article'     => [ 'js/app-article.js', 'article' ],
+		'rts-map'         => [ 'js/app-map.js', 'map' ],
+		'rts-statement'   => [ 'js/app-statement.js', 'statement' ],
+		'rts-gallery'     => [ 'js/app-gallery.js', 'gallery' ],
+		'rts-model'       => [ 'js/app-model.js', 'model' ],
+		'rts-about'       => [ 'js/app-about.js', 'about' ],
+		'rts-lab'         => [ 'js/app-lab.js', 'lab' ],
+		'rts-error'       => [ 'js/app-error.js', 'error' ],
+		'rts-animations'  => [ 'js/app-animations.js', 'all' ],
 	];
 
 	/**
@@ -148,6 +150,47 @@ class RTS_Theme {
 		remove_action( 'wp_head', 'wp_shortlink_wp_head' );
 	}
 
+	/**
+	 * Which optional scripts the current view needs — from its builder blocks
+	 * and its template.
+	 *
+	 * @return array<string, bool>
+	 */
+	private function conditions(): array {
+		$blocks = array_column( rts_builder_rows(), 'acf_fc_layout' );
+		$has    = static function ( array $layouts ) use ( $blocks ): bool {
+			return (bool) array_intersect( $layouts, $blocks );
+		};
+
+		$single    = is_singular( [ 'post', 'rts_event' ] );
+		$shortcode = is_singular() && str_contains( (string) get_post_field( 'post_content', get_queried_object_id() ), '[rts_' );
+		$lists     = is_home() || is_archive() || is_search() || is_page_template( 'templates/events.php' ) || $has( [ 'reports_list' ] );
+
+		return [
+			'swiper'    => $single || $shortcode || $has( [ 'expertise_cards', 'labs_cards', 'news_cards', 'event_cards', 'reveals', 'info_cards', 'capabilities', 'gallery', 'content', 'accordion' ] ),
+			'draw_svg'  => is_404() || $has( [ 'about_stats', 'clients' ] ),
+			'faq'       => $has( [ 'faq', 'accordion' ] ),
+			'lists'     => $lists,
+			'reports'   => $has( [ 'reports_list' ] ),
+			'select'    => $has( [ 'contacts' ] ),
+			'hero'      => $has( [ 'hero' ] ),
+			'solutions' => $has( [ 'solutions' ] ),
+			'draw'      => $has( [ 'expertise_cards', 'stats', 'reveals', 'offer_cards' ] ),
+			'front'     => is_front_page(),
+			'video'     => $has( [ 'hero', 'page_banner', 'video_banner' ] ),
+			'parallax'  => $has( [ 'left_right', 'page_banner', 'video_banner' ] ),
+			'more_text' => is_author() || $has( [ 'seo' ] ),
+			'article'   => $single || $shortcode || $has( [ 'content', 'accordion' ] ),
+			'map'       => $has( [ 'contacts_map' ] ),
+			'statement' => $has( [ 'statement' ] ),
+			'gallery'   => $has( [ 'gallery' ] ),
+			'model'     => $has( [ 'model_3d' ] ),
+			'about'     => $has( [ 'about_intro', 'history', 'about_stats', 'clients', 'team' ] ),
+			'lab'       => $has( [ 'capabilities' ] ),
+			'error'     => is_404(),
+		];
+	}
+
 	public function enqueue_assets(): void {
 		// The block library CSS is dead weight — this theme renders no blocks.
 		wp_dequeue_style( 'wp-block-library' );
@@ -155,9 +198,17 @@ class RTS_Theme {
 		wp_dequeue_style( 'classic-theme-styles' );
 		wp_dequeue_style( 'global-styles' );
 
+		$need = $this->conditions();
+
 		// --- Styles (inc/_top.php order) ---
-		wp_enqueue_style( 'rts-swiper', rts_asset( 'css/vendors/swiper-bundle.min.css' ), [], null );
-		wp_enqueue_style( 'rts-main', rts_asset( 'css/main.css' ), [ 'rts-swiper' ], rts_asset_ver( 'css/main.css' ) );
+		$main_deps = [];
+
+		if ( $need['swiper'] ) {
+			wp_enqueue_style( 'rts-swiper', rts_asset( 'css/vendors/swiper-bundle.min.css' ), [], null );
+			$main_deps[] = 'rts-swiper';
+		}
+
+		wp_enqueue_style( 'rts-main', rts_asset( 'css/main.css' ), $main_deps, rts_asset_ver( 'css/main.css' ) );
 		wp_enqueue_style( 'rts-style', rts_asset( 'css/style.css' ), [ 'rts-main' ], rts_asset_ver( 'css/style.css' ) );
 
 		$args = [
@@ -169,14 +220,18 @@ class RTS_Theme {
 		wp_deregister_script( 'jquery' );
 
 		$deps = [];
-		foreach ( self::VENDORS as $handle => $path ) {
-			wp_enqueue_script( $handle, rts_asset( $path ), [], null, $args );
-			$deps[] = $handle;
+		foreach ( self::VENDORS as $handle => $vendor ) {
+			if ( 'all' === $vendor[1] || ! empty( $need[ $vendor[1] ] ) ) {
+				wp_enqueue_script( $handle, rts_asset( $vendor[0] ), [], null, $args );
+				$deps[] = $handle;
+			}
 		}
 
 		// --- App scripts ---
-		foreach ( self::SCRIPTS as $handle => $path ) {
-			wp_enqueue_script( $handle, rts_asset( $path ), $deps, rts_asset_ver( $path ), $args );
+		foreach ( self::SCRIPTS as $handle => $script ) {
+			if ( 'all' === $script[1] || ! empty( $need[ $script[1] ] ) ) {
+				wp_enqueue_script( $handle, rts_asset( $script[0] ), $deps, rts_asset_ver( $script[0] ), $args );
+			}
 		}
 
 		// Base URL for the libraries the app fetches on demand (lightGallery, model-viewer).

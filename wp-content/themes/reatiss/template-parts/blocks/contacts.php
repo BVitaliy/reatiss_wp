@@ -16,13 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 $rts_form    = ! empty( $args['form'] ) ? (int) $args['form'] : (int) rts_option( 'contact_form' );
 $rts_offices = ! empty( $args['offices'] ) ? rts_offices() : [];
 $rts_socials = ! empty( $args['socials'] ) ? rts_socials() : [];
-$rts_icons   = [
-	'facebook'  => 'share-facebook.svg',
-	'instagram' => 'share-instagram.svg',
-	'tiktok'    => 'tiktok.svg',
-	'x'         => 'share-x.svg',
-	'linkedin'  => 'linkedin.svg',
-];
 ?>
 <section class="contacts">
 	<div class="container contacts__grid">
@@ -32,7 +25,7 @@ $rts_icons   = [
 			<?php if ( ! empty( $rts_socials ) ) { ?>
 				<ul class="social-list">
 					<?php foreach ( $rts_socials as $rts_social ) { ?>
-						<li><a href="<?php echo esc_url( $rts_social['url'] ); ?>" class="social-btn social-btn--light" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: network */ __( 'Reatiss on %s', 'reatiss' ), $rts_social['label'] ) ); ?>" target="_blank" rel="noopener"><?php rts_icon( 'icons/' . $rts_icons[ $rts_social['icon'] ] ); ?></a></li>
+						<li><a href="<?php echo esc_url( $rts_social['url'] ); ?>" class="social-btn social-btn--light" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: network */ __( 'Reatiss on %s', 'reatiss' ), $rts_social['label'] ) ); ?>" target="_blank" rel="noopener"><?php rts_social_icon( $rts_social, 'round' ); ?></a></li>
 					<?php } ?>
 				</ul>
 			<?php } ?>

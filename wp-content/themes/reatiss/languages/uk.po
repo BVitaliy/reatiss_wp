@@ -1066,3 +1066,15 @@ msgstr "Форма сторінки контактів"
 
 msgid "Used by the “Contacts” block when the block has no form of its own."
 msgstr "Використовується блоком «Контакти», якщо в ньому не обрано іншу форму."
+
+msgid "Custom icon"
+msgstr "Своя іконка"
+
+msgid "SVG 30×30 (fill=\"currentColor\" — recoloured on hover) or PNG 60×60."
+msgstr "SVG 30×30 (fill=\"currentColor\" — колір міняється при наведенні) або PNG 60×60."
+
+msgid "Network name"
+msgstr "Назва мережі"
+
+msgid "A network without a link is not shown; with none, the “Social Media” block is hidden. For a network missing from the list pick “Custom icon” and upload it."
+msgstr "Соцмережа без посилання не виводиться; без жодної — блок «Social Media» прихований. Для мережі, якої немає у списку, оберіть «Своя іконка» і завантажте її."
