@@ -12,7 +12,7 @@
 
   // a textarea is inline-block: in the wrap it would sit on the text baseline
   // and leave a 6px gap below it
-  .field__input {
+  textarea.field__input {
     display: block;
   }
 }

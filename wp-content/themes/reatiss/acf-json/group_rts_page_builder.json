@@ -4001,6 +4001,268 @@
                     "min": "",
                     "max": "",
                     "key": "layout_27fe176853901948"
+                },
+                {
+                    "name": "contacts",
+                    "label": "Contacts (info + form)",
+                    "display": "block",
+                    "min": "",
+                    "max": "",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "contacts_hide",
+                            "label": "Hide block",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_023c31bfc8a6710d"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "title",
+                            "label": "Title",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "rows": 2,
+                            "new_lines": "br",
+                            "required": 1,
+                            "default_value": "Let’s Start a Conversation",
+                            "key": "field_23420d51bd883335"
+                        },
+                        {
+                            "type": "textarea",
+                            "name": "lead",
+                            "label": "Lead text",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "rows": 2,
+                            "new_lines": "",
+                            "key": "field_1affefccbf44cb15"
+                        },
+                        {
+                            "type": "true_false",
+                            "name": "socials",
+                            "label": "Show social networks",
+                            "wrapper": {
+                                "width": "33"
+                            },
+                            "ui": 1,
+                            "default_value": 1,
+                            "instructions": "From Site Settings → Footer.",
+                            "key": "field_a3469bfc9be960c1"
+                        },
+                        {
+                            "type": "true_false",
+                            "name": "main",
+                            "label": "Show the main contacts",
+                            "wrapper": {
+                                "width": "33"
+                            },
+                            "ui": 1,
+                            "default_value": 1,
+                            "instructions": "Address, phone, e-mail from Site Settings → Contacts.",
+                            "key": "field_745965e782b4dcb9"
+                        },
+                        {
+                            "type": "true_false",
+                            "name": "offices",
+                            "label": "Show the offices",
+                            "wrapper": {
+                                "width": "34"
+                            },
+                            "ui": 1,
+                            "default_value": 1,
+                            "instructions": "Site Settings → Contacts → Offices.",
+                            "key": "field_6ae9bb023338e857"
+                        },
+                        {
+                            "type": "text",
+                            "name": "form_title",
+                            "label": "Form title",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "default_value": "Send your Request",
+                            "key": "field_063f331978b32e5c"
+                        },
+                        {
+                            "type": "post_object",
+                            "name": "form",
+                            "label": "Form",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "return_format": "id",
+                            "post_type": [
+                                "wpcf7_contact_form"
+                            ],
+                            "ui": 1,
+                            "allow_null": 1,
+                            "instructions": "Empty — “Contacts page form” from Site Settings → Forms.",
+                            "key": "field_47ce05072c2b19c8"
+                        }
+                    ],
+                    "key": "layout_7af605f0b90bc9ce"
+                },
+                {
+                    "name": "contacts_map",
+                    "label": "Map",
+                    "display": "block",
+                    "min": "",
+                    "max": "",
+                    "sub_fields": [
+                        {
+                            "type": "true_false",
+                            "name": "contacts_map_hide",
+                            "label": "Hide block",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "ui": 1,
+                            "default_value": 0,
+                            "key": "field_a5e23c419eb39457"
+                        },
+                        {
+                            "type": "select",
+                            "name": "mode",
+                            "label": "Map type",
+                            "wrapper": {
+                                "width": "34"
+                            },
+                            "ui": 1,
+                            "return_format": "value",
+                            "default_value": "google",
+                            "choices": {
+                                "google": "Google Map (needs the API key in Site Settings → Map)",
+                                "image": "Image"
+                            },
+                            "key": "field_9669891050df965f"
+                        },
+                        {
+                            "type": "number",
+                            "name": "office",
+                            "label": "Office in the card",
+                            "wrapper": {
+                                "width": "33"
+                            },
+                            "default_value": 1,
+                            "min": 1,
+                            "instructions": "Number in Site Settings → Contacts → Offices.",
+                            "key": "field_ac73c040ed4558b2"
+                        },
+                        {
+                            "type": "number",
+                            "name": "zoom",
+                            "label": "Zoom",
+                            "wrapper": {
+                                "width": "33"
+                            },
+                            "default_value": 15,
+                            "min": 3,
+                            "max": 20,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_9669891050df965f",
+                                        "operator": "==",
+                                        "value": "google"
+                                    }
+                                ]
+                            ],
+                            "key": "field_b02a131b9fa4a96a"
+                        },
+                        {
+                            "type": "text",
+                            "name": "lat",
+                            "label": "Latitude",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "default_value": "50.4262",
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_9669891050df965f",
+                                        "operator": "==",
+                                        "value": "google"
+                                    }
+                                ]
+                            ],
+                            "instructions": "Right-click the place in Google Maps → the first number.",
+                            "key": "field_feecf987aacf6853"
+                        },
+                        {
+                            "type": "text",
+                            "name": "lng",
+                            "label": "Longitude",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "default_value": "30.5146",
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_9669891050df965f",
+                                        "operator": "==",
+                                        "value": "google"
+                                    }
+                                ]
+                            ],
+                            "key": "field_d0d064daad7e2870"
+                        },
+                        {
+                            "type": "image",
+                            "name": "image",
+                            "label": "Map image",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "return_format": "array",
+                            "preview_size": "medium",
+                            "library": "all",
+                            "mime_types": "jpg,jpeg,png,webp",
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_9669891050df965f",
+                                        "operator": "==",
+                                        "value": "image"
+                                    }
+                                ]
+                            ],
+                            "instructions": "~1700×650 px, CENTRED ON THE OFFICE — the pin sits in the middle.",
+                            "key": "field_62f73798a4ada904"
+                        },
+                        {
+                            "type": "image",
+                            "name": "image_mobile",
+                            "label": "Map image (mobile)",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "return_format": "array",
+                            "preview_size": "medium",
+                            "library": "all",
+                            "mime_types": "jpg,jpeg,png,webp",
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_9669891050df965f",
+                                        "operator": "==",
+                                        "value": "image"
+                                    }
+                                ]
+                            ],
+                            "instructions": "Optional: ~650×650 px, centred on the office.",
+                            "key": "field_910af08d33252810"
+                        }
+                    ],
+                    "key": "layout_f49001122309bd81"
                 }
             ],
             "button_label": "Add block",
@@ -4051,5 +4313,5 @@
     "active": true,
     "description": "Page blocks in display order. With no blocks the page shows its title and editor text (a text page).",
     "show_in_rest": 0,
-    "modified": 1791904778
+    "modified": 1791962224
 }

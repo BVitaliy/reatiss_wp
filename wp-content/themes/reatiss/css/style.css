@@ -1922,7 +1922,7 @@ html.js .home-hero:not(.is-ready) .home-hero__content > * {opacity: 0;}
 .elements__swatch span {height: 4.375rem;border: 1px solid var(--clr-line);border-radius: var(--rd-lg);}
 .elements__dark {padding: var(--sp-xs);border-radius: var(--rd-lg);}
 .wpcf7-form-control-wrap {display: block;}
-.wpcf7-form-control-wrap .field__input {display: block;}
+.wpcf7-form-control-wrap textarea.field__input {display: block;}
 .field.is-invalid .field__error {display: block;}
 .wpcf7-not-valid-tip,
 .wpcf7-spinner,

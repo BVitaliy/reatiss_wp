@@ -970,3 +970,99 @@ msgstr "Попап «Дякуємо» — текст"
 
 msgid "“Thank you” popup — title"
 msgstr "Попап «Дякуємо» — заголовок"
+
+msgid "Search page"
+msgstr "Пошук"
+
+msgid "Results page title"
+msgstr "Заголовок сторінки результатів"
+
+msgid "Text when nothing is found"
+msgstr "Текст, коли нічого не знайдено"
+
+msgid "Contacts (info + form)"
+msgstr "Контакти (інформація + форма)"
+
+msgid "Show social networks"
+msgstr "Показувати соцмережі"
+
+msgid "From Site Settings → Footer."
+msgstr "З Налаштувань сайту → Футер."
+
+msgid "Show the main contacts"
+msgstr "Показувати головні контакти"
+
+msgid "Address, phone, e-mail from Site Settings → Contacts."
+msgstr "Адреса, телефон, e-mail з Налаштувань сайту → Контакти."
+
+msgid "Show the offices"
+msgstr "Показувати офіси"
+
+msgid "Site Settings → Contacts → Offices."
+msgstr "Налаштування сайту → Контакти → Офіси."
+
+msgid "Form title"
+msgstr "Заголовок форми"
+
+msgid "Empty — “Contacts page form” from Site Settings → Forms."
+msgstr "Порожньо — «Форма сторінки контактів» з Налаштувань сайту → Форми."
+
+msgid "Map type"
+msgstr "Тип карти"
+
+msgid "Google Map (needs the API key in Site Settings → Map)"
+msgstr "Google Map (потрібен ключ API в Налаштуваннях сайту → Карта)"
+
+msgid "Office in the card"
+msgstr "Офіс у картці"
+
+msgid "Number in Site Settings → Contacts → Offices."
+msgstr "Номер у Налаштуваннях сайту → Контакти → Офіси."
+
+msgid "Zoom"
+msgstr "Масштаб"
+
+msgid "Latitude"
+msgstr "Широта"
+
+msgid "Right-click the place in Google Maps → the first number."
+msgstr "Правий клік по місцю в Google Maps → перше число."
+
+msgid "Longitude"
+msgstr "Довгота"
+
+msgid "Map image"
+msgstr "Зображення карти"
+
+msgid "~1700×650 px, CENTRED ON THE OFFICE — the pin sits in the middle."
+msgstr "~1700×650 px, ОФІС ПО ЦЕНТРУ — пін стоїть посередині."
+
+msgid "Map image (mobile)"
+msgstr "Зображення карти (мобільне)"
+
+msgid "Optional: ~650×650 px, centred on the office."
+msgstr "Необов’язково: ~650×650 px, офіс по центру."
+
+msgid "Address"
+msgstr "Адреса"
+
+msgid "Main address on the Contacts page; it links to Google Maps."
+msgstr "Головна адреса на сторінці контактів; веде на Google Maps."
+
+msgid "Offices"
+msgstr "Офіси"
+
+msgid "Add office"
+msgstr "Додати офіс"
+
+msgid "Shown on the Contacts page; the map card shows one of them (set in the Map block)."
+msgstr "Виводяться на сторінці контактів; картка на карті показує один з них (обирається в блоці «Карта»)."
+
+msgid "Company"
+msgstr "Компанія"
+
+msgid "Contacts page form"
+msgstr "Форма сторінки контактів"
+
+msgid "Used by the “Contacts” block when the block has no form of its own."
+msgstr "Використовується блоком «Контакти», якщо в ньому не обрано іншу форму."

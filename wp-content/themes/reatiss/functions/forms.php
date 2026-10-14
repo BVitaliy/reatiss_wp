@@ -22,6 +22,18 @@ class RTS_Forms {
 		add_action( 'wpcf7_init', [ $this, 'register_tags' ] );
 		add_filter( 'wpcf7_load_css', '__return_false' );
 		add_filter( 'wpcf7_autop_or_not', '__return_false' );
+		add_filter( 'wpcf7_form_elements', [ $this, 'select_placeholder' ] );
+	}
+
+	/**
+	 * `[select … first_as_label "Pick…"]` prints the label as a plain option;
+	 * the markup's select (and app-select.js) expects the placeholder as
+	 * `<option value="" selected disabled hidden>` — grey text, not choosable.
+	 *
+	 * @param string $html Form HTML.
+	 */
+	public function select_placeholder( $html ): string {
+		return (string) preg_replace( '#(<select\b[^>]*>\s*)<option value="">#', '$1<option value="" selected disabled hidden>', (string) $html );
 	}
 
 	public function register_tags(): void {

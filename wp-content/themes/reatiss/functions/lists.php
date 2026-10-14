@@ -27,6 +27,7 @@ const RTS_LIST_CARDS = [
 	'post'       => 'news',
 	'rts_event'  => 'event',
 	'rts_report' => 'report',
+	'search'     => 'search-row',
 ];
 
 class RTS_Lists {
@@ -106,9 +107,10 @@ class RTS_Lists {
 		$term     = isset( $_POST['term'] ) ? absint( $_POST['term'] ) : 0;
 		$author   = isset( $_POST['author'] ) ? absint( $_POST['author'] ) : 0;
 		$page     = isset( $_POST['page'] ) ? max( 1, absint( $_POST['page'] ) ) : 1;
+		$search   = isset( $_POST['s'] ) ? sanitize_text_field( wp_unslash( $_POST['s'] ) ) : '';
 		// phpcs:enable
 
-		$query = rts_list_query( $type, $page, $taxonomy, $term, $author );
+		$query = 'search' === $type ? rts_search_query( $search, $page ) : rts_list_query( $type, $page, $taxonomy, $term, $author );
 
 		ob_start();
 		foreach ( $query->posts as $post ) {
@@ -324,6 +326,7 @@ function rts_pager( WP_Query $query, array $data, string $class = 'list-page__pa
 				data-taxonomy="<?php echo esc_attr( (string) ( $data['taxonomy'] ?? '' ) ); ?>"
 				data-term="<?php echo esc_attr( (string) (int) ( $data['term'] ?? 0 ) ); ?>"
 				data-author="<?php echo esc_attr( (string) (int) ( $data['author'] ?? 0 ) ); ?>"
+				data-s="<?php echo esc_attr( (string) ( $data['s'] ?? '' ) ); ?>"
 				data-page="<?php echo esc_attr( (string) $current ); ?>">
 				<span class="btn__tile"><?php rts_icon( 'icons/arrow.svg' ); ?></span>
 				<?php esc_html_e( 'Show more', 'reatiss' ); ?>

@@ -65,6 +65,84 @@
             "key": "field_dc1f83c7ef419d59"
         },
         {
+            "type": "textarea",
+            "name": "contact_address",
+            "label": "Address",
+            "wrapper": {
+                "width": "100"
+            },
+            "rows": 2,
+            "new_lines": "",
+            "default_value": "15 Kazymyra Malevycha Str., 03150, Kyiv, Ukraine",
+            "instructions": "Main address on the Contacts page; it links to Google Maps.",
+            "key": "field_02938259b594f60e"
+        },
+        {
+            "type": "repeater",
+            "name": "offices",
+            "label": "Offices",
+            "wrapper": {
+                "width": "100"
+            },
+            "layout": "block",
+            "button_label": "Add office",
+            "instructions": "Shown on the Contacts page; the map card shows one of them (set in the Map block).",
+            "sub_fields": [
+                {
+                    "type": "text",
+                    "name": "location",
+                    "label": "Location",
+                    "wrapper": {
+                        "width": "30"
+                    },
+                    "required": 1,
+                    "placeholder": "Ukraine-Kyiv",
+                    "key": "field_6e7a4da0ecc6b082"
+                },
+                {
+                    "type": "text",
+                    "name": "company",
+                    "label": "Company",
+                    "wrapper": {
+                        "width": "30"
+                    },
+                    "placeholder": "REATISS TOV",
+                    "key": "field_7a7370639012bcc4"
+                },
+                {
+                    "type": "text",
+                    "name": "phone",
+                    "label": "Phone",
+                    "wrapper": {
+                        "width": "20"
+                    },
+                    "key": "field_cb0c3b5781a43db9"
+                },
+                {
+                    "type": "email",
+                    "name": "email",
+                    "label": "E-mail",
+                    "wrapper": {
+                        "width": "20"
+                    },
+                    "key": "field_3aa03d6221d9f422"
+                },
+                {
+                    "type": "textarea",
+                    "name": "address",
+                    "label": "Address",
+                    "wrapper": {
+                        "width": "100"
+                    },
+                    "rows": 2,
+                    "new_lines": "",
+                    "required": 1,
+                    "key": "field_95ae3b26f66a4e01"
+                }
+            ],
+            "key": "field_412db049f8975b89"
+        },
+        {
             "type": "tab",
             "name": "footer_tab",
             "label": "Footer",
@@ -346,6 +424,36 @@
         },
         {
             "type": "tab",
+            "name": "search_tab",
+            "label": "Search page",
+            "wrapper": {
+                "width": "100"
+            },
+            "placement": "top",
+            "key": "field_2b213eb38204252f"
+        },
+        {
+            "type": "text",
+            "name": "search_title",
+            "label": "Results page title",
+            "wrapper": {
+                "width": "50"
+            },
+            "default_value": "Search results",
+            "key": "field_cf42e29d60f9a440"
+        },
+        {
+            "type": "text",
+            "name": "search_empty",
+            "label": "Text when nothing is found",
+            "wrapper": {
+                "width": "50"
+            },
+            "default_value": "Nothing found. Try another word.",
+            "key": "field_a36a9d7a88d27927"
+        },
+        {
+            "type": "tab",
             "name": "faq_tab",
             "label": "FAQ",
             "wrapper": {
@@ -447,6 +555,22 @@
             "ui": 1,
             "allow_null": 1,
             "key": "field_c4afab481131d7c2"
+        },
+        {
+            "type": "post_object",
+            "name": "contact_form",
+            "label": "Contacts page form",
+            "wrapper": {
+                "width": "50"
+            },
+            "return_format": "id",
+            "post_type": [
+                "wpcf7_contact_form"
+            ],
+            "ui": 1,
+            "allow_null": 1,
+            "instructions": "Used by the “Contacts” block when the block has no form of its own.",
+            "key": "field_3f223ef09bae0d53"
         },
         {
             "type": "post_object",
@@ -1080,5 +1204,5 @@
     "active": true,
     "description": "Global settings: header, contacts, footer, popups, forms.",
     "show_in_rest": 0,
-    "modified": 1791904778
+    "modified": 1791962224
 }

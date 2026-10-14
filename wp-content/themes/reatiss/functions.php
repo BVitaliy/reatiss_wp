@@ -38,6 +38,7 @@ require_once RTS_DIR . '/functions/cards.php';
 require_once RTS_DIR . '/functions/sections.php';
 require_once RTS_DIR . '/functions/lists.php';
 require_once RTS_DIR . '/functions/articles.php';
+require_once RTS_DIR . '/functions/search.php';
 require_once RTS_DIR . '/functions/post-types.php';
 
 require_once RTS_DIR . '/functions/init.php';

@@ -57,14 +57,8 @@ $(function () {
   $header.on("click", ".js-search-open", openSearch);
   $header.on("click", ".js-search-close", closeSearch);
 
-  // Demo: results appear once something is typed (backend fills the list)
-  $input.on("input", function () {
-    $results.toggleClass("is-visible", $.trim(this.value).length > 1);
-  });
-
-  $search.on("submit", function (e) {
-    e.preventDefault();
-  });
+  // WP: live results + submit are handled by app-search.js (the markup's
+  // demo toggle and the submit block were removed here).
 
   $(document).on("click", function (e) {
     if ($header.hasClass("is-search-open") && !$(e.target).closest(".js-search, .js-search-open").length) {

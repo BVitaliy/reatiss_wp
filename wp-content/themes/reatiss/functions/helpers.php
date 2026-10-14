@@ -310,3 +310,52 @@ function rts_header_class(): string {
 function rts_br( $text ): void {
 	echo wp_kses( (string) $text, [ 'br' => [] ] );
 }
+
+/**
+ * The markup's .contact-list: address (→ Google Maps), phone, e-mail; empty
+ * rows are left out.
+ *
+ * @param string $address Address.
+ * @param string $phone   Phone.
+ * @param string $email   E-mail.
+ */
+function rts_contact_list( string $address, string $phone, string $email ): void {
+	if ( '' === trim( $address . $phone . $email ) ) {
+		return;
+	}
+	?>
+	<ul class="contact-list">
+		<?php if ( '' !== trim( $address ) ) { ?>
+			<li><?php rts_icon( 'icons/location.svg' ); ?><a href="<?php echo esc_url( 'https://maps.google.com/?q=' . rawurlencode( wp_strip_all_tags( $address ) ) ); ?>" target="_blank" rel="noopener"><?php echo esc_html( $address ); ?></a></li>
+		<?php } ?>
+		<?php if ( '' !== trim( $phone ) ) { ?>
+			<li><?php rts_icon( 'icons/phone.svg' ); ?><a href="<?php echo esc_attr( rts_phone_href( $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a></li>
+		<?php } ?>
+		<?php if ( '' !== trim( $email ) ) { ?>
+			<li><?php rts_icon( 'icons/mail.svg' ); ?><a href="mailto:<?php echo esc_attr( antispambot( $email ) ); ?>"><?php echo esc_html( antispambot( $email ) ); ?></a></li>
+		<?php } ?>
+	</ul>
+	<?php
+}
+
+/**
+ * Offices from Site Settings → Contacts.
+ *
+ * @return array[] Rows { location, company, phone, email, address }.
+ */
+function rts_offices(): array {
+	$rows = rts_option( 'offices' );
+
+	return is_array( $rows ) ? array_values( array_filter( $rows, static fn( $row ) => ! empty( $row['location'] ) ) ) : [];
+}
+
+/**
+ * Office card title: "Ukraine-Kyiv • REATISS TOV".
+ *
+ * @param array $office Office row.
+ */
+function rts_office_title( array $office ): void {
+	?>
+	<p class="office-card__title"><?php echo esc_html( (string) $office['location'] ); ?><?php if ( ! empty( $office['company'] ) ) { ?> <span class="office-card__dot"></span> <?php echo esc_html( $office['company'] ); ?><?php } ?></p>
+	<?php
+}

@@ -26,8 +26,14 @@ const RTS_DARK_TOP_LAYOUTS = [ 'hero', 'page_banner' ];
  * Spacer after a layout, where it differs from `spacer-xl`.
  */
 const RTS_LAYOUT_SPACERS = [
-	'seo' => 'spacer-sm',
+	'seo'          => 'spacer-sm',
+	'contacts_map' => '', // the map closes the page right above the footer
 ];
+
+/**
+ * First blocks whose page has left-aligned breadcrumbs (contacts).
+ */
+const RTS_LEFT_CRUMBS_LAYOUTS = [ 'contacts' ];
 
 /**
  * Visible builder rows of a post.
@@ -79,7 +85,12 @@ function rts_render_builder( int $post_id = 0 ): void {
 		$row['index'] = $index;
 
 		get_template_part( 'template-parts/blocks/' . str_replace( '_', '-', $layout ), null, $row );
-		printf( '<div class="%s"></div>', esc_attr( RTS_LAYOUT_SPACERS[ $layout ] ?? 'spacer-xl' ) );
+
+		$spacer = RTS_LAYOUT_SPACERS[ $layout ] ?? 'spacer-xl';
+
+		if ( '' !== $spacer ) {
+			printf( '<div class="%s"></div>', esc_attr( $spacer ) );
+		}
 	}
 }
 
@@ -123,7 +134,10 @@ add_filter(
  */
 function rts_builder_page(): void {
 	if ( ! rts_has_dark_top() ) {
-		get_template_part( 'template-parts/global/page-top' );
+		$rows = rts_builder_rows();
+		$left = ! empty( $rows ) && in_array( $rows[0]['acf_fc_layout'], RTS_LEFT_CRUMBS_LAYOUTS, true );
+
+		get_template_part( 'template-parts/global/page-top', null, [ 'modifier' => $left ? 'breadcrumbs--left' : '' ] );
 	}
 
 	rts_render_builder();

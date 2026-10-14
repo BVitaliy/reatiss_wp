@@ -46,6 +46,7 @@ class RTS_Theme {
 		'rts-wp'          => 'js/app-wp.js',
 		'rts-load-more'   => 'js/app-load-more.js',
 		'rts-reports'     => 'js/app-reports.js',
+		'rts-search'      => 'js/app-search.js',
 		'rts-select'      => 'js/app-select.js',
 		'rts-hero'        => 'js/app-hero.js',
 		'rts-lines'       => 'js/app-lines.js',

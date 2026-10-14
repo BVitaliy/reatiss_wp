@@ -28,7 +28,7 @@
 4. Services / Labs / Expertise (CPTs, list pages, singles on the builder) ✅
 5. Blog / Events / Authors ✅
 6. On Shelf + forms (reCAPTCHA keys later) ✅
-7. Search (live + results page), Contacts, map
+7. Search (live + results page), Contacts, map ✅
 8. Content seed, Yoast, performance, team checklist, adaptive QA
 
 ## Project structure
@@ -58,6 +58,8 @@ logs/             — custom logs (rts_log()), gitignored
   popup in `js/app-cf7.js`; CF7 wrap fix in `_wp.scss`. Field HTML lives in the CF7 form
   editor (`label.field > span.field__label + [tag class:field__input] + span.field__error`),
   submit = `[rts_submit "Send"]`.
+- `js/app-header.js`: the demo search code (results toggle on typing, `submit` blocked) is
+  removed — live results and the real submit are `js/app-search.js`.
 - `js/app-wp.js`: editor links to `#consultation` / `#reports` open those popups.
 - Section partials take every text from fields; decorative run-lines (`.run-line` SVG paths)
   stay hardcoded in the block partials, as in the markup.
@@ -92,6 +94,17 @@ logs/             — custom logs (rts_log()), gitignored
   wrapped in `.article-table` by a `the_content` filter; author fields = ACF on users.
 - On Shelf: `reports_list` block (CPT `rts_report`, 10 a page) — a row opens the `reports`
   popup and `js/app-reports.js` puts its title into the CF7 hidden field `your-report`.
+- Search (`functions/search.php`): post types `RTS_SEARCH_TYPES`, relevance order set explicitly
+  (rspanel), `search.php` page + header dropdown `wp_ajax_rts_live_search` (`js/app-search.js`,
+  `template-parts/global/search-live.php`); "Show more" type `search`.
+- Contacts: offices + main address in Site Settings → Contacts (`rts_offices()`,
+  `rts_contact_list()`); blocks `contacts` (left breadcrumbs) and `contacts_map` (Google Map with
+  the key from Site Settings → Map, or an image centred on the office; no spacer after it).
+  CF7 selects: `[select … first_as_label "…"]` inside `span.field__select` + chevron SVG — the
+  placeholder option is turned into `selected disabled hidden` by a `wpcf7_form_elements` filter.
+- ACF fields are edited straight in `acf-json/` now (deterministic `field_` keys = sha1 of the
+  field path, first 16 hex). Translations: add to `languages/uk.po`, then
+  `wp i18n make-mo uk.po . && wp i18n make-php uk.po .` in `languages/`.
 - Admin list rows of pages, posts and every theme post type have **Duplicate** (draft copy with
   all fields, image, terms) — `functions/admin-duplicate.php`.
 - Buttons / links: group { label, type: none|page|custom|modal, page, url, new_tab } →

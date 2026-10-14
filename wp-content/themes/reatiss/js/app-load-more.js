@@ -23,7 +23,7 @@
     body.append("action", "rts_load_more");
     body.append("nonce", window.reatiss.nonce);
     body.append("page", String(next));
-    ["type", "taxonomy", "term", "author"].forEach(function (key) {
+    ["type", "taxonomy", "term", "author", "s"].forEach(function (key) {
       body.append(key, btn.getAttribute("data-" + key) || "");
     });
 
