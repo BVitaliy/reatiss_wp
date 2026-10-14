@@ -8,10 +8,13 @@
   component list, adaptive rules, JS modules). When a template looks wrong, diff it
   against the original markup before "fixing" the CSS
 - Local site: http://localhost:8888/reatiss_wp (DB `reatiss_wp`, table prefix `rts_`)
-- Site language English only (qTranslate-XT not installed). **The admin is English too** (for
-  English-speaking editors): ACF labels / instructions, CPT labels, menus, Site Settings are
-  English source strings in the `reatiss` text domain (`acf/settings/l10n_textdomain`), so a
-  translation file can localise them per user language later. SEO via Yoast.
+- Site language English only (qTranslate-XT not installed); the front end is always English.
+  **The admin is Ukrainian**: every admin string (ACF labels / instructions, CPT labels, menus,
+  Site Settings) is an English source string in the `reatiss` text domain
+  (`acf/settings/l10n_textdomain`), translated by `languages/uk.po` → `uk.mo` + `uk.l10n.php`.
+  Each user's profile language picks the admin language (admin = `uk`; English editors pick
+  English). **New admin strings: write them in English and add the Ukrainian to uk.po, then
+  rebuild uk.mo / uk.l10n.php.** SEO via Yoast.
 - WP core was copied from malvy_wp — a Ukrainian build (`$wp_local_package = 'uk'` in
   wp-includes/version.php). The `WPLANG` option is set to '' on purpose: without it the whole
   site (front `<html lang>`, login) falls back to Ukrainian.
@@ -32,7 +35,8 @@
 ```
 functions.php     — constants + require bootstrap only
 functions/        — PHP feature classes and helpers (init, security, admin, media, forms…)
-includes/acf/     — ACF bootstrap (acf-json paths, options page «Налаштування сайту»)
+includes/acf/     — ACF bootstrap (acf-json paths, options page Site Settings, l10n text domain)
+languages/        — uk.po / uk.mo / uk.l10n.php — Ukrainian admin
 acf-json/         — ACF field groups (source of truth — see .claude/acf-flexible-content.md)
 templates/        — page templates
 template-parts/   — section partials ported from the markup's template-parts/
@@ -108,7 +112,7 @@ the local WP site) and watches. **Never edit `css/*.css` directly.**
 ## Language
 - All code, comments, variable names, and commit messages in **English**
 - Front-end strings are **English**, wrapped for translation: `esc_html_e( 'Read more', 'reatiss' )`
-- Admin labels / ACF labels / instructions are **English**, translatable (`__( '…', 'reatiss' )`)
+- Admin labels / ACF labels / instructions: English source (`__( '…', 'reatiss' )`) + Ukrainian in `languages/uk.po`
 
 ## Escaping ACF output — no exceptions
 `get_field()` / `get_sub_field()` / `rts_option()` return unescaped data. Escape at

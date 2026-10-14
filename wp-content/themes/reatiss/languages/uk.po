@@ -1,0 +1,972 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Reatiss theme\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Domain: reatiss\n"
+
+msgid "%s (copy)"
+msgstr "%s (копія)"
+
+msgid "1540×1230 px (5:4)."
+msgstr "1540×1230 px (пропорції 5:4)."
+
+msgid "1920×1080 px. Also the video poster."
+msgstr "1920×1080 px. Також постер для відео."
+
+msgid "1920×1100 px. Shown until the video plays."
+msgstr "1920×1100 px. Видно, поки відео не запустилось."
+
+msgid "2400×1320 px. Also the video poster."
+msgstr "2400×1320 px. Також постер для відео."
+
+msgid "3+ photos, ~1200×1100 px. A click opens the photo full screen."
+msgstr "Від 3 фото, ~1200×1100 px. Клік відкриває фото на весь екран."
+
+msgid "3D model"
+msgstr "3D-модель"
+
+msgid "4 per row on desktop, a slider below 1200."
+msgstr "4 в ряд на десктопі, нижче 1200 — слайдер."
+
+msgid "A grid of 5 per row, 15 is ideal (3 rows). Logo — a one-colour PNG/SVG on a transparent background: the design recolours it."
+msgstr "Сітка 5 у ряд, оптимально 15 (3 ряди). Логотип — одноколірний PNG/SVG на прозорому фоні: його перефарбовує дизайн."
+
+msgid "A network without a link is not shown; with none, the “Social Media” block is hidden."
+msgstr "Соцмережа без посилання не виводиться; без жодної — блок «Social Media» прихований."
+
+msgid "A number with any text around it: “30+”, “2 000+”, “>50%”. Counts up from zero."
+msgstr "Число з будь-яким текстом навколо: «30+», «2 000+», «>50%». Анімується від нуля."
+
+msgid "A side panel listing the article’s H2 headings (a dropdown on phones). Off — one centred text column. Card photo — the Featured image. Inserts: [rts_cta title=\"…\" button=\"…\" url=\"…\" size=\"big\"], [rts_slider ids=\"…\"], [rts_youtube url=\"…\" image=\"ID\"]."
+msgstr "Бічна панель зі списком заголовків H2 статті (на телефоні — випадне меню). Вимкнено — текст однією колонкою по центру. Фото картки — «Зображення запису». Вставки в текст: [rts_cta title=\"…\" button=\"…\" url=\"…\" size=\"big\"], [rts_slider ids=\"…\"], [rts_youtube url=\"…\" image=\"ID\"]."
+
+msgid "A small banner in the corner of the screen, once per session."
+msgstr "Невеликий банер у кутку екрана, один раз за сесію."
+
+msgid "Accordion (analysis levels)"
+msgstr "Акордеон (рівні аналізу)"
+
+msgid "Add"
+msgstr "Додати"
+
+msgid "Add block"
+msgstr "Додати блок"
+
+msgid "Add card"
+msgstr "Додати картку"
+
+msgid "Add event"
+msgstr "Додати подію"
+
+msgid "Add expertise"
+msgstr "Додати експертизу"
+
+msgid "Add file"
+msgstr "Додати файл"
+
+msgid "Add item"
+msgstr "Додати пункт"
+
+msgid "Add lab"
+msgstr "Додати лабораторію"
+
+msgid "Add logo"
+msgstr "Додати логотип"
+
+msgid "Add network"
+msgstr "Додати соцмережу"
+
+msgid "Add new"
+msgstr "Додати"
+
+msgid "Add question"
+msgstr "Додати питання"
+
+msgid "Add report"
+msgstr "Додати звіт"
+
+msgid "Add row"
+msgstr "Додати рядок"
+
+msgid "Add service"
+msgstr "Додати послугу"
+
+msgid "Add team member"
+msgstr "Додати члена команди"
+
+msgid "Add year"
+msgstr "Додати рік"
+
+msgid "Advanced Engineering Solutions (chip scene)"
+msgstr "Advanced Engineering Solutions (сцена з чипом)"
+
+msgid "All published items are shown, sorted by “Order” (Page Attributes)."
+msgstr "Виводяться всі опубліковані записи за полем «Порядок» (Атрибути запису)."
+
+msgid "Animation"
+msgstr "Анімація"
+
+msgid "Answer"
+msgstr "Відповідь"
+
+msgid "Article"
+msgstr "Стаття"
+
+msgid "Article: “more articles” title"
+msgstr "Стаття: заголовок «інші статті»"
+
+msgid "Author page"
+msgstr "Сторінка автора"
+
+msgid "Author: articles list title"
+msgstr "Автор: заголовок списку статей"
+
+msgid "Background"
+msgstr "Фон"
+
+msgid "Background video (desktop)"
+msgstr "Фонове відео (десктоп)"
+
+msgid "Background video (mobile)"
+msgstr "Фонове відео (мобільне)"
+
+msgid "Bio"
+msgstr "Біографія"
+
+msgid "Bio (under “Read more”)"
+msgstr "Біографія (під «Read more»)"
+
+msgid "Bio (visible text)"
+msgstr "Біографія (видимий текст)"
+
+msgid "Black layer over the photo / video. It darkens to 75% on scroll."
+msgstr "Чорний шар над фото/відео. Під час прокрутки він темнішає до 75%."
+
+msgid "Blog & events"
+msgstr "Блог і події"
+
+msgid "Blog page title"
+msgstr "Заголовок сторінки блогу"
+
+msgid "Button"
+msgstr "Кнопка"
+
+msgid "Button text"
+msgstr "Текст кнопки"
+
+msgid "Call to action (light box)"
+msgstr "Заклик до дії (світлий блок)"
+
+msgid "Capabilities (scroll scene)"
+msgstr "Можливості (сцена з прокруткою)"
+
+msgid "Card text in lists and on the home page. Card photo — the Featured image."
+msgstr "Текст картки у списках і на головній. Фото картки — «Зображення запису»."
+
+msgid "Cards"
+msgstr "Картки"
+
+msgid "Centre"
+msgstr "По центру"
+
+msgid "Client logos"
+msgstr "Логотипи клієнтів"
+
+msgid "Column links are edited in Appearance → Menus (locations “Footer — column 1…5”). The column title is the menu name. Legal links at the bottom — location “Footer — legal links”."
+msgstr "Посилання колонок — у «Вигляд → Меню» (розташування «Футер — колонка 1…5»). Заголовок колонки = назва меню. Юридичні посилання внизу — розташування «Футер — юридичні посилання»."
+
+msgid "Company history (timeline)"
+msgstr "Історія компанії (таймлайн)"
+
+msgid "Contact column title"
+msgstr "Заголовок колонки контактів"
+
+msgid "Contacts"
+msgstr "Контакти"
+
+msgid "Content"
+msgstr "Вміст"
+
+msgid "Content (title + text)"
+msgstr "Контент (заголовок + текст)"
+
+msgid "Copyright"
+msgstr "Копірайт"
+
+msgid "Corner banner"
+msgstr "Банер у кутку"
+
+msgid "Custom URL"
+msgstr "Своє посилання"
+
+msgid "Decorative line from the block above"
+msgstr "Декоративна лінія з блоку вище"
+
+msgid "Decorative line from the block above (as on About)"
+msgstr "Декоративна лінія з блоку вище (як на About)"
+
+msgid "Delay, seconds"
+msgstr "Затримка, секунд"
+
+msgid "Description"
+msgstr "Опис"
+
+msgid "Drawing"
+msgstr "Малюнок"
+
+msgid "Drawing cards between lines"
+msgstr "Картки з малюнками між лініями"
+
+msgid "Duplicate"
+msgstr "Копіювати"
+
+msgid "Duplicate “%s”"
+msgstr "Копіювати «%s»"
+
+msgid "Edit"
+msgstr "Редагувати"
+
+msgid "Edit %s"
+msgstr "Редагувати: %s"
+
+msgid "Empty — a one-day event."
+msgstr "Порожньо — одноденна подія."
+
+msgid "Empty — all expertise by Order (in the “Other” variant — without the current one, up to 4). Desktop: a 2-column grid."
+msgstr "Порожньо — всі експертизи за порядком (у варіанті «Інші» — без поточної, до 4). На десктопі сітка 2 колонки."
+
+msgid "Empty — all labs by Order. 3 per row on desktop, a slider below 1200."
+msgstr "Порожньо — всі лабораторії за порядком. На десктопі 3 в ряд, нижче 1200 — слайдер."
+
+msgid "Empty — no “Read more” button."
+msgstr "Порожньо — кнопки «Read more» немає."
+
+msgid "Empty — the 3 latest posts."
+msgstr "Порожньо — 3 останні статті."
+
+msgid "Empty — the 3 nearest events (by start date)."
+msgstr "Порожньо — 3 найближчі події (за датою початку)."
+
+msgid "Empty — the page title."
+msgstr "Порожньо — назва сторінки."
+
+msgid "Empty — the page title. Enter = line break."
+msgstr "Порожньо — назва сторінки. Enter = перенос рядка."
+
+msgid "Empty — the whole team by Order. A card opens the bio popup."
+msgstr "Порожньо — вся команда за порядком. Картка відкриває попап з біографією."
+
+msgid "Empty — the “Request form” from Site Settings → Forms."
+msgstr "Порожньо — «Форма запиту» з Налаштувань сайту → Форми."
+
+msgid "End date"
+msgstr "Дата завершення"
+
+msgid "Enter = line break."
+msgstr "Enter = перенос рядка."
+
+msgid "Event"
+msgstr "Подія"
+
+msgid "Event categories"
+msgstr "Категорії подій"
+
+msgid "Event category"
+msgstr "Категорія"
+
+msgid "Event: “more events” title"
+msgstr "Подія: заголовок «інші події»"
+
+msgid "Events"
+msgstr "Події"
+
+msgid "Events page"
+msgstr "Сторінка подій"
+
+msgid "Events page title"
+msgstr "Заголовок сторінки подій"
+
+msgid "Expanded on page load."
+msgstr "Розгорнуте при завантаженні."
+
+msgid "Expertise"
+msgstr "Експертизи"
+
+msgid "Expertise cards"
+msgstr "Картки експертиз"
+
+msgid "Expertise item"
+msgstr "Експертиза"
+
+msgid "Expertise page"
+msgstr "Сторінка експертиз"
+
+msgid "FAQ"
+msgstr "Питання та відповіді"
+
+msgid "File"
+msgstr "Файл"
+
+msgid "File (download)"
+msgstr "Файл (завантаження)"
+
+msgid "Files (instead of the button)"
+msgstr "Файли (замість кнопки)"
+
+msgid "Footer"
+msgstr "Футер"
+
+msgid "Footer — column 1"
+msgstr "Футер — колонка 1"
+
+msgid "Footer — column 2"
+msgstr "Футер — колонка 2"
+
+msgid "Footer — column 3"
+msgstr "Футер — колонка 3"
+
+msgid "Footer — column 4"
+msgstr "Футер — колонка 4"
+
+msgid "Footer — column 5"
+msgstr "Футер — колонка 5"
+
+msgid "Footer — legal links"
+msgstr "Футер — юридичні посилання"
+
+msgid "For screen readers."
+msgstr "Для екранних читалок."
+
+msgid "For the live map on the contacts page. Without a key the map image is shown."
+msgstr "Для живої карти на сторінці контактів. Без ключа виводиться зображення карти."
+
+msgid "Form"
+msgstr "Форма"
+
+msgid "Form fields and emails are edited in Contact Form 7. Here — which form each popup uses and the texts around it."
+msgstr "Поля форм і листи редагуються в «Contact Form 7». Тут — у якому попапі яка форма і тексти навколо неї."
+
+msgid "Forms"
+msgstr "Форми"
+
+msgid "Full name"
+msgstr "Ім’я та прізвище"
+
+msgid "Full video (popup)"
+msgstr "Повне відео (попап)"
+
+msgid "Full-width video banner"
+msgstr "Відеобанер на всю ширину"
+
+msgid "GLB (glTF binary, textures embedded), optimised — up to ~3 MB."
+msgstr "GLB (glTF binary, текстури всередині), оптимізований — до ~3 МБ."
+
+msgid "Gallery (strip)"
+msgstr "Галерея (стрічка)"
+
+msgid "Global settings: header, contacts, footer, popups, forms."
+msgstr "Глобальні налаштування: шапка, контакти, футер, попапи, форми."
+
+msgid "Google Maps API key"
+msgstr "Ключ Google Maps API"
+
+msgid "Header"
+msgstr "Шапка"
+
+msgid "Header and mobile menu items are edited in Appearance → Menus, location “Main menu”."
+msgstr "Пункти меню шапки і мобільного меню — у «Вигляд → Меню», розташування «Головне меню»."
+
+msgid "Header button"
+msgstr "Кнопка в шапці"
+
+msgid "Hero (home page)"
+msgstr "Головний банер (головна)"
+
+msgid "Hide block"
+msgstr "Приховати блок"
+
+msgid "How it works"
+msgstr "Як працює"
+
+msgid "Icon"
+msgstr "Іконка"
+
+msgid "Icon list"
+msgstr "Список з іконками"
+
+msgid "Illustration"
+msgstr "Ілюстрація"
+
+msgid "Image"
+msgstr "Зображення"
+
+msgid "Image (mobile)"
+msgstr "Зображення (мобільне)"
+
+msgid "Inserts: [rts_cta title=\"Text\" button=\"Label\" url=\"https://…\"] — a box with a button; [rts_slider ids=\"12,13,14\"] — photo slider (media library IDs); [rts_youtube url=\"https://youtu.be/…\" image=\"15\"] — YouTube video with a cover (photo ID). A link to “#consultation” opens the consultation popup."
+msgstr "Вставки в текст: [rts_cta title=\"Текст\" button=\"Напис\" url=\"https://…\"] — блок із кнопкою; [rts_slider ids=\"12,13,14\"] — слайдер фото (ID з медіатеки); [rts_youtube url=\"https://youtu.be/…\" image=\"15\"] — відео YouTube з обкладинкою (ID фото). Посилання «#consultation» відкриває попап консультації."
+
+msgid "Intro with two photos"
+msgstr "Інтро з двома фото"
+
+msgid "Item not found."
+msgstr "Запис не знайдено."
+
+msgid "Items"
+msgstr "Пункти"
+
+msgid "Lab"
+msgstr "Лабораторія"
+
+msgid "Lab cards"
+msgstr "Картки лабораторій"
+
+msgid "Label"
+msgstr "Підпис"
+
+msgid "Labs"
+msgstr "Лабораторії"
+
+msgid "Labs page"
+msgstr "Сторінка лабораторій"
+
+msgid "Latest blog posts"
+msgstr "Останні статті блогу"
+
+msgid "Layout"
+msgstr "Розташування"
+
+msgid "Lead"
+msgstr "Вступ"
+
+msgid "Lead text"
+msgstr "Вступний текст"
+
+msgid "Left"
+msgstr "Ліворуч"
+
+msgid "Letters “decode”"
+msgstr "Літери «розшифровуються»"
+
+msgid "Line drawing 536×357 px (transparent PNG)."
+msgstr "Лінійний малюнок 536×357 px (PNG з прозорістю)."
+
+msgid "Line drawing 560×420 px (transparent PNG)."
+msgstr "Лінійний малюнок 560×420 px (PNG з прозорістю)."
+
+msgid "Line drawing 600×500 px (transparent PNG)."
+msgstr "Лінійний малюнок 600×500 px (PNG з прозорістю)."
+
+msgid "Line drawing 650×470 px (transparent PNG)."
+msgstr "Лінійний малюнок 650×470 px (PNG з прозорістю)."
+
+msgid "Line target (x,y)"
+msgstr "Ціль лінії (x,y)"
+
+msgid "Line under the cards: text before the link"
+msgstr "Рядок під картками: текст до посилання"
+
+msgid "Link"
+msgstr "Посилання"
+
+msgid "Link at the bottom (optional)"
+msgstr "Посилання внизу (необов’язково)"
+
+msgid "Link next to the title"
+msgstr "Посилання біля заголовка"
+
+msgid "Link type"
+msgstr "Тип посилання"
+
+msgid "Link under the title"
+msgstr "Посилання під заголовком"
+
+msgid "List card"
+msgstr "Картка у списках"
+
+msgid "List pages of the sections: they appear in the breadcrumbs of services, labs, expertise and events, and light up the menu item."
+msgstr "Сторінки-списки розділів: вони стоять у хлібних крихтах послуг, лабораторій, експертиз і подій та підсвічують пункт меню."
+
+msgid "Location"
+msgstr "Місце"
+
+msgid "Logo"
+msgstr "Логотип"
+
+msgid "Logos"
+msgstr "Логотипи"
+
+msgid "MP4 (H.264, faststart, no audio), 1920 px, up to ~8 MB."
+msgstr "MP4 (H.264, faststart, без звуку), 1920 px, до ~8 МБ."
+
+msgid "MP4 (H.264, faststart, no audio), 1920 px."
+msgstr "MP4 (H.264, faststart, без звуку), 1920 px."
+
+msgid "MP4 with audio — opens full screen from the button. Empty — no button."
+msgstr "MP4 зі звуком — відкривається на весь екран по кнопці. Порожньо — кнопки немає."
+
+msgid "MP4 without audio, 1920 px, a short loop."
+msgstr "MP4 без звуку, 1920 px, коротка петля."
+
+msgid "Main (with the decorative line)"
+msgstr "Основний (з декоративною лінією)"
+
+msgid "Main menu (header and mobile menu)"
+msgstr "Головне меню (шапка і мобільне меню)"
+
+msgid "Main text"
+msgstr "Головний текст"
+
+msgid "Map"
+msgstr "Карта"
+
+msgid "Max title width, em"
+msgstr "Макс. ширина заголовка, em"
+
+msgid "Menu"
+msgstr "Меню"
+
+msgid "Menu columns"
+msgstr "Колонки меню"
+
+msgid "Model (.glb)"
+msgstr "Модель (.glb)"
+
+msgid "Model description"
+msgstr "Опис моделі"
+
+msgid "Network"
+msgstr "Мережа"
+
+msgid "No link"
+msgstr "Без посилання"
+
+msgid "Nothing found"
+msgstr "Нічого не знайдено"
+
+msgid "Nothing found in Trash"
+msgstr "У кошику нічого немає"
+
+msgid "Number"
+msgstr "Число"
+
+msgid "Number 1 (with photo)"
+msgstr "Цифра 1 (з фото)"
+
+msgid "Number 2 (with map)"
+msgstr "Цифра 2 (з картою)"
+
+msgid "Number 3 (with photo)"
+msgstr "Цифра 3 (з фото)"
+
+msgid "Offer cards (dark block)"
+msgstr "Картки переваг (темний блок)"
+
+msgid "On desktop (the cell is 360 px)."
+msgstr "На десктопі (комірка 360 px)."
+
+msgid "On desktop the block pins and every scroll step shows the next item; a slider below 1200."
+msgstr "На десктопі блок «зупиняється», і кожен крок прокрутки показує наступний пункт; нижче 1200 — слайдер."
+
+msgid "On desktop, scrolling opens the chip layer by layer (videos are part of the theme) and each layer shows one item. There are 4 layers — up to 4 items. Item text — up to ~250 characters."
+msgstr "На десктопі прокрутка відкриває чип шар за шаром (відео в темі), і для кожного шару з’являється пункт зі списку. Шарів 4 — пунктів теж до 4. Текст пункту — до ~250 символів."
+
+msgid "On phones the first paragraph is clamped to 5 lines."
+msgstr "Перший абзац на телефонах обрізається до 5 рядків."
+
+msgid "Open"
+msgstr "Відкрите"
+
+msgid "Open in new tab"
+msgstr "У новій вкладці"
+
+msgid "Opens by itself, once per session."
+msgstr "Відкривається сам, один раз за сесію."
+
+msgid "Opens the “Get a consultation” popup. Empty — no button."
+msgstr "Відкриває попап «Get a consultation». Порожньо — кнопка не виводиться."
+
+msgid "Optional. 800×800 px."
+msgstr "Необов’язково. 800×800 px."
+
+msgid "Optional: 750×1000 px."
+msgstr "Необов’язково: 750×1000 px."
+
+msgid "Optional: 750×1000 px. Empty — the main image."
+msgstr "Необов’язково: 750×1000 px. Порожньо — основне зображення."
+
+msgid "Optional: 750×1334 px. Empty — the main image."
+msgstr "Необов’язково: 750×1334 px. Порожньо — основне зображення."
+
+msgid "Optional: 750×500 px."
+msgstr "Необов’язково: 750×500 px."
+
+msgid "Optional: 750×580 px."
+msgstr "Необов’язково: 750×580 px."
+
+msgid "Optional: 750×750 px."
+msgstr "Необов’язково: 750×750 px."
+
+msgid "Optional: MP4 720×1280."
+msgstr "Необов’язково: MP4 720×1280."
+
+msgid "Optional: square 1000×1000 px. Empty — the main photo."
+msgstr "Необов’язково: квадрат 1000×1000 px. Порожньо — основне фото."
+
+msgid "Optional: where a long title wraps on desktop (e.g. 15)."
+msgstr "Необов’язково: де ламати довгий заголовок на десктопі (напр. 15)."
+
+msgid "Order"
+msgstr "Порядок"
+
+msgid "Overlay, %"
+msgstr "Затемнення, %"
+
+msgid "Own for this page"
+msgstr "Свої для цієї сторінки"
+
+msgid "PDF list under the text: the title opens the file in a new tab, the icon downloads it."
+msgstr "Список PDF під текстом: назва відкриває файл у новій вкладці, іконка — завантажує."
+
+msgid "PNG/SVG, ~400 px wide."
+msgstr "PNG/SVG, ~400 px завширшки."
+
+msgid "Page"
+msgstr "Сторінка"
+
+msgid "Page banner (dark, full screen)"
+msgstr "Банер сторінки (темний, на весь екран)"
+
+msgid "Page blocks"
+msgstr "Блоки сторінки"
+
+msgid "Page blocks in display order. With no blocks the page shows its title and editor text (a text page)."
+msgstr "Блоки сторінки у порядку виводу. Якщо блоків немає — сторінка показує заголовок і текст із редактора (текстова сторінка)."
+
+msgid "Page builder"
+msgstr "Конструктор сторінки"
+
+msgid "Paragraphs, lists, bold subheadings; photos via Add Media → Create Gallery."
+msgstr "Абзаци, списки, жирні підзаголовки; фото — через «Додати медіа → Створити галерею»."
+
+msgid "People"
+msgstr "Люди"
+
+msgid "Phone"
+msgstr "Телефон"
+
+msgid "Photo"
+msgstr "Фото"
+
+msgid "Photo 1 (mobile)"
+msgstr "Фото 1 (мобільне)"
+
+msgid "Photo 1 (top left)"
+msgstr "Фото 1 (зліва вгорі)"
+
+msgid "Photo 2 (bottom right)"
+msgstr "Фото 2 (справа внизу)"
+
+msgid "Photo 2 (mobile)"
+msgstr "Фото 2 (мобільне)"
+
+msgid "Photo cards (steps / process)"
+msgstr "Картки з фото (етапи / процес)"
+
+msgid "Photo | text (About proportions)"
+msgstr "Фото | текст (пропорції About)"
+
+msgid "Photo | text (as “Let’s work together”)"
+msgstr "Фото | текст (як «Let’s work together»)"
+
+msgid "Position"
+msgstr "Посада"
+
+msgid "Poster"
+msgstr "Постер"
+
+msgid "Poster (mobile)"
+msgstr "Постер (мобільний)"
+
+msgid "Posts"
+msgstr "Статті"
+
+msgid "Preferred vertical position (the script keeps the block on screen)."
+msgstr "Бажане положення по вертикалі (скрипт утримає блок на екрані)."
+
+msgid "Questions"
+msgstr "Питання"
+
+msgid "Report"
+msgstr "Звіт"
+
+msgid "Report title"
+msgstr "Назва звіту"
+
+msgid "Reports (On Shelf)"
+msgstr "Звіти (On Shelf)"
+
+msgid "Reports / links list"
+msgstr "Список звітів / посилань"
+
+msgid "Reports come from “Reports (On Shelf)”, sorted by “Order”. A click on a report opens the “Reports” popup (Site Settings → Forms); the report title goes into the request."
+msgstr "Звіти — розділ «Звіти (On Shelf)», порядок — поле «Порядок». Клік по звіту відкриває попап «Звіти» (Налаштування сайту → Форми); назва звіту потрапляє в заявку."
+
+msgid "Reports list (On Shelf)"
+msgstr "Список звітів (On Shelf)"
+
+msgid "Request form"
+msgstr "Форма запиту"
+
+msgid "Request form (“Request form” block)"
+msgstr "Форма запиту (блок «Форма запиту»)"
+
+msgid "Right"
+msgstr "Праворуч"
+
+msgid "Right (as on expertise)"
+msgstr "Праворуч (як на експертизі)"
+
+msgid "Rows"
+msgstr "Рядки"
+
+msgid "SEO text"
+msgstr "SEO-текст"
+
+msgid "Same order as on the site: the first year is open by default."
+msgstr "Порядок як на сайті: перший рік відкритий за замовчуванням."
+
+msgid "Search"
+msgstr "Шукати"
+
+msgid "Section list (page title)"
+msgstr "Список розділу (заголовок сторінки)"
+
+msgid "Section pages"
+msgstr "Сторінки розділів"
+
+msgid "Service"
+msgstr "Послуга"
+
+msgid "Service popup"
+msgstr "Попап послуги"
+
+msgid "Services"
+msgstr "Послуги"
+
+msgid "Services page"
+msgstr "Сторінка послуг"
+
+msgid "Shared (Site Settings → FAQ)"
+msgstr "Загальні (Налаштування сайту → FAQ)"
+
+msgid "Shared questions"
+msgstr "Загальні питання"
+
+msgid "Short description"
+msgstr "Короткий опис"
+
+msgid "Show banner"
+msgstr "Показувати банер"
+
+msgid "Show map"
+msgstr "Показувати карту"
+
+msgid "Show popup"
+msgstr "Показувати попап"
+
+msgid "Shown in the mobile menu and the footer."
+msgstr "Виводиться в мобільному меню і футері."
+
+msgid "Shown in the popup. Photo — the Featured image, 900×925 px."
+msgstr "Показується в попапі. Фото — «Зображення запису», 900×925 px."
+
+msgid "Shown in the “FAQ” block on pages where “Shared” is selected."
+msgstr "Виводяться в блоці «Питання та відповіді» на сторінках, де обрано «Загальні»."
+
+msgid "Side"
+msgstr "Сторона"
+
+msgid "Site Settings"
+msgstr "Налаштування сайту"
+
+msgid "Site page"
+msgstr "Сторінка сайту"
+
+msgid "Social media title"
+msgstr "Заголовок соцмереж"
+
+msgid "Social networks"
+msgstr "Соцмережі"
+
+msgid "Square 720×720 px."
+msgstr "Квадрат 720×720 px."
+
+msgid "Square 800×800 px."
+msgstr "Квадрат 800×800 px."
+
+msgid "Stage shot 1860×842 px (transparent PNG) — shown while the model loads."
+msgstr "Знімок сцени 1860×842 px (PNG з прозорістю) — видно, поки модель вантажиться."
+
+msgid "Start date"
+msgstr "Дата початку"
+
+msgid "Stat rows (dark block)"
+msgstr "Цифри рядками (темний блок)"
+
+msgid "Statement (animated text)"
+msgstr "Велика фраза (анімований текст)"
+
+msgid "Stats (dark block)"
+msgstr "Цифри (темний блок)"
+
+msgid "Stats with map (composition)"
+msgstr "Цифри з картою (композиція)"
+
+msgid "Team"
+msgstr "Команда"
+
+msgid "Team member"
+msgstr "Член команди"
+
+msgid "Text"
+msgstr "Текст"
+
+msgid "Text (visible)"
+msgstr "Текст (видимий)"
+
+msgid "Text + photo"
+msgstr "Текст + фото"
+
+msgid "Text after the link"
+msgstr "Текст після посилання"
+
+msgid "Text under the logo"
+msgstr "Текст під логотипом"
+
+msgid "Text under “Read more”"
+msgstr "Текст під «Read more»"
+
+msgid "Text | photo"
+msgstr "Текст | фото"
+
+msgid "This SVG could not be processed: it contains disallowed elements or is damaged."
+msgstr "Цей SVG не вдалося обробити: він містить недопустимі елементи або пошкоджений."
+
+msgid "This SVG could not be processed: it contains disallowed elements or is damaged. Export it without scripts and try again."
+msgstr "Не вдалося обробити цей SVG: файл містить недопустимі елементи або пошкоджений. Експортуйте його без скриптів і спробуйте ще раз."
+
+msgid "Three numbers in a free composition. A number may have any text around it (“30+”, “2000+”) and counts up from zero. The second number has the outline of Ukraine instead of a photo."
+msgstr "Три цифри у вільній композиції. Число — з будь-яким текстом навколо («30+», «2000+»), анімується від нуля. У другої цифри замість фото — контур карти України."
+
+msgid "Title"
+msgstr "Заголовок"
+
+msgid "Type"
+msgstr "Тип"
+
+msgid "Upcoming events"
+msgstr "Найближчі події"
+
+msgid "Used by the “Request form” block on service, lab and expertise pages; a block can pick another form."
+msgstr "Блок «Форма запиту» на сторінках послуг, лабораторій, експертиз; у блоці можна обрати іншу форму."
+
+msgid "Variant"
+msgstr "Варіант"
+
+msgid "Vertical position, %"
+msgstr "Висота блоку, %"
+
+msgid "Video"
+msgstr "Відео"
+
+msgid "Video (desktop)"
+msgstr "Відео (десктоп)"
+
+msgid "Video (mobile)"
+msgstr "Відео (мобільне)"
+
+msgid "View"
+msgstr "Переглянути"
+
+msgid "Website"
+msgstr "Сайт"
+
+msgid "What for"
+msgstr "Навіщо"
+
+msgid "What to show"
+msgstr "Що показувати"
+
+msgid "Where the line from the number points: fractions of the video frame, 0,0 — top left, 1,1 — bottom right."
+msgstr "Куди веде лінія від номера: частки кадру відео, 0,0 — лівий верх, 1,1 — правий низ."
+
+msgid "Width, px"
+msgstr "Ширина, px"
+
+msgid "Words fill with colour"
+msgstr "Слова заповнюються кольором"
+
+msgid "Year"
+msgstr "Рік"
+
+msgid "Years"
+msgstr "Роки"
+
+msgid "You are not allowed to do this."
+msgstr "Немає доступу."
+
+msgid "hidden"
+msgstr "приховано"
+
+msgid "https://… or #anchor"
+msgstr "https://… або #anchor"
+
+msgid "{year} — the current year."
+msgstr "{year} — поточний рік."
+
+msgid "“All events” chip"
+msgstr "Чипс «усі події»"
+
+msgid "“All posts” chip"
+msgstr "Чипс «усі статті»"
+
+msgid "“Consultation” popup"
+msgstr "Попап «Консультація»"
+
+msgid "“Consultation” popup — form"
+msgstr "Попап «Консультація» — форма"
+
+msgid "“Consultation” popup — title"
+msgstr "Попап «Консультація» — заголовок"
+
+msgid "“In this article” navigation"
+msgstr "Навігація «In this article»"
+
+msgid "“Learn more” link"
+msgstr "Посилання «Learn more»"
+
+msgid "“Other expertise” (without the current one)"
+msgstr "«Інші експертизи» (без поточної)"
+
+msgid "“Reports” popup (On Shelf) — title"
+msgstr "Попап «Звіти» (On Shelf) — заголовок"
+
+msgid "“Reports” popup — form"
+msgstr "Попап «Звіти» — форма"
+
+msgid "“Share” label"
+msgstr "Підпис «поділитися»"
+
+msgid "“Thank you” popup — button"
+msgstr "Попап «Дякуємо» — кнопка"
+
+msgid "“Thank you” popup — text"
+msgstr "Попап «Дякуємо» — текст"
+
+msgid "“Thank you” popup — title"
+msgstr "Попап «Дякуємо» — заголовок"
