@@ -246,3 +246,13 @@
     border-radius: var(--rd-lg);
   }
 }
+
+// Home solutions scene: the right-hand items stood on the container edge
+// (text touching the screen edge on 1920) — give them the same air as the title's gutter on the left.
+// From 1300 only: below that the chip is close and the inset would push the
+// text onto it.
+@media (min-width: 1300px) {
+  .home-solutions__item--right {
+    right: rem(60);
+  }
+}
