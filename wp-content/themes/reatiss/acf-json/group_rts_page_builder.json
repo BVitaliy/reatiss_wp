@@ -4322,14 +4322,16 @@
     "location": [
         [
             {
-                "param": "post_type",
-                "operator": "==",
-                "value": "page"
-            },
-            {
                 "param": "page_type",
-                "operator": "!=",
-                "value": "posts_page"
+                "operator": "==",
+                "value": "front_page"
+            }
+        ],
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "templates/builder.php"
             }
         ],
         [
@@ -4361,7 +4363,7 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "Page blocks in display order. With no blocks the page shows its title and editor text (a text page).",
+    "description": "Page blocks in display order. Pages: shown on the front page and on the “Page builder” template.",
     "show_in_rest": 0,
-    "modified": 1791970311
+    "modified": 1792076638
 }

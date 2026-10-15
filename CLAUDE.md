@@ -77,8 +77,13 @@ logs/             — custom logs (rts_log()), gitignored
   nothing, so no gaps.
 - A page whose first block is in `RTS_DARK_TOP_LAYOUTS` (hero, page_banner) keeps the
   transparent header and has no `.page-top`; otherwise `header--light` + breadcrumbs.
-- `page.php`: builder blocks, or the text page when there are none. Builder pages hide the
-  classic editor in the admin (`functions/admin-editor.php`).
+- Pages: default template (`page.php`) = text page (title + editor); **“Page builder” template**
+  (`templates/builder.php`) = all builder blocks. The ACF builder group shows on the front page,
+  that template and the service / lab / expertise singles; there the classic editor is hidden
+  (`functions/admin-editor.php`).
+- “Add block” menu shows a screenshot of the hovered block (`functions/admin-block-previews.php`,
+  `js/admin-block-previews.js`): `img/admin/blocks/{layout-with-dashes}.webp`, 840 px wide.
+  **A new block → add its screenshot there.**
 - Cards: `template-parts/cards/{expertise,lab,news,event}.php`, lists via `rts_card_posts()`
   (`functions/cards.php`). Section list pages: Site Settings → Сторінки розділів
   (`functions/sections.php` — breadcrumbs, active menu item).

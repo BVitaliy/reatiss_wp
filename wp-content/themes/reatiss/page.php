@@ -1,7 +1,7 @@
 <?php
 /**
- * Default page template: page builder blocks, or — when the page has none —
- * a text page (Privacy policy, Terms of use, Public offer).
+ * Default page template: a text page (Privacy policy, Terms of use, Public
+ * offer). Pages built from blocks use the “Page builder” template.
  *
  * @package reatiss
  */
@@ -15,20 +15,14 @@ get_header();
 
 <main>
 	<?php
-	if ( ! empty( rts_builder_rows() ) ) {
-		rts_builder_page();
-	} else {
-		get_template_part( 'template-parts/global/page-top' );
+	get_template_part( 'template-parts/global/page-top' );
 
-		while ( have_posts() ) {
-			the_post();
-			get_template_part( 'template-parts/text-page' );
-		}
-		?>
-		<div class="spacer-xl"></div>
-		<?php
+	while ( have_posts() ) {
+		the_post();
+		get_template_part( 'template-parts/text-page' );
 	}
 	?>
+	<div class="spacer-xl"></div>
 </main>
 
 <?php

@@ -2,9 +2,9 @@
 /**
  * Edit screen order (team checklist: tidy admin).
  *
- * - A page that is built with blocks (or the front page) has no use for the
- *   classic editor — it is removed, so the page builder sits right under the
- *   title. Pages without blocks (text pages) keep the editor.
+ * - The front page and pages on the “Page builder” template have no use for
+ *   the classic editor — it is removed, so the blocks sit right under the
+ *   title. Text pages (default template) keep the editor.
  * - Yoast's box goes below the theme's fields.
  * - Collapsed builder rows show the block's title and a “hidden” mark.
  *
@@ -60,7 +60,7 @@ class RTS_Admin_Editor {
 
 		$is_front = (int) get_option( 'page_on_front' ) === $post_id;
 
-		if ( $is_front || ! empty( get_post_meta( $post_id, 'page_builder', true ) ) ) {
+		if ( $is_front || 'templates/builder.php' === get_page_template_slug( $post_id ) ) {
 			remove_post_type_support( 'page', 'editor' );
 		}
 	}
