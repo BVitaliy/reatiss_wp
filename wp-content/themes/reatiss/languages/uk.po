@@ -1102,3 +1102,24 @@ msgstr "Секунда Відео 2, де закінчується наближ�
 
 msgid "Second where the zoom back out ends."
 msgstr "Секунда, де закінчується віддалення."
+
+msgid "Questions & answers"
+msgstr "Питання та відповіді"
+
+msgid "Question"
+msgstr "Питання"
+
+msgid "Pick and order the questions for this block. Empty — all questions (Questions & answers, by Order)."
+msgstr "Оберіть питання для цього блоку і їхній порядок. Порожньо — всі питання (розділ «Питання та відповіді», за полем «Порядок»)."
+
+msgid "Open on load"
+msgstr "Розгорнуте при завантаженні"
+
+msgid "None"
+msgstr "Жодне"
+
+msgid "The first question"
+msgstr "Перше питання"
+
+msgid "The last question"
+msgstr "Останнє питання"

@@ -23,7 +23,7 @@ class RTS_Security {
 	 * registers needs its own filter — closing `post` alone would leave the
 	 * custom types open.
 	 */
-	private const CLOSED_POST_TYPES = [ 'post', 'page', 'rts_service', 'rts_lab', 'rts_expertise', 'rts_report', 'rts_event', 'rts_team' ];
+	private const CLOSED_POST_TYPES = [ 'post', 'page', 'rts_service', 'rts_lab', 'rts_expertise', 'rts_report', 'rts_event', 'rts_team', 'rts_faq' ];
 
 	public function __construct() {
 		add_filter( 'rest_pre_insert_user', [ $this, 'block_user_insert' ], 10, 2 );

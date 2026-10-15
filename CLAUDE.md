@@ -119,6 +119,11 @@ logs/             — custom logs (rts_log()), gitignored
 - Socials accept "Custom icon" (uploaded SVG/PNG, `rts_social_icon()`).
 - Editor content: `_wp.scss` styles the elements `.rich-text` leaves out (h5/h6, alignleft/right,
   hr, code/pre, dl, sup/sub, mark, abbr, embeds).
+- FAQ: questions are CPT `rts_faq` (title = question, editor = answer, «Order»); the `faq` block
+  picks them (`questions` relationship, empty = all) + «Open on load» none/first/last —
+  `functions/faq.php`. `RTS_Faq_Migration` (admin_init, once) moved the old Site Settings FAQ and
+  the blocks' own rows into posts — runs by itself on a site imported from an older export.
+- Admin lists of service / lab / expertise / report / team / faq are ordered by «Order».
 - Admin list rows of pages, posts and every theme post type have **Duplicate** (draft copy with
   all fields, image, terms) — `functions/admin-duplicate.php`.
 - Buttons / links: group { label, type: none|page|custom|modal, page, url, new_tab } →

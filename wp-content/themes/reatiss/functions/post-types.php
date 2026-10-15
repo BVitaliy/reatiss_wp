@@ -5,7 +5,7 @@
  * Services, labs and expertise have single pages built with the page builder
  * and card fields for the lists. Their list pages are ordinary pages (chosen in
  * Site Settings → Section pages), so the CPTs have no archives. Reports
- * (On Shelf) and team members have no pages of their own.
+ * (On Shelf), team members and FAQ questions have no pages of their own.
  *
  * Order in lists = “Order” (menu_order) in the item's Page Attributes.
  *
@@ -23,6 +23,28 @@ class RTS_Post_Types {
 	public function __construct() {
 		add_action( 'init', [ $this, 'register' ] );
 		add_filter( 'enter_title_here', [ $this, 'title_placeholder' ], 10, 2 );
+		add_action( 'pre_get_posts', [ $this, 'admin_order' ] );
+	}
+
+	/**
+	 * Admin lists of the ordered types follow «Order», as the site does.
+	 *
+	 * @param WP_Query $query Query.
+	 */
+	public function admin_order( $query ): void {
+		$ordered = [ 'rts_service', 'rts_lab', 'rts_expertise', 'rts_report', 'rts_team', 'rts_faq' ];
+
+		if ( ! is_admin() || ! $query->is_main_query() || ! in_array( $query->get( 'post_type' ), $ordered, true ) || ! empty( $_GET['orderby'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only list sorting.
+			return;
+		}
+
+		$query->set(
+			'orderby',
+			[
+				'menu_order' => 'ASC',
+				'title'      => 'ASC',
+			]
+		);
 	}
 
 	public function register(): void {
@@ -87,6 +109,15 @@ class RTS_Post_Types {
 			'dashicons-media-document',
 			25,
 			[ 'supports' => [ 'title', 'page-attributes' ] ]
+		);
+
+		$this->register_type(
+			'rts_faq',
+			'',
+			[ __( 'Questions & answers', 'reatiss' ), __( 'Question', 'reatiss' ), __( 'Add question', 'reatiss' ) ],
+			'dashicons-editor-help',
+			27,
+			[ 'supports' => [ 'title', 'editor', 'page-attributes' ] ]
 		);
 
 		$this->register_type(
@@ -172,6 +203,7 @@ class RTS_Post_Types {
 		$map = [
 			'rts_team'   => __( 'Full name', 'reatiss' ),
 			'rts_report' => __( 'Report title', 'reatiss' ),
+			'rts_faq'    => __( 'Question', 'reatiss' ),
 		];
 
 		return $map[ $post->post_type ] ?? (string) $text;

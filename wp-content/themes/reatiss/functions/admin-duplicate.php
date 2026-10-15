@@ -16,7 +16,7 @@ class RTS_Admin_Duplicate {
 
 	private const ACTION = 'rts_duplicate_post';
 
-	private const POST_TYPES = [ 'page', 'post', 'rts_service', 'rts_lab', 'rts_expertise', 'rts_event', 'rts_report', 'rts_team' ];
+	private const POST_TYPES = [ 'page', 'post', 'rts_service', 'rts_lab', 'rts_expertise', 'rts_event', 'rts_report', 'rts_team', 'rts_faq' ];
 
 	/**
 	 * Meta that belongs to the original only.

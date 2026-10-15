@@ -39,6 +39,7 @@ require_once RTS_DIR . '/functions/sections.php';
 require_once RTS_DIR . '/functions/lists.php';
 require_once RTS_DIR . '/functions/articles.php';
 require_once RTS_DIR . '/functions/search.php';
+require_once RTS_DIR . '/functions/faq.php';
 require_once RTS_DIR . '/functions/post-types.php';
 
 require_once RTS_DIR . '/functions/init.php';

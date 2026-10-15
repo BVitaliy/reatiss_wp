@@ -500,65 +500,6 @@
         },
         {
             "type": "tab",
-            "name": "faq_tab",
-            "label": "FAQ",
-            "wrapper": {
-                "width": "100"
-            },
-            "placement": "top",
-            "key": "field_7781f59082ec5035"
-        },
-        {
-            "type": "repeater",
-            "name": "faq_items",
-            "label": "Shared questions",
-            "wrapper": {
-                "width": "100"
-            },
-            "layout": "block",
-            "button_label": "Add question",
-            "instructions": "Shown in the “FAQ” block on pages where “Shared” is selected.",
-            "sub_fields": [
-                {
-                    "type": "text",
-                    "name": "question",
-                    "label": "Questions",
-                    "wrapper": {
-                        "width": "80"
-                    },
-                    "required": 1,
-                    "key": "field_d67329649749b359"
-                },
-                {
-                    "type": "true_false",
-                    "name": "open",
-                    "label": "Open",
-                    "wrapper": {
-                        "width": "20"
-                    },
-                    "ui": 1,
-                    "default_value": 0,
-                    "instructions": "Expanded on page load.",
-                    "key": "field_c948ab02364b773c"
-                },
-                {
-                    "type": "wysiwyg",
-                    "name": "answer",
-                    "label": "Answer",
-                    "wrapper": {
-                        "width": "100"
-                    },
-                    "toolbar": "full",
-                    "media_upload": 0,
-                    "tabs": "all",
-                    "required": 1,
-                    "key": "field_c8c23de5e4b8cda1"
-                }
-            ],
-            "key": "field_e51c19f539818ca4"
-        },
-        {
-            "type": "tab",
             "name": "forms_tab",
             "label": "Forms",
             "wrapper": {
@@ -1250,5 +1191,5 @@
     "active": true,
     "description": "Global settings: header, contacts, footer, popups, forms.",
     "show_in_rest": 0,
-    "modified": 1791963944
+    "modified": 1792077941
 }

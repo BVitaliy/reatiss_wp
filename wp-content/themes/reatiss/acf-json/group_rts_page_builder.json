@@ -1615,77 +1615,41 @@
                             "key": "field_71dabb6dd2b6c2b4"
                         },
                         {
-                            "type": "select",
-                            "name": "source",
+                            "key": "field_fd56075acc9f7f46",
+                            "type": "relationship",
+                            "name": "questions",
                             "label": "Questions",
                             "wrapper": {
-                                "width": "50"
+                                "width": "70"
                             },
-                            "ui": 1,
-                            "return_format": "value",
-                            "default_value": "global",
-                            "choices": {
-                                "global": "Shared (Site Settings → FAQ)",
-                                "own": "Own for this page"
-                            },
-                            "key": "field_5dd95b1cf8d7db20"
+                            "post_type": [
+                                "rts_faq"
+                            ],
+                            "filters": [
+                                "search"
+                            ],
+                            "elements": [],
+                            "return_format": "id",
+                            "min": "",
+                            "max": "",
+                            "instructions": "Pick and order the questions for this block. Empty — all questions (Questions & answers, by Order)."
                         },
                         {
-                            "type": "repeater",
-                            "name": "items",
-                            "label": "Questions",
+                            "key": "field_3cd51451a1044cdb",
+                            "type": "select",
+                            "name": "expanded",
+                            "label": "Open on load",
                             "wrapper": {
-                                "width": "100"
+                                "width": "30"
                             },
-                            "layout": "block",
-                            "button_label": "Add question",
-                            "conditional_logic": [
-                                [
-                                    {
-                                        "field": "field_5dd95b1cf8d7db20",
-                                        "operator": "==",
-                                        "value": "own"
-                                    }
-                                ]
-                            ],
-                            "sub_fields": [
-                                {
-                                    "type": "text",
-                                    "name": "question",
-                                    "label": "Questions",
-                                    "wrapper": {
-                                        "width": "80"
-                                    },
-                                    "required": 1,
-                                    "key": "field_a38626ff8ea8b2fc"
-                                },
-                                {
-                                    "type": "true_false",
-                                    "name": "open",
-                                    "label": "Open",
-                                    "wrapper": {
-                                        "width": "20"
-                                    },
-                                    "ui": 1,
-                                    "default_value": 0,
-                                    "instructions": "Expanded on page load.",
-                                    "key": "field_166f417b410bdd8a"
-                                },
-                                {
-                                    "type": "wysiwyg",
-                                    "name": "answer",
-                                    "label": "Answer",
-                                    "wrapper": {
-                                        "width": "100"
-                                    },
-                                    "toolbar": "full",
-                                    "media_upload": 0,
-                                    "tabs": "all",
-                                    "required": 1,
-                                    "key": "field_b26903273a7f7ead"
-                                }
-                            ],
-                            "key": "field_42fc30f42770c77b"
+                            "choices": {
+                                "none": "None",
+                                "first": "The first question",
+                                "last": "The last question"
+                            },
+                            "default_value": "none",
+                            "ui": 1,
+                            "return_format": "value"
                         }
                     ],
                     "min": "",
@@ -4365,5 +4329,5 @@
     "active": true,
     "description": "Page blocks in display order. Pages: shown on the front page and on the “Page builder” template.",
     "show_in_rest": 0,
-    "modified": 1792076638
+    "modified": 1792077941
 }
