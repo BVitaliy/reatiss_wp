@@ -11,7 +11,7 @@
             },
             "ui": 1,
             "default_value": 1,
-            "instructions": "A side panel listing the article’s H2 headings (a dropdown on phones). Off — one centred text column. Card photo — the Featured image. Inserts: [rts_cta title=\"…\" button=\"…\" url=\"…\" size=\"big\"], [rts_slider ids=\"…\"], [rts_youtube url=\"…\" image=\"ID\"].",
+            "instructions": "A side panel listing the article’s H2 headings (a dropdown on phones). Off — one centred text column. Card photo — the Featured image. Slider in the text: Add Media → Create gallery → “Display as: Slider”. Other inserts: [rts_cta title=\"…\" button=\"…\" url=\"…\" size=\"big\"], [rts_youtube url=\"…\" image=\"ID\"].",
             "key": "field_3db91c37c0f297f2"
         }
     ],
@@ -33,5 +33,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791904778
+    "modified": 1792078907
 }

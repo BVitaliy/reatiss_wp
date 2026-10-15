@@ -89,8 +89,10 @@ logs/             — custom logs (rts_log()), gitignored
   (`functions/sections.php` — breadcrumbs, active menu item).
 - Service / lab / expertise singles use `single-builder.php` (`RTS_BUILDER_TYPES`); their list
   pages are ordinary pages with the `list_page` block.
-- Editor inserts (`functions/shortcodes.php`): `[rts_cta]`, `[rts_slider ids]`, `[rts_youtube url image]`
-  → the markup's `.article-cta` / `.article-slider` / `.article-video`. Print WYSIWYG that may
+- Editor inserts (`functions/shortcodes.php`): `[rts_cta]`, `[rts_youtube url image]` → the markup's
+  `.article-cta` / `.article-video`; sliders (`.article-slider`) = WP galleries with “Display as:
+  Slider” (`[gallery type="slider"]`, `post_gallery` filter) or the “Content” block's “Slider photos”
+  field (`rts_slider_html()`). Old `[rts_slider ids]` still renders; `RTS_Slider_Migration` converted it. Print WYSIWYG that may
   hold them with `rts_editor_content()` (kses + strips the `<p>` wpautop puts around them).
 - Lists (`functions/lists.php`): blog = posts page (`home.php`), categories / tags / event categories
   = `archive.php`, events = page template «Події» (`templates/events.php`, own `/events/page/N/`

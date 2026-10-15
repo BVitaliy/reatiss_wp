@@ -4,7 +4,9 @@
  * place them anywhere in classic-editor / ACF WYSIWYG content:
  *
  *   [rts_cta title="Typical cycle time is 3-4 months." button="Process Report Example" url="https://…" size="big"]
- *   [rts_slider ids="12,13,14"]                         — .article-slider (app-article.js)
+ *   [gallery type="slider" ids="…"]                     — .article-slider (app-article.js);
+ *     WordPress's own “Create gallery” with “Display as: Slider” writes it
+ *     ([rts_slider ids="…"] from earlier content still works)
  *   [rts_youtube url="https://youtu.be/…" image="15"]   — .article-video facade (app-article.js)
  *
  * Editor output is printed through rts_editor_content(): wp_kses_post plus
@@ -24,6 +26,8 @@ class RTS_Shortcodes {
 		add_shortcode( 'rts_cta', [ $this, 'cta' ] );
 		add_shortcode( 'rts_slider', [ $this, 'slider' ] );
 		add_shortcode( 'rts_youtube', [ $this, 'youtube' ] );
+		add_filter( 'post_gallery', [ $this, 'gallery_slider' ], 10, 2 );
+		add_action( 'print_media_templates', [ $this, 'gallery_setting' ] );
 
 		// Post / event content: shortcodes run at 11, unwrap right after.
 		add_filter( 'the_content', 'rts_unwrap_inserts', 12 );
@@ -78,34 +82,60 @@ class RTS_Shortcodes {
 	}
 
 	/**
-	 * Image slider (.article-slider) from media library IDs.
+	 * Old [rts_slider ids="…"] inserts — still rendered; new sliders are
+	 * WordPress galleries with “Display as: Slider” (gallery_slider()).
 	 *
 	 * @param array|string $atts Attributes.
 	 */
 	public function slider( $atts ): string {
 		$atts = shortcode_atts( [ 'ids' => '' ], $atts, 'rts_slider' );
-		$ids  = array_filter( array_map( 'absint', explode( ',', (string) $atts['ids'] ) ) );
 
-		if ( empty( $ids ) ) {
-			return '';
+		return rts_slider_html( explode( ',', (string) $atts['ids'] ) );
+	}
+
+	/**
+	 * [gallery type="slider" ids="…"] → the markup's image slider.
+	 *
+	 * @param string $output   Gallery HTML (empty = WP renders its own).
+	 * @param array  $attr     Shortcode attributes.
+	 */
+	public function gallery_slider( $output, $attr ): string {
+		if ( 'slider' !== ( $attr['type'] ?? '' ) || empty( $attr['ids'] ) ) {
+			return (string) $output;
 		}
 
-		rts_prime_posts( $ids );
+		return rts_slider_html( explode( ',', (string) $attr['ids'] ) );
+	}
 
-		ob_start();
+	/**
+	 * Media modal → Create gallery: a “Display as: Grid / Slider” setting.
+	 */
+	public function gallery_setting(): void {
 		?>
-		<div class="article-slider swiper js-article-slider" aria-label="<?php esc_attr_e( 'Images', 'reatiss' ); ?>">
-			<div class="swiper-wrapper">
-				<?php foreach ( $ids as $id ) { ?>
-					<div class="swiper-slide">
-						<?php rts_picture( $id, null, [ 'sizes' => '(max-width: 1236px) 100vw, 1236px' ], 'large' ); ?>
-					</div>
-				<?php } ?>
-			</div>
-			<div class="swiper-pagination article-slider__pagination"></div>
-		</div>
+		<script type="text/html" id="tmpl-rts-gallery-type">
+			<span class="setting">
+				<label for="rts-gallery-type" class="name"><?php esc_html_e( 'Display as', 'reatiss' ); ?></label>
+				<select id="rts-gallery-type" data-setting="type">
+					<option value="grid"><?php esc_html_e( 'Grid', 'reatiss' ); ?></option>
+					<option value="slider"><?php esc_html_e( 'Slider', 'reatiss' ); ?></option>
+				</select>
+			</span>
+		</script>
+		<script>
+			jQuery( function () {
+				if ( ! window.wp || ! wp.media || ! wp.media.view.Settings.Gallery ) {
+					return;
+				}
+				// "grid" is the default, so a grid gallery's shortcode stays as WordPress writes it.
+				wp.media.gallery.defaults.type = 'grid';
+				wp.media.view.Settings.Gallery = wp.media.view.Settings.Gallery.extend( {
+					template: function ( view ) {
+						return wp.media.template( 'gallery-settings' )( view ) + wp.media.template( 'rts-gallery-type' )( view );
+					}
+				} );
+			} );
+		</script>
 		<?php
-		return $this->compact( (string) ob_get_clean() );
 	}
 
 	/**
@@ -151,6 +181,37 @@ class RTS_Shortcodes {
 }
 
 new RTS_Shortcodes();
+
+/**
+ * The markup's image slider (.article-slider) for media library IDs.
+ *
+ * @param array $ids Attachment IDs in order.
+ */
+function rts_slider_html( array $ids ): string {
+	$ids = array_values( array_filter( array_map( 'absint', $ids ) ) );
+
+	if ( empty( $ids ) ) {
+		return '';
+	}
+
+	rts_prime_posts( $ids );
+
+	ob_start();
+	?>
+	<div class="article-slider swiper js-article-slider" aria-label="<?php esc_attr_e( 'Images', 'reatiss' ); ?>">
+		<div class="swiper-wrapper">
+			<?php foreach ( $ids as $id ) { ?>
+				<div class="swiper-slide">
+					<?php rts_picture( $id, null, [ 'sizes' => '(max-width: 1236px) 100vw, 1236px' ], 'large' ); ?>
+				</div>
+			<?php } ?>
+		</div>
+		<div class="swiper-pagination article-slider__pagination"></div>
+	</div>
+	<?php
+	// One line between markers: rts_unwrap_inserts() strips the <p> wpautop adds.
+	return '<!--rts-insert-->' . trim( (string) preg_replace( '/>\s+</', '><', (string) ob_get_clean() ) ) . '<!--/rts-insert-->';
+}
 
 /**
  * Editor HTML for output: wp_kses_post plus the tags the inserts above use.
@@ -234,4 +295,75 @@ function rts_unwrap_inserts( string $html ): string {
 		[ '<!--rts-insert-->', '<!--/rts-insert-->', '<!--/rts-insert-->', '' ],
 		$html
 	);
+}
+
+/**
+ * One-time move of [rts_slider ids="…"] into what editors can manage without
+ * IDs: in a “Content” block → its “Slider photos” field; anywhere else (post
+ * content, other editor fields) → [gallery type="slider" ids="…"], which the
+ * media modal edits. Runs on admin_init, so an imported site upgrades itself.
+ */
+class RTS_Slider_Migration {
+
+	private const DONE = 'rts_slider_migrated_v1';
+
+	private const PATTERN = '/\[rts_slider\s+ids="([\d,\s]+)"\s*\]/';
+
+	public function __construct() {
+		add_action( 'admin_init', [ $this, 'run' ] );
+	}
+
+	public function run(): void {
+		if ( get_option( self::DONE ) ) {
+			return;
+		}
+
+		update_option( self::DONE, 1, false );
+
+		global $wpdb;
+
+		$like = '%' . $wpdb->esc_like( '[rts_slider' ) . '%';
+
+		// Post content (articles, events, text pages).
+		$posts = $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_content FROM {$wpdb->posts} WHERE post_content LIKE %s", $like ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+
+		foreach ( $posts as $post ) {
+			$wpdb->update( $wpdb->posts, [ 'post_content' => $this->to_gallery( $post->post_content ) ], [ 'ID' => $post->ID ] ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			clean_post_cache( (int) $post->ID );
+		}
+
+		// Builder fields.
+		$metas = $wpdb->get_results( $wpdb->prepare( "SELECT meta_id, post_id, meta_key, meta_value FROM {$wpdb->postmeta} WHERE meta_value LIKE %s", $like ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+
+		foreach ( $metas as $meta ) {
+			$value = (string) $meta->meta_value;
+
+			if ( preg_match( '/^page_builder_(\d+)_text$/', $meta->meta_key, $m ) ) {
+				$layouts = get_post_meta( (int) $meta->post_id, 'page_builder', true );
+
+				if ( is_array( $layouts ) && 'content' === ( $layouts[ (int) $m[1] ] ?? '' ) && preg_match( self::PATTERN, $value, $found ) ) {
+					$base = 'page_builder_' . $m[1] . '_slider';
+					$ids  = array_values( array_filter( array_map( 'trim', explode( ',', $found[1] ) ) ) );
+
+					update_post_meta( (int) $meta->post_id, $base, $ids );
+					update_post_meta( (int) $meta->post_id, '_' . $base, 'field_' . substr( sha1( 'group_rts_page_builder/page_builder/content/slider' ), 0, 16 ) );
+
+					$value = trim( (string) preg_replace( self::PATTERN, '', $value, 1 ) );
+				}
+			}
+
+			update_post_meta( (int) $meta->post_id, $meta->meta_key, $this->to_gallery( $value ) );
+		}
+	}
+
+	/**
+	 * @param string $html Editor HTML.
+	 */
+	private function to_gallery( string $html ): string {
+		return (string) preg_replace( self::PATTERN, '[gallery type="slider" ids="$1"]', $html );
+	}
+}
+
+if ( is_admin() ) {
+	new RTS_Slider_Migration();
 }

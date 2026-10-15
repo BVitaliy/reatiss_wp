@@ -2,8 +2,9 @@
 /**
  * Content — Figma 8271:41515 (service), 8271:41728 (lab), 8271:40683
  * (expertise, with its own line): centred title + editor body in the 1236
- * column (.article-content.rich-text). Inserts via shortcodes: [rts_cta],
- * [rts_slider], [rts_youtube] (functions/shortcodes.php).
+ * column (.article-content.rich-text). Inserts in the text: galleries shown as
+ * sliders, [rts_cta], [rts_youtube] (functions/shortcodes.php); the “Slider
+ * photos” field adds a slider under the text.
  *
  * @package reatiss
  *
@@ -38,6 +39,7 @@ $rts_line = ! empty( $args['line'] );
 
 			<div class="article-content rich-text text-lg">
 				<?php echo rts_editor_content( (string) $args['text'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- kses + shortcodes in rts_editor_content(). ?>
+				<?php echo rts_editor_content( rts_slider_html( is_array( $args['slider'] ?? null ) ? $args['slider'] : [] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>
 			</div>
 		</div>
 	</div>

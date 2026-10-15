@@ -1123,3 +1123,24 @@ msgstr "Перше питання"
 
 msgid "The last question"
 msgstr "Останнє питання"
+
+msgid "Display as"
+msgstr "Показувати як"
+
+msgid "Grid"
+msgstr "Сітка"
+
+msgid "Slider"
+msgstr "Слайдер"
+
+msgid "Slider photos"
+msgstr "Фото слайдера"
+
+msgid "Shown as a slider under the text. ~1240×750 px, drag to reorder."
+msgstr "Виводяться слайдером під текстом. ~1240×750 px, порядок — перетягуванням."
+
+msgid "Inserts: a slider — Add Media → Create gallery → “Display as: Slider”; [rts_cta title=\"Text\" button=\"Label\" url=\"https://…\"] — a box with a button; [rts_youtube url=\"https://youtu.be/…\" image=\"15\"] — YouTube video with a cover (photo ID). A link to “#consultation” opens the consultation popup."
+msgstr "Вставки в текст: слайдер — «Додати медіа → Створити галерею» → «Показувати як: Слайдер»; [rts_cta title=\"Текст\" button=\"Напис\" url=\"https://…\"] — блок із кнопкою; [rts_youtube url=\"https://youtu.be/…\" image=\"15\"] — відео YouTube з обкладинкою (ID фото). Посилання «#consultation» відкриває попап консультації."
+
+msgid "A side panel listing the article’s H2 headings (a dropdown on phones). Off — one centred text column. Card photo — the Featured image. Slider in the text: Add Media → Create gallery → “Display as: Slider”. Other inserts: [rts_cta title=\"…\" button=\"…\" url=\"…\" size=\"big\"], [rts_youtube url=\"…\" image=\"ID\"]."
+msgstr "Бічна панель зі списком заголовків H2 статті (на телефоні — випадне меню). Вимкнено — текст однією колонкою по центру. Фото картки — «Зображення запису». Слайдер у тексті: «Додати медіа → Створити галерею» → «Показувати як: Слайдер». Інші вставки: [rts_cta title=\"…\" button=\"…\" url=\"…\" size=\"big\"], [rts_youtube url=\"…\" image=\"ID\"]."

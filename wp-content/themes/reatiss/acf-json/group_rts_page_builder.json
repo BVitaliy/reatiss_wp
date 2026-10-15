@@ -3073,8 +3073,23 @@
                             "media_upload": 1,
                             "tabs": "all",
                             "required": 1,
-                            "instructions": "Inserts: [rts_cta title=\"Text\" button=\"Label\" url=\"https://…\"] — a box with a button; [rts_slider ids=\"12,13,14\"] — photo slider (media library IDs); [rts_youtube url=\"https://youtu.be/…\" image=\"15\"] — YouTube video with a cover (photo ID). A link to “#consultation” opens the consultation popup.",
+                            "instructions": "Inserts: a slider — Add Media → Create gallery → “Display as: Slider”; [rts_cta title=\"Text\" button=\"Label\" url=\"https://…\"] — a box with a button; [rts_youtube url=\"https://youtu.be/…\" image=\"15\"] — YouTube video with a cover (photo ID). A link to “#consultation” opens the consultation popup.",
                             "key": "field_a160d376cde3c96b"
+                        },
+                        {
+                            "key": "field_6fc9e9561806cf5f",
+                            "type": "gallery",
+                            "name": "slider",
+                            "label": "Slider photos",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "return_format": "id",
+                            "preview_size": "medium",
+                            "library": "all",
+                            "mime_types": "jpg,jpeg,png,webp",
+                            "insert": "append",
+                            "instructions": "Shown as a slider under the text. ~1240×750 px, drag to reorder."
                         }
                     ],
                     "min": "",
@@ -4329,5 +4344,5 @@
     "active": true,
     "description": "Page blocks in display order. Pages: shown on the front page and on the “Page builder” template.",
     "show_in_rest": 0,
-    "modified": 1792077941
+    "modified": 1792078907
 }

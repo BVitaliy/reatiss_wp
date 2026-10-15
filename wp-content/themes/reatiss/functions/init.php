@@ -163,7 +163,7 @@ class RTS_Theme {
 		};
 
 		$single    = is_singular( [ 'post', 'rts_event' ] );
-		$shortcode = is_singular() && str_contains( (string) get_post_field( 'post_content', get_queried_object_id() ), '[rts_' );
+		$shortcode = is_singular() && (bool) preg_match( '/\[(rts_|gallery)/', (string) get_post_field( 'post_content', get_queried_object_id() ) );
 		$lists     = is_home() || is_archive() || is_search() || is_page_template( 'templates/events.php' ) || $has( [ 'reports_list' ] );
 
 		return [
