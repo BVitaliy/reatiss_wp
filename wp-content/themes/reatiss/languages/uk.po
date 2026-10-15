@@ -369,19 +369,19 @@ msgid "Gallery (strip)"
 msgstr "Галерея (стрічка)"
 
 msgid "Global settings: header, contacts, footer, popups, forms."
-msgstr "Глобальні налаштування: шапка, контакти, футер, попапи, форми."
+msgstr "Глобальні налаштування: хедер, контакти, футер, попапи, форми."
 
 msgid "Google Maps API key"
 msgstr "Ключ Google Maps API"
 
 msgid "Header"
-msgstr "Шапка"
+msgstr "Хедер"
 
 msgid "Header and mobile menu items are edited in Appearance → Menus, location “Main menu”."
-msgstr "Пункти меню шапки і мобільного меню — у «Вигляд → Меню», розташування «Головне меню»."
+msgstr "Пункти меню хедера і мобільного меню — у «Вигляд → Меню», розташування «Головне меню»."
 
 msgid "Header button"
-msgstr "Кнопка в шапці"
+msgstr "Кнопка в хедері"
 
 msgid "Hero (home page)"
 msgstr "Головний банер (головна)"
@@ -516,7 +516,7 @@ msgid "Main (with the decorative line)"
 msgstr "Основний (з декоративною лінією)"
 
 msgid "Main menu (header and mobile menu)"
-msgstr "Головне меню (шапка і мобільне меню)"
+msgstr "Головне меню (хедер і мобільне меню)"
 
 msgid "Main text"
 msgstr "Головний текст"
