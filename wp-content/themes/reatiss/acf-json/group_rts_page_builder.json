@@ -3073,7 +3073,7 @@
                             "media_upload": 1,
                             "tabs": "all",
                             "required": 1,
-                            "instructions": "Inserts: video — paste a YouTube link on its own line; slider — Add Media → Create gallery → “Display as: Slider”; [rts_cta title=\"Text\" button=\"Label\" url=\"https://…\"] — a box with a button. A link to “#consultation” opens the consultation popup.",
+                            "instructions": "Inserts: video — paste a YouTube link on its own line; slider — Add Media → Create gallery → “Display as: Slider”; a box with a button — the megaphone button in the toolbar. A link to “#consultation” opens the consultation popup.",
                             "key": "field_a160d376cde3c96b"
                         },
                         {

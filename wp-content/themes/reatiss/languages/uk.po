@@ -1150,3 +1150,30 @@ msgstr "Вставки в текст: відео — вставте посила
 
 msgid "A side panel listing the article’s H2 headings (a dropdown on phones). Off — one centred text column. Card photo — the Featured image. In the text: video — a YouTube link on its own line; slider — Add Media → Create gallery → “Display as: Slider”; a box with a button — [rts_cta title=\"…\" button=\"…\" url=\"…\" size=\"big\"]."
 msgstr "Бічна панель зі списком заголовків H2 статті (на телефоні — випадне меню). Вимкнено — текст однією колонкою по центру. Фото картки — «Зображення запису». У тексті: відео — посилання YouTube окремим рядком; слайдер — «Додати медіа → Створити галерею» → «Показувати як: Слайдер»; блок із кнопкою — [rts_cta title=\"…\" button=\"…\" url=\"…\" size=\"big\"]."
+
+msgid "Inserts: video — paste a YouTube link on its own line; slider — Add Media → Create gallery → “Display as: Slider”; a box with a button — the megaphone button in the toolbar. A link to “#consultation” opens the consultation popup."
+msgstr "Вставки в текст: відео — вставте посилання YouTube окремим рядком; слайдер — «Додати медіа → Створити галерею» → «Показувати як: Слайдер»; блок із кнопкою — кнопка з мегафоном у панелі редактора. Посилання «#consultation» відкриває попап консультації."
+
+msgid "A side panel listing the article’s H2 headings (a dropdown on phones). Off — one centred text column. Card photo — the Featured image. In the text: video — a YouTube link on its own line; slider — Add Media → Create gallery → “Display as: Slider”; a box with a button — the megaphone button in the toolbar."
+msgstr "Бічна панель зі списком заголовків H2 статті (на телефоні — випадне меню). Вимкнено — текст однією колонкою по центру. Фото картки — «Зображення запису». У тексті: відео — посилання YouTube окремим рядком; слайдер — «Додати медіа → Створити галерею» → «Показувати як: Слайдер»; блок із кнопкою — кнопка з мегафоном у панелі редактора."
+
+msgid "Insert a box with a button (CTA)"
+msgstr "Вставити блок із кнопкою (CTA)"
+
+msgid "Box with a button"
+msgstr "Блок із кнопкою"
+
+msgid "Link to a page"
+msgstr "Посилання на сторінку"
+
+msgid "— Custom URL (field below) —"
+msgstr "— Своє посилання (поле нижче) —"
+
+msgid "Any address, a PDF from the media library, or #consultation for the consultation popup."
+msgstr "Будь-яка адреса, PDF з медіатеки або #consultation — попап консультації."
+
+msgid "Large text (as in articles)"
+msgstr "Великий текст (як у статтях)"
+
+msgid "Fill in the text."
+msgstr "Заповніть текст."

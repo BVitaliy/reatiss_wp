@@ -11,7 +11,7 @@
             },
             "ui": 1,
             "default_value": 1,
-            "instructions": "A side panel listing the article’s H2 headings (a dropdown on phones). Off — one centred text column. Card photo — the Featured image. In the text: video — a YouTube link on its own line; slider — Add Media → Create gallery → “Display as: Slider”; a box with a button — [rts_cta title=\"…\" button=\"…\" url=\"…\" size=\"big\"].",
+            "instructions": "A side panel listing the article’s H2 headings (a dropdown on phones). Off — one centred text column. Card photo — the Featured image. In the text: video — a YouTube link on its own line; slider — Add Media → Create gallery → “Display as: Slider”; a box with a button — the megaphone button in the toolbar.",
             "key": "field_3db91c37c0f297f2"
         }
     ],

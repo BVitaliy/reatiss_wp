@@ -89,7 +89,9 @@ logs/             — custom logs (rts_log()), gitignored
   (`functions/sections.php` — breadcrumbs, active menu item).
 - Service / lab / expertise singles use `single-builder.php` (`RTS_BUILDER_TYPES`); their list
   pages are ordinary pages with the `list_page` block.
-- Editor inserts (`functions/shortcodes.php`): `[rts_cta]` → `.article-cta`; **video = a YouTube link
+- Editor inserts (`functions/shortcodes.php`): `[rts_cta]` → `.article-cta` — editors insert it with
+  the toolbar's megaphone button (dialog + visual preview: `functions/admin-mce-cta.php`,
+  `js/admin-mce-cta.js`); **video = a YouTube link
   on its own line** (WP oEmbed → plain iframe, switched to youtube-nocookie; the markup styles
   `.article-content iframe`; no poster facade — old `[rts_youtube]` was migrated to links); sliders (`.article-slider`) = WP galleries with “Display as:
   Slider” (`[gallery type="slider"]`, `post_gallery` filter) or the “Content” block's “Slider photos”
