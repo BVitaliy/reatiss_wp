@@ -7,7 +7,8 @@
  *   [gallery type="slider" ids="…"]                     — .article-slider (app-article.js);
  *     WordPress's own “Create gallery” with “Display as: Slider” writes it
  *     ([rts_slider ids="…"] from earlier content still works)
- *   [rts_youtube url="https://youtu.be/…" image="15"]   — .article-video facade (app-article.js)
+ *   YouTube: a link on its own line → the player (oEmbed, youtube-nocookie);
+ *     old [rts_youtube url="…"] renders the same player
  *
  * Editor output is printed through rts_editor_content(): wp_kses_post plus
  * the tags these inserts need (picture / source, the inline SVG icon, the
@@ -27,6 +28,7 @@ class RTS_Shortcodes {
 		add_shortcode( 'rts_slider', [ $this, 'slider' ] );
 		add_shortcode( 'rts_youtube', [ $this, 'youtube' ] );
 		add_filter( 'post_gallery', [ $this, 'gallery_slider' ], 10, 2 );
+		add_filter( 'embed_oembed_html', [ $this, 'youtube_embed' ], 10, 2 );
 		add_action( 'print_media_templates', [ $this, 'gallery_setting' ] );
 
 		// Post / event content: shortcodes run at 11, unwrap right after.
@@ -139,7 +141,8 @@ class RTS_Shortcodes {
 	}
 
 	/**
-	 * YouTube facade (.article-video): cover image → youtube-nocookie iframe on click.
+	 * Old [rts_youtube url="…"] inserts — rendered as the same player a pasted
+	 * YouTube link gets (videos are now just a link on its own line).
 	 *
 	 * @param array|string $atts Attributes.
 	 */
@@ -148,7 +151,7 @@ class RTS_Shortcodes {
 			[
 				'url'   => '',
 				'image' => '',
-				'label' => __( 'Play video', 'reatiss' ),
+				'label' => '',
 			],
 			$atts,
 			'rts_youtube'
@@ -158,14 +161,36 @@ class RTS_Shortcodes {
 			return '';
 		}
 
-		ob_start();
-		?>
-		<button class="article-video js-youtube" type="button" data-youtube="<?php echo esc_attr( $atts['url'] ); ?>" aria-label="<?php echo esc_attr( $atts['label'] ); ?>">
-			<?php rts_picture( absint( $atts['image'] ), null, [ 'alt' => '' ], 'large' ); ?>
-			<span class="article-video__play"><?php rts_icon( 'icons/youtube.svg' ); ?></span>
-		</button>
-		<?php
-		return $this->compact( (string) ob_get_clean() );
+		$html = wp_oembed_get( $atts['url'] );
+
+		return $html ? $this->compact( $this->nocookie( (string) $html ) ) : '';
+	}
+
+	/**
+	 * A YouTube link pasted on its own line → the player, privacy-enhanced
+	 * (youtube-nocookie.com: no cookies until the video plays). The size comes
+	 * from CSS (.article-content iframe: full width, 16:9).
+	 *
+	 * @param string $html oEmbed HTML.
+	 * @param string $url  Embedded URL.
+	 */
+	public function youtube_embed( $html, $url ): string {
+		$html = (string) $html;
+
+		if ( ! preg_match( '#(youtube\.com|youtu\.be)/#i', (string) $url ) ) {
+			return $html;
+		}
+
+		return $this->nocookie( $html );
+	}
+
+	/**
+	 * @param string $html Player iframe.
+	 */
+	private function nocookie( string $html ): string {
+		$html = str_replace( [ 'https://www.youtube.com/embed/', 'https://youtube.com/embed/' ], 'https://www.youtube-nocookie.com/embed/', $html );
+
+		return (string) preg_replace( '/\s(width|height)="\d+"/', '', $html );
 	}
 
 	/**
@@ -228,6 +253,18 @@ function rts_editor_content( string $html ): string {
 		$allowed = wp_kses_allowed_html( 'post' );
 
 		$allowed['picture'] = [ 'class' => true ];
+		// Embedded players (a YouTube / Vimeo link pasted on its own line).
+		$allowed['iframe']  = [
+			'src'             => true,
+			'title'           => true,
+			'width'           => true,
+			'height'          => true,
+			'frameborder'     => true,
+			'allow'           => true,
+			'allowfullscreen' => true,
+			'referrerpolicy'  => true,
+			'loading'         => true,
+		];
 		$allowed['source']  = [
 			'srcset' => true,
 			'media'  => true,
@@ -364,6 +401,48 @@ class RTS_Slider_Migration {
 	}
 }
 
+/**
+ * One-time move of [rts_youtube url="…" image="…"] to a plain YouTube link on
+ * its own line (WordPress embeds it as the player).
+ */
+class RTS_Youtube_Migration {
+
+	private const DONE = 'rts_youtube_migrated_v1';
+
+	public function __construct() {
+		add_action( 'admin_init', [ $this, 'run' ] );
+	}
+
+	public function run(): void {
+		if ( get_option( self::DONE ) ) {
+			return;
+		}
+
+		update_option( self::DONE, 1, false );
+
+		global $wpdb;
+
+		$like = '%' . $wpdb->esc_like( '[rts_youtube' ) . '%';
+
+		foreach ( $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_content FROM {$wpdb->posts} WHERE post_content LIKE %s", $like ) ) as $post ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$wpdb->update( $wpdb->posts, [ 'post_content' => $this->to_link( $post->post_content ) ], [ 'ID' => $post->ID ] ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			clean_post_cache( (int) $post->ID );
+		}
+
+		foreach ( $wpdb->get_results( $wpdb->prepare( "SELECT post_id, meta_key, meta_value FROM {$wpdb->postmeta} WHERE meta_value LIKE %s", $like ) ) as $meta ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			update_post_meta( (int) $meta->post_id, $meta->meta_key, $this->to_link( (string) $meta->meta_value ) );
+		}
+	}
+
+	/**
+	 * @param string $html Editor HTML.
+	 */
+	private function to_link( string $html ): string {
+		return (string) preg_replace( '/\[rts_youtube\s+[^\]]*url="([^"]+)"[^\]]*\]/', "\n$1\n", $html );
+	}
+}
+
 if ( is_admin() ) {
 	new RTS_Slider_Migration();
+	new RTS_Youtube_Migration();
 }
