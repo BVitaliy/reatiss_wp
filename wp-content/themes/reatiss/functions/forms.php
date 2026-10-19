@@ -23,6 +23,19 @@ class RTS_Forms {
 		add_filter( 'wpcf7_load_css', '__return_false' );
 		add_filter( 'wpcf7_autop_or_not', '__return_false' );
 		add_filter( 'wpcf7_form_elements', [ $this, 'select_placeholder' ] );
+		add_filter( 'wpcf7_mail_tag_replaced_textarea', [ $this, 'mail_line_breaks' ], 10, 3 );
+		add_filter( 'wpcf7_mail_tag_replaced_textarea*', [ $this, 'mail_line_breaks' ], 10, 3 );
+	}
+
+	/**
+	 * HTML mails: keep the message's line breaks (auto-p is off, see above).
+	 *
+	 * @param string $replaced  Escaped field value.
+	 * @param mixed  $submitted Raw value.
+	 * @param bool   $html      Is the mail body HTML?
+	 */
+	public function mail_line_breaks( $replaced, $submitted, $html ): string {
+		return $html ? nl2br( (string) $replaced, false ) : (string) $replaced;
 	}
 
 	/**
