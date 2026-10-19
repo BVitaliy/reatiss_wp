@@ -65,6 +65,8 @@ logs/             — custom logs (rts_log()), gitignored
 - `js/app-solutions.js`: reads optional `data-zoom` (`[[in, out], …]` seconds of the layers clip,
   one pair per item) from the section — the block's videos and zoom timings are editable; empty
   = the theme's `video/chip1|2.mp4` and the measured `ZOOM`.
+- `app-select.js` (as delivered) never hides the closed list — `_wp.scss` makes `.select__list:not(.is-open)`
+  hidden + unclickable.
 - `js/app-wp.js`: editor links to `#consultation` / `#reports` open those popups.
 - Section partials take every text from fields; decorative run-lines (`.run-line` SVG paths)
   stay hardcoded in the block partials, as in the markup.

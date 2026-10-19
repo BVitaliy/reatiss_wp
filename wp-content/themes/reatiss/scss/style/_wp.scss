@@ -256,3 +256,18 @@
     right: rem(60);
   }
 }
+
+// Custom select: app-select.js shows the list with display:block but closing
+// only drops .is-open — the faded list stayed over the fields below and caught
+// clicks. Closed = hidden + not clickable (visibility waits for the fade-out).
+.select__list {
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.35s var(--ease-out), visibility 0s linear 0.35s;
+
+  &.is-open {
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+}

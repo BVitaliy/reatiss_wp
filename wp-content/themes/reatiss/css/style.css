@@ -1972,3 +1972,5 @@ to {transform: rotate(360deg);}
 @media (min-width: 1300px) {
 .home-solutions__item--right {right: 3.75rem;}
 }
+.select__list {visibility: hidden;pointer-events: none;transition: opacity 0.25s ease,transform 0.35s var(--ease-out),visibility 0s linear 0.35s;}
+.select__list.is-open {visibility: visible;pointer-events: auto;transition-delay: 0s;}
