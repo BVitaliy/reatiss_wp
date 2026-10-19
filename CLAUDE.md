@@ -58,7 +58,7 @@ logs/             — custom logs (rts_log()), gitignored
   popup in `js/app-cf7.js`; CF7 wrap fix in `_wp.scss`. Field HTML lives in the CF7 form
   editor (`label.field > span.field__label + [tag class:field__input] + span.field__error`),
   submit = `[rts_submit "Send"]`. Mails: a full HTML document in each form's Mail tab ("Use HTML
-  content type"; logo = `uploads/2026/10/reatiss-logo-email.png` via `[_site_url]`); WP HTML Mail's own
+  content type"; logo = `img/logo-email.png` via `[_site_url]/wp-content/themes/reatiss/…`); WP HTML Mail's own
   template is off for CF7 (its Plugins tab); textarea line breaks → `<br>` in `functions/forms.php`.
 - `js/app-header.js`: the demo search code (results toggle on typing, `submit` blocked) is
   removed — live results and the real submit are `js/app-search.js`.
