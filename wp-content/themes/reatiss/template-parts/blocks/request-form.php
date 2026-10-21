@@ -14,7 +14,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $rts_form = ! empty( $args['form'] ) ? (int) $args['form'] : (int) rts_option( 'request_form' );
 
-if ( ! rts_has_form( $rts_form ) ) {
+$rts_has_form = rts_has_form( $rts_form );
+
+if ( ! $rts_has_form && empty( $args['title'] ) ) {
 	return;
 }
 ?>
@@ -22,10 +24,12 @@ if ( ! rts_has_form( $rts_form ) ) {
 	<div class="container">
 		<div class="request-form__box form-box cut cut--br">
 			<div class="form-box__form">
-				<?php if ( ! empty( $args['title'] ) ) { ?>
-					<h2 class="form-box__title h3"><?php echo esc_html( $args['title'] ); ?></h2>
-				<?php } ?>
-				<?php rts_form( $rts_form, 'form-box__form' ); ?>
+				<?php rts_title( $args, 'h2', 'form-box__title h3' ); ?>
+				<?php
+				if ( $rts_has_form ) {
+					rts_form( $rts_form, 'form-box__form' );
+				}
+				?>
 			</div>
 		</div>
 	</div>

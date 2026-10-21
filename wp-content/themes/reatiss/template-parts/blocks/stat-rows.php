@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $rts_items = is_array( $args['items'] ?? null ) ? $args['items'] : [];
 
-if ( empty( $rts_items ) ) {
+if ( empty( $args['lead'] ) && empty( $args['text'] ) && empty( $rts_items ) ) {
 	return;
 }
 ?>
@@ -28,6 +28,7 @@ if ( empty( $rts_items ) ) {
 			<p class="stats-rows__text text-lg"><?php echo esc_html( $args['text'] ); ?></p>
 		<?php } ?>
 
+		<?php if ( ! empty( $rts_items ) ) { ?>
 		<ul class="stat-rows">
 			<?php
 			foreach ( $rts_items as $rts_item ) {
@@ -37,8 +38,12 @@ if ( empty( $rts_items ) ) {
 				<li class="stat-row">
 					<span class="step-line"></span>
 					<div class="stat-row__body">
-						<p class="stat-row__num stat-num"<?php echo $rts_count ? ' data-count="' . esc_attr( (string) $rts_count ) . '"' : ''; ?>><?php echo esc_html( $rts_value ); ?></p>
-						<h3 class="stat-row__label h5"><?php echo esc_html( (string) ( $rts_item['label'] ?? '' ) ); ?></h3>
+						<?php if ( '' !== $rts_value ) { ?>
+							<p class="stat-row__num stat-num"<?php echo $rts_count ? ' data-count="' . esc_attr( (string) $rts_count ) . '"' : ''; ?>><?php echo esc_html( $rts_value ); ?></p>
+						<?php } ?>
+						<?php if ( ! empty( $rts_item['label'] ) ) { ?>
+							<h3 class="stat-row__label h5"><?php echo esc_html( $rts_item['label'] ); ?></h3>
+						<?php } ?>
 						<?php if ( ! empty( $rts_item['text'] ) ) { ?>
 							<p class="stat-row__text text-lg"><?php echo esc_html( $rts_item['text'] ); ?></p>
 						<?php } ?>
@@ -46,5 +51,6 @@ if ( empty( $rts_items ) ) {
 				</li>
 			<?php } ?>
 		</ul>
+		<?php } ?>
 	</div>
 </section>

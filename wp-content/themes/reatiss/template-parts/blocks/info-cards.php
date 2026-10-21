@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $rts_items = is_array( $args['items'] ?? null ) ? $args['items'] : [];
 
-if ( empty( $rts_items ) ) {
+if ( empty( $args['title'] ) && empty( $rts_items ) ) {
 	return;
 }
 
@@ -32,10 +32,13 @@ $rts_line = ! empty( $args['line'] );
 	<?php } ?>
 
 	<div class="container">
-		<div class="section-head">
-			<h2 class="section-head__title h2" style="--title-w: 18em"><?php rts_br( $args['title'] ?? '' ); ?></h2>
-		</div>
+		<?php if ( ! empty( $args['title'] ) ) { ?>
+			<div class="section-head">
+				<?php rts_title( $args, 'h2', 'section-head__title h2', '--title-w: 18em' ); ?>
+			</div>
+		<?php } ?>
 
+		<?php if ( ! empty( $rts_items ) ) { ?>
 		<div class="grid-slider swiper js-grid-slider" style="--cols: 4">
 			<div class="swiper-wrapper">
 				<?php foreach ( $rts_items as $rts_item ) { ?>
@@ -46,7 +49,9 @@ $rts_line = ! empty( $args['line'] );
 									<?php rts_picture( $rts_item['image'], null, [], 'large' ); ?>
 								</div>
 							<?php } ?>
-							<h3 class="info-card__title h5"><?php echo esc_html( (string) ( $rts_item['title'] ?? '' ) ); ?></h3>
+							<?php if ( ! empty( $rts_item['title'] ) ) { ?>
+								<h3 class="info-card__title h5"><?php echo esc_html( $rts_item['title'] ); ?></h3>
+							<?php } ?>
 							<?php if ( ! empty( $rts_item['text'] ) ) { ?>
 								<p class="info-card__text text-md"><?php echo esc_html( $rts_item['text'] ); ?></p>
 							<?php } ?>
@@ -56,5 +61,6 @@ $rts_line = ! empty( $args['line'] );
 			</div>
 			<div class="grid-slider__pagination"></div>
 		</div>
+		<?php } ?>
 	</div>
 </section>

@@ -15,7 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( empty( $args['text'] ) ) {
+$rts_slider = is_array( $args['slider'] ?? null ) ? $args['slider'] : [];
+
+if ( empty( $args['title'] ) && empty( $args['text'] ) && empty( $rts_slider ) ) {
 	return;
 }
 
@@ -33,14 +35,14 @@ $rts_line = ! empty( $args['line'] );
 
 	<div class="container">
 		<div class="service-content__inner">
-			<?php if ( ! empty( $args['title'] ) ) { ?>
-				<h2 class="service-content__title h2"><?php rts_br( $args['title'] ); ?></h2>
-			<?php } ?>
+			<?php rts_title( $args, 'h2', 'service-content__title h2' ); ?>
 
-			<div class="article-content rich-text text-lg">
-				<?php echo rts_editor_content( (string) $args['text'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- kses + shortcodes in rts_editor_content(). ?>
-				<?php echo rts_editor_content( rts_slider_html( is_array( $args['slider'] ?? null ) ? $args['slider'] : [] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>
-			</div>
+			<?php if ( ! empty( $args['text'] ) || ! empty( $rts_slider ) ) { ?>
+				<div class="article-content rich-text text-lg">
+					<?php echo rts_editor_content( (string) ( $args['text'] ?? '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- kses + shortcodes in rts_editor_content(). ?>
+					<?php echo rts_editor_content( rts_slider_html( $rts_slider ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>
+				</div>
+			<?php } ?>
 		</div>
 	</div>
 </section>

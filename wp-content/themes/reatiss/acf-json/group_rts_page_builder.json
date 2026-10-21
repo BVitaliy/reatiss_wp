@@ -31,14 +31,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "100"
+                                "width": "85"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "IC Reverse Engineering for IP Owners",
                             "instructions": "Enter = line break.",
                             "key": "field_2bac1b8d23180a78"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h1",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_32f24d30f713c4ae"
                         },
                         {
                             "type": "textarea",
@@ -201,7 +223,6 @@
                             "preview_size": "medium",
                             "library": "all",
                             "mime_types": "jpg,jpeg,png,webp",
-                            "required": 1,
                             "instructions": "2400×1320 px. Also the video poster.",
                             "key": "field_1dad6a09c5782abf"
                         },
@@ -287,14 +308,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "60"
+                                "width": "45"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "Deep Technical Expertise",
                             "instructions": "Enter = line break.",
                             "key": "field_29ac7a9591c303a5"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_046c337c46e9921c"
                         },
                         {
                             "type": "relationship",
@@ -473,14 +516,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "100"
+                                "width": "85"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "Advanced Engineering Solutions",
                             "instructions": "Enter = line break.",
                             "key": "field_c2608c135bd4d6a7"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_d98de42547c91a1b"
                         },
                         {
                             "type": "message",
@@ -688,14 +753,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "50"
+                                "width": "35"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "",
                             "instructions": "Enter = line break.",
                             "key": "field_608dfa3ca0b17241"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_b5ab64b0195124c5"
                         },
                         {
                             "type": "wysiwyg",
@@ -707,7 +794,6 @@
                             "toolbar": "basic",
                             "media_upload": 0,
                             "tabs": "all",
-                            "required": 1,
                             "key": "field_ed837a71e7fe4c7b"
                         },
                         {
@@ -867,7 +953,6 @@
                             "preview_size": "medium",
                             "library": "all",
                             "mime_types": "jpg,jpeg,png,webp",
-                            "required": 1,
                             "instructions": "1700×1400 px.",
                             "key": "field_7513e65da271c3f9"
                         },
@@ -911,14 +996,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "100"
+                                "width": "85"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "Advanced Laboratories for Discovery",
                             "instructions": "Enter = line break.",
                             "key": "field_fccb45786c60b965"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_ce00345f2dfcd207"
                         },
                         {
                             "type": "relationship",
@@ -972,7 +1079,6 @@
                             },
                             "rows": 3,
                             "new_lines": "",
-                            "required": 1,
                             "key": "field_92baa249f33d825f"
                         },
                         {
@@ -984,7 +1090,6 @@
                             },
                             "layout": "block",
                             "button_label": "Add card",
-                            "min": 1,
                             "max": 3,
                             "sub_fields": [
                                 {
@@ -1064,14 +1169,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "100"
+                                "width": "85"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "Research, Technology, and Engineering Insights",
                             "instructions": "Enter = line break.",
                             "key": "field_3dc1a5b978d26203"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_cb5d8e9833588f3c"
                         },
                         {
                             "type": "group",
@@ -1236,7 +1363,6 @@
                             "preview_size": "medium",
                             "library": "all",
                             "mime_types": "jpg,jpeg,png,webp",
-                            "required": 1,
                             "instructions": "1920×1100 px. Shown until the video plays.",
                             "key": "field_adcff1f839a8ba57"
                         },
@@ -1330,14 +1456,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "100"
+                                "width": "85"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "Meet Our Experts Around the World",
                             "instructions": "Enter = line break.",
                             "key": "field_2a62aa10b5f2a116"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_d24eb269aa2973a1"
                         },
                         {
                             "type": "group",
@@ -1496,14 +1644,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "100"
+                                "width": "85"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "Common Questions About Our Services",
                             "instructions": "Enter = line break.",
                             "key": "field_cd9b1d34d3406930"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_9504a221efefef40"
                         },
                         {
                             "type": "group",
@@ -1677,10 +1847,32 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "100"
+                                "width": "85"
                             },
-                            "required": 1,
                             "key": "field_e40ee037112a0986"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_0427d253fd5c4399"
                         },
                         {
                             "type": "wysiwyg",
@@ -1692,7 +1884,6 @@
                             "toolbar": "full",
                             "media_upload": 0,
                             "tabs": "all",
-                            "required": 1,
                             "instructions": "On phones the first paragraph is clamped to 5 lines.",
                             "key": "field_d3b77932bf84f475"
                         },
@@ -1735,12 +1926,35 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "70"
+                                "width": "55"
                             },
                             "rows": 2,
                             "new_lines": "br",
                             "instructions": "Empty — the page title. Enter = line break.",
                             "key": "field_1fbb963ae383b3d9"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h1",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_164f152721ff2b17"
                         },
                         {
                             "type": "number",
@@ -1795,7 +2009,6 @@
                             "preview_size": "medium",
                             "library": "all",
                             "mime_types": "jpg,jpeg,png,webp",
-                            "required": 1,
                             "instructions": "1920×1080 px. Also the video poster.",
                             "key": "field_dbf21f6996542205"
                         },
@@ -1865,14 +2078,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "100"
+                                "width": "85"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "Deep Technical Expertise",
                             "instructions": "Enter = line break.",
                             "key": "field_d4a50090b561e98c"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_8327adfd7b43dc83"
                         },
                         {
                             "type": "wysiwyg",
@@ -1884,7 +2119,6 @@
                             "toolbar": "basic",
                             "media_upload": 0,
                             "tabs": "all",
-                            "required": 1,
                             "key": "field_6de02613de9439e1"
                         },
                         {
@@ -2007,7 +2241,6 @@
                             "preview_size": "medium",
                             "library": "all",
                             "mime_types": "jpg,jpeg,png,webp",
-                            "required": 1,
                             "instructions": "1400×1080 px.",
                             "key": "field_83a6ca1117098ccb"
                         },
@@ -2037,7 +2270,6 @@
                             "preview_size": "medium",
                             "library": "all",
                             "mime_types": "jpg,jpeg,png,webp",
-                            "required": 1,
                             "instructions": "1280×850 px.",
                             "key": "field_08fbf962c56f127c"
                         },
@@ -2082,14 +2314,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "100"
+                                "width": "85"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "What Reatiss could offer you",
                             "instructions": "Enter = line break.",
                             "key": "field_f2efedc711596690"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_15af9f3030803364"
                         },
                         {
                             "type": "repeater",
@@ -2100,7 +2354,6 @@
                             },
                             "layout": "block",
                             "button_label": "Add card",
-                            "min": 1,
                             "max": 3,
                             "sub_fields": [
                                 {
@@ -2168,14 +2421,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "100"
+                                "width": "85"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "Company Background and History",
                             "instructions": "Enter = line break.",
                             "key": "field_9e2bea860117bf46"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_c9542556562f63c6"
                         },
                         {
                             "type": "repeater",
@@ -2186,7 +2461,6 @@
                             },
                             "layout": "block",
                             "button_label": "Add year",
-                            "min": 1,
                             "instructions": "Same order as on the site: the first year is open by default.",
                             "sub_fields": [
                                 {
@@ -2266,14 +2540,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "70"
+                                "width": "55"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "What Drives Our Expertise",
                             "instructions": "Enter = line break.",
                             "key": "field_ae1bc76c1da7dfd3"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_b39794cfd5107bce"
                         },
                         {
                             "type": "number",
@@ -2308,7 +2604,6 @@
                             },
                             "layout": "block",
                             "button_label": "Add card",
-                            "min": 1,
                             "instructions": "4 per row on desktop, a slider below 1200.",
                             "sub_fields": [
                                 {
@@ -2376,14 +2671,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "100"
+                                "width": "85"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "Scientific research shaping the future of semiconductors.",
                             "instructions": "Enter = line break.",
                             "key": "field_fa859da99d03b920"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_fe16bc2d5c7367a1"
                         },
                         {
                             "type": "message",
@@ -2411,7 +2728,6 @@
                                     "wrapper": {
                                         "width": "20"
                                     },
-                                    "required": 1,
                                     "key": "field_a0168f4eb39a7f22"
                                 },
                                 {
@@ -2466,7 +2782,6 @@
                                     "wrapper": {
                                         "width": "20"
                                     },
-                                    "required": 1,
                                     "key": "field_d6f253044fde02c4"
                                 },
                                 {
@@ -2517,7 +2832,6 @@
                                     "wrapper": {
                                         "width": "20"
                                     },
-                                    "required": 1,
                                     "key": "field_2e13c2e894686971"
                                 },
                                 {
@@ -2582,14 +2896,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "100"
+                                "width": "85"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "Trusted by Leading Technology Companies",
                             "instructions": "Enter = line break.",
                             "key": "field_d01ccd83959df531"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_153a1bba80f01986"
                         },
                         {
                             "type": "repeater",
@@ -2600,7 +2936,6 @@
                             },
                             "layout": "table",
                             "button_label": "Add logo",
-                            "min": 1,
                             "max": 15,
                             "instructions": "A grid of 5 per row, 15 is ideal (3 rows). Logo — a one-colour PNG/SVG on a transparent background: the design recolours it.",
                             "sub_fields": [
@@ -2680,14 +3015,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "100"
+                                "width": "85"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "The People Behind the Expertise",
                             "instructions": "Enter = line break.",
                             "key": "field_b84feb4480ab436d"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_aef861cf1c29414b"
                         },
                         {
                             "type": "relationship",
@@ -2737,10 +3094,33 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "100"
+                                "width": "85"
                             },
                             "default_value": "Technology in Detail",
                             "key": "field_ef49127add56bdfb"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_7e84682940ea75e8"
                         },
                         {
                             "type": "gallery",
@@ -2802,12 +3182,35 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "60"
+                                "width": "45"
                             },
                             "rows": 2,
                             "new_lines": "br",
                             "instructions": "Empty — the page title.",
                             "key": "field_d2e7b1d4788a9595"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h1",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_1f822641d72b1d98"
                         },
                         {
                             "type": "message",
@@ -2845,11 +3248,33 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "60"
+                                "width": "45"
                             },
                             "default_value": "Send your Request",
-                            "required": 1,
                             "key": "field_8c79e8841db58ed6"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_52c6b236d09b1597"
                         },
                         {
                             "type": "post_object",
@@ -2958,14 +3383,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "100"
+                                "width": "85"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "Available Analysis Levels",
                             "instructions": "Enter = line break.",
                             "key": "field_1d510d8f372a4b67"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_cbe1a3529774b145"
                         },
                         {
                             "type": "repeater",
@@ -2976,7 +3423,6 @@
                             },
                             "layout": "block",
                             "button_label": "Add item",
-                            "min": 1,
                             "sub_fields": [
                                 {
                                     "type": "text",
@@ -3042,14 +3488,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "70"
+                                "width": "55"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "Built on Expertise. Driven by Discovery.",
                             "instructions": "Enter = line break.",
                             "key": "field_7c5173ea1d339a54"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_e6aa485d06345231"
                         },
                         {
                             "type": "true_false",
@@ -3072,7 +3540,6 @@
                             "toolbar": "full",
                             "media_upload": 1,
                             "tabs": "all",
-                            "required": 1,
                             "instructions": "Inserts: video — paste a YouTube link on its own line; slider — Add Media → Create gallery → “Display as: Slider”; a box with a button — the megaphone button in the toolbar. A link to “#consultation” opens the consultation popup.",
                             "key": "field_a160d376cde3c96b"
                         },
@@ -3117,14 +3584,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "100"
+                                "width": "85"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "Reports",
                             "instructions": "Enter = line break.",
                             "key": "field_a9a9ce3920d249f1"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_119591a7bec5b16f"
                         },
                         {
                             "type": "repeater",
@@ -3135,7 +3624,6 @@
                             },
                             "layout": "block",
                             "button_label": "Add item",
-                            "min": 1,
                             "sub_fields": [
                                 {
                                     "type": "text",
@@ -3334,14 +3822,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "100"
+                                "width": "85"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "Advanced Sample Preparation Capabilities",
                             "instructions": "Enter = line break.",
                             "key": "field_875e66a2003f2a80"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_cb2940f888268ee1"
                         },
                         {
                             "type": "message",
@@ -3362,7 +3872,6 @@
                             },
                             "layout": "block",
                             "button_label": "Add item",
-                            "min": 1,
                             "sub_fields": [
                                 {
                                     "type": "text",
@@ -3601,14 +4110,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "70"
+                                "width": "55"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "3D Transistor Analysis Workflow",
                             "instructions": "Enter = line break.",
                             "key": "field_79a23249eb3443b9"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_90df75b8fb40ba56"
                         },
                         {
                             "type": "true_false",
@@ -3630,7 +4161,6 @@
                             },
                             "layout": "block",
                             "button_label": "Add card",
-                            "min": 1,
                             "instructions": "4 per row on desktop, a slider below 1200.",
                             "sub_fields": [
                                 {
@@ -3728,7 +4258,6 @@
                             "preview_size": "medium",
                             "library": "all",
                             "mime_types": "png,webp,jpg,jpeg",
-                            "required": 1,
                             "instructions": "Stage shot 1860×842 px (transparent PNG) — shown while the model loads.",
                             "key": "field_4ba0e1e0665c025c"
                         },
@@ -3777,7 +4306,6 @@
                             },
                             "rows": 3,
                             "new_lines": "",
-                            "required": 1,
                             "key": "field_153563ed065baa5f"
                         },
                         {
@@ -3800,7 +4328,6 @@
                             },
                             "layout": "table",
                             "button_label": "Add row",
-                            "min": 1,
                             "sub_fields": [
                                 {
                                     "type": "text",
@@ -3863,13 +4390,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "100"
+                                "width": "85"
                             },
                             "rows": 2,
                             "new_lines": "br",
                             "default_value": "Available Analysis Reports",
                             "instructions": "Reports come from “Reports (On Shelf)”, sorted by “Order”. A click on a report opens the “Reports” popup (Site Settings → Forms); the report title goes into the request.",
                             "key": "field_d8a19a695f1bd8d0"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h1",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_c34206f0b44cdcb7"
                         }
                     ],
                     "min": "",
@@ -3897,14 +4447,36 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "100"
+                                "width": "85"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "Explore Advanced Semiconductor Analysis",
                             "instructions": "Enter = line break.",
                             "key": "field_1e2b98613ba67a80"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h2",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_30692969b5eb52e7"
                         },
                         {
                             "type": "textarea",
@@ -4054,13 +4626,35 @@
                             "name": "title",
                             "label": "Title",
                             "wrapper": {
-                                "width": "100"
+                                "width": "85"
                             },
                             "rows": 2,
                             "new_lines": "br",
-                            "required": 1,
                             "default_value": "Let’s Start a Conversation",
                             "key": "field_23420d51bd883335"
+                        },
+                        {
+                            "type": "select",
+                            "name": "title_tag",
+                            "label": "Title tag",
+                            "wrapper": {
+                                "width": "15"
+                            },
+                            "instructions": "SEO: one H1 per page.",
+                            "choices": {
+                                "h1": "H1",
+                                "h2": "H2",
+                                "h3": "H3",
+                                "h4": "H4",
+                                "h5": "H5",
+                                "h6": "H6",
+                                "p": "p (not a heading)"
+                            },
+                            "default_value": "h1",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "key": "field_a04d86d92e6e854e"
                         },
                         {
                             "type": "textarea",
@@ -4344,5 +4938,5 @@
     "active": true,
     "description": "Page blocks in display order. Pages: shown on the front page and on the “Page builder” template.",
     "show_in_rest": 0,
-    "modified": 1792078907
+    "modified": 1792577361
 }

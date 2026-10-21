@@ -73,6 +73,9 @@ class RTS_Nav_Walker extends Walker_Nav_Menu {
 			$attrs['rel']    = 'noopener noreferrer';
 		}
 
+		/* translators: %s: menu item */
+		$attrs['aria-label'] = '_blank' === $item->target ? sprintf( __( '%s (opens in a new tab)', 'reatiss' ), $item->title ) : $item->title;
+
 		$attrs = array_merge( $attrs, $this->link_attrs );
 		$html  = '';
 

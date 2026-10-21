@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $rts_items = is_array( $args['items'] ?? null ) ? $args['items'] : [];
 
-if ( empty( $rts_items ) ) {
+if ( empty( $args['title'] ) && empty( $rts_items ) ) {
 	return;
 }
 
@@ -34,10 +34,13 @@ $rts_title_w = ! empty( $args['title_width'] ) ? (float) $args['title_width'] : 
 	<?php } ?>
 
 	<div class="container">
-		<div class="section-head">
-			<h2 class="section-head__title h2" style="--title-w: <?php echo esc_attr( (string) $rts_title_w ); ?>em"><?php rts_br( $args['title'] ?? '' ); ?></h2>
-		</div>
+		<?php if ( ! empty( $args['title'] ) ) { ?>
+			<div class="section-head">
+				<?php rts_title( $args, 'h2', 'section-head__title h2', '--title-w: ' . $rts_title_w . 'em' ); ?>
+			</div>
+		<?php } ?>
 
+		<?php if ( ! empty( $rts_items ) ) { ?>
 		<div class="service-reveals__list">
 			<div class="grid-slider swiper js-grid-slider" style="--cols: 4">
 				<div class="swiper-wrapper">
@@ -50,7 +53,9 @@ $rts_title_w = ! empty( $args['title_width'] ) ? (float) $args['title_width'] : 
 										<?php rts_picture( $rts_item['image'], null, [ 'alt' => '' ], 'medium_large' ); ?>
 									</div>
 								<?php } ?>
-								<h3 class="reveal-card__title h5"><?php echo esc_html( (string) ( $rts_item['title'] ?? '' ) ); ?></h3>
+								<?php if ( ! empty( $rts_item['title'] ) ) { ?>
+									<h3 class="reveal-card__title h5"><?php echo esc_html( $rts_item['title'] ); ?></h3>
+								<?php } ?>
 								<?php if ( ! empty( $rts_item['text'] ) ) { ?>
 									<p class="reveal-card__text text-md"><?php echo esc_html( $rts_item['text'] ); ?></p>
 								<?php } ?>
@@ -62,5 +67,6 @@ $rts_title_w = ! empty( $args['title_width'] ) ? (float) $args['title_width'] : 
 			</div>
 			<span class="step-line step-line--v service-reveals__end" aria-hidden="true"></span>
 		</div>
+		<?php } ?>
 	</div>
 </section>

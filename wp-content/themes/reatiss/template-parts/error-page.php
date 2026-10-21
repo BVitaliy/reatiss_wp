@@ -40,7 +40,7 @@ $rts_btn   = (string) rts_option( 'error_btn' );
         <p class="error-page__lead text-lg"><?php echo esc_html( $rts_text ); ?></p>
       <?php } ?>
       <?php if ( '' !== $rts_btn ) { ?>
-        <a href="<?php echo esc_url( RTS_HOME_URL ); ?>" class="btn btn--primary">
+        <a href="<?php echo esc_url( RTS_HOME_URL ); ?>" class="btn btn--primary"<?php echo rts_aria_label( $rts_btn ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>>
           <span class="btn__tile"><?php rts_icon( 'icons/arrow.svg' ); ?></span>
           <?php echo esc_html( $rts_btn ); ?>
         </a>

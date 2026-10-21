@@ -58,7 +58,7 @@ foreach ( $rts_items as $rts_item ) {
 
 	<div class="home-solutions__stage js-solutions-stage">
 		<div class="container home-solutions__inner">
-			<h2 class="home-solutions__title h2"><?php rts_br( $args['title'] ?? '' ); ?></h2>
+			<?php rts_title( $args, 'h2', 'home-solutions__title h2' ); ?>
 			<svg class="home-solutions__leads js-solutions-leads" aria-hidden="true"></svg>
 
 			<ol class="home-solutions__list">
@@ -69,14 +69,18 @@ foreach ( $rts_items as $rts_item ) {
 					$rts_aim  = preg_match( '/^\s*[\d.]+\s*,\s*[\d.]+\s*$/', (string) ( $rts_item['aim'] ?? '' ) ) ? preg_replace( '/\s+/', '', $rts_item['aim'] ) : '';
 					?>
 					<li class="home-solutions__item home-solutions__item--<?php echo esc_attr( $rts_side ); ?> js-solutions-item" style="--sol-top: <?php echo esc_attr( (string) $rts_top ); ?>%"<?php echo '' !== $rts_aim ? ' data-aim="' . esc_attr( $rts_aim ) . '"' : ''; ?>>
-						<span class="home-solutions__num"><?php echo esc_html( (string) ( $rts_item['num'] ?? '' ) ); ?></span>
+						<?php if ( ! empty( $rts_item['num'] ) ) { ?>
+							<span class="home-solutions__num"><?php echo esc_html( $rts_item['num'] ); ?></span>
+						<?php } ?>
 						<?php if ( rts_image_id( $rts_item['image'] ?? 0 ) ) { ?>
 							<span class="home-solutions__art">
 								<?php rts_picture( $rts_item['image'], null, [], 'large' ); ?>
 							</span>
 						<?php } ?>
 						<span class="home-solutions__body">
-							<h3 class="home-solutions__item-title h5"><?php echo esc_html( (string) ( $rts_item['title'] ?? '' ) ); ?></h3>
+							<?php if ( ! empty( $rts_item['title'] ) ) { ?>
+								<h3 class="home-solutions__item-title h5"><?php echo esc_html( $rts_item['title'] ); ?></h3>
+							<?php } ?>
 							<?php if ( ! empty( $rts_item['text'] ) ) { ?>
 								<p class="home-solutions__item-text text-lg"><?php echo esc_html( $rts_item['text'] ); ?></p>
 							<?php } ?>

@@ -15,19 +15,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 $rts_video     = 'video' === ( $args['media_type'] ?? '' ) ? (string) ( $args['video'] ?? '' ) : '';
 $rts_video_mob = '' !== $rts_video ? (string) ( $args['video_mobile'] ?? '' ) : '';
 $rts_overlay   = isset( $args['overlay'] ) && '' !== $args['overlay'] ? max( 0, min( 90, (int) $args['overlay'] ) ) / 100 : 0.3;
+$rts_image     = rts_image_id( $args['image'] ?? 0 );
+
+if ( empty( $args['title'] ) && empty( $args['text'] ) && ! rts_has_button( $args['btn'] ?? [] ) && ! $rts_image && '' === $rts_video ) {
+	return;
+}
 ?>
 <section class="home-hero<?php echo '' !== $rts_video ? ' home-hero--video js-bg-video-section' : ''; ?> js-hero">
 	<div class="home-hero__media js-hero-media">
 		<?php
-		rts_picture(
-			$args['image'] ?? 0,
-			$args['image_mobile'] ?? 0,
-			[
-				'loading'       => 'eager',
-				'fetchpriority' => 'high',
-				'sizes'         => '100vw',
-			]
-		);
+		if ( $rts_image ) {
+			rts_picture(
+				$rts_image,
+				$args['image_mobile'] ?? 0,
+				[
+					'loading'       => 'eager',
+					'fetchpriority' => 'high',
+					'sizes'         => '100vw',
+				]
+			);
+		}
 		?>
 		<?php if ( '' !== $rts_video ) { ?>
 			<video class="home-hero__video js-bg-video" muted loop playsinline preload="none" aria-hidden="true"
@@ -46,7 +53,7 @@ $rts_overlay   = isset( $args['overlay'] ) && '' !== $args['overlay'] ? max( 0, 
 	</svg>
 
 	<div class="container home-hero__content js-hero-content">
-		<h1 class="home-hero__title h1 clr-white"><?php rts_br( $args['title'] ?? '' ); ?></h1>
+		<?php rts_title( $args, 'h1', 'home-hero__title h1 clr-white' ); ?>
 		<?php if ( ! empty( $args['text'] ) ) { ?>
 			<p class="home-hero__text text-lg"><?php echo esc_html( $args['text'] ); ?></p>
 		<?php } ?>

@@ -125,7 +125,7 @@ if ( $rts_toast ) {
 		<?php } ?>
 		<div class="toast__body">
 			<?php if ( $rts_toast_href ) { ?>
-				<a href="<?php echo esc_url( $rts_toast_href ); ?>" class="toast__title h5"<?php echo $rts_toast_tab; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static attributes. ?>><?php echo esc_html( (string) rts_option( 'toast_title' ) ); ?></a>
+				<a href="<?php echo esc_url( $rts_toast_href ); ?>" class="toast__title h5"<?php echo $rts_toast_tab . rts_aria_label( (string) rts_option( 'toast_title' ), '' !== $rts_toast_tab ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static attributes / escaped inside. ?>><?php echo esc_html( (string) rts_option( 'toast_title' ) ); ?></a>
 			<?php } else { ?>
 				<p class="toast__title h5"><?php echo esc_html( (string) rts_option( 'toast_title' ) ); ?></p>
 			<?php } ?>
@@ -133,7 +133,7 @@ if ( $rts_toast ) {
 				<p class="toast__text text-md"><?php echo esc_html( (string) rts_option( 'toast_text' ) ); ?></p>
 			<?php } ?>
 			<?php if ( $rts_toast_href ) { ?>
-				<a href="<?php echo esc_url( $rts_toast_href ); ?>" class="link-arrow"<?php echo $rts_toast_tab; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static attributes. ?>><?php esc_html_e( 'Learn more', 'reatiss' ); ?> <?php rts_icon( 'icons/arrow.svg' ); ?></a>
+				<a href="<?php echo esc_url( $rts_toast_href ); ?>" class="link-arrow"<?php echo $rts_toast_tab . rts_aria_label( sprintf( /* translators: %s: banner title */ __( 'Learn more: %s', 'reatiss' ), (string) rts_option( 'toast_title' ) ), '' !== $rts_toast_tab ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static attributes / escaped inside. ?>><?php esc_html_e( 'Learn more', 'reatiss' ); ?> <?php rts_icon( 'icons/arrow.svg' ); ?></a>
 			<?php } ?>
 		</div>
 	</aside>

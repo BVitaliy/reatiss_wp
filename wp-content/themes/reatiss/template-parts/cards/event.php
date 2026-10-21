@@ -21,7 +21,7 @@ $rts_thumb    = (int) get_post_thumbnail_id( $rts_post );
 $rts_dates    = rts_event_dates( $rts_post->ID );
 $rts_location = (string) get_post_meta( $rts_post->ID, 'location', true );
 ?>
-<a href="<?php echo esc_url( get_permalink( $rts_post ) ); ?>" class="news-card news-card--event is-hover-arrow">
+<a href="<?php echo esc_url( get_permalink( $rts_post ) ); ?>" class="news-card news-card--event is-hover-arrow"<?php echo rts_aria_label( get_the_title( $rts_post ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>>
 	<span class="news-card__media cut cut--bl">
 		<?php rts_picture( $rts_thumb, null, [], 'large' ); ?>
 	</span>

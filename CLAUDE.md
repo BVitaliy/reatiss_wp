@@ -77,6 +77,11 @@ logs/             — custom logs (rts_log()), gitignored
 - ACF flexible content `page_builder` (group `group_rts_page_builder`) on pages and on
   service / lab / expertise singles. Layout `foo_bar` → `template-parts/blocks/foo-bar.php`
   with the row as `$args` (`functions/builder.php`). First sub-field `{layout}_hide`.
+- Blocks print only what is filled: a block returns only when nothing at all is set; title, text,
+  button, media and the list are each checked (block-level fields are not required in ACF). Section
+  titles: `title_tag` select (h1–h6 / p, default = the markup's tag) → `rts_title( $args, 'h2', $class )`.
+- Every `<a>` has an aria-label (visible text; “(opens in a new tab)” added): `rts_link_attrs( $link,
+  $label )`, `rts_aria_label()`, menus via the walker, editor HTML via `rts_label_links()`.
 - Every rendered row is followed by `.spacer-xl` (`seo` → `.spacer-sm`); hidden rows print
   nothing, so no gaps.
 - A page whose first block is in `RTS_DARK_TOP_LAYOUTS` (hero, page_banner) keeps the

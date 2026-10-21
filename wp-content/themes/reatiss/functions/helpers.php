@@ -80,11 +80,69 @@ function rts_button( $btn, string $class = 'btn btn--primary' ): void {
 		return;
 	}
 	?>
-	<a class="<?php echo esc_attr( $class ); ?>"<?php echo rts_link_attrs( $link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in rts_link_attrs(). ?>>
+	<a class="<?php echo esc_attr( $class ); ?>"<?php echo rts_link_attrs( $link, $label ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in rts_link_attrs(). ?>>
 		<span class="btn__tile"><?php rts_icon( 'icons/arrow.svg' ); ?></span>
 		<?php echo esc_html( $label ); ?>
 	</a>
 	<?php
+}
+
+/**
+ * ` aria-label="…"` for a link, escaped; a link opening a new tab says so.
+ * Empty label — nothing.
+ *
+ * @param string $label   Accessible name — keep the visible text in it.
+ * @param bool   $new_tab The link opens a new tab.
+ */
+function rts_aria_label( string $label, bool $new_tab = false ): string {
+	$label = trim( wp_strip_all_tags( str_replace( [ '<br>', '<br/>', '<br />' ], ' ', $label ) ) );
+
+	if ( '' === $label ) {
+		return '';
+	}
+
+	if ( $new_tab ) {
+		/* translators: %s: link text */
+		$label = sprintf( __( '%s (opens in a new tab)', 'reatiss' ), $label );
+	}
+
+	return ' aria-label="' . esc_attr( $label ) . '"';
+}
+
+/**
+ * Tag of a block's title: the block's “Title tag” (title_tag) or the design's.
+ *
+ * @param array  $args    Block row.
+ * @param string $default Tag from the markup.
+ */
+function rts_title_tag( array $args, string $default = 'h2' ): string {
+	$tag = (string) ( $args['title_tag'] ?? '' );
+
+	return in_array( $tag, [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p' ], true ) ? $tag : $default;
+}
+
+/**
+ * A block's title in its picked tag (rts_title_tag()); nothing when empty.
+ * Line breaks saved as <br> are kept.
+ *
+ * @param array       $args    Block row.
+ * @param string      $default Tag from the markup.
+ * @param string      $class   Classes.
+ * @param string      $style   Inline style, e.g. '--title-w: 14em'.
+ * @param string|null $text    Text other than $args['title'] (e.g. with a fallback).
+ */
+function rts_title( array $args, string $default, string $class, string $style = '', ?string $text = null ): void {
+	$text = $text ?? (string) ( $args['title'] ?? '' );
+
+	if ( '' === trim( $text ) ) {
+		return;
+	}
+
+	$tag = rts_title_tag( $args, $default );
+
+	printf( '<%1$s class="%2$s"%3$s>', $tag, esc_attr( $class ), '' !== $style ? ' style="' . esc_attr( $style ) . '"' : '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- tag from an allow-list.
+	rts_br( $text );
+	printf( '</%s>', $tag ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- tag from an allow-list.
 }
 
 /**
@@ -144,14 +202,18 @@ function rts_phone_href( string $phone ): string {
  * @param string $value Phone number or e-mail.
  */
 function rts_contact_link_attrs( string $type, string $value ): string {
-	$href = 'email' === $type ? 'mailto:' . antispambot( $value ) : rts_phone_href( $value );
-	$html = ' href="' . esc_attr( $href ) . '"';
+	$href    = 'email' === $type ? 'mailto:' . antispambot( $value ) : rts_phone_href( $value );
+	$new_tab = ! empty( rts_option( 'contact_' . $type . '_new_tab' ) );
+	$html    = ' href="' . esc_attr( $href ) . '"';
 
-	if ( ! empty( rts_option( 'contact_' . $type . '_new_tab' ) ) ) {
+	if ( $new_tab ) {
 		$html .= ' target="_blank" rel="noopener"';
 	}
 
-	return $html;
+	/* translators: %s: e-mail / phone */
+	$label = 'email' === $type ? sprintf( __( 'Email %s', 'reatiss' ), antispambot( $value ) ) : sprintf( __( 'Call %s', 'reatiss' ), $value );
+
+	return $html . rts_aria_label( $label, $new_tab );
 }
 
 /**
@@ -246,14 +308,17 @@ function rts_link( $link ): ?array {
 /**
  * href + target / popup attributes for a resolved link (rts_link()), escaped.
  *
- * @param array $link Resolved link.
+ * @param array  $link  Resolved link.
+ * @param string $label Accessible name (the visible text) → aria-label.
  */
-function rts_link_attrs( array $link ): string {
+function rts_link_attrs( array $link, string $label = '' ): string {
 	$html = ' href="' . esc_url( $link['url'] ) . '"';
 
 	if ( ! empty( $link['new_tab'] ) ) {
 		$html .= ' target="_blank" rel="noopener noreferrer"';
 	}
+
+	$html .= rts_aria_label( $label, ! empty( $link['new_tab'] ) );
 
 	if ( ! empty( $link['modal'] ) ) {
 		$html .= ' data-modal-open="' . esc_attr( $link['modal'] ) . '"';
@@ -370,7 +435,7 @@ function rts_contact_list( string $address, string $phone, string $email ): void
 	?>
 	<ul class="contact-list">
 		<?php if ( '' !== trim( $address ) ) { ?>
-			<li><?php rts_icon( 'icons/location.svg' ); ?><a href="<?php echo esc_url( 'https://maps.google.com/?q=' . rawurlencode( wp_strip_all_tags( $address ) ) ); ?>" target="_blank" rel="noopener"><?php echo esc_html( $address ); ?></a></li>
+			<li><?php rts_icon( 'icons/location.svg' ); ?><a href="<?php echo esc_url( 'https://maps.google.com/?q=' . rawurlencode( wp_strip_all_tags( $address ) ) ); ?>" target="_blank" rel="noopener"<?php echo rts_aria_label( sprintf( /* translators: %s: address */ __( '%s on Google Maps', 'reatiss' ), $address ), true ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>><?php echo esc_html( $address ); ?></a></li>
 		<?php } ?>
 		<?php if ( '' !== trim( $phone ) ) { ?>
 			<li><?php rts_icon( 'icons/phone.svg' ); ?><a<?php echo rts_contact_link_attrs( 'phone', $phone ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>><?php echo esc_html( $phone ); ?></a></li>

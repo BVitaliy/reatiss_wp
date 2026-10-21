@@ -13,6 +13,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+
+if ( empty( $args['title'] ) && empty( $args['text'] ) && ! rts_has_button( $args['btn'] ?? [] ) && ! rts_image_id( $args['image_1'] ?? 0 ) && ! rts_image_id( $args['image_2'] ?? 0 ) ) {
+	return;
+}
 ?>
 <section class="about-intro">
 	<div class="container">
@@ -31,11 +35,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<div class="about-intro__panel cut cut--br">
 				<div class="about-intro__content">
-					<h2 class="about-intro__title h3"><?php rts_br( $args['title'] ?? '' ); ?></h2>
+					<?php rts_title( $args, 'h2', 'about-intro__title h3' ); ?>
 					<span class="step-line about-intro__line"></span>
 					<?php if ( ! empty( $args['text'] ) ) { ?>
 						<div class="about-intro__text rich-text text-lg">
-							<?php echo wp_kses_post( $args['text'] ); ?>
+							<?php echo rts_label_links( wp_kses_post( $args['text'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- kses, then escaped labels. ?>
 						</div>
 					<?php } ?>
 				</div>

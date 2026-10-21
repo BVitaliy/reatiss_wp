@@ -16,15 +16,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $rts_items = is_array( $args['items'] ?? null ) ? $args['items'] : [];
 
-if ( empty( $rts_items ) ) {
+if ( empty( $args['title'] ) && empty( $rts_items ) ) {
 	return;
 }
 ?>
 <section class="capabilities js-capabilities">
-	<div class="container">
-		<h2 class="capabilities__title h2"><?php rts_br( $args['title'] ?? '' ); ?></h2>
-	</div>
+	<?php if ( ! empty( $args['title'] ) ) { ?>
+		<div class="container">
+			<?php rts_title( $args, 'h2', 'capabilities__title h2' ); ?>
+		</div>
+	<?php } ?>
 
+	<?php if ( ! empty( $rts_items ) ) { ?>
 	<div class="capabilities__track">
 		<div class="capabilities__stage swiper">
 			<div class="capabilities__slides swiper-wrapper">
@@ -34,16 +37,22 @@ if ( empty( $rts_items ) ) {
 					$rts_list = is_array( $rts_item['list'] ?? null ) ? $rts_item['list'] : [];
 					?>
 					<article class="capability swiper-slide<?php echo 0 === $rts_n ? ' is-active' : ''; ?>" style="--i: <?php echo esc_attr( (string) $rts_n ); ?>">
-						<div class="capability__media">
-							<?php rts_picture( $rts_item['image'] ?? 0, $rts_item['image_mobile'] ?? 0, [], 'large' ); ?>
-						</div>
+						<?php if ( rts_image_id( $rts_item['image'] ?? 0 ) ) { ?>
+							<div class="capability__media">
+								<?php rts_picture( $rts_item['image'], $rts_item['image_mobile'] ?? 0, [], 'large' ); ?>
+							</div>
+						<?php } ?>
 						<div class="capability__panel">
 							<div class="capability__head">
 								<div class="capability__mark">
 									<span class="step-line"></span>
-									<span class="capability__num"><?php echo esc_html( (string) ( $rts_item['num'] ?? '' ) ); ?></span>
+									<?php if ( ! empty( $rts_item['num'] ) ) { ?>
+										<span class="capability__num"><?php echo esc_html( $rts_item['num'] ); ?></span>
+									<?php } ?>
 								</div>
-								<h3 class="capability__title h4"><?php echo esc_html( (string) ( $rts_item['title'] ?? '' ) ); ?></h3>
+								<?php if ( ! empty( $rts_item['title'] ) ) { ?>
+									<h3 class="capability__title h4"><?php echo esc_html( $rts_item['title'] ); ?></h3>
+								<?php } ?>
 							</div>
 							<div class="capability__body">
 								<?php if ( ! empty( $rts_item['text'] ) ) { ?>
@@ -63,7 +72,7 @@ if ( empty( $rts_items ) ) {
 								<?php } ?>
 							</div>
 							<?php if ( $rts_link && ! empty( $rts_item['link']['label'] ) ) { ?>
-								<a class="link-line capability__link"<?php echo rts_link_attrs( $rts_link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in rts_link_attrs(). ?>><?php echo esc_html( $rts_item['link']['label'] ); ?> <span class="link-line__icon" aria-hidden="true"><?php rts_icon( 'icons/arrow.svg' ); ?></span></a>
+								<a class="link-line capability__link"<?php echo rts_link_attrs( $rts_link, $rts_item['link']['label'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in rts_link_attrs(). ?>><?php echo esc_html( $rts_item['link']['label'] ); ?> <span class="link-line__icon" aria-hidden="true"><?php rts_icon( 'icons/arrow.svg' ); ?></span></a>
 							<?php } ?>
 						</div>
 					</article>
@@ -72,4 +81,5 @@ if ( empty( $rts_items ) ) {
 			<div class="grid-slider__pagination capabilities__pagination"></div>
 		</div>
 	</div>
+	<?php } ?>
 </section>

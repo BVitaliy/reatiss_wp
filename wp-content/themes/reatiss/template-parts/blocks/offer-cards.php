@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $rts_items = is_array( $args['items'] ?? null ) ? $args['items'] : [];
 
-if ( empty( $rts_items ) ) {
+if ( empty( $args['title'] ) && empty( $rts_items ) ) {
 	return;
 }
 ?>
@@ -26,7 +26,8 @@ if ( empty( $rts_items ) ) {
 	</svg>
 
 	<div class="container about-offer__inner">
-		<h2 class="about-offer__title h2"><?php rts_br( $args['title'] ?? '' ); ?></h2>
+		<?php rts_title( $args, 'h2', 'about-offer__title h2' ); ?>
+		<?php if ( ! empty( $rts_items ) ) { ?>
 		<ul class="about-offer__list">
 			<?php foreach ( $rts_items as $rts_item ) { ?>
 				<li class="offer-card">
@@ -36,7 +37,9 @@ if ( empty( $rts_items ) ) {
 						</div>
 					<?php } ?>
 					<div class="offer-card__body">
-						<h3 class="offer-card__title h5"><?php echo esc_html( (string) ( $rts_item['title'] ?? '' ) ); ?></h3>
+						<?php if ( ! empty( $rts_item['title'] ) ) { ?>
+							<h3 class="offer-card__title h5"><?php echo esc_html( $rts_item['title'] ); ?></h3>
+						<?php } ?>
 						<?php if ( ! empty( $rts_item['text'] ) ) { ?>
 							<p class="offer-card__text text-lg"><?php echo esc_html( $rts_item['text'] ); ?></p>
 						<?php } ?>
@@ -44,5 +47,6 @@ if ( empty( $rts_items ) ) {
 				</li>
 			<?php } ?>
 		</ul>
+		<?php } ?>
 	</div>
 </section>

@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $rts_items = is_array( $args['items'] ?? null ) ? $args['items'] : [];
 
-if ( empty( $rts_items ) ) {
+if ( empty( $args['lead'] ) && empty( $rts_items ) ) {
 	return;
 }
 ?>
@@ -34,6 +34,7 @@ if ( empty( $rts_items ) ) {
 			<p class="home-stats__lead h3"><?php echo esc_html( $args['lead'] ); ?></p>
 		<?php } ?>
 
+		<?php if ( ! empty( $rts_items ) ) { ?>
 		<ul class="home-stats__list">
 			<?php
 			foreach ( $rts_items as $rts_item ) {
@@ -48,8 +49,12 @@ if ( empty( $rts_items ) ) {
 						</div>
 					<?php } ?>
 					<div class="stat-card__body">
-						<p class="stat-card__num stat-num"<?php echo $rts_count ? ' data-count="' . esc_attr( (string) $rts_count ) . '"' : ''; ?><?php echo $rts_count >= 1000 && ! str_contains( $rts_value, ' ' ) ? ' data-count-sep=""' : ''; ?>><?php echo esc_html( $rts_value ); ?></p>
-						<p class="stat-card__label h5"><?php echo esc_html( (string) ( $rts_item['label'] ?? '' ) ); ?></p>
+						<?php if ( '' !== $rts_value ) { ?>
+							<p class="stat-card__num stat-num"<?php echo $rts_count ? ' data-count="' . esc_attr( (string) $rts_count ) . '"' : ''; ?><?php echo $rts_count >= 1000 && ! str_contains( $rts_value, ' ' ) ? ' data-count-sep=""' : ''; ?>><?php echo esc_html( $rts_value ); ?></p>
+						<?php } ?>
+						<?php if ( ! empty( $rts_item['label'] ) ) { ?>
+							<p class="stat-card__label h5"><?php echo esc_html( $rts_item['label'] ); ?></p>
+						<?php } ?>
 						<?php if ( ! empty( $rts_item['text'] ) ) { ?>
 							<p class="stat-card__text text-lg"><?php echo esc_html( $rts_item['text'] ); ?></p>
 						<?php } ?>
@@ -57,5 +62,6 @@ if ( empty( $rts_items ) ) {
 				</li>
 			<?php } ?>
 		</ul>
+		<?php } ?>
 	</div>
 </section>

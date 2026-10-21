@@ -15,25 +15,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $rts_items = rts_faq_items( is_array( $args['questions'] ?? null ) ? $args['questions'] : [] );
 
-if ( empty( $rts_items ) ) {
+$rts_link = rts_link( $args['link'] ?? [] );
+$rts_link = $rts_link && ! empty( $args['link']['label'] ) ? $rts_link : null;
+
+if ( empty( $args['title'] ) && ! $rts_link && empty( $rts_items ) ) {
 	return;
 }
 
 $rts_expanded = (string) ( $args['expanded'] ?? 'none' );
 $rts_open_at  = 'first' === $rts_expanded ? 0 : ( 'last' === $rts_expanded ? count( $rts_items ) - 1 : -1 );
 
-$rts_link = rts_link( $args['link'] ?? [] );
-$rts_id   = 'faq-' . (int) ( $args['index'] ?? 0 ) . '-';
+$rts_id = 'faq-' . (int) ( $args['index'] ?? 0 ) . '-';
 ?>
 <section class="home-faq">
 	<div class="container home-faq__grid">
+		<?php if ( ! empty( $args['title'] ) || $rts_link ) { ?>
 		<div class="home-faq__head">
-			<h2 class="home-faq__title h2"><?php rts_br( $args['title'] ?? '' ); ?></h2>
-			<?php if ( $rts_link && ! empty( $args['link']['label'] ) ) { ?>
-				<a class="link-line"<?php echo rts_link_attrs( $rts_link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in rts_link_attrs(). ?>><?php echo esc_html( $args['link']['label'] ); ?> <span class="link-line__icon" aria-hidden="true"><?php rts_icon( 'icons/arrow.svg' ); ?></span></a>
+			<?php rts_title( $args, 'h2', 'home-faq__title h2' ); ?>
+			<?php if ( $rts_link ) { ?>
+				<a class="link-line"<?php echo rts_link_attrs( $rts_link, $args['link']['label'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in rts_link_attrs(). ?>><?php echo esc_html( $args['link']['label'] ); ?> <span class="link-line__icon" aria-hidden="true"><?php rts_icon( 'icons/arrow.svg' ); ?></span></a>
 			<?php } ?>
 		</div>
 
+		<?php } ?>
+
+		<?php if ( ! empty( $rts_items ) ) { ?>
 		<div class="faq home-faq__list">
 			<?php
 			foreach ( $rts_items as $rts_n => $rts_item ) {
@@ -50,5 +56,6 @@ $rts_id   = 'faq-' . (int) ( $args['index'] ?? 0 ) . '-';
 			<?php } ?>
 			<span class="step-line faq__end"></span>
 		</div>
+		<?php } ?>
 	</div>
 </section>

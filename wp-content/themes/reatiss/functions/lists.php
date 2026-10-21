@@ -246,9 +246,9 @@ function rts_filter_chips( string $taxonomy, string $all_label, string $all_url 
 	?>
 	<nav class="list-page__filter" aria-label="<?php esc_attr_e( 'Categories', 'reatiss' ); ?>">
 		<ul class="chips chips--scroll">
-			<li><a href="<?php echo esc_url( $all_url ); ?>" class="chip<?php echo $current ? '' : ' is-active'; ?>"<?php echo $current ? '' : ' aria-current="page"'; ?>><?php echo esc_html( $all_label ); ?></a></li>
+			<li><a href="<?php echo esc_url( $all_url ); ?>" class="chip<?php echo $current ? '' : ' is-active'; ?>"<?php echo $current ? '' : ' aria-current="page"'; ?><?php echo rts_aria_label( $all_label ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>><?php echo esc_html( $all_label ); ?></a></li>
 			<?php foreach ( $terms as $term ) { ?>
-				<li><a href="<?php echo esc_url( (string) get_term_link( $term ) ); ?>" class="chip<?php echo $current === $term->term_id ? ' is-active' : ''; ?>"<?php echo $current === $term->term_id ? ' aria-current="page"' : ''; ?>><?php echo esc_html( $term->name ); ?></a></li>
+				<li><a href="<?php echo esc_url( (string) get_term_link( $term ) ); ?>" class="chip<?php echo $current === $term->term_id ? ' is-active' : ''; ?>"<?php echo $current === $term->term_id ? ' aria-current="page"' : ''; ?><?php echo rts_aria_label( $term->name ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>><?php echo esc_html( $term->name ); ?></a></li>
 			<?php } ?>
 		</ul>
 	</nav>
@@ -327,7 +327,7 @@ function rts_pager( WP_Query $query, array $data, string $class = 'list-page__pa
 				data-term="<?php echo esc_attr( (string) (int) ( $data['term'] ?? 0 ) ); ?>"
 				data-author="<?php echo esc_attr( (string) (int) ( $data['author'] ?? 0 ) ); ?>"
 				data-s="<?php echo esc_attr( (string) ( $data['s'] ?? '' ) ); ?>"
-				data-page="<?php echo esc_attr( (string) $current ); ?>">
+				data-page="<?php echo esc_attr( (string) $current ); ?>"<?php echo rts_aria_label( __( 'Show more', 'reatiss' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>>
 				<span class="btn__tile"><?php rts_icon( 'icons/arrow.svg' ); ?></span>
 				<?php esc_html_e( 'Show more', 'reatiss' ); ?>
 			</a>
@@ -342,7 +342,7 @@ function rts_pager( WP_Query $query, array $data, string $class = 'list-page__pa
 						<?php } elseif ( $n === $current ) { ?>
 							<span class="pagination__item is-active" aria-current="page"><?php echo esc_html( (string) $n ); ?></span>
 						<?php } else { ?>
-							<a href="<?php echo esc_url( get_pagenum_link( $n ) ); ?>" class="pagination__item" data-page="<?php echo esc_attr( (string) $n ); ?>"><?php echo esc_html( (string) $n ); ?></a>
+							<a href="<?php echo esc_url( get_pagenum_link( $n ) ); ?>" class="pagination__item" data-page="<?php echo esc_attr( (string) $n ); ?>"<?php echo rts_aria_label( sprintf( /* translators: %d: page number */ __( 'Page %d', 'reatiss' ), $n ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>><?php echo esc_html( (string) $n ); ?></a>
 						<?php } ?>
 					</li>
 				<?php } ?>

@@ -108,7 +108,7 @@ foreach ( [ 1, 2, 3, 4, 5 ] as $rts_n ) {
 				}
 				?>
 			</div>
-			<a href="https://redstone.agency/" class="footer__dev" target="_blank" rel="noopener">
+			<a href="https://redstone.agency/" class="footer__dev" target="_blank" rel="noopener"<?php echo rts_aria_label( __( 'Website development: Redstone', 'reatiss' ), true ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>>
 				<?php esc_html_e( 'Website Development:', 'reatiss' ); ?>
 				<img src="<?php echo esc_url( rts_asset( 'img/redstone.svg' ) ); ?>" alt="Redstone" width="83" height="12" loading="lazy">
 			</a>

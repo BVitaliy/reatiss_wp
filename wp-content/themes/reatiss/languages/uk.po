@@ -1207,3 +1207,12 @@ msgstr "Логотип у листах форм"
 
 msgid "PNG or JPG (mail apps do not show SVG), about 376×82 px. Empty — the theme logo. Emails share one layout; in Contact Form 7 → Mail keep a plain body, one “Label: [field]” per line, with “Use HTML content type” off."
 msgstr "PNG або JPG (поштові програми не показують SVG), приблизно 376×82 px. Порожньо — логотип теми. Усі листи мають один шаблон; у Contact Form 7 → Пошта пишіть звичайний текст, по рядку «Назва: [поле]», без галочки «Використовувати HTML»."
+
+msgid "Title tag"
+msgstr "Тег заголовка"
+
+msgid "SEO: one H1 per page."
+msgstr "SEO: на сторінці один H1."
+
+msgid "p (not a heading)"
+msgstr "p (не заголовок)"

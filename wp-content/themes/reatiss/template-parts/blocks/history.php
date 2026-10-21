@@ -14,9 +14,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$rts_items = is_array( $args['items'] ?? null ) ? array_values( $args['items'] ) : [];
+$rts_items = is_array( $args['items'] ?? null ) ? array_values( array_filter( $args['items'], static fn( $item ) => ! empty( $item['year'] ) ) ) : [];
 
-if ( empty( $rts_items ) ) {
+if ( empty( $args['title'] ) && empty( $rts_items ) ) {
 	return;
 }
 
@@ -29,8 +29,9 @@ foreach ( $rts_items as $rts_n => $rts_item ) {
 <section class="about-history js-history" id="history">
 	<div class="container">
 		<div class="about-history__inner">
-			<h2 class="about-history__title h2"><?php rts_br( $args['title'] ?? '' ); ?></h2>
+			<?php rts_title( $args, 'h2', 'about-history__title h2' ); ?>
 
+			<?php if ( ! empty( $rts_items ) ) { ?>
 			<div class="about-history__bar">
 				<div class="about-history__years-wrap" data-lenis-prevent-horizontal>
 					<div class="about-history__years" role="tablist" aria-label="<?php esc_attr_e( 'Company history', 'reatiss' ); ?>">
@@ -52,8 +53,12 @@ foreach ( $rts_items as $rts_n => $rts_item ) {
 				<?php foreach ( $rts_items as $rts_n => $rts_item ) { ?>
 					<article class="about-history__panel<?php echo 0 === $rts_n ? ' is-active' : ''; ?>" id="history-<?php echo esc_attr( $rts_keys[ $rts_n ] ); ?>" role="tabpanel" aria-labelledby="history-tab-<?php echo esc_attr( $rts_keys[ $rts_n ] ); ?>" data-history-panel="<?php echo esc_attr( $rts_keys[ $rts_n ] ); ?>"<?php echo 0 === $rts_n ? '' : ' hidden'; ?>>
 						<div class="about-history__copy">
-							<h3 class="about-history__panel-title h5"><?php echo esc_html( (string) ( $rts_item['title'] ?? '' ) ); ?></h3>
-							<p class="about-history__text text-lg"><?php echo esc_html( (string) ( $rts_item['text'] ?? '' ) ); ?></p>
+							<?php if ( ! empty( $rts_item['title'] ) ) { ?>
+								<h3 class="about-history__panel-title h5"><?php echo esc_html( $rts_item['title'] ); ?></h3>
+							<?php } ?>
+							<?php if ( ! empty( $rts_item['text'] ) ) { ?>
+								<p class="about-history__text text-lg"><?php echo esc_html( $rts_item['text'] ); ?></p>
+							<?php } ?>
 						</div>
 						<?php if ( rts_image_id( $rts_item['image'] ?? 0 ) ) { ?>
 							<div class="about-history__media">
@@ -63,6 +68,7 @@ foreach ( $rts_items as $rts_n => $rts_item ) {
 					</article>
 				<?php } ?>
 			</div>
+			<?php } ?>
 		</div>
 	</div>
 </section>

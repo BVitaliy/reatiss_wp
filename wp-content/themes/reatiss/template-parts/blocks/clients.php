@@ -13,18 +13,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$rts_items = is_array( $args['items'] ?? null ) ? $args['items'] : [];
+$rts_items = is_array( $args['items'] ?? null ) ? array_filter( $args['items'], static fn( $item ) => rts_image_id( $item['logo'] ?? 0 ) ) : [];
 
-if ( empty( $rts_items ) ) {
+if ( empty( $args['title'] ) && empty( $rts_items ) ) {
 	return;
 }
 ?>
 <section class="about-clients">
 	<div class="container">
-		<div class="section-head">
-			<h2 class="section-head__title h2" style="--title-w: 14em"><?php rts_br( $args['title'] ?? '' ); ?></h2>
-		</div>
+		<?php if ( ! empty( $args['title'] ) ) { ?>
+			<div class="section-head">
+				<?php rts_title( $args, 'h2', 'section-head__title h2', '--title-w: 14em' ); ?>
+			</div>
+		<?php } ?>
 
+		<?php if ( ! empty( $rts_items ) ) { ?>
 		<div class="about-clients__grid js-clients">
 			<svg class="about-clients__lines" viewBox="0 0 1862 776" preserveAspectRatio="none" fill="none" aria-hidden="true">
 				<path d="M16.5 0V254.67L0.5 264.713V512L16.5 521.33V776" />
@@ -68,5 +71,6 @@ if ( empty( $rts_items ) ) {
 				<?php } ?>
 			</ul>
 		</div>
+		<?php } ?>
 	</div>
 </section>

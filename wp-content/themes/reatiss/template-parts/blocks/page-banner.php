@@ -54,6 +54,6 @@ $rts_picture = (string) ob_get_clean();
 			rts_breadcrumbs_nav( rts_breadcrumbs(), 'breadcrumbs--light' );
 		}
 		?>
-		<h1 class="page-banner__title h1 h1--sm"<?php echo $rts_title_w ? ' style="--title-w: ' . esc_attr( (string) $rts_title_w ) . 'em"' : ''; ?>><?php rts_br( $rts_title ); ?></h1>
+		<?php rts_title( $args, 'h1', 'page-banner__title h1 h1--sm', $rts_title_w ? '--title-w: ' . $rts_title_w . 'em' : '', $rts_title ); ?>
 	</div>
 </section>

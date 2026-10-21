@@ -57,7 +57,7 @@ $rts_phone = (string) rts_option( 'contact_phone' );
 				<?php rts_icon( 'icons/search.svg' ); ?>
 			</button>
 			<?php if ( $rts_link ) { ?>
-				<a class="btn-solid header__cta"<?php echo rts_link_attrs( $rts_link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>><?php echo esc_html( $rts_cta['label'] ); ?></a>
+				<a class="btn-solid header__cta"<?php echo rts_link_attrs( $rts_link, $rts_cta['label'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>><?php echo esc_html( $rts_cta['label'] ); ?></a>
 			<?php } ?>
 			<button class="header__burger js-burger" type="button" aria-label="<?php esc_attr_e( 'Menu', 'reatiss' ); ?>" aria-expanded="false" aria-controls="mobile-menu">
 				<span></span><span></span><span></span>

@@ -14,7 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $rts_posts = rts_card_posts( 'rts_event', $args['items'] ?? [], 3 );
 
-if ( empty( $rts_posts ) ) {
+$rts_link = rts_link( $args['link'] ?? [] );
+$rts_link = $rts_link && ! empty( $args['link']['label'] ) ? $rts_link : null;
+
+if ( empty( $args['title'] ) && ! $rts_link && empty( $rts_posts ) ) {
 	return;
 }
 ?>
@@ -26,17 +29,17 @@ if ( empty( $rts_posts ) ) {
 		<span class="run-line__dot js-run-dot" style="--x: 87.2%; --y: 36.3%;"></span>
 	</div>
 	<div class="container">
+		<?php if ( ! empty( $args['title'] ) || $rts_link ) { ?>
 		<div class="section-head">
-			<h2 class="section-head__title h2"><?php rts_br( $args['title'] ?? '' ); ?></h2>
-			<?php
-			$rts_link = rts_link( $args['link'] ?? [] );
-
-			if ( $rts_link && ! empty( $args['link']['label'] ) ) {
-				?>
-				<a class="link-line"<?php echo rts_link_attrs( $rts_link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in rts_link_attrs(). ?>><?php echo esc_html( $args['link']['label'] ); ?> <span class="link-line__icon" aria-hidden="true"><?php rts_icon( 'icons/arrow.svg' ); ?></span></a>
+			<?php rts_title( $args, 'h2', 'section-head__title h2' ); ?>
+			<?php if ( $rts_link ) { ?>
+				<a class="link-line"<?php echo rts_link_attrs( $rts_link, $args['link']['label'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in rts_link_attrs(). ?>><?php echo esc_html( $args['link']['label'] ); ?> <span class="link-line__icon" aria-hidden="true"><?php rts_icon( 'icons/arrow.svg' ); ?></span></a>
 			<?php } ?>
 		</div>
 
+		<?php } ?>
+
+		<?php if ( ! empty( $rts_posts ) ) { ?>
 		<div class="grid-slider swiper js-grid-slider">
 			<div class="swiper-wrapper">
 				<?php foreach ( $rts_posts as $rts_post ) { ?>
@@ -47,5 +50,6 @@ if ( empty( $rts_posts ) ) {
 			</div>
 			<div class="grid-slider__pagination"></div>
 		</div>
+		<?php } ?>
 	</div>
 </section>

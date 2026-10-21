@@ -16,11 +16,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 $rts_form    = ! empty( $args['form'] ) ? (int) $args['form'] : (int) rts_option( 'contact_form' );
 $rts_offices = ! empty( $args['offices'] ) ? rts_offices() : [];
 $rts_socials = ! empty( $args['socials'] ) ? rts_socials() : [];
+$rts_main    = ! empty( $args['main'] ) && '' !== trim( rts_option( 'contact_address' ) . rts_option( 'contact_phone' ) . rts_option( 'contact_email' ) );
+$rts_has     = rts_has_form( $rts_form );
+
+if ( empty( $args['title'] ) && empty( $args['lead'] ) && ! $rts_main && empty( $rts_offices ) && empty( $rts_socials ) && ! $rts_has ) {
+	return;
+}
 ?>
 <section class="contacts">
 	<div class="container contacts__grid">
 		<div class="contacts__info">
-			<h1 class="contacts__title h1 h1--sm"><?php rts_br( $args['title'] ?? '' ); ?></h1>
+			<?php rts_title( $args, 'h1', 'contacts__title h1 h1--sm' ); ?>
 
 			<?php if ( ! empty( $rts_socials ) ) { ?>
 				<ul class="social-list">
@@ -54,7 +60,7 @@ $rts_socials = ! empty( $args['socials'] ) ? rts_socials() : [];
 			<?php } ?>
 		</div>
 
-		<?php if ( rts_has_form( $rts_form ) ) { ?>
+		<?php if ( $rts_has ) { ?>
 			<div class="contacts__form-box form-box cut cut--br">
 				<div class="form-box__form">
 					<?php if ( ! empty( $args['form_title'] ) ) { ?>

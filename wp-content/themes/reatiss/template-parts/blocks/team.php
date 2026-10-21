@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $rts_posts = rts_card_posts( 'rts_team', $args['items'] ?? [] );
 
-if ( empty( $rts_posts ) ) {
+if ( empty( $args['title'] ) && empty( $rts_posts ) ) {
 	return;
 }
 ?>
@@ -28,10 +28,13 @@ if ( empty( $rts_posts ) ) {
 	</div>
 
 	<div class="container">
-		<div class="section-head">
-			<h2 class="section-head__title h2" style="--title-w: 16em"><?php rts_br( $args['title'] ?? '' ); ?></h2>
-		</div>
+		<?php if ( ! empty( $args['title'] ) ) { ?>
+			<div class="section-head">
+				<?php rts_title( $args, 'h2', 'section-head__title h2', '--title-w: 16em' ); ?>
+			</div>
+		<?php } ?>
 
+		<?php if ( ! empty( $rts_posts ) ) { ?>
 		<ul class="cards-grid">
 			<?php foreach ( $rts_posts as $rts_post ) { ?>
 				<li>
@@ -39,5 +42,6 @@ if ( empty( $rts_posts ) ) {
 				</li>
 			<?php } ?>
 		</ul>
+		<?php } ?>
 	</div>
 </section>

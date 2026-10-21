@@ -22,7 +22,7 @@ $rts_tag   = 'h2' === ( $args['heading'] ?? '' ) ? 'h2' : 'h3';
 $rts_text  = (string) get_post_meta( $rts_post->ID, 'card_text', true );
 $rts_thumb = (int) get_post_thumbnail_id( $rts_post );
 ?>
-<a href="<?php echo esc_url( get_permalink( $rts_post ) ); ?>" class="expertise-card is-hover-arrow">
+<a href="<?php echo esc_url( get_permalink( $rts_post ) ); ?>" class="expertise-card is-hover-arrow"<?php echo rts_aria_label( get_the_title( $rts_post ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>>
 	<div class="expertise-card__body">
 		<<?php echo esc_attr( $rts_tag ); ?> class="expertise-card__title h5"><?php echo esc_html( get_the_title( $rts_post ) ); ?></<?php echo esc_attr( $rts_tag ); ?>>
 		<div class="expertise-card__foot">

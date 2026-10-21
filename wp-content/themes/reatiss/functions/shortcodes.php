@@ -35,6 +35,7 @@ class RTS_Shortcodes {
 		add_filter( 'the_content', 'rts_unwrap_inserts', 12 );
 		// After shortcodes — tables printed by them are wrapped as well.
 		add_filter( 'the_content', 'rts_wrap_tables', 20 );
+		add_filter( 'the_content', 'rts_label_links', 21 );
 	}
 
 	/**
@@ -75,7 +76,7 @@ class RTS_Shortcodes {
 				<?php } ?>
 			<?php } ?>
 			<?php if ( $link && '' !== $atts['button'] ) { ?>
-				<a class="btn btn--primary"<?php echo rts_link_attrs( $link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in rts_link_attrs(). ?>>
+				<a class="btn btn--primary"<?php echo rts_link_attrs( $link, $atts['button'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in rts_link_attrs(). ?>>
 					<span class="btn__tile"><?php rts_icon( 'icons/arrow.svg' ); ?></span>
 					<?php echo esc_html( $atts['button'] ); ?>
 				</a>
@@ -315,7 +316,33 @@ function rts_editor_content( string $html ): string {
 		);
 	}
 
-	return wp_kses( rts_unwrap_inserts( $html ), $allowed );
+	return rts_label_links( wp_kses( rts_unwrap_inserts( $html ), $allowed ) );
+}
+
+/**
+ * Editor links get an aria-label — their text (an image link: the image's
+ * alt), “opens in a new tab” when so — unless the editor set one.
+ *
+ * @param string $html Editor HTML.
+ */
+function rts_label_links( string $html ): string {
+	if ( ! str_contains( $html, '<a' ) ) {
+		return $html;
+	}
+
+	return (string) preg_replace_callback(
+		'#<a\b(?![^>]*\baria-label=)([^>]*)>(.*?)</a>#is',
+		static function ( array $m ): string {
+			$text = trim( html_entity_decode( wp_strip_all_tags( $m[2] ), ENT_QUOTES, 'UTF-8' ) );
+
+			if ( '' === $text && preg_match( '#\balt=(["\'])(.*?)\1#i', $m[2], $alt ) ) {
+				$text = html_entity_decode( $alt[2], ENT_QUOTES, 'UTF-8' );
+			}
+
+			return '<a' . $m[1] . rts_aria_label( $text, (bool) preg_match( '#\btarget=(["\']?)_blank#i', $m[1] ) ) . '>' . $m[2] . '</a>';
+		},
+		$html
+	);
 }
 
 /**

@@ -26,7 +26,7 @@ $rts_section = rts_section_page_id( $rts_post->post_type );
 		<div class="related__head">
 			<h2 class="h2"><?php echo esc_html( (string) rts_option( $rts_is_event ? 'related_events_title' : 'related_posts_title' ) ); ?></h2>
 			<?php if ( $rts_section ) { ?>
-				<a href="<?php echo esc_url( (string) get_permalink( $rts_section ) ); ?>" class="link-line"><?php echo esc_html( $rts_is_event ? __( 'All events', 'reatiss' ) : __( 'All news', 'reatiss' ) ); ?> <span class="link-line__icon" aria-hidden="true"><?php rts_icon( 'icons/arrow.svg' ); ?></span></a>
+				<a href="<?php echo esc_url( (string) get_permalink( $rts_section ) ); ?>" class="link-line"<?php echo rts_aria_label( $rts_is_event ? __( 'All events', 'reatiss' ) : __( 'All news', 'reatiss' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>><?php echo esc_html( $rts_is_event ? __( 'All events', 'reatiss' ) : __( 'All news', 'reatiss' ) ); ?> <span class="link-line__icon" aria-hidden="true"><?php rts_icon( 'icons/arrow.svg' ); ?></span></a>
 			<?php } ?>
 		</div>
 

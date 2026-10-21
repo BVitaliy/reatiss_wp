@@ -19,7 +19,7 @@ if ( ! $rts_post instanceof WP_Post ) {
 
 $rts_thumb = (int) get_post_thumbnail_id( $rts_post );
 ?>
-<a href="<?php echo esc_url( get_permalink( $rts_post ) ); ?>" class="news-card is-hover-arrow">
+<a href="<?php echo esc_url( get_permalink( $rts_post ) ); ?>" class="news-card is-hover-arrow"<?php echo rts_aria_label( get_the_title( $rts_post ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>>
 	<span class="news-card__media cut cut--bl">
 		<?php rts_picture( $rts_thumb, null, [], 'large' ); ?>
 	</span>

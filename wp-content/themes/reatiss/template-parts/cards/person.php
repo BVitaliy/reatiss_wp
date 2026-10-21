@@ -31,7 +31,7 @@ $rts_icons   = [
 	'linkedin'  => [ 'linkedin.svg', 'LinkedIn' ],
 ];
 ?>
-<a href="#team-<?php echo esc_attr( (string) $rts_post->ID ); ?>" class="lab-card lab-card--person is-hover-arrow js-team-open" data-modal-open="team" aria-haspopup="dialog">
+<a href="#team-<?php echo esc_attr( (string) $rts_post->ID ); ?>" class="lab-card lab-card--person is-hover-arrow js-team-open" data-modal-open="team" aria-haspopup="dialog"<?php echo rts_aria_label( get_the_title( $rts_post ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>>
 	<div class="lab-card__media cut cut--tr">
 		<?php rts_picture( $rts_thumb, null, [ 'alt' => $rts_name . ( '' !== $rts_role ? ', ' . $rts_role : '' ) ], 'large' ); ?>
 	</div>
@@ -73,7 +73,7 @@ $rts_icons   = [
 			<?php } ?>
 			<?php if ( '' !== $rts_bio ) { ?>
 				<div class="team-modal__text rich-text text-lg">
-					<?php echo wp_kses_post( wpautop( $rts_bio ) ); ?>
+					<?php echo rts_label_links( wp_kses_post( wpautop( $rts_bio ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- kses, then escaped labels. ?>
 				</div>
 			<?php } ?>
 		</div>

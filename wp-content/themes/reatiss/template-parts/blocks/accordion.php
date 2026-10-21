@@ -13,9 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$rts_items = is_array( $args['items'] ?? null ) ? $args['items'] : [];
+$rts_items = is_array( $args['items'] ?? null ) ? array_filter( $args['items'], static fn( $item ) => ! empty( $item['title'] ) ) : [];
 
-if ( empty( $rts_items ) ) {
+if ( empty( $args['title'] ) && empty( $rts_items ) ) {
 	return;
 }
 
@@ -24,10 +24,13 @@ $rts_id = 'level-' . (int) ( $args['index'] ?? 0 ) . '-';
 <section class="service-levels">
 	<div class="container">
 		<div class="service-levels__inner">
-			<div class="section-head section-head--left service-levels__head">
-				<h2 class="section-head__title h2"><?php rts_br( $args['title'] ?? '' ); ?></h2>
-			</div>
+			<?php if ( ! empty( $args['title'] ) ) { ?>
+				<div class="section-head section-head--left service-levels__head">
+					<?php rts_title( $args, 'h2', 'section-head__title h2' ); ?>
+				</div>
+			<?php } ?>
 
+			<?php if ( ! empty( $rts_items ) ) { ?>
 			<div class="faq faq--wide">
 				<?php
 				foreach ( $rts_items as $rts_n => $rts_item ) {
@@ -46,6 +49,7 @@ $rts_id = 'level-' . (int) ( $args['index'] ?? 0 ) . '-';
 				<?php } ?>
 				<span class="step-line faq__end"></span>
 			</div>
+			<?php } ?>
 		</div>
 	</div>
 </section>

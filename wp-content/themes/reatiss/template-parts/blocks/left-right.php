@@ -19,20 +19,24 @@ $rts_variants = [
 	'media-left' => ' left-right--media-left',
 ];
 $rts_variant  = $rts_variants[ $args['variant'] ?? '' ] ?? '';
+$rts_files    = is_array( $args['files'] ?? null ) ? array_filter( $args['files'], static fn( $row ) => ! empty( $row['file'] ) ) : [];
+$rts_image    = rts_image_id( $args['image'] ?? 0 );
+
+if ( empty( $args['title'] ) && empty( $args['text'] ) && empty( $rts_files ) && ! rts_has_button( $args['btn'] ?? [] ) && ! $rts_image ) {
+	return;
+}
 ?>
 <section class="left-right<?php echo esc_attr( $rts_variant ); ?>">
 	<div class="container left-right__grid">
 		<div class="left-right__content">
-			<h2 class="left-right__title h3"><?php rts_br( $args['title'] ?? '' ); ?></h2>
+			<?php rts_title( $args, 'h2', 'left-right__title h3' ); ?>
 			<span class="step-line left-right__line"></span>
 			<?php if ( ! empty( $args['text'] ) ) { ?>
 				<div class="left-right__text rich-text text-lg">
-					<?php echo wp_kses_post( $args['text'] ); ?>
+					<?php echo rts_label_links( wp_kses_post( $args['text'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- kses, then escaped labels. ?>
 				</div>
 			<?php } ?>
 			<?php
-			$rts_files = is_array( $args['files'] ?? null ) ? array_filter( $args['files'], static fn( $row ) => ! empty( $row['file'] ) ) : [];
-
 			if ( ! empty( $rts_files ) ) {
 				// Report files instead of the button (service "Process Report Example"):
 				// the title opens the PDF in a new tab, the icon downloads it.
@@ -42,7 +46,7 @@ $rts_variant  = $rts_variants[ $args['variant'] ?? '' ] ?? '';
 						<li>
 							<span class="step-line"></span>
 							<div class="result-row result-row--file">
-								<a class="result-row__title text-lg" href="<?php echo esc_url( $rts_file['file'] ); ?>" target="_blank" rel="noopener"><?php echo esc_html( (string) ( $rts_file['title'] ?? '' ) ); ?></a>
+								<a class="result-row__title text-lg" href="<?php echo esc_url( $rts_file['file'] ); ?>" target="_blank" rel="noopener"<?php echo rts_aria_label( (string) ( $rts_file['title'] ?? '' ), true ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>><?php echo esc_html( (string) ( $rts_file['title'] ?? '' ) ); ?></a>
 								<a class="result-row__file" href="<?php echo esc_url( $rts_file['file'] ); ?>" download aria-label="<?php echo esc_attr( sprintf( /* translators: %s: file title */ __( 'Download PDF: %s', 'reatiss' ), (string) ( $rts_file['title'] ?? '' ) ) ); ?>"><?php rts_icon( 'icons/pdf.svg' ); ?></a>
 							</div>
 						</li>
@@ -56,12 +60,12 @@ $rts_variant  = $rts_variants[ $args['variant'] ?? '' ] ?? '';
 			?>
 		</div>
 
-		<?php if ( rts_image_id( $args['image'] ?? 0 ) ) { ?>
+		<?php if ( $rts_image ) { ?>
 			<div class="left-right__media" data-parallax-media data-parallax-intensity="120">
 				<?php
 				// The picture itself is the parallax layer.
 				ob_start();
-				rts_picture( $args['image'], $args['image_mobile'] ?? 0, [], 'large' );
+				rts_picture( $rts_image, $args['image_mobile'] ?? 0, [], 'large' );
 				echo str_replace( '<picture>', '<picture data-parallax-target>', (string) ob_get_clean() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in rts_picture().
 				?>
 			</div>

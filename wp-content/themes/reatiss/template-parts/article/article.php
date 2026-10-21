@@ -30,7 +30,7 @@ $rts_date     = $rts_is_event ? rts_event_dates( $rts_post->ID ) : get_the_date(
 			<?php if ( $rts_is_event && '' !== $rts_location ) { ?>
 				<span class="article-page__pill"><?php echo esc_html( $rts_location ); ?></span>
 			<?php } elseif ( ! $rts_is_event ) { ?>
-				<a href="<?php echo esc_url( get_author_posts_url( (int) $rts_post->post_author ) ); ?>" class="article-page__pill"><?php rts_icon( 'icons/user.svg' ); ?><?php echo esc_html( get_the_author_meta( 'display_name', (int) $rts_post->post_author ) ); ?></a>
+				<a href="<?php echo esc_url( get_author_posts_url( (int) $rts_post->post_author ) ); ?>" class="article-page__pill"<?php echo rts_aria_label( sprintf( /* translators: %s: author */ __( 'Author: %s', 'reatiss' ), get_the_author_meta( 'display_name', (int) $rts_post->post_author ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>><?php rts_icon( 'icons/user.svg' ); ?><?php echo esc_html( get_the_author_meta( 'display_name', (int) $rts_post->post_author ) ); ?></a>
 			<?php } ?>
 		</div>
 		<h1 class="article-page__title h3"><?php the_title(); ?></h1>
@@ -48,7 +48,7 @@ $rts_date     = $rts_is_event ? rts_event_dates( $rts_post->ID ) : get_the_date(
 				<?php if ( ! empty( $rts_terms ) && ! is_wp_error( $rts_terms ) ) { ?>
 					<ul class="chips article-share__tags">
 						<?php foreach ( $rts_terms as $rts_term ) { ?>
-							<li><a href="<?php echo esc_url( (string) get_term_link( $rts_term ) ); ?>" class="chip chip--white"><?php echo esc_html( $rts_term->name ); ?></a></li>
+							<li><a href="<?php echo esc_url( (string) get_term_link( $rts_term ) ); ?>" class="chip chip--white"<?php echo rts_aria_label( $rts_term->name ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>><?php echo esc_html( $rts_term->name ); ?></a></li>
 						<?php } ?>
 					</ul>
 				<?php } ?>

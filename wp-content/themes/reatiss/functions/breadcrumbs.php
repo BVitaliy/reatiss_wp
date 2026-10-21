@@ -103,7 +103,7 @@ function rts_breadcrumbs_nav( array $items, string $modifier = '' ): void {
 			<?php foreach ( $items as $item ) { ?>
 				<li class="breadcrumbs__item">
 					<?php if ( '' !== $item['url'] ) { ?>
-						<a href="<?php echo esc_url( $item['url'] ); ?>"><?php echo esc_html( $item['title'] ); ?></a>
+						<a href="<?php echo esc_url( $item['url'] ); ?>"<?php echo rts_aria_label( $item['title'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>><?php echo esc_html( $item['title'] ); ?></a>
 					<?php } else { ?>
 						<span aria-current="page"><?php echo esc_html( $item['title'] ); ?></span>
 					<?php } ?>

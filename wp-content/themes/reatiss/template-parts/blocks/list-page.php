@@ -17,9 +17,6 @@ $rts_type  = in_array( $args['type'] ?? '', [ 'rts_service', 'rts_lab', 'rts_exp
 $rts_posts = rts_card_posts( $rts_type, [] );
 $rts_title = ! empty( $args['title'] ) ? (string) $args['title'] : esc_html( get_the_title() );
 
-if ( empty( $rts_posts ) ) {
-	return;
-}
 ?>
 <?php if ( 'rts_service' === $rts_type ) { ?>
 <section class="list-page services">
@@ -32,14 +29,16 @@ if ( empty( $rts_posts ) ) {
 
 	<div class="container">
 		<div class="section-head">
-			<h1 class="section-head__title h2" style="--title-w: 10.4em"><?php rts_br( $rts_title ); ?></h1>
+			<?php rts_title( $args, 'h1', 'section-head__title h2', '--title-w: 10.4em', $rts_title ); ?>
 		</div>
 
+		<?php if ( ! empty( $rts_posts ) ) { ?>
 		<ul class="cards-grid">
 			<?php foreach ( $rts_posts as $rts_post ) { ?>
 				<li><?php get_template_part( 'template-parts/cards/lab', null, [ 'post' => $rts_post, 'heading' => 'h2' ] ); ?></li>
 			<?php } ?>
 		</ul>
+		<?php } ?>
 	</div>
 </section>
 <?php } elseif ( 'rts_lab' === $rts_type ) { ?>
@@ -53,14 +52,16 @@ if ( empty( $rts_posts ) ) {
 
 	<div class="container">
 		<div class="section-head">
-			<h1 class="section-head__title h2" style="--title-w: 11.8em"><?php rts_br( $rts_title ); ?></h1>
+			<?php rts_title( $args, 'h1', 'section-head__title h2', '--title-w: 11.8em', $rts_title ); ?>
 		</div>
 
+		<?php if ( ! empty( $rts_posts ) ) { ?>
 		<ul class="cards-grid">
 			<?php foreach ( $rts_posts as $rts_post ) { ?>
 				<li><?php get_template_part( 'template-parts/cards/lab', null, [ 'post' => $rts_post, 'heading' => 'h2' ] ); ?></li>
 			<?php } ?>
 		</ul>
+		<?php } ?>
 	</div>
 </section>
 <?php } else { ?>
@@ -74,14 +75,16 @@ if ( empty( $rts_posts ) ) {
 
 	<div class="container">
 		<div class="section-head">
-			<h1 class="section-head__title h2"><?php rts_br( $rts_title ); ?></h1>
+			<?php rts_title( $args, 'h1', 'section-head__title h2', '', $rts_title ); ?>
 		</div>
 
+		<?php if ( ! empty( $rts_posts ) ) { ?>
 		<ul class="expertise-list">
 			<?php foreach ( $rts_posts as $rts_post ) { ?>
 				<li><?php get_template_part( 'template-parts/cards/expertise', null, [ 'post' => $rts_post, 'heading' => 'h2' ] ); ?></li>
 			<?php } ?>
 		</ul>
+		<?php } ?>
 	</div>
 </section>
 <?php } ?>

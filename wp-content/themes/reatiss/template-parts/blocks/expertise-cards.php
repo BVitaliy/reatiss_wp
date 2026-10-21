@@ -33,11 +33,12 @@ if ( $rts_other ) {
 	}
 }
 
-if ( empty( $rts_posts ) ) {
+$rts_more = rts_link( $args['more_link'] ?? [] );
+$rts_more = $rts_more && ! empty( $args['more_link']['label'] ) ? $rts_more : null;
+
+if ( empty( $args['title'] ) && ! $rts_more && empty( $rts_posts ) ) {
 	return;
 }
-
-$rts_more = rts_link( $args['more_link'] ?? [] );
 ?>
 <section class="home-expertise<?php echo $rts_other ? ' home-expertise--other' : ''; ?>">
 	<?php if ( ! $rts_other ) { ?>
@@ -50,10 +51,13 @@ $rts_more = rts_link( $args['more_link'] ?? [] );
 	<?php } ?>
 
 	<div class="container">
-		<div class="section-head">
-			<h2 class="section-head__title h2"><?php rts_br( $args['title'] ?? '' ); ?></h2>
-		</div>
+		<?php if ( ! empty( $args['title'] ) ) { ?>
+			<div class="section-head">
+				<?php rts_title( $args, 'h2', 'section-head__title h2' ); ?>
+			</div>
+		<?php } ?>
 
+		<?php if ( ! empty( $rts_posts ) ) { ?>
 		<div class="grid-slider swiper js-grid-slider" data-slider-below="768" style="--cols: 2">
 			<div class="swiper-wrapper">
 				<?php foreach ( $rts_posts as $rts_post ) { ?>
@@ -64,11 +68,12 @@ $rts_more = rts_link( $args['more_link'] ?? [] );
 			</div>
 			<div class="grid-slider__pagination"></div>
 		</div>
+		<?php } ?>
 
-		<?php if ( $rts_more && ! empty( $args['more_link']['label'] ) ) { ?>
+		<?php if ( $rts_more ) { ?>
 			<p class="home-expertise__more h4">
 				<?php echo esc_html( (string) ( $args['more_before'] ?? '' ) ); ?>
-				<a class="link-inline"<?php echo rts_link_attrs( $rts_more ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in rts_link_attrs(). ?>><?php echo esc_html( $args['more_link']['label'] ); ?> <?php rts_icon( 'icons/arrow.svg' ); ?></a>
+				<a class="link-inline"<?php echo rts_link_attrs( $rts_more, $args['more_link']['label'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in rts_link_attrs(). ?>><?php echo esc_html( $args['more_link']['label'] ); ?> <?php rts_icon( 'icons/arrow.svg' ); ?></a>
 				<?php echo esc_html( (string) ( $args['more_after'] ?? '' ) ); ?>
 			</p>
 		<?php } ?>

@@ -28,7 +28,7 @@ if ( ! $rts_query->have_posts() ) {
 	</div>
 	<div class="container">
 		<div class="section-head">
-			<h1 class="section-head__title h2" style="--title-w: 10.4em; --title-wrap: wrap"><?php rts_br( ! empty( $args['title'] ) ? $args['title'] : esc_html( get_the_title() ) ); ?></h1>
+			<?php rts_title( $args, 'h1', 'section-head__title h2', '--title-w: 10.4em; --title-wrap: wrap', ! empty( $args['title'] ) ? (string) $args['title'] : esc_html( get_the_title() ) ); ?>
 		</div>
 
 		<div class="shelf__inner">
