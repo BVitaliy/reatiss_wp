@@ -29,8 +29,9 @@ class RTS_Forms {
 	/**
 	 * Every form mail goes out in one layout (template-parts/mail/layout.php).
 	 * The form's Mail tab keeps a plain body — “Label: [field]”, one per line;
-	 * labels turn bold, links clickable, the subject is the heading. A form
-	 * with “Use HTML content type” on sends its own HTML untouched.
+	 * labels turn bold, links clickable, the subject is the heading. A body
+	 * written in HTML is sent as is; “Use HTML content type” alone (a plain
+	 * body with the box left ticked) still gets the layout.
 	 *
 	 * @param array             $components Mail parts: subject, body, additional_headers…
 	 * @param WPCF7_ContactForm $form       Form.
@@ -39,12 +40,18 @@ class RTS_Forms {
 	public function mail_layout( $components, $form, $mail ): array {
 		$components = (array) $components;
 		$template   = $form && $mail ? (array) $form->prop( $mail->name() ) : [];
+		$raw        = (string) ( $template['body'] ?? '' );
 
-		if ( ! empty( $template['use_html'] ) || '' === trim( (string) ( $components['body'] ?? '' ) ) ) {
+		if ( '' === trim( $raw ) || preg_match( '/<[a-z!][^>]*>/i', $raw ) ) {
 			return $components;
 		}
 
-		$body = esc_html( trim( (string) $components['body'] ) );
+		// With the HTML box ticked CF7 has escaped and wrapped the body already —
+		// take the plain text again.
+		$body = ! empty( $template['use_html'] )
+			? (string) wpcf7_mail_replace_tags( $raw, [ 'exclude_blank' => ! empty( $template['exclude_blank'] ) ] )
+			: (string) ( $components['body'] ?? '' );
+		$body = esc_html( trim( $body ) );
 		$body = (string) preg_replace( '/^([^:\n]{1,40}):/m', '<strong>$1:</strong>', $body );
 		$body = nl2br( str_replace( '<a ', '<a style="color: #001d77;" ', make_clickable( $body ) ), false );
 

@@ -58,7 +58,7 @@ logs/             — custom logs (rts_log()), gitignored
   editor (`label.field > span.field__label + [tag class:field__input] + span.field__error`),
   submit = `[rts_submit "Send"]`. Mails: one layout for all forms — `template-parts/mail/layout.php`
   via `wpcf7_mail_components` (`RTS_Forms::mail_layout()`); the Mail tab keeps a plain body
-  (“Label: [field]” per line, “Use HTML” off — on = the form's own HTML, untouched); logo = Site
+  (“Label: [field]” per line; a body written in HTML is sent untouched, the “Use HTML” box alone does not matter); logo = Site
   Settings → Forms `mail_logo`, else `img/logo-email.png`. WP HTML Mail's template is off for CF7.
 - `js/app-header.js`: the demo search code (results toggle on typing, `submit` blocked) is
   removed — live results and the real submit are `js/app-search.js`.
