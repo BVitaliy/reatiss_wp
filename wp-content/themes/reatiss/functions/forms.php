@@ -23,19 +23,45 @@ class RTS_Forms {
 		add_filter( 'wpcf7_load_css', '__return_false' );
 		add_filter( 'wpcf7_autop_or_not', '__return_false' );
 		add_filter( 'wpcf7_form_elements', [ $this, 'select_placeholder' ] );
-		add_filter( 'wpcf7_mail_tag_replaced_textarea', [ $this, 'mail_line_breaks' ], 10, 3 );
-		add_filter( 'wpcf7_mail_tag_replaced_textarea*', [ $this, 'mail_line_breaks' ], 10, 3 );
+		add_filter( 'wpcf7_mail_components', [ $this, 'mail_layout' ], 10, 3 );
 	}
 
 	/**
-	 * HTML mails: keep the message's line breaks (auto-p is off, see above).
+	 * Every form mail goes out in one layout (template-parts/mail/layout.php).
+	 * The form's Mail tab keeps a plain body — “Label: [field]”, one per line;
+	 * labels turn bold, links clickable, the subject is the heading. A form
+	 * with “Use HTML content type” on sends its own HTML untouched.
 	 *
-	 * @param string $replaced  Escaped field value.
-	 * @param mixed  $submitted Raw value.
-	 * @param bool   $html      Is the mail body HTML?
+	 * @param array             $components Mail parts: subject, body, additional_headers…
+	 * @param WPCF7_ContactForm $form       Form.
+	 * @param WPCF7_Mail        $mail       Mail being sent (mail / mail_2).
 	 */
-	public function mail_line_breaks( $replaced, $submitted, $html ): string {
-		return $html ? nl2br( (string) $replaced, false ) : (string) $replaced;
+	public function mail_layout( $components, $form, $mail ): array {
+		$components = (array) $components;
+		$template   = $form && $mail ? (array) $form->prop( $mail->name() ) : [];
+
+		if ( ! empty( $template['use_html'] ) || '' === trim( (string) ( $components['body'] ?? '' ) ) ) {
+			return $components;
+		}
+
+		$body = esc_html( trim( (string) $components['body'] ) );
+		$body = (string) preg_replace( '/^([^:\n]{1,40}):/m', '<strong>$1:</strong>', $body );
+		$body = nl2br( str_replace( '<a ', '<a style="color: #001d77;" ', make_clickable( $body ) ), false );
+
+		ob_start();
+		get_template_part(
+			'template-parts/mail/layout',
+			null,
+			[
+				'title'   => (string) ( $components['subject'] ?? '' ),
+				'content' => $body,
+			]
+		);
+
+		$components['body']               = (string) ob_get_clean();
+		$components['additional_headers'] = trim( ( $components['additional_headers'] ?? '' ) . "\nContent-Type: text/html; charset=UTF-8" );
+
+		return $components;
 	}
 
 	/**

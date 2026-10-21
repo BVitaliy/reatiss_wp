@@ -137,6 +137,24 @@ function rts_phone_href( string $phone ): string {
 }
 
 /**
+ * href of a phone / e-mail link (+ target from Site Settings → Contacts
+ * “open in new tab”), escaped, with a leading space.
+ *
+ * @param string $type  'phone' or 'email'.
+ * @param string $value Phone number or e-mail.
+ */
+function rts_contact_link_attrs( string $type, string $value ): string {
+	$href = 'email' === $type ? 'mailto:' . antispambot( $value ) : rts_phone_href( $value );
+	$html = ' href="' . esc_attr( $href ) . '"';
+
+	if ( ! empty( rts_option( 'contact_' . $type . '_new_tab' ) ) ) {
+		$html .= ' target="_blank" rel="noopener"';
+	}
+
+	return $html;
+}
+
+/**
  * Splits a textarea value into trimmed, non-empty lines.
  *
  * @param mixed $value Textarea field value.
@@ -355,10 +373,10 @@ function rts_contact_list( string $address, string $phone, string $email ): void
 			<li><?php rts_icon( 'icons/location.svg' ); ?><a href="<?php echo esc_url( 'https://maps.google.com/?q=' . rawurlencode( wp_strip_all_tags( $address ) ) ); ?>" target="_blank" rel="noopener"><?php echo esc_html( $address ); ?></a></li>
 		<?php } ?>
 		<?php if ( '' !== trim( $phone ) ) { ?>
-			<li><?php rts_icon( 'icons/phone.svg' ); ?><a href="<?php echo esc_attr( rts_phone_href( $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a></li>
+			<li><?php rts_icon( 'icons/phone.svg' ); ?><a<?php echo rts_contact_link_attrs( 'phone', $phone ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>><?php echo esc_html( $phone ); ?></a></li>
 		<?php } ?>
 		<?php if ( '' !== trim( $email ) ) { ?>
-			<li><?php rts_icon( 'icons/mail.svg' ); ?><a href="mailto:<?php echo esc_attr( antispambot( $email ) ); ?>"><?php echo esc_html( antispambot( $email ) ); ?></a></li>
+			<li><?php rts_icon( 'icons/mail.svg' ); ?><a<?php echo rts_contact_link_attrs( 'email', $email ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>><?php echo esc_html( antispambot( $email ) ); ?></a></li>
 		<?php } ?>
 	</ul>
 	<?php

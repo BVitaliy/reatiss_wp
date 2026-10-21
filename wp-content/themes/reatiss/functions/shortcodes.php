@@ -33,6 +33,8 @@ class RTS_Shortcodes {
 
 		// Post / event content: shortcodes run at 11, unwrap right after.
 		add_filter( 'the_content', 'rts_unwrap_inserts', 12 );
+		// After shortcodes — tables printed by them are wrapped as well.
+		add_filter( 'the_content', 'rts_wrap_tables', 20 );
 	}
 
 	/**
@@ -445,4 +447,23 @@ class RTS_Youtube_Migration {
 if ( is_admin() ) {
 	new RTS_Slider_Migration();
 	new RTS_Youtube_Migration();
+}
+
+/**
+ * Editor tables scroll sideways on phones inside .article-table.
+ *
+ * @param string $content Post content.
+ */
+function rts_wrap_tables( $content ): string {
+	$content = (string) $content;
+
+	if ( ! str_contains( $content, '<table' ) || str_contains( $content, 'article-table' ) ) {
+		return $content;
+	}
+
+	return (string) preg_replace(
+		'#<table\b.*?</table>#s',
+		'<div class="article-table" data-lenis-prevent-horizontal>$0</div>',
+		$content
+	);
 }

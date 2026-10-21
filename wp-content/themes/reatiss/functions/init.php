@@ -90,6 +90,38 @@ class RTS_Theme {
 
 		// The [gallery] shortcode is styled by .rich-text; WP's inline <style> fights it.
 		add_filter( 'use_default_gallery_style', '__return_false' );
+
+		// ACF reads / writes field groups in the theme's acf-json/ by itself.
+		// Labels and instructions go through __( …, 'reatiss' ), so uk.po
+		// localises the admin per user language.
+		add_filter(
+			'acf/settings/l10n_textdomain',
+			static function () {
+				return 'reatiss';
+			}
+		);
+		add_action( 'acf/init', [ $this, 'options_page' ] );
+	}
+
+	/**
+	 * Site Settings (ACF options page).
+	 */
+	public function options_page(): void {
+		if ( ! function_exists( 'acf_add_options_page' ) ) {
+			return;
+		}
+
+		acf_add_options_page(
+			[
+				'page_title' => __( 'Site Settings', 'reatiss' ),
+				'menu_title' => __( 'Site Settings', 'reatiss' ),
+				'menu_slug'  => 'rts-site-settings',
+				'capability' => 'edit_posts',
+				'redirect'   => false,
+				'icon_url'   => 'dashicons-admin-generic',
+				'position'   => 59,
+			]
+		);
 	}
 
 	public function setup(): void {
@@ -250,3 +282,44 @@ class RTS_Theme {
 }
 
 new RTS_Theme();
+
+/**
+ * The header button used to be a text field that always opened the
+ * “Consultation” popup; now it is a link group (header_cta). Once, carry the
+ * old text over with the popup as its link — on a site imported from an older
+ * export too.
+ */
+class RTS_Header_Cta_Migration {
+
+	private const DONE = 'rts_header_cta_migrated_v1';
+
+	public function __construct() {
+		add_action( 'acf/init', [ $this, 'run' ], 20 );
+	}
+
+	public function run(): void {
+		if ( get_option( self::DONE ) ) {
+			return;
+		}
+
+		update_option( self::DONE, 1 );
+
+		// The group's `label` is stored as options_header_cta_label — the old field's name.
+		$label = get_option( 'options_header_cta_label' );
+
+		if ( false === $label || ! function_exists( 'update_field' ) ) {
+			return;
+		}
+
+		update_field(
+			'field_8b055c68102a8611',
+			[
+				'field_360bcde1522deffc' => (string) $label,
+				'field_f70df8657e15d568' => '' === trim( (string) $label ) ? 'none' : 'modal',
+			],
+			'option'
+		);
+	}
+}
+
+new RTS_Header_Cta_Migration();

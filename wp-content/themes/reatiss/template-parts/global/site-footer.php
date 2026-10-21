@@ -33,7 +33,7 @@ foreach ( [ 1, 2, 3, 4, 5 ] as $rts_n ) {
 		<div class="footer__top">
 			<div class="footer__about">
 				<a href="<?php echo esc_url( RTS_HOME_URL ); ?>" class="logo" aria-label="<?php esc_attr_e( 'Reatiss — home', 'reatiss' ); ?>">
-					<?php rts_icon( 'logo.svg' ); ?>
+					<?php rts_logo( 'footer_logo', true ); ?>
 				</a>
 				<?php if ( '' !== $rts_text ) { ?>
 					<p class="footer__text text-md"><?php echo esc_html( $rts_text ); ?></p>
@@ -78,10 +78,10 @@ foreach ( [ 1, 2, 3, 4, 5 ] as $rts_n ) {
 						<p class="footer__label"><?php echo esc_html( (string) rts_option( 'contact_title' ) ); ?></p>
 						<ul class="footer__links">
 							<?php if ( '' !== $rts_email ) { ?>
-								<li><a href="mailto:<?php echo esc_attr( antispambot( $rts_email ) ); ?>"><?php rts_icon( 'icons/mail.svg' ); ?><?php echo esc_html( antispambot( $rts_email ) ); ?></a></li>
+								<li><a<?php echo rts_contact_link_attrs( 'email', $rts_email ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>><?php rts_icon( 'icons/mail.svg' ); ?><?php echo esc_html( antispambot( $rts_email ) ); ?></a></li>
 							<?php } ?>
 							<?php if ( '' !== $rts_phone ) { ?>
-								<li><a href="<?php echo esc_attr( rts_phone_href( $rts_phone ) ); ?>"><?php rts_icon( 'icons/phone.svg' ); ?><?php echo esc_html( $rts_phone ); ?></a></li>
+								<li><a<?php echo rts_contact_link_attrs( 'phone', $rts_phone ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>><?php rts_icon( 'icons/phone.svg' ); ?><?php echo esc_html( $rts_phone ); ?></a></li>
 							<?php } ?>
 						</ul>
 					</div>

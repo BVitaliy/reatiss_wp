@@ -9,25 +9,13 @@ acf-json/
 ├── group_rts_page_builder.json   ← Page Builder (flexible content — pages and CPT singles)
 ├── group_rts_theme_options.json  ← Site Settings (options page «Налаштування сайту»)
 └── …                             ← CPT / taxonomy / user groups
-includes/acf/
-└── register-acf-fields.php       ← bootstrap: acf-json paths + options page
 ```
 
 ## ACF Local JSON (`acf-json/`)
-JSON files are the **source of truth**. Edit them directly, then commit. ACF PRO loads them automatically via the `acf/settings/load_json` filter in `register-acf-fields.php`.
-
-### Theme bootstrap (required)
-```php
-add_filter( 'acf/settings/save_json', function () {
-    return get_stylesheet_directory() . '/acf-json';
-} );
-
-add_filter( 'acf/settings/load_json', function ( $paths ) {
-    unset( $paths[0] );
-    $paths[] = get_stylesheet_directory() . '/acf-json';
-    return $paths;
-} );
-```
+JSON files are the **source of truth**. Edit them directly, then commit. ACF PRO saves to and
+loads from the theme's `acf-json/` by itself (its default when the folder exists) — no
+`save_json` / `load_json` filters. The options page and the `l10n_textdomain` filter live in
+`RTS_Theme` (`functions/init.php`).
 
 ### Workflow
 1. Edit the relevant `.json` file in `acf-json/` directly.

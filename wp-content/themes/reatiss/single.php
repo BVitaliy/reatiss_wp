@@ -9,6 +9,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once RTS_DIR . '/functions/articles.php';
+
 get_header();
 ?>
 

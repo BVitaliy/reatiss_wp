@@ -37,7 +37,6 @@ require_once RTS_DIR . '/functions/builder.php';
 require_once RTS_DIR . '/functions/cards.php';
 require_once RTS_DIR . '/functions/sections.php';
 require_once RTS_DIR . '/functions/lists.php';
-require_once RTS_DIR . '/functions/articles.php';
 require_once RTS_DIR . '/functions/search.php';
 require_once RTS_DIR . '/functions/faq.php';
 require_once RTS_DIR . '/functions/post-types.php';
@@ -63,9 +62,4 @@ require_once RTS_DIR . '/functions/shortcodes.php';
 // ACF 6.8.7+ rejects SVG in image fields; this scopes an exemption to icon fields.
 if ( class_exists( 'ACF' ) ) {
 	require_once RTS_DIR . '/functions/class-svg-acf.php';
-}
-
-// ACF field groups live in acf-json/.
-if ( class_exists( 'ACF' ) ) {
-	require_once RTS_DIR . '/includes/acf/register-acf-fields.php';
 }

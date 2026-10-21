@@ -10,7 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$rts_cta   = (string) rts_option( 'header_cta_label' );
+$rts_cta   = rts_option( 'header_cta' );
+$rts_link  = rts_has_button( $rts_cta ) ? rts_link( $rts_cta ) : null;
 $rts_email = (string) rts_option( 'contact_email' );
 $rts_phone = (string) rts_option( 'contact_phone' );
 ?>
@@ -18,7 +19,7 @@ $rts_phone = (string) rts_option( 'contact_phone' );
 	<div class="header__inner">
 
 		<a href="<?php echo esc_url( RTS_HOME_URL ); ?>" class="logo" aria-label="<?php esc_attr_e( 'Reatiss — home', 'reatiss' ); ?>">
-			<?php rts_icon( 'logo.svg' ); ?>
+			<?php rts_logo( 'header_logo' ); ?>
 		</a>
 
 		<?php if ( has_nav_menu( 'header_menu' ) ) { ?>
@@ -55,8 +56,8 @@ $rts_phone = (string) rts_option( 'contact_phone' );
 			<button class="btn-round header__search-btn js-search-open" type="button" aria-label="<?php esc_attr_e( 'Open search', 'reatiss' ); ?>">
 				<?php rts_icon( 'icons/search.svg' ); ?>
 			</button>
-			<?php if ( '' !== $rts_cta ) { ?>
-				<a href="#" class="btn-solid header__cta" data-modal-open="consultation"><?php echo esc_html( $rts_cta ); ?></a>
+			<?php if ( $rts_link ) { ?>
+				<a class="btn-solid header__cta"<?php echo rts_link_attrs( $rts_link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>><?php echo esc_html( $rts_cta['label'] ); ?></a>
 			<?php } ?>
 			<button class="header__burger js-burger" type="button" aria-label="<?php esc_attr_e( 'Menu', 'reatiss' ); ?>" aria-expanded="false" aria-controls="mobile-menu">
 				<span></span><span></span><span></span>
@@ -83,19 +84,14 @@ $rts_phone = (string) rts_option( 'contact_phone' );
 		</nav>
 	<?php } ?>
 	<div class="mobile-menu__foot">
-		<?php if ( '' !== $rts_cta ) { ?>
-			<a href="#" class="btn btn--primary" data-modal-open="consultation">
-				<span class="btn__tile"><?php rts_icon( 'icons/arrow.svg' ); ?></span>
-				<?php echo esc_html( $rts_cta ); ?>
-			</a>
-		<?php } ?>
+		<?php rts_button( $rts_cta ); ?>
 		<?php if ( '' !== $rts_email || '' !== $rts_phone ) { ?>
 			<div class="mobile-menu__contacts">
 				<?php if ( '' !== $rts_email ) { ?>
-					<a href="mailto:<?php echo esc_attr( antispambot( $rts_email ) ); ?>"><?php rts_icon( 'icons/mail.svg' ); ?><?php echo esc_html( antispambot( $rts_email ) ); ?></a>
+					<a<?php echo rts_contact_link_attrs( 'email', $rts_email ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>><?php rts_icon( 'icons/mail.svg' ); ?><?php echo esc_html( antispambot( $rts_email ) ); ?></a>
 				<?php } ?>
 				<?php if ( '' !== $rts_phone ) { ?>
-					<a href="<?php echo esc_attr( rts_phone_href( $rts_phone ) ); ?>"><?php rts_icon( 'icons/phone.svg' ); ?><?php echo esc_html( $rts_phone ); ?></a>
+					<a<?php echo rts_contact_link_attrs( 'phone', $rts_phone ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside. ?>><?php rts_icon( 'icons/phone.svg' ); ?><?php echo esc_html( $rts_phone ); ?></a>
 				<?php } ?>
 			</div>
 		<?php } ?>

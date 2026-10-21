@@ -13,15 +13,18 @@
             "key": "field_ad958dd06c9cd469"
         },
         {
-            "type": "text",
-            "name": "header_cta_label",
-            "label": "Header button",
+            "type": "image",
+            "name": "header_logo",
+            "label": "Header logo",
             "wrapper": {
                 "width": "50"
             },
-            "default_value": "Get a consultation",
-            "instructions": "Opens the “Get a consultation” popup. Empty — no button.",
-            "key": "field_205f0ef9ca1aa922"
+            "instructions": "SVG is best: an SVG drawn with fill=\"currentColor\" takes the header colour (white over a dark banner, dark on light pages). Empty — the theme logo.",
+            "return_format": "id",
+            "preview_size": "medium",
+            "library": "all",
+            "mime_types": "svg,png,webp",
+            "key": "field_50359560902aa3c8"
         },
         {
             "type": "message",
@@ -32,6 +35,117 @@
             },
             "message": "Header and mobile menu items are edited in Appearance → Menus, location “Main menu”.",
             "key": "field_cc5ce4abdfb8e4cb"
+        },
+        {
+            "type": "group",
+            "name": "header_cta",
+            "label": "Header button",
+            "wrapper": {
+                "width": "100"
+            },
+            "layout": "block",
+            "instructions": "Empty text — no button. By default it opens the “Consultation” popup.",
+            "sub_fields": [
+                {
+                    "type": "text",
+                    "name": "label",
+                    "label": "Button text",
+                    "wrapper": {
+                        "width": "30"
+                    },
+                    "key": "field_360bcde1522deffc",
+                    "default_value": "Get a consultation"
+                },
+                {
+                    "type": "select",
+                    "name": "type",
+                    "label": "Link type",
+                    "wrapper": {
+                        "width": "20"
+                    },
+                    "ui": 1,
+                    "return_format": "value",
+                    "default_value": "modal",
+                    "choices": {
+                        "none": "No link",
+                        "page": "Site page",
+                        "custom": "Custom URL",
+                        "modal": "“Consultation” popup"
+                    },
+                    "key": "field_f70df8657e15d568"
+                },
+                {
+                    "type": "page_link",
+                    "name": "page",
+                    "label": "Page",
+                    "wrapper": {
+                        "width": "50"
+                    },
+                    "post_type": [
+                        "page",
+                        "post",
+                        "rts_service",
+                        "rts_lab",
+                        "rts_expertise",
+                        "rts_event"
+                    ],
+                    "allow_null": 0,
+                    "allow_archives": 1,
+                    "multiple": 0,
+                    "required": 1,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_f70df8657e15d568",
+                                "operator": "==",
+                                "value": "page"
+                            }
+                        ]
+                    ],
+                    "key": "field_6bbd95e48a812c01"
+                },
+                {
+                    "type": "text",
+                    "name": "url",
+                    "label": "Link",
+                    "wrapper": {
+                        "width": "35"
+                    },
+                    "required": 1,
+                    "placeholder": "https://… or #anchor",
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_f70df8657e15d568",
+                                "operator": "==",
+                                "value": "custom"
+                            }
+                        ]
+                    ],
+                    "key": "field_43acbe8fb6995509"
+                },
+                {
+                    "type": "true_false",
+                    "name": "new_tab",
+                    "label": "Open in new tab",
+                    "wrapper": {
+                        "width": "15"
+                    },
+                    "ui": 1,
+                    "default_value": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_f70df8657e15d568",
+                                "operator": "==",
+                                "value": "custom"
+                            }
+                        ]
+                    ],
+                    "key": "field_233806b408633ae3"
+                }
+            ],
+            "key": "field_8b055c68102a8611"
         },
         {
             "type": "tab",
@@ -48,21 +162,43 @@
             "name": "contact_email",
             "label": "E-mail",
             "wrapper": {
-                "width": "50"
+                "width": "35"
             },
             "default_value": "info@reatiss.com",
             "instructions": "Shown in the mobile menu and the footer.",
             "key": "field_8e6290209a77ed8d"
         },
         {
+            "type": "true_false",
+            "name": "contact_email_new_tab",
+            "label": "E-mail: open in new tab",
+            "wrapper": {
+                "width": "15"
+            },
+            "ui": 1,
+            "default_value": 0,
+            "key": "field_180a4d7e4ac24992"
+        },
+        {
             "type": "text",
             "name": "contact_phone",
             "label": "Phone",
             "wrapper": {
-                "width": "50"
+                "width": "35"
             },
             "default_value": "+38 099 454 5678",
             "key": "field_dc1f83c7ef419d59"
+        },
+        {
+            "type": "true_false",
+            "name": "contact_phone_new_tab",
+            "label": "Phone: open in new tab",
+            "wrapper": {
+                "width": "15"
+            },
+            "ui": 1,
+            "default_value": 0,
+            "key": "field_a129d4f449f5b4b4"
         },
         {
             "type": "textarea",
@@ -151,6 +287,20 @@
             },
             "placement": "top",
             "key": "field_f366e0a0f83e99b4"
+        },
+        {
+            "type": "image",
+            "name": "footer_logo",
+            "label": "Footer logo",
+            "wrapper": {
+                "width": "100"
+            },
+            "instructions": "SVG with fill=\"currentColor\" turns white on the dark footer. Empty — the theme logo.",
+            "return_format": "id",
+            "preview_size": "medium",
+            "library": "all",
+            "mime_types": "svg,png,webp",
+            "key": "field_139cb73b1999b788"
         },
         {
             "type": "textarea",
@@ -515,7 +665,7 @@
             "wrapper": {
                 "width": "100"
             },
-            "message": "Form fields and emails are edited in Contact Form 7. Here — which form each popup uses and the texts around it.",
+            "message": "Form fields and email texts are edited in Contact Form 7; every email goes out in the site's email layout. Here — which form each popup uses and the texts around it.",
             "key": "field_12bb69f0a390adf8"
         },
         {
@@ -640,6 +790,20 @@
             },
             "default_value": "Back to the site",
             "key": "field_863396c0be93e165"
+        },
+        {
+            "type": "image",
+            "name": "mail_logo",
+            "label": "Logo in form emails",
+            "wrapper": {
+                "width": "100"
+            },
+            "instructions": "PNG or JPG (mail apps do not show SVG), about 376×82 px. Empty — the theme logo. Emails share one layout; in Contact Form 7 → Mail keep a plain body, one “Label: [field]” per line, with “Use HTML content type” off.",
+            "return_format": "id",
+            "preview_size": "medium",
+            "library": "all",
+            "mime_types": "png,jpg,jpeg",
+            "key": "field_f3d813170c8caf3a"
         },
         {
             "type": "tab",
@@ -1191,5 +1355,5 @@
     "active": true,
     "description": "Global settings: header, contacts, footer, popups, forms.",
     "show_in_rest": 0,
-    "modified": 1792077941
+    "modified": 1792576004
 }

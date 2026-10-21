@@ -35,7 +35,6 @@
 ```
 functions.php     — constants + require bootstrap only
 functions/        — PHP feature classes and helpers (init, security, admin, media, forms…)
-includes/acf/     — ACF bootstrap (acf-json paths, options page Site Settings, l10n text domain)
 languages/        — uk.po / uk.mo / uk.l10n.php — Ukrainian admin
 acf-json/         — ACF field groups (source of truth — see .claude/acf-flexible-content.md)
 templates/        — page templates
@@ -57,9 +56,10 @@ logs/             — custom logs (rts_log()), gitignored
 - Forms are CF7 (`form.rts-form`), not `.js-form`: error states / busy button / "thanks"
   popup in `js/app-cf7.js`; CF7 wrap fix in `_wp.scss`. Field HTML lives in the CF7 form
   editor (`label.field > span.field__label + [tag class:field__input] + span.field__error`),
-  submit = `[rts_submit "Send"]`. Mails: a full HTML document in each form's Mail tab ("Use HTML
-  content type"; logo = `img/logo-email.png` via `[_site_url]/wp-content/themes/reatiss/…`); WP HTML Mail's own
-  template is off for CF7 (its Plugins tab); textarea line breaks → `<br>` in `functions/forms.php`.
+  submit = `[rts_submit "Send"]`. Mails: one layout for all forms — `template-parts/mail/layout.php`
+  via `wpcf7_mail_components` (`RTS_Forms::mail_layout()`); the Mail tab keeps a plain body
+  (“Label: [field]” per line, “Use HTML” off — on = the form's own HTML, untouched); logo = Site
+  Settings → Forms `mail_logo`, else `img/logo-email.png`. WP HTML Mail's template is off for CF7.
 - `js/app-header.js`: the demo search code (results toggle on typing, `submit` blocked) is
   removed — live results and the real submit are `js/app-search.js`.
 - `js/app-solutions.js`: reads optional `data-zoom` (`[[in, out], …]` seconds of the layers clip,
@@ -125,6 +125,11 @@ logs/             — custom logs (rts_log()), gitignored
 - Scripts / Swiper CSS load only where needed: `RTS_Theme::conditions()` in `functions/init.php`
   maps builder layouts / templates to script groups. **A new block with JS → add it there.**
 - Busy buttons (`.btn.is-loading`, CF7 send + "Show more") show a spinner in the tile (`_wp.scss`).
+- Site Settings: `header_logo` / `footer_logo` (SVG inlined via `rts_logo()`, empty = `img/logo.svg`);
+  header button = link group `header_cta` (`RTS_Header_Cta_Migration` moved the old text field);
+  e-mail / phone “open in new tab” toggles → `rts_contact_link_attrs()`.
+- `functions/articles.php` (related items, share buttons) is required by `single.php` only; the
+  `.article-table` wrap is `rts_wrap_tables()` in `shortcodes.php`.
 - Socials accept "Custom icon" (uploaded SVG/PNG, `rts_social_icon()`).
 - Editor content: `_wp.scss` styles the elements `.rich-text` leaves out (h5/h6, alignleft/right,
   hr, code/pre, dl, sup/sub, mark, abbr, embeds).

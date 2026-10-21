@@ -117,3 +117,35 @@ function rts_inline_icon( $image, array $attrs = [] ): void {
 
 	rts_image( $id, $attrs, 'thumbnail' );
 }
+
+/**
+ * Site logo from Site Settings (`header_logo` / `footer_logo`). An SVG is
+ * inlined, so one drawn with currentColor takes the header / footer colour;
+ * empty — the theme's img/logo.svg. The surrounding link carries the label.
+ *
+ * @param string $option Option name.
+ * @param bool   $lazy   Lazy-load a raster logo (the footer one).
+ */
+function rts_logo( string $option, bool $lazy = false ): void {
+	$id = rts_image_id( rts_option( $option ) );
+
+	if ( ! $id ) {
+		rts_icon( 'logo.svg' );
+
+		return;
+	}
+
+	if ( 'image/svg+xml' === get_post_mime_type( $id ) ) {
+		rts_inline_icon( $id );
+
+		return;
+	}
+
+	rts_image(
+		$id,
+		[
+			'alt'     => '',
+			'loading' => $lazy ? 'lazy' : 'eager',
+		]
+	);
+}

@@ -1,6 +1,7 @@
 <?php
 /**
- * Article / event pages: editor output tweaks, related items, share links.
+ * Article / event pages: related items, share links.
+ * Loaded by single.php only — nothing else uses these.
  *
  * @package reatiss
  */
@@ -8,35 +9,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
-class RTS_Articles {
-
-	public function __construct() {
-		// After shortcodes (11) — tables printed by them are wrapped as well.
-		add_filter( 'the_content', [ $this, 'wrap_tables' ], 20 );
-	}
-
-	/**
-	 * Editor tables scroll sideways on phones inside .article-table.
-	 *
-	 * @param string $content Post content.
-	 */
-	public function wrap_tables( $content ): string {
-		$content = (string) $content;
-
-		if ( ! str_contains( $content, '<table' ) || str_contains( $content, 'article-table' ) ) {
-			return $content;
-		}
-
-		return (string) preg_replace(
-			'#<table\b.*?</table>#s',
-			'<div class="article-table" data-lenis-prevent-horizontal>$0</div>',
-			$content
-		);
-	}
-}
-
-new RTS_Articles();
 
 /**
  * Related items for the bottom of an article / event: the same category

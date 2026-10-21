@@ -24,7 +24,7 @@ class RTS_Svg_Acf {
 	/**
 	 * ACF field names allowed to hold an SVG.
 	 */
-	private const SVG_FIELDS = [ 'icon', 'logo', 'custom_icon', 'overlay_svg', 'zone_svg' ];
+	private const SVG_FIELDS = [ 'icon', 'logo', 'header_logo', 'footer_logo', 'custom_icon', 'overlay_svg', 'zone_svg' ];
 
 	/**
 	 * @var RTS_Svg_Sanitizer

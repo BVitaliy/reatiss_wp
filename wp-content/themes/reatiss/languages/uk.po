@@ -1177,3 +1177,33 @@ msgstr "Великий текст (як у статтях)"
 
 msgid "Fill in the text."
 msgstr "Заповніть текст."
+
+msgid "Header logo"
+msgstr "Логотип у хедері"
+
+msgid "SVG is best: an SVG drawn with fill=\"currentColor\" takes the header colour (white over a dark banner, dark on light pages). Empty — the theme logo."
+msgstr "Найкраще SVG: SVG з fill=\"currentColor\" бере колір хедера (білий над темним банером, темний на світлих сторінках). Порожньо — логотип теми."
+
+msgid "Empty text — no button. By default it opens the “Consultation” popup."
+msgstr "Порожній текст — без кнопки. За замовчуванням відкриває попап «Консультація»."
+
+msgid "E-mail: open in new tab"
+msgstr "E-mail: відкривати в новій вкладці"
+
+msgid "Phone: open in new tab"
+msgstr "Телефон: відкривати в новій вкладці"
+
+msgid "Footer logo"
+msgstr "Логотип у футері"
+
+msgid "SVG with fill=\"currentColor\" turns white on the dark footer. Empty — the theme logo."
+msgstr "SVG з fill=\"currentColor\" стає білим на темному футері. Порожньо — логотип теми."
+
+msgid "Form fields and email texts are edited in Contact Form 7; every email goes out in the site's email layout. Here — which form each popup uses and the texts around it."
+msgstr "Поля форм і тексти листів редагуються в Contact Form 7; усі листи йдуть у єдиному шаблоні листа сайту. Тут — яку форму використовує кожен попап і тексти навколо нього."
+
+msgid "Logo in form emails"
+msgstr "Логотип у листах форм"
+
+msgid "PNG or JPG (mail apps do not show SVG), about 376×82 px. Empty — the theme logo. Emails share one layout; in Contact Form 7 → Mail keep a plain body, one “Label: [field]” per line, with “Use HTML content type” off."
+msgstr "PNG або JPG (поштові програми не показують SVG), приблизно 376×82 px. Порожньо — логотип теми. Усі листи мають один шаблон; у Contact Form 7 → Пошта пишіть звичайний текст, по рядку «Назва: [поле]», без галочки «Використовувати HTML»."

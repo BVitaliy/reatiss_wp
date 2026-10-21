@@ -271,3 +271,10 @@
     transition-delay: 0s;
   }
 }
+
+// Raster logo picked in Site Settings (an SVG one is inlined like the theme's).
+.logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
