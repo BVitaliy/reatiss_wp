@@ -446,86 +446,6 @@
         },
         {
             "type": "tab",
-            "name": "sections_tab",
-            "label": "Section pages",
-            "wrapper": {
-                "width": "100"
-            },
-            "placement": "top",
-            "key": "field_c13077f90a2dd6f5"
-        },
-        {
-            "type": "message",
-            "name": "sections_message",
-            "label": "What for",
-            "wrapper": {
-                "width": "100"
-            },
-            "message": "List pages of the sections: they appear in the breadcrumbs of services, labs, expertise and events, and light up the menu item.",
-            "key": "field_5ea4bacb058a9338"
-        },
-        {
-            "type": "post_object",
-            "name": "services_page",
-            "label": "Services page",
-            "wrapper": {
-                "width": "25"
-            },
-            "return_format": "id",
-            "post_type": [
-                "page"
-            ],
-            "ui": 1,
-            "allow_null": 1,
-            "key": "field_be125f84a4b9d3f9"
-        },
-        {
-            "type": "post_object",
-            "name": "labs_page",
-            "label": "Labs page",
-            "wrapper": {
-                "width": "25"
-            },
-            "return_format": "id",
-            "post_type": [
-                "page"
-            ],
-            "ui": 1,
-            "allow_null": 1,
-            "key": "field_299f1fa877ae1f3c"
-        },
-        {
-            "type": "post_object",
-            "name": "expertise_page",
-            "label": "Expertise page",
-            "wrapper": {
-                "width": "25"
-            },
-            "return_format": "id",
-            "post_type": [
-                "page"
-            ],
-            "ui": 1,
-            "allow_null": 1,
-            "key": "field_b1ccff0d6e3e01c5"
-        },
-        {
-            "type": "post_object",
-            "name": "events_page",
-            "label": "Events page",
-            "wrapper": {
-                "width": "25"
-            },
-            "return_format": "id",
-            "post_type": [
-                "page"
-            ],
-            "ui": 1,
-            "allow_null": 1,
-            "key": "field_cc149450fd93f7c4"
-        },
-        {
-            "type": "tab",
             "name": "blog_tab",
             "label": "Blog & events",
             "wrapper": {
@@ -1355,5 +1275,5 @@
     "active": true,
     "description": "Global settings: header, contacts, footer, popups, forms.",
     "show_in_rest": 0,
-    "modified": 1792576004
+    "modified": 1793031494
 }

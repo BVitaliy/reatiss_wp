@@ -1,8 +1,9 @@
 <?php
 /**
- * Section pages: the list page each post type belongs to (Site Settings →
- * Section pages). Used by the breadcrumbs, the menu's active item and the
- * blocks' default "View all" links.
+ * Section pages: the list page each post type belongs to — found by itself:
+ * services / labs / expertise = the page whose “List page” block shows them,
+ * events = the page on the “Events” template, posts = the posts page.
+ * Used by the breadcrumbs, the menu's active item and the "All events" link.
  *
  * @package reatiss
  */
@@ -12,14 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Post type => Site Settings field holding its list page.
+ * Post types that have a section list page.
  */
-const RTS_SECTION_OPTIONS = [
-	'rts_service'   => 'services_page',
-	'rts_lab'       => 'labs_page',
-	'rts_expertise' => 'expertise_page',
-	'rts_event'     => 'events_page',
-];
+const RTS_SECTION_TYPES = [ 'rts_service', 'rts_lab', 'rts_expertise', 'rts_event' ];
 
 /**
  * List page of a post type (the blog page for posts).
@@ -31,7 +27,11 @@ function rts_section_page_id( string $post_type ): int {
 		return (int) get_option( 'page_for_posts' );
 	}
 
-	return isset( RTS_SECTION_OPTIONS[ $post_type ] ) ? (int) rts_option( RTS_SECTION_OPTIONS[ $post_type ] ) : 0;
+	if ( 'rts_event' === $post_type ) {
+		return rts_template_page_id( 'templates/events.php' );
+	}
+
+	return in_array( $post_type, RTS_SECTION_TYPES, true ) ? rts_template_page_id( 'list:' . $post_type ) : 0;
 }
 
 add_filter(
@@ -47,7 +47,7 @@ add_filter(
 add_filter(
 	'rts_nav_item_current',
 	static function ( $current, $item ) {
-		if ( $current || ! is_singular( array_keys( RTS_SECTION_OPTIONS ) ) || 'page' !== $item->object ) {
+		if ( $current || ! is_singular( RTS_SECTION_TYPES ) || 'page' !== $item->object ) {
 			return $current;
 		}
 

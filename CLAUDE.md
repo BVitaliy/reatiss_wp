@@ -94,8 +94,10 @@ logs/             — custom logs (rts_log()), gitignored
   `js/admin-block-previews.js`): `img/admin/blocks/{layout-with-dashes}.webp`, 840 px wide.
   **A new block → add its screenshot there.**
 - Cards: `template-parts/cards/{expertise,lab,news,event}.php`, lists via `rts_card_posts()`
-  (`functions/cards.php`). Section list pages: Site Settings → Сторінки розділів
-  (`functions/sections.php` — breadcrumbs, active menu item).
+  (`functions/cards.php`). Section list pages are found by themselves
+  (`functions/sections.php` — breadcrumbs, active menu item): services / labs / expertise = the page
+  whose `list_page` block shows that type, events = the «Події» template page, posts = the posts page
+  (kept in the `rts_template_pages_v2` map, `functions/performance.php`).
 - Service / lab / expertise singles use `single-builder.php` (`RTS_BUILDER_TYPES`); their list
   pages are ordinary pages with the `list_page` block.
 - Editor inserts (`functions/shortcodes.php`): `[rts_cta]` → `.article-cta` — editors insert it with
