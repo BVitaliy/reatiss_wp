@@ -2,8 +2,8 @@
 /**
  * 404 — Figma 8038:21975. Texts: Site Settings → 404.
  *
- * Text + "Back to home" | "4 [logo mark] 4" (one SVG, outlined from the
- * mockup). Two running lines (8038:22449 top, 8054:19447 bottom), from 992 up.
+ * Text + "Back to home" | "404" (one SVG: the 4s outlined from the mockup,
+ * the 0 — in place of the logo mark, client — from the same Jakarta Medium). Two running lines (8038:22449 top, 8054:19447 bottom), from 992 up.
  *
  * @package reatiss
  */

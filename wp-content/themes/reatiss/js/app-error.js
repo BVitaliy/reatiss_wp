@@ -1,9 +1,9 @@
 /* global gsap, DrawSVGPlugin */
 // 404 art (template-parts/error-page.php, .js-error-art — img/404-art.svg
-// inline: path 0 = the left 4, 1–7 = the mark's traces and pads, 8 = the
-// right 4). On load the shapes draw their outlines like circuit traces (left
-// 4 → the mark, trace by trace → right 4), then fill in; after that a blue
-// signal runs along the mark's traces every few seconds.
+// inline: path 0 = the left 4, 1 = the 0, 2 = the right 4; the 0 replaced the
+// logo mark — client). On load the digits draw their outlines like circuit
+// traces (4 → 0 → 4), then fill in; after that a blue signal runs round the
+// 0's outline every few seconds.
 // Pre-hidden in style/_error-page.scss (3s CSS fail-safe); reduced motion /
 // no GSAP: shown as is.
 (function () {
@@ -17,14 +17,10 @@
   gsap.registerPlugin(DrawSVGPlugin);
 
   var paths = Array.prototype.slice.call(art.querySelectorAll("path"));
-  if (paths.length < 9) return ready();
+  if (paths.length < 3) return ready();
 
-  var four1 = paths[0];
-  var four2 = paths[8];
-  // the mark in drawing order: outer traces in, the stripes, the pads
-  var mark = [paths[7], paths[6], paths[1], paths[5], paths[4], paths[2], paths[3]];
+  var zero = paths[1];
   var ACCENT = getComputedStyle(document.documentElement).getPropertyValue("--clr-accent").trim() || "#2358fc";
-  var BASE = getComputedStyle(art).color; // the art's own colour (--clr-main)
 
   paths.forEach(function (p) {
     p.setAttribute("stroke", "currentColor");
@@ -32,21 +28,30 @@
     p.setAttribute("stroke-linejoin", "round");
   });
   gsap.set(paths, { fillOpacity: 0, drawSVG: "0%" });
+
+  // the signal: a short accent dash over the 0's outline
+  var pulse = zero.cloneNode(false);
+  pulse.setAttribute("fill", "none");
+  pulse.setAttribute("stroke", ACCENT);
+  pulse.setAttribute("stroke-width", "4");
+  pulse.setAttribute("stroke-linecap", "round");
+  zero.parentNode.appendChild(pulse);
+  gsap.set(pulse, { drawSVG: "0% 0%", autoAlpha: 0 });
   ready();
 
   var tl = gsap.timeline({ delay: 0.3 });
-  tl.to(four1, { drawSVG: "100%", duration: 1.1, ease: "power2.inOut" })
-    .to(mark, { drawSVG: "100%", duration: 0.9, ease: "power2.inOut", stagger: 0.12 }, "-=0.6")
-    .to(four2, { drawSVG: "100%", duration: 1.1, ease: "power2.inOut" }, "-=0.7")
+  tl.to(paths, { drawSVG: "100%", duration: 1.1, ease: "power2.inOut", stagger: 0.4 })
     // fill in, outlines go
-    .to([four1].concat(mark, [four2]), { fillOpacity: 1, duration: 0.6, ease: "power1.out", stagger: 0.05 }, "-=0.4")
+    .to(paths, { fillOpacity: 1, duration: 0.6, ease: "power1.out", stagger: 0.08 }, "-=0.4")
     .set(paths, { attr: { "stroke-width": 0 } })
     .add(signal, "+=0.6");
 
-  // a pulse of accent along the mark, trace after trace, then a pause
   function signal() {
-    gsap.timeline({ repeat: -1, repeatDelay: 3.2 })
-      .to(mark, { fill: ACCENT, duration: 0.25, ease: "power1.out", stagger: 0.08 })
-      .to(mark, { fill: BASE, duration: 0.6, ease: "power1.in", stagger: 0.08 }, 0.3);
+    gsap.timeline({ repeat: -1, repeatDelay: 3 })
+      .set(pulse, { autoAlpha: 1, drawSVG: "0% 0%" })
+      .to(pulse, { drawSVG: "0% 14%", duration: 0.35, ease: "power1.in" })
+      .to(pulse, { drawSVG: "86% 100%", duration: 1.6, ease: "none" })
+      .to(pulse, { drawSVG: "100% 100%", duration: 0.35, ease: "power1.out" })
+      .set(pulse, { autoAlpha: 0 });
   }
 })();

@@ -131,12 +131,17 @@ h2 {
   }
 }
 
-// card descriptions, nav — 16 / 1.55
+// card descriptions — 18 / 1.55 (client: content text 16 → 18; the size
+// of .text-lg now, kept as its own class for the places that differ)
 .text-md {
   font-family: var(--font-main);
-  font-size: max(15px, #{rem(16)});
+  font-size: max(16px, #{rem(18)});
   font-weight: 300; // descriptions are Inter Light site-wide
   line-height: 1.55;
+
+  @include maxMedia(md) {
+    font-size: rem(16);
+  }
 }
 
 // buttons, links, dates — 14

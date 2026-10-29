@@ -19,6 +19,11 @@
     blocks.forEach(function (block) {
       var stage = block.querySelector(".capabilities__stage");
       var slider = null;
+      // destroy(…, cleanStyles) wipes the rows' style="--i: n" (their
+      // z-index order) — put back after it
+      var styled = [].slice.call(stage.querySelectorAll(".swiper-slide"))
+        .map(function (node) { return [node, node.getAttribute("style")]; })
+        .filter(function (pair) { return pair[1] !== null; });
       function sync() {
         if (mqSlider.matches && !slider) {
           slider = new Swiper(stage, {
@@ -32,6 +37,8 @@
         } else if (!mqSlider.matches && slider) {
           slider.destroy(true, true);
           slider = null;
+          styled.forEach(function (pair) { pair[0].setAttribute("style", pair[1]); });
+          stage.classList.remove("swiper-backface-hidden");
         }
       }
       sync();

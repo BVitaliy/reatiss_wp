@@ -1,12 +1,13 @@
 @use "../../mixins" as *;
 
 // ── Home: Common Questions ── Figma 7967:9186
-// Left: title (506) + "Contact us" 80 below; right: accordion 1027 wide
-// starting at 833 of 1860. Stacks below 992.
+// Left: title (506) + "Contact us" 80 below; right: accordion. Figma has it
+// 1027 wide from 833 of 1860 — widened by the client to 1240 (from 620; the
+// title column still holds the 11em title). Stacks below 992.
 .home-faq {
   &__grid {
     display: grid;
-    grid-template-columns: minmax(0, 833fr) minmax(0, 1027fr);
+    grid-template-columns: minmax(0, 620fr) minmax(0, 1240fr);
     align-items: start;
 
     @include maxMedia(lg) {

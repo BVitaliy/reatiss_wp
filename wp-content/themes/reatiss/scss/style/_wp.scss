@@ -247,30 +247,8 @@
   }
 }
 
-// Home solutions scene: the right-hand items stood on the container edge
-// (text touching the screen edge on 1920) — give them the same air as the title's gutter on the left.
-// From 1300 only: below that the chip is close and the inset would push the
-// text onto it.
-@media (min-width: 1300px) {
-  .home-solutions__item--right {
-    right: rem(60);
-  }
-}
-
-// Custom select: app-select.js shows the list with display:block but closing
-// only drops .is-open — the faded list stayed over the fields below and caught
-// clicks. Closed = hidden + not clickable (visibility waits for the fade-out).
-.select__list {
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0.25s ease, transform 0.35s var(--ease-out), visibility 0s linear 0.35s;
-
-  &.is-open {
-    visibility: visible;
-    pointer-events: auto;
-    transition-delay: 0s;
-  }
-}
+// (the solutions right-hand inset and the closed select list fix moved into
+// style/home/_solutions.scss and style/_forms.scss — shared with the markup)
 
 // Raster logo picked in Site Settings (an SVG one is inlined like the theme's).
 .logo img {

@@ -37,7 +37,7 @@
   background: var(--btn-bg);
   color: var(--btn-fg);
   font-family: var(--font-main);
-  font-size: max(13px, #{rem(14)});
+  font-size: max(15px, #{rem(16)}); // client: button / link text 16
   font-weight: 500;
   line-height: 1;
   white-space: nowrap;
@@ -150,7 +150,7 @@
   border-radius: var(--rd-md);
   background: var(--clr-main);
   color: var(--clr-white);
-  font-size: max(13px, #{rem(14)});
+  font-size: max(15px, #{rem(16)}); // client: button / link text 16
   font-weight: 500;
   white-space: nowrap;
   transition: background var(--transition-1), color var(--transition-1);
@@ -220,7 +220,7 @@
   align-items: center;
   gap: rem(5);
   color: var(--clr-main);
-  font-size: max(13px, #{rem(14)});
+  font-size: max(15px, #{rem(16)}); // client: button / link text 16
   font-weight: 500;
   line-height: 1.2;
   white-space: nowrap;
@@ -269,7 +269,7 @@
   padding-bottom: rem(12);
   border-bottom: 1px solid var(--clr-line);
   color: var(--clr-main);
-  font-size: max(13px, #{rem(14)});
+  font-size: max(15px, #{rem(16)}); // client: button / link text 16
   font-weight: 500;
 
   @include maxMedia(xl) {

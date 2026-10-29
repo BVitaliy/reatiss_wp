@@ -202,7 +202,11 @@
   box-shadow: 0 rem(20) rem(40) rgba(2, 16, 22, 0.1);
   opacity: 0;
   transform: translateY(#{rem(-6)});
-  transition: opacity 0.25s ease, transform 0.35s var(--ease-out);
+  // closing only drops .is-open: hidden + not clickable once faded, or the
+  // list stays over the fields below and catches clicks
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.35s var(--ease-out), visibility 0s linear 0.35s;
   scrollbar-width: thin;
   scrollbar-color: var(--clr-line) transparent;
 
@@ -213,6 +217,9 @@
   &.is-open {
     opacity: 1;
     transform: none;
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
   }
 
   @include maxMedia(xl) {

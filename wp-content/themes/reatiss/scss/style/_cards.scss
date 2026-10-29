@@ -66,6 +66,7 @@
 
   &__text {
     max-width: rem(287);
+    font-size: max(15px, #{rem(16)}); // client: the short description stays 16 (content is 18)
     color: var(--clr-text);
 
     @include maxMedia(xl) {

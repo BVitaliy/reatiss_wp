@@ -134,6 +134,12 @@
 
     &--right {
       right: 0;
+
+      // the text stood on the screen edge at 1920 — the title's air on the
+      // left; below 1300 the chip is close and the inset would push it onto it
+      @media (min-width: 1300px) {
+        right: rem(60);
+      }
     }
 
     &--left {

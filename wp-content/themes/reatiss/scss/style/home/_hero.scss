@@ -1,13 +1,13 @@
 @use "../../mixins" as *;
 
-// ── Home hero ── Figma 7967:8854
+// ── Home hero ── Figma 7967:8854, text block moved by the client: 8530:28383
 // Full screen height; on short screens the min-height wins so the content
 // always fits below the header (content has padding-top = header height).
-// Photo + 30% black shade + hexagon outlines. Scroll motion: app-hero.js.
+// Text bottom-left. Photo + 40% black shade + hexagon outlines. Scroll motion: app-hero.js.
 .home-hero {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-end; // Figma 8530:28383: text bottom-left, 30 above the edge
   height: 100svh;
   min-height: rem(720);
   overflow: hidden;
@@ -47,12 +47,12 @@
     }
   }
 
-  // Figma: rgba(0,0,0,.3); JS deepens it while the hero scrolls away
+  // Figma: rgba(0,0,0,.3) + 10% (client); JS deepens it while the hero scrolls away
   &__shade {
     position: absolute;
     inset: 0;
     background: #000;
-    opacity: 0.3;
+    opacity: 0.4;
   }
 
   &__grid {
@@ -81,10 +81,10 @@
     z-index: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     padding-top: calc(var(--header-h) + #{rem(40)});
-    padding-bottom: rem(60);
-    text-align: center;
+    padding-bottom: rem(30);
+    text-align: left;
     will-change: transform, opacity;
   }
 
@@ -94,7 +94,7 @@
   }
 
   &__text {
-    max-width: rem(409);
+    max-width: rem(635);
     margin-top: rem(30);
     color: rgba(255, 255, 255, 0.75);
 

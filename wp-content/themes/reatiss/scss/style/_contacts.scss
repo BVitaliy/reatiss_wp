@@ -12,9 +12,13 @@
     display: flex;
     align-items: flex-start;
     gap: rem(12);
-    font-size: max(15px, #{rem(16)});
+    font-size: max(16px, #{rem(18)}); // content text 18 (as .text-md)
     line-height: 1.55;
     color: var(--clr-text);
+
+    @include maxMedia(md) {
+      font-size: rem(16);
+    }
   }
 
   // 20px icon box, centred on the first 25px text line
