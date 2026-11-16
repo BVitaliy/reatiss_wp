@@ -17,9 +17,42 @@
 
   &__dots,
   &__bg,
+  &__scene,
   &__stage,
   &__track {
     grid-area: 1 / 1;
+  }
+
+  // 3D teardown (≥1200, app-solutions-3d.js): its own sticky layer, no
+  // blend (the dark metal would sink into the section). Shown once the
+  // model is in and only on the dark page — on the white one (page theme
+  // still switching) it would stand out as a dark object.
+  &__scene {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100svh;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &.is-ready &__scene {
+    opacity: 1;
+  }
+
+  :root.has-page-theme:not(.is-page-dark) &.is-ready &__scene {
+    opacity: 0;
+  }
+
+  &.is-3d &__bg {
+    display: none;
   }
 
   // under the clips: the lighten blend of __bg lets the dots through the
@@ -195,6 +228,7 @@
     &__track,
     &__leads,
     &__dots,
+    &__scene,
     &__video--reveal {
       display: none;
     }

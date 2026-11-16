@@ -122,6 +122,8 @@ export const updateJS = () => {
       "node_modules/lightgallery/plugins/thumbnail/lg-thumbnail.min.js",
       "node_modules/lightgallery/plugins/zoom/lg-zoom.min.js",
       "node_modules/@google/model-viewer/dist/model-viewer.min.js", // ES module, loaded on demand (app-model.js)
+      "node_modules/three/build/three.module.min.js", // ES module (+ core below), loaded on demand (app-solutions-3d.js)
+      "node_modules/three/build/three.core.min.js",
     ])
     .pipe(gulp.dest("js/vendors/"));
 };

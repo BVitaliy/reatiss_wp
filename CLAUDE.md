@@ -62,6 +62,13 @@ logs/             — custom logs (rts_log()), gitignored
   Settings → Forms `mail_logo`, else `img/logo-email.png`. WP HTML Mail's template is off for CF7.
 - `js/app-header.js`: the demo search code (results toggle on typing, `submit` blocked) is
   removed — live results and the real submit are `js/app-search.js`.
+- Solutions block 3D teardown (markup a5081a4): `js/app-solutions-3d.js` (ES module, three.js r183 from
+  `js/vendors/three.module.min.js` + `three.core.min.js`, textures `img/home/solutions-3d/`) is imported by
+  `app-solutions.js` ≥1200 with WebGL2; URL + version in the section's `data-scene`, `imgBase` =
+  `window.reatissThemeUrl`. Per item ACF «3D layer» → `data-layer` (pkg-top | pkg-inner | pkg-bottom |
+  pkg-lid | die-1…4). No WebGL → the video scene; <1200 → the looping clip. QA: `?solp=0..1`
+  (headless: suppress the promo popup via sessionStorage `reatiss-promo-service` / `reatiss-toast-closed`).
+  Keep `app-solutions*.js` and `home/_solutions.scss` in step with the markup (only `data-zoom` is WP's).
 - `js/app-solutions.js`: reads optional `data-zoom` (`[[in, out], …]` seconds of the layers clip,
   one pair per item) from the section — the block's videos and zoom timings are editable; empty
   = the theme's `video/chip1|2.mp4` and the measured `ZOOM`.

@@ -554,7 +554,7 @@
                             "wrapper": {
                                 "width": "100"
                             },
-                            "message": "On desktop the scroll plays two videos: “Video 1” opens the chip into layers, “Video 2” zooms to each layer and back. Each item below is one zoom: set the second of Video 2 where its zoom-in ends and where the zoom-out ends (open the video in a player and note the time). Empty videos / timings — the theme’s own chip videos and their timings. Encode both as H.264 MP4 without audio, all-intra (ffmpeg -g 1), black background; the last frame of Video 1 must equal the first frame of Video 2.",
+                            "message": "On desktop (≥1200 px, WebGL) the block is a 3D scene: a laptop is taken apart down to the processor, the package layers spread on the left and the die layers on the right, and each item stands by the layer chosen in “3D layer”. Without WebGL — and as the source for timings below — the scroll plays two videos: “Video 1” opens the chip into layers, “Video 2” zooms to each layer and back. Each item below is one zoom: set the second of Video 2 where its zoom-in ends and where the zoom-out ends (open the video in a player and note the time). Empty videos / timings — the theme’s own chip videos and their timings. Encode both as H.264 MP4 without audio, all-intra (ffmpeg -g 1), black background; the last frame of Video 1 must equal the first frame of Video 2. Below 1200 px the layers video loops under a plain list.",
                             "key": "field_9aaccb239f2353b8"
                         },
                         {
@@ -706,6 +706,30 @@
                                     "min": 0,
                                     "instructions": "Second where the zoom back out ends.",
                                     "key": "field_9d5d5177d29137a3"
+                                },
+                                {
+                                    "type": "select",
+                                    "name": "layer",
+                                    "label": "3D layer",
+                                    "wrapper": {
+                                        "width": "60"
+                                    },
+                                    "instructions": "Desktop 3D scene: the layer this item’s line points at. Package layers are on the left, die layers on the right — set “Side” to match. Empty — the next layer in order.",
+                                    "choices": {
+                                        "pkg-top": "Package · top layer",
+                                        "pkg-inner": "Package · inner (metal) layer",
+                                        "pkg-bottom": "Package · bottom layer (pads)",
+                                        "pkg-lid": "Package · lid",
+                                        "die-1": "Die · 1: aluminium under a thin dielectric",
+                                        "die-2": "Die · 2: copper with a thin dielectric",
+                                        "die-3": "Die · 3: silicon with gates",
+                                        "die-4": "Die · 4: silicon"
+                                    },
+                                    "allow_null": 1,
+                                    "ui": 0,
+                                    "return_format": "value",
+                                    "default_value": "",
+                                    "key": "field_d3ca07665a54b824"
                                 }
                             ],
                             "key": "field_920abab497a2985d"

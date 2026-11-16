@@ -1,5 +1,5 @@
 /* global gsap, ScrollTrigger */
-// Home — Advanced Engineering Solutions (template-parts/home-solutions.php).
+// Home — Advanced Engineering Solutions (template-parts/blocks/solutions.php).
 // Scroll scene from Oleg's prototype (https://reatiss.vercel.app/, scroll
 // variant), on the site's Lenis + ScrollTrigger (app-global.js):
 //   sticky screen (CSS) → scroll drives video.currentTime:
@@ -66,6 +66,7 @@
     { to: 7.4, w: 1, item: 3, aim: { x: 0.22, y: 0.78 } },
     { to: 8.38, w: 0.7 },
   ];
+
   // WP: the block can set its own timings — data-zoom = [[in, out], …] in
   // seconds of the layers clip, one pair per item (template-parts/blocks/solutions.php).
   try {
@@ -78,7 +79,6 @@
       });
     }
   } catch (e) {} // malformed — keep the measured timings
-
   var TOTAL = ZOOM.reduce(function (sum, seg) { return sum + seg.w; }, 0);
 
   // scroll px the sticky scene lives
@@ -93,191 +93,262 @@
 
   var blobbed = false;
 
-  ScrollTrigger.matchMedia({
-    "(min-width: 1200px)": function () {
-      var triggers = [];
-      var timelines = [];
-      var leads = [];
-      var pin = section.querySelector(".home-solutions__bg");
+  // ≥1200 without WebGL (or when the 3D module fails): the video scene
+  function videoScene() {
+    var triggers = [];
+    var timelines = [];
+    var leads = [];
+    var pin = section.querySelector(".home-solutions__bg");
 
-      // whole files in memory (blob): every seek is instant, no range requests
-      triggers.push(ScrollTrigger.create({
-        trigger: section,
-        start: "top 200%",
-        once: true,
-        onEnter: function () {
-          if (blobbed) return;
-          blobbed = true;
-          [reveal, layers].forEach(function (v) {
-            v.preload = "auto";
-            fetch(v.currentSrc || v.querySelector("source").src)
-              .then(function (r) { return r.blob(); })
-              .then(function (blob) {
-                var t = v.currentTime;
-                v.src = URL.createObjectURL(blob);
-                v.currentTime = t + 0.01;
-              })
-              .catch(function () {}); // keep streaming from the network
-          });
-        },
-      }));
-
-      function afterReveal() {
-        return "top top-=" + range() * PHASE.reveal;
-      }
-
-      // phase 1: steady, easing out on the last frames (speeds match at the
-      // joint of the two tweens: 75% of frames over 60% of the scroll)
-      whenMeta(reveal, function () {
-        var d = reveal.duration || 1;
-        var tl = gsap.timeline({
-          scrollTrigger: { trigger: pin, start: "top top", end: function () { return "+=" + range() * PHASE.reveal; }, scrub: 1, invalidateOnRefresh: true },
+    // whole files in memory (blob): every seek is instant, no range requests
+    triggers.push(ScrollTrigger.create({
+      trigger: section,
+      start: "top 200%",
+      once: true,
+      onEnter: function () {
+        if (blobbed) return;
+        blobbed = true;
+        [reveal, layers].forEach(function (v) {
+          v.preload = "auto";
+          fetch(v.currentSrc || v.querySelector("source").src)
+            .then(function (r) { return r.blob(); })
+            .then(function (blob) {
+              var t = v.currentTime;
+              v.src = URL.createObjectURL(blob);
+              v.currentTime = t + 0.01;
+            })
+            .catch(function () {}); // keep streaming from the network
         });
-        tl.fromTo(reveal, { currentTime: 0 }, { currentTime: d * 0.75, ease: "none", duration: 0.6 })
-          .to(reveal, { currentTime: d, ease: "power2.out", duration: 0.4 });
-        timelines.push(tl);
-      });
+      },
+    }));
 
-      // clip swap at the joint — till the end of the scene, or the reveal
-      // clip would come back on the tail
+    function afterReveal() {
+      return "top top-=" + range() * PHASE.reveal;
+    }
+
+    // phase 1: steady, easing out on the last frames (speeds match at the
+    // joint of the two tweens: 75% of frames over 60% of the scroll)
+    whenMeta(reveal, function () {
+      var d = reveal.duration || 1;
+      var tl = gsap.timeline({
+        scrollTrigger: { trigger: pin, start: "top top", end: function () { return "+=" + range() * PHASE.reveal; }, scrub: 1, invalidateOnRefresh: true },
+      });
+      tl.fromTo(reveal, { currentTime: 0 }, { currentTime: d * 0.75, ease: "none", duration: 0.6 })
+        .to(reveal, { currentTime: d, ease: "power2.out", duration: 0.4 });
+      timelines.push(tl);
+    });
+
+    // clip swap at the joint — till the end of the scene, or the reveal
+    // clip would come back on the tail
+    triggers.push(ScrollTrigger.create({
+      trigger: pin,
+      start: afterReveal,
+      end: function () { return "+=" + range(); },
+      invalidateOnRefresh: true,
+      onToggle: function (self) {
+        gsap.set(layers, { opacity: self.isActive ? 1 : 0 });
+        gsap.set(reveal, { opacity: self.isActive ? 0 : 1 });
+      },
+    }));
+
+    // phase 2: frames only, linear (the render already has camera easing)
+    whenMeta(layers, function () {
+      var tl = gsap.timeline({
+        scrollTrigger: { trigger: pin, start: afterReveal, end: function () { return "+=" + range() * PHASE.layers; }, scrub: 1, invalidateOnRefresh: true },
+      });
+      var pos = 0;
+      ZOOM.forEach(function (seg, i) {
+        tl.fromTo(layers,
+          { currentTime: i === 0 ? 0 : ZOOM[i - 1].to },
+          { currentTime: seg.to, ease: "none", duration: seg.w, immediateRender: i === 0 },
+          pos);
+        pos += seg.w;
+      });
+      timelines.push(tl);
+      drawLeads();
+    });
+
+    // a service lives from the middle of its zoom-in to the middle of the
+    // next zoom-out; the class toggles, CSS draws the fade
+    function at(weight) {
+      return range() * (PHASE.reveal + (PHASE.layers * weight) / TOTAL);
+    }
+
+    var cursor = 0;
+    ZOOM.forEach(function (seg, i) {
+      var from = cursor;
+      cursor += seg.w;
+      if (seg.item === undefined || !items[seg.item]) return;
+
+      var item = items[seg.item];
+      // lead target from the markup (data-aim="x,y"), mockup default otherwise
+      var aimAttr = (item.getAttribute("data-aim") || "").split(",");
+      var aim = aimAttr.length === 2 && !isNaN(parseFloat(aimAttr[0])) ? { x: parseFloat(aimAttr[0]), y: parseFloat(aimAttr[1]) } : seg.aim;
+      var lead = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+      lead.setAttribute("class", "home-solutions__lead");
+      lead.setAttribute("vector-effect", "non-scaling-stroke");
+      svg.appendChild(lead);
+      leads.push({ item: item, lead: lead, aim: aim });
+
+      var out = ZOOM[i + 1];
+      var last = seg.item === items.length - 1;
+
       triggers.push(ScrollTrigger.create({
         trigger: pin,
-        start: afterReveal,
-        end: function () { return "+=" + range(); },
+        start: function () { return "top top-=" + at(from + seg.w * 0.5); },
+        end: function () {
+          return last ? "top top-=" + range() * (PHASE.reveal + PHASE.layers) : "top top-=" + at(from + seg.w + out.w * 0.5);
+        },
         invalidateOnRefresh: true,
         onToggle: function (self) {
-          gsap.set(layers, { opacity: self.isActive ? 1 : 0 });
-          gsap.set(reveal, { opacity: self.isActive ? 0 : 1 });
+          item.classList.toggle("is-active", self.isActive);
+          lead.classList.toggle("is-active", self.isActive);
         },
       }));
+    });
 
-      // phase 2: frames only, linear (the render already has camera easing)
-      whenMeta(layers, function () {
-        var tl = gsap.timeline({
-          scrollTrigger: { trigger: pin, start: afterReveal, end: function () { return "+=" + range() * PHASE.layers; }, scrub: 1, invalidateOnRefresh: true },
-        });
-        var pos = 0;
-        ZOOM.forEach(function (seg, i) {
-          tl.fromTo(layers,
-            { currentTime: i === 0 ? 0 : ZOOM[i - 1].to },
-            { currentTime: seg.to, ease: "none", duration: seg.w, immediateRender: i === 0 },
-            pos);
-          pos += seg.w;
-        });
-        timelines.push(tl);
-        drawLeads();
+    // keep every service block inside the screen: its preferred top
+    // (--sol-top) clamped between the header and the bottom edge — longer
+    // CMS text or a low window must not push it out of the pinned scene
+    function placeItems() {
+      var h = stage.clientHeight;
+      var title = section.querySelector(".home-solutions__title");
+      // the fixed header stays over the pinned scene
+      var headerH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-h")) || 0;
+      var minTop = headerH + 20;
+      // left blocks share the side with the title — stay below it
+      var minLeft = Math.max(minTop, title.offsetTop + title.offsetHeight + 24);
+      Array.prototype.forEach.call(items, function (item) {
+        item.style.top = "";
+        item.classList.remove("is-compact");
+        var min = item.classList.contains("home-solutions__item--left") ? minLeft : minTop;
+        // still too tall (low window + long text): drop the decorative art
+        if (item.offsetHeight > h - 24 - min) item.classList.add("is-compact");
+        var want = item.offsetTop; // from --sol-top
+        var maxTop = h - item.offsetHeight - 24;
+        item.style.top = Math.max(min, Math.min(want, maxTop)) + "px";
       });
+    }
 
-      // a service lives from the middle of its zoom-in to the middle of the
-      // next zoom-out; the class toggles, CSS draws the fade
-      function at(weight) {
-        return range() * (PHASE.reveal + (PHASE.layers * weight) / TOTAL);
-      }
+    // lead: horizontal from the number, a step, horizontal into the layer —
+    // from the real frame box, so it hits the layer at any width
+    function drawLeads() {
+      placeItems();
+      var box = svg.getBoundingClientRect();
+      var frame = layers.getBoundingClientRect();
+      if (!frame.width || !box.width) return;
+      svg.setAttribute("width", box.width);
+      svg.setAttribute("height", box.height);
 
-      var cursor = 0;
-      ZOOM.forEach(function (seg, i) {
-        var from = cursor;
-        cursor += seg.w;
-        if (seg.item === undefined || !items[seg.item]) return;
-
-        var item = items[seg.item];
-        // lead target from the markup (data-aim="x,y"), mockup default otherwise
-        var aimAttr = (item.getAttribute("data-aim") || "").split(",");
-        var aim = aimAttr.length === 2 && !isNaN(parseFloat(aimAttr[0])) ? { x: parseFloat(aimAttr[0]), y: parseFloat(aimAttr[1]) } : seg.aim;
-        var lead = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-        lead.setAttribute("class", "home-solutions__lead");
-        lead.setAttribute("vector-effect", "non-scaling-stroke");
-        svg.appendChild(lead);
-        leads.push({ item: item, lead: lead, aim: aim });
-
-        var out = ZOOM[i + 1];
-        var last = seg.item === items.length - 1;
-
-        triggers.push(ScrollTrigger.create({
-          trigger: pin,
-          start: function () { return "top top-=" + at(from + seg.w * 0.5); },
-          end: function () {
-            return last ? "top top-=" + range() * (PHASE.reveal + PHASE.layers) : "top top-=" + at(from + seg.w + out.w * 0.5);
-          },
-          invalidateOnRefresh: true,
-          onToggle: function (self) {
-            item.classList.toggle("is-active", self.isActive);
-            lead.classList.toggle("is-active", self.isActive);
-          },
-        }));
+      leads.forEach(function (l) {
+        var num = l.item.querySelector(".home-solutions__num");
+        var x1 = frame.left + frame.width * l.aim.x - box.left;
+        var y1 = frame.top + frame.height * l.aim.y - box.top;
+        // offsets, not rects: independent of the fade transforms
+        var nx = l.item.offsetLeft + num.offsetLeft;
+        var ny = l.item.offsetTop + num.offsetTop;
+        // start on the side facing the target, not across the pill
+        var x0 = x1 > nx + num.offsetWidth / 2 ? nx + num.offsetWidth : nx;
+        var y0 = ny + num.offsetHeight / 2;
+        var dx = x1 - x0;
+        l.lead.setAttribute("points", x0 + "," + y0 + " " + (x0 + dx * 0.42) + "," + y0 + " " + (x0 + dx * 0.72) + "," + y1 + " " + x1 + "," + y1);
       });
+    }
 
-      // keep every service block inside the screen: its preferred top
-      // (--sol-top) clamped between the header and the bottom edge — longer
-      // CMS text or a low window must not push it out of the pinned scene
-      function placeItems() {
-        var h = stage.clientHeight;
-        var title = section.querySelector(".home-solutions__title");
-        // the fixed header stays over the pinned scene
-        var headerH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-h")) || 0;
-        var minTop = headerH + 20;
-        // left blocks share the side with the title — stay below it
-        var minLeft = Math.max(minTop, title.offsetTop + title.offsetHeight + 24);
-        Array.prototype.forEach.call(items, function (item) {
-          item.style.top = "";
-          item.classList.remove("is-compact");
-          var min = item.classList.contains("home-solutions__item--left") ? minLeft : minTop;
-          // still too tall (low window + long text): drop the decorative art
-          if (item.offsetHeight > h - 24 - min) item.classList.add("is-compact");
-          var want = item.offsetTop; // from --sol-top
-          var maxTop = h - item.offsetHeight - 24;
-          item.style.top = Math.max(min, Math.min(want, maxTop)) + "px";
-        });
-      }
+    drawLeads();
+    // heights change once the illustrations arrive
+    Array.prototype.forEach.call(section.querySelectorAll(".home-solutions__art img"), function (img) {
+      if (!img.complete) img.addEventListener("load", drawLeads, { once: true });
+    });
+    ScrollTrigger.addEventListener("refresh", drawLeads);
+    window.addEventListener("resize", drawLeads);
 
-      // lead: horizontal from the number, a step, horizontal into the layer —
-      // from the real frame box, so it hits the layer at any width
-      function drawLeads() {
-        placeItems();
-        var box = svg.getBoundingClientRect();
-        var frame = layers.getBoundingClientRect();
-        if (!frame.width || !box.width) return;
-        svg.setAttribute("width", box.width);
-        svg.setAttribute("height", box.height);
-
-        leads.forEach(function (l) {
-          var num = l.item.querySelector(".home-solutions__num");
-          var x1 = frame.left + frame.width * l.aim.x - box.left;
-          var y1 = frame.top + frame.height * l.aim.y - box.top;
-          // offsets, not rects: independent of the fade transforms
-          var nx = l.item.offsetLeft + num.offsetLeft;
-          var ny = l.item.offsetTop + num.offsetTop;
-          // start on the side facing the target, not across the pill
-          var x0 = x1 > nx + num.offsetWidth / 2 ? nx + num.offsetWidth : nx;
-          var y0 = ny + num.offsetHeight / 2;
-          var dx = x1 - x0;
-          l.lead.setAttribute("points", x0 + "," + y0 + " " + (x0 + dx * 0.42) + "," + y0 + " " + (x0 + dx * 0.72) + "," + y1 + " " + x1 + "," + y1);
-        });
-      }
-
-      drawLeads();
-      // heights change once the illustrations arrive
-      Array.prototype.forEach.call(section.querySelectorAll(".home-solutions__art img"), function (img) {
-        if (!img.complete) img.addEventListener("load", drawLeads, { once: true });
+    return function () {
+      ScrollTrigger.removeEventListener("refresh", drawLeads);
+      window.removeEventListener("resize", drawLeads);
+      triggers.forEach(function (t) { t.kill(); });
+      timelines.forEach(function (tl) {
+        if (tl.scrollTrigger) tl.scrollTrigger.kill();
+        tl.kill();
       });
-      ScrollTrigger.addEventListener("refresh", drawLeads);
-      window.addEventListener("resize", drawLeads);
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      Array.prototype.forEach.call(items, function (item) {
+        item.classList.remove("is-active", "is-compact");
+        item.style.top = "";
+      });
+      gsap.set([reveal, layers], { clearProps: "all" }); // the flow layout takes its own
+    };
+  }
 
-      return function () {
-        ScrollTrigger.removeEventListener("refresh", drawLeads);
-        window.removeEventListener("resize", drawLeads);
-        triggers.forEach(function (t) { t.kill(); });
-        timelines.forEach(function (tl) {
-          if (tl.scrollTrigger) tl.scrollTrigger.kill();
-          tl.kill();
+  // ≥1200: the 3D teardown (app-solutions-3d.js — three.js, ES module) is
+  // fetched when the section is three screens away; the videos stay for
+  // smaller screens and as the fallback. QA: ?solp=0..1 jumps the scroll
+  // to that point of the scene (no smoothing).
+  // module URL (+ its own version) from the section, else next to this file
+  var me = document.currentScript;
+  var SCENE_URL = section.getAttribute("data-scene") || (me && me.src ? me.src.replace(/app-solutions\.js(\?.*)?$/, "app-solutions-3d.js") : "js/app-solutions-3d.js");
+  // import() in a classic script resolves against the script, not the page
+  SCENE_URL = new URL(SCENE_URL, document.baseURI).href;
+  var debugMatch = /[?&]solp=([\d.]+)/.exec(location.search);
+  var debugProgress = debugMatch ? Math.min(1, Math.max(0, parseFloat(debugMatch[1]))) : null;
+
+  function webgl() {
+    try {
+      var c = document.createElement("canvas");
+      return !!(window.WebGL2RenderingContext && c.getContext("webgl2"));
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function scene3d() {
+    var destroy = null;
+    var fallback = null;
+    var dead = false;
+    section.classList.add("is-3d");
+
+    function start() {
+      import(SCENE_URL)
+        .then(function (mod) {
+          if (dead) return;
+          destroy = mod.mount(section, { gsap: gsap, ScrollTrigger: ScrollTrigger, debugProgress: debugProgress, imgBase: window.reatissThemeUrl || "" });
+          if (debugProgress !== null) {
+            var y = section.getBoundingClientRect().top + window.scrollY + range() * debugProgress;
+            if (window.lenis) window.lenis.scrollTo(y, { immediate: true, force: true });
+            else window.scrollTo(0, y);
+          }
+        })
+        .catch(function (err) {
+          if (dead) return;
+          if (window.console) console.warn("Solutions 3D scene failed, video fallback:", err);
+          section.classList.remove("is-3d");
+          fallback = videoScene();
         });
-        while (svg.firstChild) svg.removeChild(svg.firstChild);
-        Array.prototype.forEach.call(items, function (item) {
-          item.classList.remove("is-active", "is-compact");
-          item.style.top = "";
-        });
-        gsap.set([reveal, layers], { clearProps: "all" }); // the flow layout takes its own
-      };
+    }
+
+    var near = ScrollTrigger.create({
+      trigger: section,
+      start: "top 300%",
+      once: true,
+      onEnter: start,
+    });
+    if (debugProgress !== null && !near.isActive) {
+      near.kill();
+      start();
+    }
+
+    return function () {
+      dead = true;
+      near.kill();
+      section.classList.remove("is-3d");
+      if (destroy) destroy();
+      if (fallback) fallback();
+    };
+  }
+
+  ScrollTrigger.matchMedia({
+    "(min-width: 1200px)": function () {
+      return webgl() ? scene3d() : videoScene();
     },
 
     "(max-width: 1199px)": function () {
