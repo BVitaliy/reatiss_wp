@@ -65,10 +65,19 @@ logs/             — custom logs (rts_log()), gitignored
 - Solutions block 3D teardown (markup a5081a4): `js/app-solutions-3d.js` (ES module, three.js r183 from
   `js/vendors/three.module.min.js` + `three.core.min.js`, textures `img/home/solutions-3d/`) is imported by
   `app-solutions.js` ≥1200 with WebGL2; URL + version in the section's `data-scene`, `imgBase` =
-  `window.reatissThemeUrl`. Per item ACF «3D layer» → `data-layer` (pkg-top | pkg-inner | pkg-bottom |
-  pkg-lid | die-1…4). No WebGL → the video scene; <1200 → the looping clip. QA: `?solp=0..1`
+  `window.reatissThemeUrl`. Client edits (Nov 16): the package
+  flips once and stays pads-up (no flip back), LGA pads stay on the board, package layers = the client's
+  photos `package-1…4.webp` (pins + SMD, metal, metal, lid), die-2 tinted copper; items = blue dot · title ·
+  1–2 lines · text link, no lines to the layers (two columns by the model: left under the title, right by
+  the die; low screens: text to one line, then title + link only), block CTA (`cta_text` + `cta_btn`) under
+  the scene; the final shot keeps between the header and the CTA. No WebGL → the video scene; <1200 → `video/solutions-mobile.mp4` (or the
+  block's «Mobile video»): a square loop rendered from the 3D scene — `?solrender` = the model alone, centred;
+  capture frames over progress 0→1 headless (1080², SwiftShader) and encode H.264 (fade in/out, end hold),
+  poster `img/home/solutions-3d/mobile-poster.webp`. **Re-render it after scene changes.** The block's Nov 16
+  content reaches a server via `RTS_Solutions_Migration` (functions/solutions.php, once — v2: into the
+  untouched 4-item seed or its own v1, never into a block edited by hand). QA: `?solp=0..1`
   (headless: suppress the promo popup via sessionStorage `reatiss-promo-service` / `reatiss-toast-closed`).
-  Keep `app-solutions*.js` and `home/_solutions.scss` in step with the markup (only `data-zoom` is WP's).
+  Since Nov 16 the block is edited in WP only (the markup is no longer the source for it).
 - `js/app-solutions.js`: reads optional `data-zoom` (`[[in, out], …]` seconds of the layers clip,
   one pair per item) from the section — the block's videos and zoom timings are editable; empty
   = the theme's `video/chip1|2.mp4` and the measured `ZOOM`.
@@ -78,6 +87,7 @@ logs/             — custom logs (rts_log()), gitignored
 - Consent checkbox (client, not in the markup): CF7 `[acceptance]` inside `div.field-check field--full`,
   form setting `acceptance_as_validation: on`; unticked → not sent, red + nudge (`app-cf7.js`). Link the
   text to `#privacy-policy` — `RTS_Forms::privacy_link()` swaps in the Privacy Policy page URL.
+  `RTS_Consent_Migration` (forms.php, once) adds it to every `[rts_submit]` form lacking it on a server.
 - Header (client): on scroll a dark full-width translucent bar (`.header::before`, headings' colour),
   not the markup's white bar; `header--light` stays white only at the top of inner pages.
 - Title reveal = words rise in (`app-titles.js`); the markup's 0/1 "decode" is gone (titles + statement).

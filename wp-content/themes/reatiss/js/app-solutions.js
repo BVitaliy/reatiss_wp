@@ -17,6 +17,8 @@
 
   var reveal = section.querySelector(".js-solutions-reveal");
   var layers = section.querySelector(".js-solutions-layers");
+  // WP: below 1200 the square clip rendered from the 3D scene, if the block has it
+  var mobile = section.querySelector(".js-solutions-mobile") || layers;
   var items = section.querySelectorAll(".js-solutions-item");
   var stage = section.querySelector(".js-solutions-stage");
   var svg = section.querySelector(".js-solutions-leads");
@@ -45,7 +47,7 @@
   }
 
   if (!hasGsap || reduceMotion) {
-    loopInView(layers);
+    loopInView(window.innerWidth < 1200 ? mobile : layers);
     return;
   }
 
@@ -203,6 +205,9 @@
         onToggle: function (self) {
           item.classList.toggle("is-active", self.isActive);
           lead.classList.toggle("is-active", self.isActive);
+          // WP: the block's CTA comes with the last service
+          var cta = last && section.querySelector(".js-solutions-cta");
+          if (cta) cta.classList.toggle("is-active", self.isActive);
         },
       }));
     });
@@ -247,8 +252,10 @@
         // offsets, not rects: independent of the fade transforms
         var nx = l.item.offsetLeft + num.offsetLeft;
         var ny = l.item.offsetTop + num.offsetTop;
-        // start on the side facing the target, not across the pill
-        var x0 = x1 > nx + num.offsetWidth / 2 ? nx + num.offsetWidth : nx;
+        // start on the side facing the target, not across the pill; WP: the
+        // dot sits on the title's line — heading across, start after the title
+        var head = l.item.querySelector(".home-solutions__item-title");
+        var x0 = x1 > nx + num.offsetWidth / 2 ? Math.max(nx + num.offsetWidth, head ? l.item.offsetLeft + head.offsetLeft + head.offsetWidth + 14 : 0) : nx;
         var y0 = ny + num.offsetHeight / 2;
         var dx = x1 - x0;
         l.lead.setAttribute("points", x0 + "," + y0 + " " + (x0 + dx * 0.42) + "," + y0 + " " + (x0 + dx * 0.72) + "," + y1 + " " + x1 + "," + y1);
@@ -291,6 +298,8 @@
   SCENE_URL = new URL(SCENE_URL, document.baseURI).href;
   var debugMatch = /[?&]solp=([\d.]+)/.exec(location.search);
   var debugProgress = debugMatch ? Math.min(1, Math.max(0, parseFloat(debugMatch[1]))) : null;
+  // WP: ?solrender — the model alone, centred (frames for the mobile video)
+  var bare = /[?&]solrender\b/.test(location.search);
 
   function webgl() {
     try {
@@ -311,7 +320,7 @@
       import(SCENE_URL)
         .then(function (mod) {
           if (dead) return;
-          destroy = mod.mount(section, { gsap: gsap, ScrollTrigger: ScrollTrigger, debugProgress: debugProgress, imgBase: window.reatissThemeUrl || "" });
+          destroy = mod.mount(section, { gsap: gsap, ScrollTrigger: ScrollTrigger, debugProgress: debugProgress, imgBase: window.reatissThemeUrl || "", bare: bare });
           if (debugProgress !== null) {
             var y = section.getBoundingClientRect().top + window.scrollY + range() * debugProgress;
             if (window.lenis) window.lenis.scrollTo(y, { immediate: true, force: true });
@@ -352,7 +361,7 @@
     },
 
     "(max-width: 1199px)": function () {
-      return loopInView(layers);
+      return loopInView(mobile);
     },
   });
 })();

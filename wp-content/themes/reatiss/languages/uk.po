@@ -896,8 +896,6 @@ msgstr "Навіщо"
 msgid "What to show"
 msgstr "Що показувати"
 
-msgid "Where the line from the number points: fractions of the video frame, 0,0 — top left, 1,1 — bottom right."
-msgstr "Куди веде лінія від номера: частки кадру відео, 0,0 — лівий верх, 1,1 — правий низ."
 
 msgid "Width, px"
 msgstr "Ширина, px"
@@ -1073,8 +1071,8 @@ msgstr "Назва мережі"
 msgid "A network without a link is not shown; with none, the “Social Media” block is hidden. For a network missing from the list pick “Custom icon” and upload it."
 msgstr "Соцмережа без посилання не виводиться; без жодної — блок «Social Media» прихований. Для мережі, якої немає у списку, оберіть «Своя іконка» і завантажте її."
 
-msgid "On desktop (≥1200 px, WebGL) the block is a 3D scene: a laptop is taken apart down to the processor, the package layers spread on the left and the die layers on the right, and each item stands by the layer chosen in “3D layer”. Without WebGL — and as the source for timings below — the scroll plays two videos: “Video 1” opens the chip into layers, “Video 2” zooms to each layer and back. Each item below is one zoom: set the second of Video 2 where its zoom-in ends and where the zoom-out ends (open the video in a player and note the time). Empty videos / timings — the theme’s own chip videos and their timings. Encode both as H.264 MP4 without audio, all-intra (ffmpeg -g 1), black background; the last frame of Video 1 must equal the first frame of Video 2. Below 1200 px the layers video loops under a plain list."
-msgstr "На десктопі (≥1200 px, WebGL) блок — 3D-сцена: ноутбук розбирається до процесора, шари корпусу розходяться ліворуч, шари кристала — праворуч, і кожен пункт стає біля шару, вибраного в «3D-шар». Без WebGL — і як основа для таймінгів нижче — скрол програє два відео: «Відео 1» розкриває чип на шари, «Відео 2» наближає кожен шар і віддаляє. Кожен пункт нижче — одне наближення: вкажіть секунду Відео 2, де закінчується наближення до цього шару і де закінчується віддалення (відкрийте відео в плеєрі й подивіться час). Порожні відео / таймінги — власні відео чипа теми та їхні таймінги. Кодуйте обидва як H.264 MP4 без звуку, all-intra (ffmpeg -g 1), чорний фон; останній кадр Відео 1 має збігатися з першим кадром Відео 2. Менше 1200 px відео шарів крутиться по колу під звичайним списком."
+msgid "On desktop (≥1200 px, WebGL) the block is a 3D scene: a laptop is taken apart down to the processor, the package layers spread on the left and the die layers on the right, and the items stand in two columns by it (left — under the title). Without WebGL — and as the source for timings below — the scroll plays two videos: “Video 1” opens the chip into layers, “Video 2” zooms to each layer and back. Each item below is one zoom: set the second of Video 2 where its zoom-in ends and where the zoom-out ends (open the video in a player and note the time). Empty videos / timings — the theme’s own chip videos and their timings. Encode both as H.264 MP4 without audio, all-intra (ffmpeg -g 1), black background; the last frame of Video 1 must equal the first frame of Video 2. Below 1200 px the layers video loops under a plain list."
+msgstr "На десктопі (≥1200 px, WebGL) блок — 3D-сцена: ноутбук розбирається до процесора, шари корпусу розходяться ліворуч, шари кристала — праворуч, а пункти стоять двома колонками обабіч (ліва — під заголовком). Без WebGL — і як основа для таймінгів нижче — скрол програє два відео: «Відео 1» розкриває чип на шари, «Відео 2» наближає кожен шар і віддаляє. Кожен пункт нижче — одне наближення: вкажіть секунду Відео 2, де закінчується наближення до цього шару і де закінчується віддалення (відкрийте відео в плеєрі й подивіться час). Порожні відео / таймінги — власні відео чипа теми та їхні таймінги. Кодуйте обидва як H.264 MP4 без звуку, all-intra (ffmpeg -g 1), чорний фон; останній кадр Відео 1 має збігатися з першим кадром Відео 2. Менше 1200 px відео шарів крутиться по колу під звичайним списком."
 
 msgid "Video 1 — chip opens"
 msgstr "Відео 1 — чип розкривається"
@@ -1244,32 +1242,50 @@ msgstr "Коли клікають по рядку звіту: цей рядок,
 msgid "When the popup is opened without a report (e.g. a link to #reports)."
 msgstr "Коли попап відкрито не зі звіту (напр. посилання на #reports)."
 
-msgid "3D layer"
-msgstr "3D-шар"
 
-msgid "Desktop 3D scene: the layer this item’s line points at. Package layers are on the left, die layers on the right — set “Side” to match. Empty — the next layer in order."
-msgstr "3D-сцена на десктопі: шар, на який веде лінія від цього пункту. Шари корпусу — ліворуч, шари кристала — праворуч: «Сторону» виберіть відповідно. Порожньо — наступний шар по порядку."
 
-msgid "Package · top layer"
-msgstr "Корпус · верхній шар"
 
-msgid "Package · inner (metal) layer"
-msgstr "Корпус · внутрішній (металевий) шар"
 
-msgid "Package · bottom layer (pads)"
-msgstr "Корпус · нижній шар (контакти)"
 
-msgid "Package · lid"
-msgstr "Корпус · кришка"
 
-msgid "Die · 1: aluminium under a thin dielectric"
-msgstr "Кристал · 1: алюміній під тонким шаром діелектрика"
 
-msgid "Die · 2: copper with a thin dielectric"
-msgstr "Кристал · 2: мідь з тонким шаром діелектрика"
 
-msgid "Die · 3: silicon with gates"
-msgstr "Кристал · 3: кремній із затворами"
 
-msgid "Die · 4: silicon"
-msgstr "Кристал · 4: кремній"
+
+
+
+
+
+
+msgid "1–2 lines (about 110 characters)."
+msgstr "1–2 рядки (близько 110 символів)."
+
+msgid "Text link under the description"
+msgstr "Текстове посилання під описом"
+
+msgid "A text link with an arrow, as on post cards."
+msgstr "Текстове посилання зі стрілкою, як на картках постів."
+
+msgid "Bottom CTA — text"
+msgstr "CTA внизу — текст"
+
+msgid "Bottom CTA — button"
+msgstr "CTA внизу — кнопка"
+
+msgid "Shown under the scene once the services are out (desktop) and after the list (mobile). Empty text and button — no CTA."
+msgstr "Показується під сценою, коли з’являються послуги (десктоп), і після списку (мобільний). Порожні текст і кнопка — CTA немає."
+
+msgid "Mobile video (below 1200 px)"
+msgstr "Мобільне відео (менше 1200 px)"
+
+msgid "MP4, square (1080×1080), H.264 without audio, loops under the title on phones and tablets. Empty — the theme video rendered from the desktop 3D scene."
+msgstr "MP4, квадратне (1080×1080), H.264 без звуку, крутиться по колу під заголовком на телефонах і планшетах. Порожньо — відео теми, відрендерене з десктопної 3D-сцени."
+
+msgid "Mobile video — poster"
+msgstr "Мобільне відео — постер"
+
+msgid "Shown until the video plays (and with reduced motion). Empty — the theme poster (only with the theme video)."
+msgstr "Показується, доки відео не запуститься (і при зменшеній анімації). Порожньо — постер теми (лише з відео теми)."
+
+msgid "Desktop: left = under the title (shows with the package layers), right = by the die layers. Put the longer list on the right."
+msgstr "Десктоп: ліворуч — під заголовком (з’являється разом із шарами корпусу), праворуч — біля шарів кристала. Довший список ставте праворуч."

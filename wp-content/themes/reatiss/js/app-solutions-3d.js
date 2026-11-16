@@ -7,23 +7,28 @@
 //   tips up on its back edge (body and screen stay) → the cooler comes off →
 //   the motherboard rises and slides out towards the camera, the body drops
 //   out of the frame → traces light up, camera to the CPU
-//   → the package lifts off the board and flips (pads up), back →
-//   the lid (IHS) comes off, the die rises out of its cavity →
-//   package layers spread on the left (lid hanging below), die layers on the
-//   right → the services stand next to their layers with lead lines.
+//   → the package lifts off the board (its contact pads stay on the board)
+//   and flips once, pads up — it stays that way (client: no flip back) →
+//   the lid (IHS, now underneath) comes off downwards, the die drops out of
+//   its cavity → package layers spread on the left, top to bottom: back side
+//   with pins + SMD, two metal layers, the lid; die layers on the right, top
+//   to bottom: aluminium, copper, silicon with gates, silicon → the services
+//   show in two columns by the model (no lines), a CTA under the scene.
 // The laptop, board and parts are built in code (no model to license or
 // download); the package and die layers wear the client's photos
-// (img/home/solutions-3d/). Services: .js-solutions-item, data-layer = the
-// layer the lead points at (pkg-top, pkg-inner, pkg-bottom, pkg-lid, die-1…4).
+// (img/home/solutions-3d/package-1…4, die-1…4). Services: .js-solutions-item
+// (--left: under the title, shows with the package layers; --right: with the
+// die layers).
 import * as THREE from "./vendors/three.module.min.js";
 
 const IMG = "img/home/solutions-3d/";
 
-export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgBase = "" }) {
+// bare (?solrender): no services, the model centred in the whole canvas —
+// used to render the frames of the mobile video (video/solutions-mobile.mp4)
+export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgBase = "", bare = false }) {
   const host = section.querySelector(".js-solutions-scene");
   const inner = section.querySelector(".home-solutions__inner");
   const title = section.querySelector(".home-solutions__title");
-  const svg = section.querySelector(".js-solutions-leads");
   const items = Array.from(section.querySelectorAll(".js-solutions-item"));
 
   const canvas = document.createElement("canvas");
@@ -782,76 +787,95 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
   const pkg = new THREE.Group(); // child of the board root: rides out with it
   pkg.position.set(CPU.x, 0.1 + 0.2, CPU.z);
   boardRoot.add(pkg);
-  const lidGroup = new THREE.Group();
-  const slabTop = new THREE.Group();
-  const slabInner = new THREE.Group();
-  const slabBottom = new THREE.Group();
+  // Local stack, lid side up as it sits on the board. The package flips once
+  // (rotation.x = -π) and stays pads-up, so on screen everything is upside
+  // down: world y = -local y, world z = -local z, and the face each part
+  // shows the camera is its local bottom. Layers numbered as the client
+  // lists them, top to bottom on screen:
+  //   pkg-1 back side with pins + SMD (the local bottom slab)
+  //   pkg-2, pkg-3 metal layers · pkg-4 stainless steel lid
+  //   die-1 aluminium · die-2 copper · die-3 silicon with gates · die-4 silicon
+  //   (die-1 faces the substrate, so it is the lowest locally)
+  const lidGroup = new THREE.Group(); // pkg-4
+  const slab1 = new THREE.Group(); // pkg-1: pins + SMD
+  const slab2 = new THREE.Group(); // pkg-2: metal
+  const slab3 = new THREE.Group(); // pkg-3: metal, die side
   const dieGroup = new THREE.Group();
   const dieLayers = [0, 1, 2, 3].map(() => new THREE.Group());
   dieLayers.forEach((l) => dieGroup.add(l));
-  pkg.add(slabBottom, slabInner, slabTop, dieGroup, lidGroup);
+  pkg.add(slab1, slab2, slab3, dieGroup, lidGroup);
 
   // closed stack heights (local y, centred for the flip)
-  const Y = { bottom: -0.2, inner: -0.14, top: -0.1, die: -0.04, lid: -0.04 };
-  slabBottom.position.y = Y.bottom;
-  slabInner.position.y = Y.inner;
-  slabTop.position.y = Y.top;
+  const Y = { s1: -0.2, s2: -0.14, s3: -0.1, die: -0.04, lid: -0.04 };
+  slab1.position.y = Y.s1;
+  slab2.position.y = Y.s2;
+  slab3.position.y = Y.s3;
   lidGroup.position.y = Y.lid;
   dieGroup.position.set(0, Y.die, DIE.z);
-  dieLayers.forEach((l, i) => (l.position.y = 0.036 - i * 0.012));
+  dieLayers.forEach((l, i) => (l.position.y = i * 0.012));
 
-  const anchors = {};
-  function anchor(name, parent, x, y, z) {
-    const a = new THREE.Object3D();
-    a.position.set(x, y, z);
-    parent.add(a);
-    anchors[name] = a;
+  // the CPU's landing on the board (client: the contact points stay on the
+  // board once the chip is off) — gold LGA pads in the package's pin
+  // pattern (package-1: a pin field round an empty centre), a solder-mask
+  // frame; under the package until it lifts, it drops away with the board
+  {
+    const N = 30;
+    const size = 1024;
+    const c = makeCanvas(size, size);
+    const x = c.getContext("2d");
+    x.fillStyle = "#0c1a15";
+    x.fillRect(0, 0, size, size);
+    x.strokeStyle = "rgba(210,225,215,.35)";
+    x.lineWidth = 6;
+    x.strokeRect(14, 14, size - 28, size - 28);
+    const pitch = (size - 96) / N;
+    for (let i = 0; i < N; i++) {
+      for (let j = 0; j < N; j++) {
+        if (i >= 10 && i < 20 && j >= 10 && j < 20) continue; // the SMD window
+        const px = 48 + (i + 0.5) * pitch;
+        const py = 48 + (j + 0.5) * pitch;
+        x.fillStyle = "#d9b25e";
+        x.beginPath();
+        x.arc(px, py, pitch * 0.3, 0, Math.PI * 2);
+        x.fill();
+        x.fillStyle = "rgba(255,240,200,.55)";
+        x.beginPath();
+        x.arc(px - pitch * 0.08, py - pitch * 0.08, pitch * 0.11, 0, Math.PI * 2);
+        x.fill();
+      }
+    }
+    const padsMat = new THREE.MeshStandardMaterial({ map: canvasTex(c), metalness: 0.55, roughness: 0.38 });
+    disposables.push(padsMat);
+    mesh(flat(rrShape(S, S, 0.1), S, S), padsMat, CPU.x, 0.1 + 0.004, CPU.z, boardDeck);
   }
-  anchor("pkg-top", slabTop, -S / 2, 0.06, S / 2);
-  anchor("pkg-inner", slabInner, -S / 2, 0.04, S / 2);
-  anchor("pkg-bottom", slabBottom, -S / 2, 0, -S / 2); // front-left once flipped pads-up
-  anchor("pkg-lid", lidGroup, -S * 0.43, 0.2, S * 0.43);
-  dieLayers.forEach((l, i) => anchor("die-" + (i + 1), l, DIE.w / 2, 0.012, DIE.d / 2));
 
   function buildPackage(tex) {
-    // substrate top: the photo with the die taken out (a dark cavity left)
-    const img = tex.open.image;
-    const c = makeCanvas(img.width, img.height);
-    const x = c.getContext("2d");
-    x.drawImage(img, 0, 0);
-    const dw = (DIE.w / S) * c.width;
-    const dh = (DIE.d / S) * c.height;
-    const dx = c.width / 2 - dw / 2;
-    const dy = c.height / 2 + (DIE.z / S) * c.height - dh / 2;
-    x.fillStyle = "#0a0b0c";
-    x.beginPath();
-    x.roundRect(dx - 8, dy - 8, dw + 16, dh + 16, 18);
-    x.fill();
-    x.strokeStyle = "rgba(200,170,90,.55)";
-    x.lineWidth = 4;
-    x.strokeRect(dx + 10, dy + 10, dw - 20, dh - 20);
-    const openTex = canvasTex(c);
-
     const photo = (map, extra = {}) => {
       const m = new THREE.MeshStandardMaterial({ map, roughness: 0.5, metalness: 0.15, ...extra });
       disposables.push(m);
       return m;
     };
+    // the camera sees the local bottom face after the flip: the planar UVs
+    // run the other way there, so the photo goes in upside down to read right
+    const FLIP = { x: 0, y: 1, w: 1, h: -1 };
 
-    mesh(rbox(S, 0.06, S, 0.12, 0.012), [photo(openTex), M.substrateEdge], 0, 0, 0, slabTop);
-    const routing = pcb({ w: 1024, h: 1024, seed: 21, base: ["#14382a", "#0b2219"], trace: "rgba(222,168,86,.85)", pad: "#e0b864", buses: 40, singles: 120, silk: false });
-    mesh(rbox(S, 0.04, S, 0.12, 0.01), [photo(routing.map, { metalness: 0.35, roughness: 0.4 }), M.substrateEdge], 0, 0, 0, slabInner);
-    mesh(rbox(S, 0.06, S, 0.12, 0.012), [photo(tex.bottom, { metalness: 0.45, roughness: 0.38 }), M.substrateEdge], 0, 0, 0, slabBottom);
+    // the client's photos, one per layer (package-1 … 4)
+    mesh(rbox(S, 0.06, S, 0.12, 0.012, FLIP), [photo(tex.pkg[0], { metalness: 0.45, roughness: 0.38 }), M.substrateEdge], 0, 0, 0, slab1);
+    mesh(rbox(S, 0.04, S, 0.12, 0.01, FLIP), [photo(tex.pkg[1], { metalness: 0.6, roughness: 0.35 }), M.substrateEdge], 0, 0, 0, slab2);
+    mesh(rbox(S, 0.06, S, 0.12, 0.012, FLIP), [photo(tex.pkg[2], { metalness: 0.6, roughness: 0.35 }), M.substrateEdge], 0, 0, 0, slab3);
 
-    // integrated heat spreader: photo top (cropped to the lid), steel rest
+    // integrated heat spreader (stainless steel): the lid photo on top —
+    // seen while it still sits on the board — and on the flange face the
+    // camera sees once it hangs at the bottom of the stack, steel sides
     const L = S * 0.865;
-    const lidTop = photo(tex.top, { metalness: 0.75, roughness: 0.3 });
-    mesh(rbox(L, 0.22, L, 0.22, 0.04, { x: 0.068, y: 0.05, w: 0.865, h: 0.865 }), [lidTop, M.nickel], 0, 0.04, 0, lidGroup);
-    mesh(rbox(S * 0.9, 0.05, S * 0.92, 0.18, 0.015), [M.nickel, M.nickel], 0, 0.0, 0, lidGroup);
+    const lidTop = photo(tex.pkg[3], { metalness: 0.7, roughness: 0.32 });
+    mesh(rbox(L, 0.22, L, 0.22, 0.04, { x: 0.064, y: 0.054, w: 0.872, h: 0.87 }), [lidTop, M.nickel], 0, 0.04, 0, lidGroup);
+    mesh(rbox(S * 0.9, 0.05, S * 0.92, 0.18, 0.015, { x: 0.05, y: 0.96, w: 0.9, h: -0.92 }), [lidTop, M.nickel], 0, 0.0, 0, lidGroup);
 
-    // die: four layers, top metal first
-    tex.die.forEach((t, i) => mesh(rbox(DIE.w, 0.012, DIE.d, 0.015, 0.003), [photo(t, { metalness: 0.45, roughness: 0.3 }), M.dieEdge], 0, 0, 0, dieLayers[i]));
-
+    // die: four layers, die-1 (aluminium) next to the substrate; die-2 is
+    // copper (client) — its photo reads gold, a warm tint takes it there
+    const TINT = [0xffffff, 0xffb48c, 0xffffff, 0xffffff];
+    tex.die.forEach((t, i) => mesh(rbox(DIE.w, 0.012, DIE.d, 0.015, 0.003, FLIP), [photo(t, { metalness: 0.45, roughness: 0.3, color: TINT[i] }), M.dieEdge], 0, 0, 0, dieLayers[i]));
   }
 
   // ------------------------------------------------------------ timeline
@@ -937,29 +961,32 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
   fadeTo(tl, "cooler", 0, 3.75);
   fadeTo(tl, "tub", 0, 4.1, 0.2);
 
-  // 4.7 → 6.5: the package lifts off and flips (pads up), then back;
-  // the board deck drops away under it
+  // 4.7 → 6.5: the package lifts off (its pads stay on the board) and
+  // flips once, pads up — and stays so (client: no second flip); the board
+  // deck drops away under it
   tl.to(pkg.position, { x: P0local.x, y: P0local.y, z: P0local.z, duration: 1.8, ease: "power3.inOut" }, 4.7)
-    .to(pkg.rotation, { x: -Math.PI, duration: 0.8 }, 4.9)
-    .to(pkg.rotation, { x: -Math.PI * 2, duration: 0.8 }, 5.8)
-    .to(boardDeck.position, { y: -12, duration: 1.5, ease: "power2.in" }, 5.0)
+    .to(pkg.rotation, { x: -Math.PI, duration: 0.9 }, 5.0)
+    .to(boardDeck.position, { y: -12, duration: 1.5, ease: "power2.in" }, 5.2)
     .to(glow, { v: 0, duration: 0.8 }, 5.0);
-  fadeTo(tl, "deck", 0, 6.15);
+  fadeTo(tl, "deck", 0, 6.35);
 
-  // 6.6 → 7.8: the IHS comes off, the die rises out of its cavity
+  // 6.6 → 7.8: the IHS (underneath now) comes off downwards, the die drops
+  // out of its cavity after it (local +y = down on screen)
   tl.to(lidGroup.position, { y: 1.9, duration: 0.8 }, 6.6).to(dieGroup.position, { y: 1.0, duration: 0.8 }, 7.1);
 
-  // 7.9 → 9.5: package layers to the left (lid hangs below), die to the right
+  // 7.9 → 9.5: package layers to the left, die layers to the right — no
+  // more turning, each shows the face it has. On screen, top to bottom:
+  // pins, metal, metal, lid | aluminium, copper, gates, silicon. Local y is
+  // upside down (y = -screen y).
   const L = -2.1;
   const RX = 2.05;
-  tl.to(slabTop.position, { x: L, y: 1.5, duration: 1.3 }, 7.9)
-    .to(slabInner.position, { x: L, y: -0.05, duration: 1.3 }, 7.95)
-    .to(slabBottom.position, { x: L, y: -1.6, duration: 1.3 }, 8.0)
-    .to(slabBottom.rotation, { x: Math.PI, duration: 1.2 }, 8.05)
-    .to(lidGroup.position, { x: L, y: -3.2, duration: 1.4 }, 7.9)
+  tl.to(slab1.position, { x: L, y: -1.6, duration: 1.3 }, 7.9)
+    .to(slab2.position, { x: L, y: -0.05, duration: 1.3 }, 7.95)
+    .to(slab3.position, { x: L, y: 1.5, duration: 1.3 }, 8.0)
+    .to(lidGroup.position, { x: L, y: 3.1, duration: 1.4 }, 7.9)
     .to(dieGroup.position, { x: RX, y: 0, z: 0, duration: 1.3 }, 8.0)
     .to(dieGroup.scale, { x: 2.2, y: 2.2, z: 2.2, duration: 1.3 }, 8.0);
-  dieLayers.forEach((layer, i) => tl.to(layer.position, { y: 1.3 - i * 0.87, duration: 1.2 }, 8.6 + i * 0.07));
+  dieLayers.forEach((layer, i) => tl.to(layer.position, { y: -1.3 + i * 0.87, duration: 1.2 }, 8.6 + i * 0.07));
 
   // → 11: hold with the services on screen
   tl.to({}, { duration: 1 }, 10);
@@ -969,20 +996,18 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
 
   // ------------------------------------------------------------ services
 
-  const fallback = ["die-1", "pkg-top", "die-4", "pkg-bottom", "die-2", "pkg-inner", "die-3", "pkg-lid"];
-  const leads = items.map((item, i) => {
-    const line = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-    line.setAttribute("class", "home-solutions__lead");
-    line.setAttribute("vector-effect", "non-scaling-stroke");
-    svg.appendChild(line);
-    const name = anchors[item.dataset.layer] ? item.dataset.layer : fallback[i % fallback.length];
-    return { item, line, name, side: item.classList.contains("home-solutions__item--left") ? "left" : "right", group: name.indexOf("pkg") === 0 ? "pkg" : "die" };
-  });
+  // Two columns by the model (client, Nov 16: no lines, the services are not
+  // tied to layers): the left side (under the title) shows with the package
+  // layers, the right side with the die layers, then the CTA.
+  const cta = section.querySelector(".js-solutions-cta");
+  const GAP = 40; // between blocks in a column
+  const blocks = items.map((item) => ({ item, side: item.classList.contains("home-solutions__item--left") ? "left" : "right" }));
 
   // cached per resize: stage box, the offset of the services box inside the
-  // canvas, the free band for the blocks
-  const box = { w: 1, h: 1, ox: 0, oy: 0, minTop: 0, minLeft: 0, zoneC: 0, fit: 1 };
+  // canvas, the free band for the model
+  const box = { w: 1, h: 1, ox: 0, oy: 0, minTop: 0, minLeft: 0, maxBottom: 0, zoneC: 0, zoneM: 0, fit: 1 };
   const FINAL_W = 7.4; // width of the final composition, world units (+ air)
+  const FINAL_H = 7.6; // its height: lid at the bottom … die-1 at the top (+ air)
   const FINAL_DIST = 26.4; // camera distance of the last key shot
 
   function measure() {
@@ -990,79 +1015,62 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
     const ir = inner.getBoundingClientRect();
     box.ox = ir.left - cr.left;
     box.oy = ir.top - cr.top;
+    // the fixed header's bottom on screen, in stage px. Not from rects: this
+    // also runs on ScrollTrigger's refresh (a resize), when the sticky stage
+    // isn't stuck at the top and its rect is far off
     const header = document.querySelector(".js-header");
-    const headerB = header ? header.getBoundingClientRect().bottom - (canvas.getBoundingClientRect().top + box.oy) : 0;
+    const headerB = header ? header.offsetTop + header.offsetHeight - box.oy : 0;
     box.minTop = Math.max(headerB, 0) + 24;
     box.minLeft = Math.max(box.minTop, title.offsetTop + title.offsetHeight + 24);
     box.ih = inner.clientHeight;
-    leads.forEach((l) => {
-      l.item.classList.remove("is-compact");
-      l.item.style.top = "0px";
+    // the CTA sits at the bottom: the blocks and the model stay above it
+    box.ctaH = cta ? cta.offsetHeight + (box.ih - cta.offsetTop - cta.offsetHeight) + 24 : 24;
+    box.maxBottom = box.ih - box.ctaH;
+    // the model between the header and the CTA (low screens: centred there)
+    box.zoneM = box.oy + (box.minTop + box.maxBottom) / 2;
+
+    blocks.forEach((b) => {
+      b.item.classList.remove("is-compact", "is-tight");
+      b.item.style.top = "0px";
     });
-    // a side that can't hold its blocks with their art drops the art
+    // a column that can't hold its blocks on a low screen: first the text
+    // goes down to one line (.is-compact), then only title + link stay
+    // (.is-tight) — never blocks on top of each other
     ["left", "right"].forEach((side) => {
-      const list = leads.filter((l) => l.side === side);
-      const need = list.reduce((s, l) => s + l.item.offsetHeight + 24, 0);
-      const room = box.ih - (side === "left" ? box.minLeft : box.minTop) - 24;
-      if (need > room) list.forEach((l) => l.item.classList.add("is-compact"));
+      const list = blocks.filter((b) => b.side === side);
+      if (!list.length) return;
+      const min = side === "left" ? box.minLeft : box.minTop;
+      const room = box.maxBottom - min;
+      const need = () => list.reduce((sum, b) => sum + b.item.offsetHeight, 0) + GAP * (list.length - 1);
+      if (need() > room) list.forEach((b) => b.item.classList.add("is-compact"));
+      if (need() > room) list.forEach((b) => b.item.classList.add("is-tight"));
+      // the column centred on the model's height, kept inside its band
+      const total = need();
+      let top = box.zoneM - box.oy - total / 2;
+      top = Math.max(min, Math.min(top, box.maxBottom - total));
+      list.forEach((b) => {
+        b.item.style.top = top + "px";
+        top += b.item.offsetHeight + GAP;
+      });
     });
-    leads.forEach((l) => {
-      const num = l.item.querySelector(".home-solutions__num");
-      l.h = l.item.offsetHeight;
-      l.left = l.item.offsetLeft;
-      l.w = l.item.offsetWidth;
-      l.numX = num.offsetLeft;
-      l.numY = num.offsetTop + num.offsetHeight / 2;
-      l.numW = num.offsetWidth;
-    });
-    // the free band between the two columns of services (canvas px): the
-    // final composition is centred in it and the camera steps back to fit
-    const lefts = leads.filter((l) => l.side === "left").map((l) => box.ox + l.left + l.w);
-    const rights = leads.filter((l) => l.side === "right").map((l) => box.ox + l.left);
+
+    // the free band between the two columns (canvas px): the final
+    // composition is centred in it and the camera steps back to fit
+    const lefts = blocks.filter((b) => b.side === "left").map((b) => box.ox + b.item.offsetLeft + b.item.offsetWidth);
+    const rights = blocks.filter((b) => b.side === "right").map((b) => box.ox + b.item.offsetLeft);
     const z0 = lefts.length ? Math.max(...lefts) : 0;
     const z1 = rights.length ? Math.min(...rights) : box.w;
     box.zoneC = (z0 + z1) / 2;
     const room = Math.max(z1 - z0 - 80, 200);
-    const need = (FINAL_W * box.h) / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * room);
-    box.fit = Math.max(camFit, need / FINAL_DIST);
-  }
-
-  const v3 = new THREE.Vector3();
-
-  // blocks follow their layers: number at the layer's height, kept apart
-  // and inside the screen; leads from the number to the layer corner — along
-  // the number's row, the step outside the text block, then to the layer
-  function layoutServices() {
-    leads.forEach((l) => {
-      anchors[l.name].getWorldPosition(v3).project(camera);
-      l.ax = (v3.x * 0.5 + 0.5) * box.w - box.ox;
-      l.ay = (-v3.y * 0.5 + 0.5) * box.h - box.oy;
-      l.top = l.ay - l.numY;
-    });
-    ["left", "right"].forEach((side) => {
-      const list = leads.filter((l) => l.side === side).sort((a, b) => a.top - b.top);
-      const min = side === "left" ? box.minLeft : box.minTop;
-      const max = box.ih - 24;
-      list.forEach((l, i) => {
-        l.top = Math.max(l.top, i ? list[i - 1].top + list[i - 1].h + 24 : min);
-      });
-      // pushed off the bottom: shift the stack up as far as the top allows
-      for (let i = list.length - 1; i >= 0; i--) {
-        const limit = i === list.length - 1 ? max - list[i].h : list[i + 1].top - 24 - list[i].h;
-        list[i].top = Math.max(min, Math.min(list[i].top, limit));
-      }
-    });
-    leads.forEach((l) => {
-      l.item.style.top = l.top + "px";
-      const nx = l.left + l.numX;
-      const y0 = l.top + l.numY;
-      const toRight = l.ax > nx + l.numW / 2;
-      const x0 = toRight ? nx + l.numW : nx;
-      // the step goes past the text (close to the layer if the gap is tight)
-      let xs = toRight ? Math.min(l.left + l.w + 16, l.ax - 6) : Math.max(l.left - 16, l.ax + 6);
-      if (toRight ? xs < l.left + l.w : xs > l.left) xs = (x0 + l.ax) / 2;
-      l.line.setAttribute("points", `${x0},${y0} ${xs},${y0} ${xs},${l.ay} ${l.ax},${l.ay}`);
-    });
+    const tan = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+    const need = (FINAL_W * box.h) / (tan * room);
+    const needH = (FINAL_H * box.h) / (tan * Math.max(box.maxBottom - box.minTop, 200));
+    box.fit = Math.max(camFit, need / FINAL_DIST, needH / FINAL_DIST);
+    if (bare) {
+      box.zoneC = box.w / 2;
+      box.zoneM = box.h / 2;
+      box.fit = Math.max((FINAL_W * box.h) / (tan * box.w * 0.74), (FINAL_H * box.h) / (tan * box.h * 0.74)) / FINAL_DIST;
+    }
   }
 
   let shown = null;
@@ -1070,11 +1078,8 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
     const state = t >= T.dieLabels ? 2 : t >= T.pkgLabels ? 1 : 0;
     if (state === shown) return;
     shown = state;
-    leads.forEach((l) => {
-      const on = l.group === "pkg" ? state >= 1 : state >= 2;
-      l.item.classList.toggle("is-active", on);
-      l.line.classList.toggle("is-active", on);
-    });
+    blocks.forEach((b) => b.item.classList.toggle("is-active", b.side === "left" ? state >= 1 : state >= 2));
+    if (cta) cta.classList.toggle("is-active", state >= 2);
   }
 
   // ------------------------------------------------------------ loop
@@ -1092,9 +1097,34 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
     renderer.setSize(box.w, box.h, false);
     camera.aspect = box.w / box.h;
     camera.updateProjectionMatrix();
-    camFit = Math.max(1, 1.75 / camera.aspect);
+    camFit = bare ? 1.3 : Math.max(1, 1.75 / camera.aspect); // bare: the square video frame, closer
     measure();
     camera.updateProjectionMatrix();
+  }
+
+  // bare (video frames): the desktop shots leave room for the title on the
+  // left; a square frame keeps what the story is about in its middle instead
+  const SUBJECT = [
+    [0, [0, 1, 0]],
+    [1.1, [0, 4, -3]],
+    [2.3, [0, 4, -2]],
+    [3.2, [0, 2.5, 0]],
+    [4.1, [BOARD_OUT.x, BOARD_OUT.y, BOARD_OUT.z]],
+    [4.8, [CPU_OUT.x, CPU_OUT.y, CPU_OUT.z]],
+    [6.5, [P0.x, P0.y, P0.z]],
+    [9.3, [-0.48, P0.y - 0.25, P0.z]],
+  ];
+  const subject = new THREE.Vector3();
+  const subjB = new THREE.Vector3();
+  function centreSubject(t) {
+    let i = 0;
+    while (i < SUBJECT.length - 2 && t > SUBJECT[i + 1][0]) i++;
+    const f = THREE.MathUtils.smoothstep(t, SUBJECT[i][0], SUBJECT[i + 1][0]);
+    subject.set(...SUBJECT[i][1]).lerp(subjB.set(...SUBJECT[i + 1][1]), f);
+    camera.updateMatrixWorld();
+    camera.clearViewOffset();
+    subject.project(camera);
+    camera.setViewOffset(box.w, box.h, subject.x * 0.5 * box.w, -subject.y * 0.5 * box.h, box.w, box.h);
   }
 
   let visible = false;
@@ -1112,17 +1142,18 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
     const t = tl.time();
     const k = THREE.MathUtils.smoothstep(t, 7.4, 9.2); // into the final shot
     cameraAt(t, THREE.MathUtils.lerp(camFit, box.fit, k));
-    camera.setViewOffset(box.w, box.h, -(box.zoneC - box.w / 2) * k, 0, box.w, box.h);
+    camera.setViewOffset(box.w, box.h, -(box.zoneC - box.w / 2) * k, -(box.zoneM - box.h / 2) * k, box.w, box.h);
     camera.position.set(camPos.x + pointer.sx * 1.2, camPos.y - pointer.sy * 0.8, camPos.z);
     camera.lookAt(camTgt);
+    if (bare) centreSubject(t);
 
     fans.forEach((f) => (f.userData.blades.rotation.y -= dt * 3));
     boardGlowMat.emissiveIntensity = glow.v * (0.85 + 0.15 * Math.sin(elapsed * 2.2));
     backlightMat.opacity = glow.kb * 0.22 * fades.top.v;
 
     renderer.render(scene, camera);
+    if (bare) return;
     setStates(t);
-    if (shown) layoutServices();
   }
 
   // ------------------------------------------------------------ start
@@ -1152,9 +1183,9 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
       disposables.push(t);
       return t;
     });
-  Promise.all([load("package-top.webp"), load("package-open.webp"), load("package-bottom.webp"), ...[1, 2, 3, 4].map((i) => load(`die-${i}.webp`))]).then(([top, open, bottom, ...die]) => {
+  Promise.all([1, 2, 3, 4].map((i) => load(`package-${i}.webp`)).concat([1, 2, 3, 4].map((i) => load(`die-${i}.webp`)))).then((t) => {
     if (!alive) return;
-    buildPackage({ top, open, bottom, die });
+    buildPackage({ pkg: t.slice(0, 4), die: t.slice(4) });
     section.classList.add("is-ready");
     renderer.setAnimationLoop(render);
   });
@@ -1167,11 +1198,11 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
     io.disconnect();
     window.removeEventListener("resize", resize);
     window.removeEventListener("pointermove", onPointer);
-    leads.forEach((l) => {
-      l.line.remove();
-      l.item.classList.remove("is-active", "is-compact");
-      l.item.style.top = "";
+    blocks.forEach((b) => {
+      b.item.classList.remove("is-active", "is-compact", "is-tight");
+      b.item.style.top = "";
     });
+    if (cta) cta.classList.remove("is-active");
     section.classList.remove("is-ready");
     disposables.forEach((d) => d.dispose());
     envRT.dispose();

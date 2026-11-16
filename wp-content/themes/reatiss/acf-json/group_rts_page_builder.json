@@ -554,7 +554,7 @@
                             "wrapper": {
                                 "width": "100"
                             },
-                            "message": "On desktop (≥1200 px, WebGL) the block is a 3D scene: a laptop is taken apart down to the processor, the package layers spread on the left and the die layers on the right, and each item stands by the layer chosen in “3D layer”. Without WebGL — and as the source for timings below — the scroll plays two videos: “Video 1” opens the chip into layers, “Video 2” zooms to each layer and back. Each item below is one zoom: set the second of Video 2 where its zoom-in ends and where the zoom-out ends (open the video in a player and note the time). Empty videos / timings — the theme’s own chip videos and their timings. Encode both as H.264 MP4 without audio, all-intra (ffmpeg -g 1), black background; the last frame of Video 1 must equal the first frame of Video 2. Below 1200 px the layers video loops under a plain list.",
+                            "message": "On desktop (≥1200 px, WebGL) the block is a 3D scene: a laptop is taken apart down to the processor, the package layers spread on the left and the die layers on the right, and the items stand in two columns by it (left — under the title). Without WebGL — and as the source for timings below — the scroll plays two videos: “Video 1” opens the chip into layers, “Video 2” zooms to each layer and back. Each item below is one zoom: set the second of Video 2 where its zoom-in ends and where the zoom-out ends (open the video in a player and note the time). Empty videos / timings — the theme’s own chip videos and their timings. Encode both as H.264 MP4 without audio, all-intra (ffmpeg -g 1), black background; the last frame of Video 1 must equal the first frame of Video 2. Below 1200 px the layers video loops under a plain list.",
                             "key": "field_9aaccb239f2353b8"
                         },
                         {
@@ -584,6 +584,33 @@
                             "key": "field_374da27e02b5ede8"
                         },
                         {
+                            "type": "file",
+                            "name": "video_mobile",
+                            "label": "Mobile video (below 1200 px)",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "return_format": "url",
+                            "library": "all",
+                            "mime_types": "mp4",
+                            "instructions": "MP4, square (1080×1080), H.264 without audio, loops under the title on phones and tablets. Empty — the theme video rendered from the desktop 3D scene.",
+                            "key": "field_f51b2097511a5a49"
+                        },
+                        {
+                            "type": "image",
+                            "name": "video_mobile_poster",
+                            "label": "Mobile video — poster",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "return_format": "id",
+                            "preview_size": "medium",
+                            "library": "all",
+                            "mime_types": "jpg, jpeg, png, webp",
+                            "instructions": "Shown until the video plays (and with reduced motion). Empty — the theme poster (only with the theme video).",
+                            "key": "field_1985c835736dd6d9"
+                        },
+                        {
                             "type": "repeater",
                             "name": "items",
                             "label": "Items",
@@ -597,21 +624,10 @@
                             "sub_fields": [
                                 {
                                     "type": "text",
-                                    "name": "num",
-                                    "label": "Number",
-                                    "wrapper": {
-                                        "width": "10"
-                                    },
-                                    "default_value": "01",
-                                    "required": 1,
-                                    "key": "field_8423721c198dd169"
-                                },
-                                {
-                                    "type": "text",
                                     "name": "title",
                                     "label": "Title",
                                     "wrapper": {
-                                        "width": "40"
+                                        "width": "50"
                                     },
                                     "required": 1,
                                     "key": "field_03017f34eb057cfd"
@@ -645,7 +661,8 @@
                                         "left": "Left"
                                     },
                                     "default_value": "right",
-                                    "key": "field_d3c375fcfe9d204b"
+                                    "key": "field_d3c375fcfe9d204b",
+                                    "instructions": "Desktop: left = under the title (shows with the package layers), right = by the die layers. Put the longer list on the right."
                                 },
                                 {
                                     "type": "textarea",
@@ -657,7 +674,119 @@
                                     "rows": 3,
                                     "new_lines": "",
                                     "required": 1,
-                                    "key": "field_bd74c0dd3cc3cba8"
+                                    "key": "field_bd74c0dd3cc3cba8",
+                                    "instructions": "1–2 lines (about 110 characters)."
+                                },
+                                {
+                                    "type": "group",
+                                    "name": "link",
+                                    "label": "Text link under the description",
+                                    "wrapper": {
+                                        "width": "100"
+                                    },
+                                    "layout": "block",
+                                    "sub_fields": [
+                                        {
+                                            "type": "text",
+                                            "name": "label",
+                                            "label": "Button text",
+                                            "wrapper": {
+                                                "width": "30"
+                                            },
+                                            "key": "field_d06e948271fc969b",
+                                            "default_value": "Learn more"
+                                        },
+                                        {
+                                            "type": "select",
+                                            "name": "type",
+                                            "label": "Link type",
+                                            "wrapper": {
+                                                "width": "20"
+                                            },
+                                            "ui": 1,
+                                            "return_format": "value",
+                                            "default_value": "none",
+                                            "choices": {
+                                                "none": "No link",
+                                                "page": "Site page",
+                                                "custom": "Custom URL",
+                                                "modal": "“Consultation” popup"
+                                            },
+                                            "key": "field_eea2b1969d33c0d3"
+                                        },
+                                        {
+                                            "type": "page_link",
+                                            "name": "page",
+                                            "label": "Page",
+                                            "wrapper": {
+                                                "width": "50"
+                                            },
+                                            "post_type": [
+                                                "page",
+                                                "post",
+                                                "rts_service",
+                                                "rts_lab",
+                                                "rts_expertise",
+                                                "rts_event"
+                                            ],
+                                            "allow_null": 0,
+                                            "allow_archives": 1,
+                                            "multiple": 0,
+                                            "required": 1,
+                                            "conditional_logic": [
+                                                [
+                                                    {
+                                                        "field": "field_eea2b1969d33c0d3",
+                                                        "operator": "==",
+                                                        "value": "page"
+                                                    }
+                                                ]
+                                            ],
+                                            "key": "field_ac11ffc7ba9257a0"
+                                        },
+                                        {
+                                            "type": "text",
+                                            "name": "url",
+                                            "label": "Link",
+                                            "wrapper": {
+                                                "width": "35"
+                                            },
+                                            "required": 1,
+                                            "placeholder": "https://… or #anchor",
+                                            "conditional_logic": [
+                                                [
+                                                    {
+                                                        "field": "field_eea2b1969d33c0d3",
+                                                        "operator": "==",
+                                                        "value": "custom"
+                                                    }
+                                                ]
+                                            ],
+                                            "key": "field_123b400e01d1813f"
+                                        },
+                                        {
+                                            "type": "true_false",
+                                            "name": "new_tab",
+                                            "label": "Open in new tab",
+                                            "wrapper": {
+                                                "width": "15"
+                                            },
+                                            "ui": 1,
+                                            "default_value": 0,
+                                            "conditional_logic": [
+                                                [
+                                                    {
+                                                        "field": "field_eea2b1969d33c0d3",
+                                                        "operator": "==",
+                                                        "value": "custom"
+                                                    }
+                                                ]
+                                            ],
+                                            "key": "field_3781b1a31d0992a7"
+                                        }
+                                    ],
+                                    "key": "field_b10eaa6ab5eff762",
+                                    "instructions": "A text link with an arrow, as on post cards."
                                 },
                                 {
                                     "type": "number",
@@ -671,17 +800,6 @@
                                     "max": 80,
                                     "instructions": "Preferred vertical position (the script keeps the block on screen).",
                                     "key": "field_4b89cc4e27167167"
-                                },
-                                {
-                                    "type": "text",
-                                    "name": "aim",
-                                    "label": "Line target (x,y)",
-                                    "wrapper": {
-                                        "width": "20"
-                                    },
-                                    "default_value": "0.78,0.24",
-                                    "instructions": "Where the line from the number points: fractions of the video frame, 0,0 — top left, 1,1 — bottom right.",
-                                    "key": "field_fada0e6553ed58d1"
                                 },
                                 {
                                     "type": "number",
@@ -706,33 +824,128 @@
                                     "min": 0,
                                     "instructions": "Second where the zoom back out ends.",
                                     "key": "field_9d5d5177d29137a3"
-                                },
-                                {
-                                    "type": "select",
-                                    "name": "layer",
-                                    "label": "3D layer",
-                                    "wrapper": {
-                                        "width": "60"
-                                    },
-                                    "instructions": "Desktop 3D scene: the layer this item’s line points at. Package layers are on the left, die layers on the right — set “Side” to match. Empty — the next layer in order.",
-                                    "choices": {
-                                        "pkg-top": "Package · top layer",
-                                        "pkg-inner": "Package · inner (metal) layer",
-                                        "pkg-bottom": "Package · bottom layer (pads)",
-                                        "pkg-lid": "Package · lid",
-                                        "die-1": "Die · 1: aluminium under a thin dielectric",
-                                        "die-2": "Die · 2: copper with a thin dielectric",
-                                        "die-3": "Die · 3: silicon with gates",
-                                        "die-4": "Die · 4: silicon"
-                                    },
-                                    "allow_null": 1,
-                                    "ui": 0,
-                                    "return_format": "value",
-                                    "default_value": "",
-                                    "key": "field_d3ca07665a54b824"
                                 }
                             ],
                             "key": "field_920abab497a2985d"
+                        },
+                        {
+                            "type": "text",
+                            "name": "cta_text",
+                            "label": "Bottom CTA — text",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "instructions": "Shown under the scene once the services are out (desktop) and after the list (mobile). Empty text and button — no CTA.",
+                            "key": "field_1f1e8785cf473492"
+                        },
+                        {
+                            "type": "group",
+                            "name": "cta_btn",
+                            "label": "Bottom CTA — button",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "layout": "block",
+                            "sub_fields": [
+                                {
+                                    "type": "text",
+                                    "name": "label",
+                                    "label": "Button text",
+                                    "wrapper": {
+                                        "width": "30"
+                                    },
+                                    "key": "field_816ebe956f231ab6"
+                                },
+                                {
+                                    "type": "select",
+                                    "name": "type",
+                                    "label": "Link type",
+                                    "wrapper": {
+                                        "width": "20"
+                                    },
+                                    "ui": 1,
+                                    "return_format": "value",
+                                    "default_value": "none",
+                                    "choices": {
+                                        "none": "No link",
+                                        "page": "Site page",
+                                        "custom": "Custom URL",
+                                        "modal": "“Consultation” popup"
+                                    },
+                                    "key": "field_ed81a7696e2101ab"
+                                },
+                                {
+                                    "type": "page_link",
+                                    "name": "page",
+                                    "label": "Page",
+                                    "wrapper": {
+                                        "width": "50"
+                                    },
+                                    "post_type": [
+                                        "page",
+                                        "post",
+                                        "rts_service",
+                                        "rts_lab",
+                                        "rts_expertise",
+                                        "rts_event"
+                                    ],
+                                    "allow_null": 0,
+                                    "allow_archives": 1,
+                                    "multiple": 0,
+                                    "required": 1,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_ed81a7696e2101ab",
+                                                "operator": "==",
+                                                "value": "page"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_8e8b3d216b7845b0"
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "url",
+                                    "label": "Link",
+                                    "wrapper": {
+                                        "width": "35"
+                                    },
+                                    "required": 1,
+                                    "placeholder": "https://… or #anchor",
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_ed81a7696e2101ab",
+                                                "operator": "==",
+                                                "value": "custom"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_f11aa62d925fa5ec"
+                                },
+                                {
+                                    "type": "true_false",
+                                    "name": "new_tab",
+                                    "label": "Open in new tab",
+                                    "wrapper": {
+                                        "width": "15"
+                                    },
+                                    "ui": 1,
+                                    "default_value": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_ed81a7696e2101ab",
+                                                "operator": "==",
+                                                "value": "custom"
+                                            }
+                                        ]
+                                    ],
+                                    "key": "field_806acb5f05154d23"
+                                }
+                            ],
+                            "key": "field_af1565946e75e453"
                         }
                     ],
                     "min": "",

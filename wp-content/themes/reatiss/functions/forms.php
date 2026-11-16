@@ -150,3 +150,74 @@ function rts_form( int $form_id, string $classes = '' ): void {
 		)
 	);
 }
+
+/**
+ * One-time: the required consent checkbox (client, Nov 2026 — ref.
+ * peeklogic.com/contacts) in every form of the design (the ones with
+ * [rts_submit]). The forms live in the database, so a theme upload alone
+ * would not bring it to a server: this adds it there once. A form that
+ * already has an [acceptance] is left alone. Markup and states: see the
+ * "Consent checkbox" note in CLAUDE.md (.field-check, app-cf7.js).
+ */
+class RTS_Consent_Migration {
+
+	private const DONE = 'rts_cf7_consent_v1';
+
+	private const FIELD = '<div class="field-check field--full">[acceptance your-acceptance]I agree with the <a href="#privacy-policy" target="_blank" rel="noopener" aria-label="Privacy Policy (opens in a new tab)">Privacy Policy</a>[/acceptance]</div>';
+
+	public function __construct() {
+		add_action( 'init', [ $this, 'run' ], 99 );
+	}
+
+	public function run(): void {
+		if ( get_option( self::DONE ) || ! function_exists( 'wpcf7_contact_form' ) ) {
+			return;
+		}
+
+		update_option( self::DONE, 1 );
+
+		$ids = get_posts(
+			[
+				'post_type'      => 'wpcf7_contact_form',
+				'post_status'    => 'any',
+				'posts_per_page' => -1,
+				'fields'         => 'ids',
+			]
+		);
+
+		foreach ( $ids as $id ) {
+			$form = wpcf7_contact_form( $id );
+
+			if ( ! $form ) {
+				continue;
+			}
+
+			$props = $form->get_properties();
+			$body  = (string) $props['form'];
+			$at    = strpos( $body, '[rts_submit' );
+
+			if ( false === $at || false !== strpos( $body, '[acceptance' ) ) {
+				continue;
+			}
+
+			// into the field grid: before its closing tag, the last one ahead of the button
+			$cut = strrpos( substr( $body, 0, $at ), '</div>' );
+
+			if ( false === $cut ) {
+				continue;
+			}
+
+			$props['form'] = substr_replace( $body, self::FIELD . "\n", $cut, 0 );
+
+			// unticked = a validation error (red box), not a disabled button
+			if ( false === strpos( (string) $props['additional_settings'], 'acceptance_as_validation' ) ) {
+				$props['additional_settings'] = trim( $props['additional_settings'] . "\nacceptance_as_validation: on" );
+			}
+
+			$form->set_properties( $props );
+			$form->save();
+		}
+	}
+}
+
+new RTS_Consent_Migration();
