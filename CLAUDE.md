@@ -80,6 +80,10 @@ logs/             — custom logs (rts_log()), gitignored
   and the six reports still named after the old seed (+ the 13th report). QA: `?solp=0..1`
   (headless: suppress the promo popup via sessionStorage `reatiss-promo-service` / `reatiss-toast-closed`).
   Since Nov 16 the block is edited in WP only (the markup is no longer the source for it).
+  Laptop shell (case / deck / lid, MacBook Pro 14"-style, silver, no logo) = `img/home/solutions-3d/laptop.glb`
+  from `blender/laptop.py` (`blender -b --python blender/laptop.py`): shapes only, the scene maps materials by
+  name; loaded with `js/vendors/GLTFLoader.js` (+ BufferGeometryUtils / SkeletonUtils — `gulp updateJS` copies
+  them from three/examples with their bare 'three' imports made relative). No GLB → the procedural shell.
 - `js/app-solutions.js`: reads optional `data-zoom` (`[[in, out], …]` seconds of the layers clip,
   one pair per item) from the section — the block's videos and zoom timings are editable; empty
   = the theme's `video/chip1|2.mp4` and the measured `ZOOM`.

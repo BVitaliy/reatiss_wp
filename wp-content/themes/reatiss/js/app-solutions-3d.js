@@ -14,12 +14,16 @@
 //   with pins + SMD, two metal layers, the lid; die layers on the right, top
 //   to bottom: aluminium, copper, silicon with gates, silicon → the services
 //   show in two columns by the model (no lines), a CTA under the scene.
-// The laptop, board and parts are built in code (no model to license or
-// download); the package and die layers wear the client's photos
+// The laptop's shell (case, deck, lid — MacBook Pro 14"-style, silver, no
+// logo) is a Blender model: img/home/solutions-3d/laptop.glb, made by
+// blender/laptop.py; until it loads (or if it can't) the shell built here
+// stands in. Keys, screen and everything inside are built in code; the
+// package and die layers wear the client's photos
 // (img/home/solutions-3d/package-1…4, die-1…4). Services: .js-solutions-item
 // (--left: under the title, shows with the package layers; --right: with the
 // die layers).
 import * as THREE from "./vendors/three.module.min.js";
+import { GLTFLoader } from "./vendors/GLTFLoader.js";
 
 const IMG = "img/home/solutions-3d/";
 
@@ -37,7 +41,7 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
   // ------------------------------------------------------------ renderer
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "high-performance", preserveDrawingBuffer: debugProgress !== null });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // retina: 1.5 is plenty with antialias, a quarter fewer pixels than 1.75
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
 
@@ -48,7 +52,10 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
   scene.environmentIntensity = 0.75;
   pmrem.dispose();
 
-  const camera = new THREE.PerspectiveCamera(30, 1, 0.5, 500);
+  // near 1.5, not closer: the camera never gets nearer than ~14, and a tiny
+  // near plane wasted the depth precision — thin layers (screen / glass /
+  // notch) z-fought and flickered
+  const camera = new THREE.PerspectiveCamera(30, 1, 1.5, 500);
 
   scene.add(new THREE.HemisphereLight(0xe6ecff, 0x0a0a1a, 0.35));
   const key = new THREE.DirectionalLight(0xffffff, 2.3);
@@ -84,6 +91,9 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
     panel(0xbcd2ff, 2.2, [19.5, 9, -6], [0.2, 5, 12]);
     panel(0xffffff, 1.2, [0, 5, -19.5], [24, 3, 0.2]);
     panel(0xffffff, 0.8, [6, 3, 19.5], [10, 2, 0.2]);
+    // a soft floor: metal facing down (the laptop's rounded bottom edge)
+    // mirrored the dark room and read as a black band
+    panel(0xdfe6f2, 0.55, [0, -2.8, 0], [34, 0.2, 30]);
     return s;
   }
 
@@ -181,19 +191,24 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
     return m;
   }
 
-  // fading a group: its meshes get their own material copies first
+  // fading a group: its meshes get their own material copies first;
+  // take() adds meshes put into the group later (the Blender shell)
   function fader(group) {
     const mats = [];
-    group.traverse((o) => {
-      if (!o.isMesh) return;
-      o.material = Array.isArray(o.material) ? o.material.map((m) => m.clone()) : o.material.clone();
-      (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => {
-        // its own see-through look (grilles, backlight) comes back at v = 1
-        m.userData.base = { opacity: m.opacity, transparent: m.transparent, depthWrite: m.depthWrite };
-        mats.push(m);
+    const take = (root) =>
+      root.traverse((o) => {
+        if (!o.isMesh || o.userData.faded) return;
+        o.userData.faded = true;
+        o.material = Array.isArray(o.material) ? o.material.map((m) => m.clone()) : o.material.clone();
+        (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => {
+          // its own see-through look (grilles, backlight) comes back at v = 1
+          m.userData.base = { opacity: m.opacity, transparent: m.transparent, depthWrite: m.depthWrite };
+          disposables.push(m);
+          mats.push(m);
+        });
       });
-    });
-    const state = { v: 1 };
+    take(group);
+    const state = { v: 1, take };
     state.apply = () => {
       mats.forEach((m) => {
         const b = m.userData.base;
@@ -205,6 +220,12 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
     };
     return state;
   }
+
+  // the procedural shell parts the Blender model replaces
+  const shell = (m) => {
+    m.userData.shell = true;
+    return m;
+  };
 
   // ------------------------------------------------------------ textures
 
@@ -419,7 +440,7 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
 
   const brush = brushed();
   const M = {
-    alu: new THREE.MeshStandardMaterial({ color: 0x8b9199, metalness: 1, roughness: 0.4, roughnessMap: brush }),
+    alu: new THREE.MeshStandardMaterial({ color: 0xc6c9cd, metalness: 1, roughness: 0.38 }), // silver, bead-blasted
     aluInner: new THREE.MeshStandardMaterial({ color: 0x3a3e44, metalness: 0.9, roughness: 0.5 }),
     aluDark: new THREE.MeshStandardMaterial({ color: 0x24272c, metalness: 1, roughness: 0.45 }),
     key: new THREE.MeshStandardMaterial({ color: 0x0c0d10, metalness: 0.15, roughness: 0.6 }),
@@ -457,22 +478,22 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
   // bottom case: floor + walls (hollow, so the parts show once the top is off)
   const tub = new THREE.Group();
   laptop.add(tub);
-  mesh(rbox(W, 0.22, D, R, 0.06), [M.alu, M.alu], 0, 0, 0, tub);
+  shell(mesh(rbox(W, 0.22, D, R, 0.06), [M.alu, M.alu], 0, 0, 0, tub));
   {
     const t = 0.32;
     const ring = rrShape(W - 0.08, D - 0.08, R - 0.04);
     ring.holes.push(rrShape(W - 2 * t, D - 2 * t, R - t));
-    mesh(extrude(ring, W, D, TUB_H, 0.04), [M.alu, M.alu], 0, 0, 0, tub);
-    mesh(flat(rrShape(W - 2 * t, D - 2 * t, R - t), W, D), M.aluInner, 0, 0.225, 0, tub);
+    shell(mesh(extrude(ring, W, D, TUB_H, 0.04), [M.alu, M.alu], 0, 0, 0, tub));
+    shell(mesh(flat(rrShape(W - 2 * t, D - 2 * t, R - t), W, D), M.aluInner, 0, 0.225, 0, tub));
     // USB-C / audio on the sides
     const portGeo = new THREE.PlaneGeometry(0.95, 0.32);
     disposables.push(portGeo);
     [[-1, -3.2], [-1, -1.7], [1, -3.2], [1, 2.4]].forEach(([side, z], i) => {
-      const p = mesh(i === 3 ? new THREE.CircleGeometry(0.17, 20) : portGeo, M.port, side * (W / 2 + 0.002), 0.62, z, tub);
+      const p = shell(mesh(i === 3 ? new THREE.CircleGeometry(0.17, 20) : portGeo, M.port, side * (W / 2 + 0.002), 0.62, z, tub));
       p.rotation.y = side * Math.PI / 2;
     });
     // rubber feet
-    [-1, 1].forEach((s) => mesh(rbox(W - 6, 0.12, 0.7, 0.35, 0.05), M.rubber, 0, -0.1, s * (D / 2 - 2.2), tub));
+    [-1, 1].forEach((s) => shell(mesh(rbox(W - 6, 0.12, 0.7, 0.35, 0.05), M.rubber, 0, -0.1, s * (D / 2 - 2.2), tub)));
   }
 
   // parts inside the body
@@ -662,11 +683,11 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
   const topCase = new THREE.Group();
   topCase.position.set(0, -TUB_H, D / 2);
   deckHinge.add(topCase);
-  mesh(rbox(W, TOP_H, D, R, 0.07), [M.alu, M.alu], 0, TUB_H, 0, topCase);
+  shell(mesh(rbox(W, TOP_H, D, R, 0.07), [M.alu, M.alu], 0, TUB_H, 0, topCase));
   const KB_Z = -3.6; // keyboard centre
   {
     // keyboard well (dark recess) with the backlight under the keys
-    mesh(flat(rrShape(27, 11.6, 0.5), 27, 11.6), M.aluDark, 0, DECK_Y + 0.001, KB_Z, topCase);
+    shell(mesh(flat(rrShape(27, 11.6, 0.5), 27, 11.6), M.aluDark, 0, DECK_Y + 0.001, KB_Z, topCase));
     const backlight = new THREE.MeshBasicMaterial({ color: 0x8cb6ff, transparent: true, opacity: 0.0, blending: THREE.AdditiveBlending, depthWrite: false });
     disposables.push(backlight);
     mesh(flat(rrShape(26.2, 10.8, 0.4), 26.2, 10.8), backlight, 0, DECK_Y + 0.004, KB_Z, topCase);
@@ -719,7 +740,7 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
     });
 
     // trackpad (glass) + speaker grilles either side of the keyboard
-    mesh(rbox(12.6, 0.02, 7.8, 0.45, 0.008), [M.pad, M.pad], 0, DECK_Y, 5.9, topCase);
+    shell(mesh(rbox(12.6, 0.02, 7.8, 0.45, 0.008), [M.pad, M.pad], 0, DECK_Y, 5.9, topCase));
     const grille = new THREE.MeshStandardMaterial({ color: 0x0b0c0e, alphaMap: grilleTex(), transparent: true, metalness: 0.3, roughness: 0.6 });
     disposables.push(grille);
     [-1, 1].forEach((s) => mesh(flat(rrShape(1.25, 11.2, 0.3), 1.25, 11.2), grille, s * 14.25, DECK_Y + 0.002, KB_Z, topCase));
@@ -730,9 +751,9 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
   lidPivot.position.set(0, DECK_Y, -D / 2 + 0.45);
   tub.add(lidPivot); // the lid stays with the body when the keyboard lifts
   const LD = D - 0.45;
-  mesh(rbox(W, 0.34, LD, R, 0.08), [M.alu, M.alu], 0, 0.02, LD / 2, lidPivot);
+  shell(mesh(rbox(W, 0.34, LD, R, 0.08), [M.alu, M.alu], 0, 0.02, LD / 2, lidPivot));
   {
-    const hinge = mesh(new THREE.CylinderGeometry(0.24, 0.24, W - 7, 24), M.aluDark, 0, 0, -0.05, lidPivot);
+    const hinge = shell(mesh(new THREE.CylinderGeometry(0.24, 0.24, W - 7, 24), M.aluDark, 0, 0, -0.05, lidPivot));
     hinge.rotation.z = Math.PI / 2;
     disposables.push(hinge.geometry);
 
@@ -740,7 +761,7 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
     const glassGeo = new THREE.ShapeGeometry(rrShape(W - 0.25, LD - 0.25, R - 0.12), 10);
     glassGeo.rotateX(Math.PI / 2);
     disposables.push(glassGeo);
-    mesh(glassGeo, M.glass, 0, 0.012, LD / 2, lidPivot);
+    shell(mesh(glassGeo, M.glass, 0, 0.012, LD / 2, lidPivot));
 
     const wall = makeCanvas(1600, 1040);
     const screenTex = canvasTex(wall);
@@ -768,15 +789,17 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
       }
       screenTex.needsUpdate = true;
     }
-    const screenGeo = new THREE.PlaneGeometry(W - 1.3, LD - 1.6);
+    // thin bezels (MacBook): 0.45 at the sides and top, 0.8 at the bottom;
+    // the model's notch hangs over its top edge
+    const screenGeo = new THREE.PlaneGeometry(W - 0.9, LD - 1.25);
     screenGeo.rotateX(Math.PI / 2);
     disposables.push(screenGeo);
-    const screenMat = new THREE.MeshBasicMaterial({ map: screenTex, toneMapped: false });
+    const screenMat = new THREE.MeshBasicMaterial({ map: screenTex, toneMapped: false, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1 });
     screenMat.color.setScalar(0.9);
     disposables.push(screenMat);
-    mesh(screenGeo, screenMat, 0, 0.008, LD / 2 + 0.25, lidPivot);
-    // camera in the top bezel
-    const camDot = mesh(new THREE.CircleGeometry(0.12, 20), M.port, 0, 0.006, LD - 0.42, lidPivot);
+    mesh(screenGeo, screenMat, 0, 0.007, 0.8 + (LD - 1.25) / 2, lidPivot);
+    // camera in the notch
+    const camDot = mesh(new THREE.CircleGeometry(0.09, 20), M.port, 0, 0.0012, LD - 0.62, lidPivot);
     camDot.rotation.x = Math.PI / 2;
   }
 
@@ -951,11 +974,13 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
 
   // 2.6 → 4.1: the board rises out of the body and slides out to the camera;
   // the rest leaves the frame (up / down), fades only once off screen
+  // (far enough to be out of the frame — the open lid is ~21 tall — well
+  // before the fade hides them: they used to vanish in sight)
   tl.to(boardRoot.position, { y: BOARD_Y + 2.2, duration: 0.6, ease: "power2.out" }, 2.6)
     .to(boardRoot.position, { x: BOARD_OUT.x, y: BOARD_OUT.y, z: BOARD_OUT.z, duration: 1.1, ease: "power3.inOut" }, 3.0)
-    .to(deckHinge.position, { y: 40, duration: 1.1, ease: "power2.in" }, 2.95)
-    .to(cooler.position, { y: 30, duration: 1.0, ease: "power2.in" }, 3.0)
-    .to(tub.position, { y: -46, duration: 1.15, ease: "power2.in" }, 2.95)
+    .to(deckHinge.position, { y: 80, duration: 1.1, ease: "power2.in" }, 2.95)
+    .to(cooler.position, { y: 50, duration: 1.0, ease: "power2.in" }, 3.0)
+    .to(tub.position, { y: -95, duration: 1.15, ease: "power2.in" }, 2.95)
     .to(glow, { v: 1.6, duration: 0.9, ease: "power1.inOut" }, 3.5);
   fadeTo(tl, "top", 0, 3.85);
   fadeTo(tl, "cooler", 0, 3.75);
@@ -1183,8 +1208,48 @@ export function mount(section, { gsap, ScrollTrigger, debugProgress = null, imgB
       disposables.push(t);
       return t;
     });
-  Promise.all([1, 2, 3, 4].map((i) => load(`package-${i}.webp`)).concat([1, 2, 3, 4].map((i) => load(`die-${i}.webp`)))).then((t) => {
+  // the Blender shell: its parts take the scene's materials by name and
+  // replace the procedural ones; a failed load keeps those
+  const SHELL_MATS = {
+    alu: M.alu,
+    alu_inner: new THREE.MeshStandardMaterial({ color: 0x8d9096, metalness: 0.55, roughness: 0.55 }), // machined inside, reads grey from any side
+    black: new THREE.MeshStandardMaterial({ color: 0x0b0c0e, metalness: 0.35, roughness: 0.55 }),
+    trackpad: new THREE.MeshStandardMaterial({ color: 0xc2c5c9, metalness: 0.85, roughness: 0.22 }),
+    glass: M.glass,
+    hinge: new THREE.MeshStandardMaterial({ color: 0x2a2c30, metalness: 1, roughness: 0.4 }),
+    rubber: M.rubber,
+    port: M.port,
+  };
+  ["alu_inner", "black", "trackpad", "hinge"].forEach((k) => disposables.push(SHELL_MATS[k]));
+
+  function applyShell(gltf) {
+    const parts = { shell_tub: [tub, fades.tub], shell_deck: [topCase, fades.top], shell_lid: [lidPivot, fades.tub] };
+    Object.entries(parts).forEach(([name, [group, fade]]) => {
+      const part = gltf.scene.getObjectByName(name);
+      if (!part) return;
+      group.children.filter((c) => c.userData.shell).forEach((c) => group.remove(c));
+      part.traverse((o) => {
+        if (!o.isMesh) return;
+        disposables.push(o.geometry);
+        const pick = (m) => SHELL_MATS[(m.name || "").replace(/\.\d+$/, "")] || M.alu;
+        o.material = Array.isArray(o.material) ? o.material.map(pick) : pick(o.material);
+      });
+      part.position.set(0, 0, 0);
+      group.add(part);
+      fade.take(part);
+      fade.apply();
+    });
+  }
+
+  const shellReady = new GLTFLoader()
+    .loadAsync(imgBase + IMG + "laptop.glb")
+    .then((gltf) => gltf)
+    .catch(() => null); // keep the procedural shell
+
+  Promise.all([1, 2, 3, 4].map((i) => load(`package-${i}.webp`)).concat([1, 2, 3, 4].map((i) => load(`die-${i}.webp`)), [shellReady])).then((t) => {
     if (!alive) return;
+    const gltf = t.pop();
+    if (gltf) applyShell(gltf);
     buildPackage({ pkg: t.slice(0, 4), die: t.slice(4) });
     section.classList.add("is-ready");
     renderer.setAnimationLoop(render);

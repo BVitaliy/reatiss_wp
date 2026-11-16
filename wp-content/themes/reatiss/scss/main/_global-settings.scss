@@ -123,7 +123,7 @@ html {
 @mixin page-dark {
   --page-bg: #0a0a2a;
   --clr-black: #fff;
-  --clr-text: rgba(255, 255, 255, 0.72);
+  --clr-text: rgba(255, 255, 255, 0.6); // client: content on the blue backgrounds at 0.6
   --clr-line: rgba(255, 255, 255, 0.14);
   --bg-1: rgba(255, 255, 255, 0.06);
 }

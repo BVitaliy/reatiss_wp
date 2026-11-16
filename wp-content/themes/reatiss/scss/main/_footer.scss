@@ -58,7 +58,7 @@
 
   &__text {
     margin-top: rem(43); // logo bottom → text (156 in the mockup)
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.6); // client: content on the blue backgrounds
     letter-spacing: -0.01em;
 
     @include maxMedia(xl) {

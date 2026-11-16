@@ -208,12 +208,11 @@
 
   &__text {
     margin-left: rem(1); // 40 from the label column (39 gap + 1)
-    color: var(--clr-white);
+    color: rgba(255, 255, 255, 0.6); // client: content on the blue backgrounds
 
     @include maxMedia(md) {
       grid-area: text;
       margin: 0;
-      color: rgba(255, 255, 255, 0.75);
     }
   }
 }

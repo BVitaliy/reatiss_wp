@@ -192,7 +192,7 @@
   &__text {
     max-width: rem(433);
     margin-top: rem(32);
-    color: var(--clr-black); // white on the dark tokens
+    color: color-mix(in srgb, var(--clr-black) 60%, transparent); // white 0.6 on the dark tokens
 
     @include maxMedia(xl) {
       margin-top: 16px;

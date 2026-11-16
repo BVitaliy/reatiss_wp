@@ -220,7 +220,7 @@
   }
 
   &__item-text {
-    color: color-mix(in srgb, var(--clr-black) 85%, transparent);
+    color: color-mix(in srgb, var(--clr-black) 60%, transparent); // white 0.6 on the dark tokens
   }
 
   &__link {
