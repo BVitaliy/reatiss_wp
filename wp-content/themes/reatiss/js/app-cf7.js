@@ -3,8 +3,9 @@
 // The markup's app-form.js validated `.js-form` and opened "thanks" without a
 // backend. CF7 forms (`form.rts-form`) are sent by CF7; this file maps its
 // lifecycle onto the design: the field error state (.field__input.is-error +
-// .field__error), a busy button while sending, and the "thanks" popup on
-// `wpcf7mailsent`.
+// .field__error), the required consent checkbox (.field-check, CF7
+// [acceptance] — red until ticked, the form is not sent), a busy button while
+// sending, and the "thanks" popup on `wpcf7mailsent`.
 (function () {
   "use strict";
 
@@ -12,6 +13,7 @@
   var EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   function fieldError(input) {
+    if (input.type === "checkbox") return !input.checked;
     var value = String(input.value || "").trim();
     var required = input.classList.contains("wpcf7-validates-as-required");
     if (required && !value) return true;
@@ -20,14 +22,23 @@
   }
 
   function mark(input, bad) {
-    var field = input.closest(".field");
+    var field = input.closest(".field-check") || input.closest(".field");
     input.classList.toggle("is-error", bad);
-    if (field) field.classList.toggle("is-invalid", bad);
+    if (field) {
+      field.classList.toggle("is-invalid", bad);
+      // replay the nudge on every failed try
+      if (bad && field.classList.contains("field-check")) {
+        field.classList.remove("is-shaking");
+        void field.offsetWidth;
+        field.classList.add("is-shaking");
+      }
+    }
     input.setAttribute("aria-invalid", bad ? "true" : "false");
   }
 
+  // text fields + required consent boxes (CF7 marks an optional one .optional)
   function inputs(form) {
-    return form.querySelectorAll(".field__input");
+    return form.querySelectorAll(".field__input, .wpcf7-acceptance:not(.optional) input[type=checkbox]");
   }
 
   // Capture phase: runs before CF7's own submit listener, so an invalid form
@@ -50,12 +61,14 @@
     }
   }, true);
 
-  // Clear a field's error as soon as it becomes valid.
-  document.addEventListener("input", function (event) {
+  // Clear a field's error as soon as it becomes valid (checkboxes: on change).
+  function recheck(event) {
     var input = event.target;
     if (!input.closest || !input.closest(FORM) || !input.classList.contains("is-error")) return;
     if (!fieldError(input)) mark(input, false);
-  });
+  }
+  document.addEventListener("input", recheck);
+  document.addEventListener("change", recheck);
 
   // Busy button while CF7 sends.
   document.addEventListener("submit", function (event) {
@@ -80,7 +93,7 @@
 
     invalid.forEach(function (item) {
       var wrap = form.querySelector('[data-name="' + item.field + '"]');
-      var input = wrap && wrap.querySelector(".field__input");
+      var input = wrap && wrap.querySelector(".field__input, input[type=checkbox]");
       if (!input) return;
       mark(input, true);
       if (!first) first = input;

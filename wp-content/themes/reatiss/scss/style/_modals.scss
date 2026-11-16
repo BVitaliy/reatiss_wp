@@ -101,8 +101,10 @@ body.is-scroll-pinned {
       }
     }
 
-    // reports modal — Figma 8278:46875: 925×542, content 392 → 75 top and
-    // bottom; right part of the bottom edge raised 32 (diagonal 648 → 679)
+    // reports modal — Figma 8422:37147: 925×582, content 776 inset 75; right
+    // part of the bottom edge raised 32 (diagonal 648 → 679). Title 42 + the
+    // clicked report's part number 23 (gap 12), then its description in a
+    // plate (client, as the SEO box), then the form
     &--reports {
       --cut-x: calc(100% - #{rem(277)});
       --cut-w: #{rem(31)};
@@ -175,6 +177,43 @@ body.is-scroll-pinned {
 
     .btn {
       margin-top: rem(20);
+    }
+  }
+
+  // reports popup (app-reports.js): title + the report's part number
+  &__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: rem(12);
+    text-align: center;
+
+    @include maxMedia(xl) {
+      gap: 8px;
+    }
+  }
+
+  &__subtitle[hidden] {
+    display: none;
+  }
+
+  // the report's description — the SEO box look (light grey, r10)
+  &__note {
+    width: 100%;
+    margin-block: calc(-1 * #{rem(20)}); // 30 to the title and the form (gap 50)
+    padding: rem(30);
+    border-radius: var(--rd-lg);
+    background: var(--bg-1);
+    color: var(--clr-text);
+    text-align: left;
+
+    @include maxMedia(xl) {
+      margin-block: -8px;
+      padding: 20px 16px;
+    }
+
+    &[hidden] {
+      display: none;
     }
   }
 

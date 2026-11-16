@@ -3327,26 +3327,10 @@
                         },
                         {
                             "type": "select",
-                            "name": "animation",
-                            "label": "Animation",
-                            "wrapper": {
-                                "width": "50"
-                            },
-                            "ui": 1,
-                            "return_format": "value",
-                            "default_value": "fill",
-                            "choices": {
-                                "fill": "Words fill with colour",
-                                "decode": "Letters “decode”"
-                            },
-                            "key": "field_c10e38ef230191af"
-                        },
-                        {
-                            "type": "select",
                             "name": "align",
                             "label": "Layout",
                             "wrapper": {
-                                "width": "50"
+                                "width": "100"
                             },
                             "ui": 1,
                             "return_format": "value",
@@ -4395,7 +4379,7 @@
                             "rows": 2,
                             "new_lines": "br",
                             "default_value": "Available Analysis Reports",
-                            "instructions": "Reports come from “Reports (On Shelf)”, sorted by “Order”. A click on a report opens the “Reports” popup (Site Settings → Forms); the report title goes into the request.",
+                            "instructions": "Reports come from “Reports (On Shelf)”, sorted by “Order”. A click on a row opens the “Reports” popup (Site Settings → Forms): the report’s description is shown above the form and its part number goes into the request.",
                             "key": "field_d8a19a695f1bd8d0"
                         },
                         {
@@ -4420,6 +4404,40 @@
                             "ui": 0,
                             "allow_null": 0,
                             "key": "field_c34206f0b44cdcb7"
+                        },
+                        {
+                            "type": "wysiwyg",
+                            "name": "text",
+                            "label": "Text under the title",
+                            "wrapper": {
+                                "width": "100"
+                            },
+                            "toolbar": "basic",
+                            "media_upload": 0,
+                            "tabs": "all",
+                            "key": "field_2e34eb3cc004705d"
+                        },
+                        {
+                            "type": "text",
+                            "name": "col_part",
+                            "label": "Column heading: part number",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "default_value": "Part number and die marking",
+                            "placeholder": "Part number and die marking",
+                            "key": "field_8a46ee82c0068538"
+                        },
+                        {
+                            "type": "text",
+                            "name": "col_func",
+                            "label": "Column heading: functionality",
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "default_value": "Functionality",
+                            "placeholder": "Functionality",
+                            "key": "field_98cf9f9d3ba65c78"
                         }
                     ],
                     "min": "",

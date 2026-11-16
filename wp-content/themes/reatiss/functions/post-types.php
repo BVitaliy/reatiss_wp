@@ -202,7 +202,7 @@ class RTS_Post_Types {
 	public function title_placeholder( $text, $post ): string {
 		$map = [
 			'rts_team'   => __( 'Full name', 'reatiss' ),
-			'rts_report' => __( 'Report title', 'reatiss' ),
+			'rts_report' => __( 'Part number and die marking', 'reatiss' ),
 			'rts_faq'    => __( 'Question', 'reatiss' ),
 		];
 

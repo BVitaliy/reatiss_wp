@@ -23,6 +23,7 @@ class RTS_Forms {
 		add_filter( 'wpcf7_load_css', '__return_false' );
 		add_filter( 'wpcf7_autop_or_not', '__return_false' );
 		add_filter( 'wpcf7_form_elements', [ $this, 'select_placeholder' ] );
+		add_filter( 'wpcf7_form_elements', [ $this, 'privacy_link' ] );
 		add_filter( 'wpcf7_mail_components', [ $this, 'mail_layout' ], 10, 3 );
 	}
 
@@ -80,6 +81,19 @@ class RTS_Forms {
 	 */
 	public function select_placeholder( $html ): string {
 		return (string) preg_replace( '#(<select\b[^>]*>\s*)<option value="">#', '$1<option value="" selected disabled hidden>', (string) $html );
+	}
+
+	/**
+	 * Consent text in the CF7 editor links to `#privacy-policy`: it becomes the
+	 * site's Privacy Policy page (Settings → Privacy), so the form body holds no
+	 * site URL.
+	 *
+	 * @param string $html Form HTML.
+	 */
+	public function privacy_link( $html ): string {
+		$url = get_privacy_policy_url();
+
+		return str_replace( 'href="#privacy-policy"', 'href="' . esc_url( '' !== $url ? $url : home_url( '/' ) ) . '"', (string) $html );
 	}
 
 	public function register_tags(): void {

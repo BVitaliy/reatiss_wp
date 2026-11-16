@@ -49,7 +49,20 @@ $rts_forms = [
 				<?php rts_icon( 'icons/close.svg' ); ?>
 			</button>
 			<div class="modal__form">
-				<?php if ( '' !== $rts_modal['title'] ) { ?>
+				<?php if ( 'reports' === $rts_name ) { ?>
+					<?php
+					// Figma 8422:37147 — a clicked On Shelf report: "Request access to" +
+					// its part number, then its description in a plate (js/app-reports.js).
+					$rts_item_title = (string) rts_option( 'reports_title_item' );
+					?>
+					<div class="modal__head">
+						<p class="modal__title h3 js-report-heading" id="modal-reports-title" data-default="<?php echo esc_attr( $rts_modal['title'] ); ?>" data-item="<?php echo esc_attr( '' !== $rts_item_title ? $rts_item_title : __( 'Request access to', 'reatiss' ) ); ?>"><?php echo esc_html( $rts_modal['title'] ); ?></p>
+						<p class="modal__subtitle h5 js-report-part" hidden></p>
+					</div>
+					<div class="modal__note js-report-note" hidden>
+						<p class="text-md js-report-note-text"></p>
+					</div>
+				<?php } elseif ( '' !== $rts_modal['title'] ) { ?>
 					<p class="modal__title h3" id="modal-<?php echo esc_attr( $rts_name ); ?>-title"><?php echo esc_html( $rts_modal['title'] ); ?></p>
 				<?php } ?>
 				<?php rts_form( $rts_modal['form'], 'modal__form' ); ?>

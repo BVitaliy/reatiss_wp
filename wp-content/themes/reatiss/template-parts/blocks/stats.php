@@ -22,11 +22,12 @@ if ( empty( $args['lead'] ) && empty( $rts_items ) ) {
 ?>
 <section class="home-stats js-stats" data-page-theme="dark">
 
-	<div class="run-line home-stats__line js-run-line" data-duration="10" data-start="0.57" aria-hidden="true">
-		<svg class="run-line__svg" viewBox="0 0 823 520" preserveAspectRatio="xMinYMin meet" fill="none">
-			<path class="run-line__path js-run-path" d="M822.5 0V282.5C822.5 314.533 796.533 340.5 764.5 340.5H418.486C397.765 340.5 378.618 351.555 368.257 369.5L298.686 490C288.325 507.945 269.178 519 248.457 519H-213" />
+	<?php // The vertical starts 200 higher than the mockup: it comes out from under the lab cards above. ?>
+	<div class="run-line home-stats__line js-run-line" data-duration="11.5" data-start="0.622" aria-hidden="true">
+		<svg class="run-line__svg" viewBox="0 0 823 720" preserveAspectRatio="xMinYMin meet" fill="none">
+			<path class="run-line__path js-run-path" d="M822.5 0V482.5C822.5 514.533 796.533 540.5 764.5 540.5H418.486C397.765 540.5 378.618 551.555 368.257 569.5L298.686 690C288.325 707.945 269.178 719 248.457 719H-213" />
 		</svg>
-		<span class="run-line__dot js-run-dot" style="--x: 43%; --y: 77.2%;"></span>
+		<span class="run-line__dot js-run-dot" style="--x: 43%; --y: 83.5%;"></span>
 	</div>
 
 	<div class="container">

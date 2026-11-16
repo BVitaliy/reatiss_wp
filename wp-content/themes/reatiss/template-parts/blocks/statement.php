@@ -1,8 +1,8 @@
 <?php
 /**
- * Statement — big text that plays once in view (app-statement.js): word
- * fill (statement.php) or letter decode (statement-decode.php); centred or
- * on the right (expertise, with its own line). Opts out of the title decode.
+ * Statement — big text that plays once in view (app-statement.js, word
+ * fill); centred or on the right (expertise, with its own line). Opts out
+ * of the title reveal.
  *
  * @package reatiss
  *
@@ -19,7 +19,6 @@ if ( empty( $args['text'] ) ) {
 
 $rts_right   = 'right' === ( $args['align'] ?? '' );
 $rts_classes = 'statement';
-$rts_classes .= 'decode' === ( $args['animation'] ?? '' ) ? ' statement--decode' : '';
 $rts_classes .= $rts_right ? ' statement--right expertise-detail__statement' : '';
 ?>
 <section class="<?php echo esc_attr( $rts_classes ); ?>" data-title-anim="off">

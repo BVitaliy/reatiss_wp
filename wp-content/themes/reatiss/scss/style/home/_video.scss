@@ -3,7 +3,8 @@
 // ── Home: full-width video banner ── Figma 7967:9091
 // 1920×1020 full bleed (393×520 on phones, as Ajour's wide media), never
 // taller than the screen. One button group centred 50px above the bottom:
-// a 50×50 play tile + a "› Watch full video" pill (black 50%, blur, r 8).
+// a 50×50 play tile + a "› Watch full video" pill (r 8) — solid white with
+// main-blue icon / text (client; the mockup had black 50% + blur).
 // Parallax (app-parallax.js): the media layer is taller than the block by
 // --parallax-room and drifts through it while the block crosses the screen.
 .home-video {
@@ -60,7 +61,7 @@
     align-items: center;
     gap: rem(15);
     transform: translateX(-50%);
-    color: var(--clr-white);
+    color: var(--clr-main);
 
     @include maxMedia(xl) {
       bottom: 32px;
@@ -74,9 +75,7 @@
     align-items: center;
     height: rem(50);
     border-radius: rem(8);
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(1.55px);
-    -webkit-backdrop-filter: blur(1.55px);
+    background: var(--clr-white);
     transition: background var(--transition-1), color var(--transition-1);
 
     @include maxMedia(xl) {
@@ -121,6 +120,7 @@
     @include hover {
       .home-video__play {
         background: var(--clr-main);
+        color: var(--clr-white);
 
         svg {
           transform: scale(1.1);
@@ -128,7 +128,7 @@
       }
 
       .home-video__label {
-        background: rgba(0, 0, 0, 0.7);
+        background: var(--bg-1);
 
         svg {
           transform: translateX(#{rem(4)});

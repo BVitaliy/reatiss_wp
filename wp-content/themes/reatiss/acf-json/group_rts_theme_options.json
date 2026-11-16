@@ -659,17 +659,29 @@
             "name": "reports_title",
             "label": "“Reports” popup (On Shelf) — title",
             "wrapper": {
-                "width": "50"
+                "width": "35"
             },
             "default_value": "Request access to the Reports",
-            "key": "field_ffb6832ca2598eb4"
+            "key": "field_ffb6832ca2598eb4",
+            "instructions": "When the popup is opened without a report (e.g. a link to #reports)."
+        },
+        {
+            "type": "text",
+            "name": "reports_title_item",
+            "label": "“Reports” popup — title above the report",
+            "wrapper": {
+                "width": "35"
+            },
+            "instructions": "When a report row is clicked: this line, then the report’s part number under it.",
+            "default_value": "Request access to",
+            "key": "field_8da90c4ae83b2468"
         },
         {
             "type": "post_object",
             "name": "reports_form",
             "label": "“Reports” popup — form",
             "wrapper": {
-                "width": "50"
+                "width": "30"
             },
             "return_format": "id",
             "post_type": [

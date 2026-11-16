@@ -59,26 +59,4 @@
       color: var(--clr-black);
     }
   }
-
-  // decode variant: letters, each locked to its glyph width (em)
-  &--decode &__word {
-    color: inherit;
-    white-space: nowrap;
-    transition: none;
-  }
-
-  &__char {
-    display: inline-block;
-    text-align: center;
-    color: var(--statement-pale);
-
-    &.is-bit {
-      color: var(--clr-accent);
-    }
-
-    &.is-on {
-      color: var(--clr-black);
-      transition: color 0.3s ease;
-    }
-  }
 }

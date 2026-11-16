@@ -2,10 +2,12 @@
 
 // ── Header ─────────────────────────────────────────────────────────
 // Figma: over hero 7967:8872 · on scroll 7976:22677 · search open 7982:27375
-// One header, two looks:
+// One header, three looks:
 //   default        transparent over the dark hero, white text
-//   .is-scrolled   white glass bar (also the resting state on inner pages:
-//                  add .header--light to <header>)
+//   .header--light white glass bar — the resting state on inner pages
+//   .is-scrolled   dark glass bar across the full width (client, ref.
+//                  redstone "blest" product page): the headings' colour,
+//                  translucent + blur, white text as over the hero
 // Search (.is-search-open) swaps the nav for a wide input + results.
 
 .logo {
@@ -30,13 +32,33 @@
 }
 
 .header {
+  --header-inset: #{rem(10)};
   position: fixed;
   z-index: 100;
-  top: rem(10);
-  left: rem(10);
-  right: rem(10);
+  top: var(--header-inset);
+  left: var(--header-inset);
+  right: var(--header-inset);
   color: var(--clr-white);
   transition: transform 0.6s var(--ease-out);
+
+  // dark full-width backing once the page is scrolled (edge to edge, the
+  // inset given back on every side so the bar's content stays in place)
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: calc(-1 * var(--header-inset));
+    background: rgba(2, 16, 22, 0.9); // --clr-black, the headings' colour
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  &.is-scrolled:not(.is-menu-open)::before {
+    opacity: 1;
+  }
 
   // slid off-screen while a full-screen scene is pinned (app-solutions.js)
   &.is-hidden {
@@ -44,9 +66,7 @@
   }
 
   @include maxMedia(xl) {
-    top: 8px;
-    left: 8px;
-    right: 8px;
+    --header-inset: 8px;
   }
 
   &__inner {
@@ -295,16 +315,9 @@
     }
   }
 
-  // once the page is scrolled the white bar floats over white content:
-  // a faint 1px hairline + a very soft drop keep its edge
-  &.is-scrolled .header__inner {
-    box-shadow:
-      0 0 0 max(1px, #{rem(1)}) rgba(2, 16, 22, 0.04);
-  }
-
-  // ── state: glass bar ──
-  &.is-scrolled,
-  &--light,
+  // ── state: white glass bar (inner pages at the top, mobile menu) ──
+  // scrolled → the dark backing (::before) and the hero colours instead
+  &--light:not(.is-scrolled),
   &.is-menu-open {
     .header__inner {
       background: rgba(255, 255, 255, 0.85);

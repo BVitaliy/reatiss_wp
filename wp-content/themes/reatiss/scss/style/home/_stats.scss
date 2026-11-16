@@ -17,18 +17,22 @@
   }
 
   // line 7976:18082 — top-left corner, runs off the left edge. In Figma its
-  // vertical is cut by the frame top; here it starts 150 higher (viewBox
-  // 823×520 = the mockup's 370 + 150) and fades in, so there is no cut edge
+  // vertical is cut by the frame top; here it starts 350 higher (viewBox
+  // 823×720 = the mockup's 370 + 150 gap + 200): on the home page it comes
+  // out from under the lab cards above (.home-labs is stacked over it), so
+  // the line and the dash leave the card's bottom edge instead of starting
+  // in mid-air. The top 20% fades in — hidden under the cards there, a soft
+  // start on pages where nothing covers it
   &__line {
-    top: calc(-150 / 1920 * 100vw);
-    aspect-ratio: 823 / 520;
+    top: calc(-350 / 1920 * 100vw);
+    aspect-ratio: 823 / 720;
     width: calc(823 / 1920 * 100%);
-    -webkit-mask-image: linear-gradient(transparent, #000 29%);
-    mask-image: linear-gradient(transparent, #000 29%);
+    -webkit-mask-image: linear-gradient(transparent, #000 20%);
+    mask-image: linear-gradient(transparent, #000 20%);
 
     @include maxMedia(md) {
-      top: calc(-0.7 * 150 / 823 * 100vw);
-      aspect-ratio: 823 / 520;
+      top: calc(-0.7 * 350 / 823 * 100vw);
+      aspect-ratio: 823 / 720;
       height: auto;
       width: 70%;
     }

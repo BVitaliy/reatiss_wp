@@ -3,6 +3,17 @@
     "title": "Report",
     "fields": [
         {
+            "type": "text",
+            "name": "functionality",
+            "label": "Functionality",
+            "wrapper": {
+                "width": "100"
+            },
+            "instructions": "The table’s second column (the title is the part number and die marking).",
+            "placeholder": "e.g. SoC",
+            "key": "field_34bb237f4c1bac0b"
+        },
+        {
             "type": "textarea",
             "name": "description",
             "label": "Description",
@@ -11,8 +22,9 @@
             },
             "rows": 3,
             "new_lines": "",
-            "required": 1,
-            "key": "field_57bdabf2834146e4"
+            "required": 0,
+            "key": "field_57bdabf2834146e4",
+            "instructions": "Shown in the request popup, above the form, when this report is clicked."
         }
     ],
     "location": [

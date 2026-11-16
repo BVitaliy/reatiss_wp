@@ -68,6 +68,13 @@ logs/             — custom logs (rts_log()), gitignored
 - `app-select.js` (as delivered) never hides the closed list — `_wp.scss` makes `.select__list:not(.is-open)`
   hidden + unclickable.
 - `js/app-wp.js`: editor links to `#consultation` / `#reports` open those popups.
+- Consent checkbox (client, not in the markup): CF7 `[acceptance]` inside `div.field-check field--full`,
+  form setting `acceptance_as_validation: on`; unticked → not sent, red + nudge (`app-cf7.js`). Link the
+  text to `#privacy-policy` — `RTS_Forms::privacy_link()` swaps in the Privacy Policy page URL.
+- Header (client): on scroll a dark full-width translucent bar (`.header::before`, headings' colour),
+  not the markup's white bar; `header--light` stays white only at the top of inner pages.
+- Title reveal = words rise in (`app-titles.js`); the markup's 0/1 "decode" is gone (titles + statement).
+- Running lines: 1.3× faster than `data-duration` + a fading tail of dash copies (`app-lines.js`).
 - Section partials take every text from fields; decorative run-lines (`.run-line` SVG paths)
   stay hardcoded in the block partials, as in the markup.
 - Menus come from WP (`RTS_Nav_Walker` adds `.is-active` / `aria-current`); app-header.js's
@@ -116,8 +123,11 @@ logs/             — custom logs (rts_log()), gitignored
   `orderby=date` explicitly and use `rts_get_posts()` (WP_Query without `suppress_filters`).
 - Articles / events: `single.php` → `template-parts/article/article.php` (+ related); tables are
   wrapped in `.article-table` by a `the_content` filter; author fields = ACF on users.
-- On Shelf: `reports_list` block (CPT `rts_report`, 10 a page) — a row opens the `reports`
-  popup and `js/app-reports.js` puts its title into the CF7 hidden field `your-report`.
+- On Shelf: `reports_list` block (CPT `rts_report`, 10 a page) — title + text, then a table
+  (title = part number | `functionality`; the Figma "№" column dropped). A row opens the `reports`
+  popup (Figma 8422:37147): `js/app-reports.js` switches the heading to Site Settings
+  `reports_title_item` + the part number under it, shows `description` in a plate above the form
+  (`.modal__note`, SEO-box look) and puts the part number into the CF7 hidden field `your-report`.
 - Search (`functions/search.php`): post types `RTS_SEARCH_TYPES`, relevance order set explicitly
   (rspanel), `search.php` page + header dropdown `wp_ajax_rts_live_search` (`js/app-search.js`,
   `template-parts/global/search-live.php`); "Show more" type `search`.

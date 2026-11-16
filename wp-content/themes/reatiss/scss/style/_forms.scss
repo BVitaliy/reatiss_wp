@@ -97,6 +97,87 @@
   }
 }
 
+// Consent checkbox — CF7 [acceptance] in a div.field-check (client, ref.
+// peeklogic.com/contacts): a 20px box + "I agree with the Privacy Policy".
+// Required: until it is ticked the form is not sent and the box + text turn
+// red with a short nudge (app-cf7.js → .is-invalid / .is-shaking).
+@keyframes field-shake {
+  0%, 100% { transform: none; }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+.field-check {
+  font-size: max(15px, #{rem(16)});
+  line-height: 1.55;
+  color: var(--clr-text);
+  transition: color var(--transition-1);
+
+  label {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: rem(12);
+    cursor: pointer;
+
+    @include maxMedia(xl) {
+      gap: 10px;
+    }
+  }
+
+  input[type="checkbox"] {
+    flex: none;
+    width: max(18px, #{rem(20)});
+    height: max(18px, #{rem(20)});
+    margin: 0.15em 0 0;
+    border: 1px solid #c9ccd1;
+    border-radius: var(--rd-sm);
+    background: var(--clr-white) center / 70% no-repeat;
+    appearance: none;
+    cursor: pointer;
+    transition: border-color var(--transition-1), background-color var(--transition-1), box-shadow var(--transition-1);
+
+    &:checked {
+      border-color: var(--clr-main);
+      background-color: var(--clr-main);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10'%3E%3Cpath d='M1 5.2 4.4 8.5 11 1.5' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--clr-main);
+      outline-offset: 2px;
+    }
+  }
+
+  a {
+    color: var(--clr-main);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  @include hover {
+    input[type="checkbox"]:not(:checked) {
+      border-color: var(--clr-main);
+    }
+  }
+
+  &.is-invalid {
+    color: var(--clr-error);
+
+    input[type="checkbox"] {
+      border-color: var(--clr-error);
+      box-shadow: 0 0 0 1px var(--clr-error);
+    }
+
+    a {
+      color: inherit;
+    }
+  }
+
+  &.is-shaking label {
+    animation: field-shake 0.4s ease;
+  }
+}
+
 // <select> with the Figma chevron (8233:39068) — maps 1:1 to CF7/ACF.
 // app-select.js hides the native control and adds a combobox trigger +
 // a listbox (rendered in <body>, see .select__list). Without JS the native

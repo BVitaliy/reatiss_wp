@@ -57,6 +57,14 @@
     }
   }
 
+  // tail (app-lines.js): copies of the dash a moment behind it, each fainter
+  // and thinner (--tail-o / --tail-s); `scale` composes with GSAP's transform
+  &__dot--tail {
+    opacity: var(--tail-o, 0.3);
+    scale: 1 var(--tail-s, 1);
+    box-shadow: none;
+  }
+
   // GSAP places the dot with transforms from the top-left corner
   &.is-running &__dot {
     top: 0;

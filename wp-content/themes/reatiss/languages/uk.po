@@ -449,9 +449,6 @@ msgstr "Вступний текст"
 msgid "Left"
 msgstr "Ліворуч"
 
-msgid "Letters “decode”"
-msgstr "Літери «розшифровуються»"
-
 msgid "Line drawing 536×357 px (transparent PNG)."
 msgstr "Лінійний малюнок 536×357 px (PNG з прозорістю)."
 
@@ -704,17 +701,14 @@ msgstr "Питання"
 msgid "Report"
 msgstr "Звіт"
 
-msgid "Report title"
-msgstr "Назва звіту"
-
 msgid "Reports (On Shelf)"
 msgstr "Звіти (On Shelf)"
 
 msgid "Reports / links list"
 msgstr "Список звітів / посилань"
 
-msgid "Reports come from “Reports (On Shelf)”, sorted by “Order”. A click on a report opens the “Reports” popup (Site Settings → Forms); the report title goes into the request."
-msgstr "Звіти — розділ «Звіти (On Shelf)», порядок — поле «Порядок». Клік по звіту відкриває попап «Звіти» (Налаштування сайту → Форми); назва звіту потрапляє в заявку."
+msgid "Reports come from “Reports (On Shelf)”, sorted by “Order”. A click on a row opens the “Reports” popup (Site Settings → Forms): the report’s description is shown above the form and its part number goes into the request."
+msgstr "Звіти — розділ «Звіти (On Shelf)», порядок — поле «Порядок». Клік по рядку відкриває попап «Звіти» (Налаштування сайту → Форми): опис звіту показується над формою, а парт-номер потрапляє в заявку."
 
 msgid "Reports list (On Shelf)"
 msgstr "Список звітів (On Shelf)"
@@ -1216,3 +1210,36 @@ msgstr "SEO: на сторінці один H1."
 
 msgid "p (not a heading)"
 msgstr "p (не заголовок)"
+
+msgid "Part number and die marking"
+msgstr "Парт-номер і маркування кристала"
+
+msgid "Functionality"
+msgstr "Функціональність"
+
+msgid "Text under the title"
+msgstr "Текст під заголовком"
+
+msgid "Column heading: part number"
+msgstr "Заголовок колонки: парт-номер"
+
+msgid "Column heading: functionality"
+msgstr "Заголовок колонки: функціональність"
+
+msgid "The table’s second column (the title is the part number and die marking)."
+msgstr "Друга колонка таблиці (заголовок запису — парт-номер і маркування кристала)."
+
+msgid "e.g. SoC"
+msgstr "напр. SoC"
+
+msgid "Shown in the request popup, above the form, when this report is clicked."
+msgstr "Показується в попапі запиту над формою, коли клікають по цьому звіту."
+
+msgid "“Reports” popup — title above the report"
+msgstr "Попап «Звіти» — заголовок над звітом"
+
+msgid "When a report row is clicked: this line, then the report’s part number under it."
+msgstr "Коли клікають по рядку звіту: цей рядок, а під ним — парт-номер звіту."
+
+msgid "When the popup is opened without a report (e.g. a link to #reports)."
+msgstr "Коли попап відкрито не зі звіту (напр. посилання на #reports)."

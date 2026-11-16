@@ -1,12 +1,21 @@
 @use "../mixins" as *;
 
-// ── On Shelf ── Figma 8271:41619
-// Title → 80 → reports list 1236 wide → 50 → pager. Own stepped line
+// ── On Shelf ── Figma 8422:36759
+// Title → text → 80 → table 1236 wide → 50 → pager. Own stepped line
 // (8356:36530): starts 54 above the title, drops down the left at x194.
 .shelf {
   &__line {
     top: calc(-54 / 1920 * 100vw);
     aspect-ratio: 1920 / 545;
+  }
+
+  &__head {
+    gap: var(--sp-xs);
+  }
+
+  &__text {
+    max-width: rem(820);
+    color: var(--clr-text);
   }
 
   &__inner {
@@ -19,3 +28,68 @@
   }
 }
 
+// ── Reports table ── Figma 8469:26153 (the "№" column left out — client)
+// 1px #EEEFF0 grid; head row light grey 60 high, Jakarta 23; cells 12/16,
+// Inter 18/1.55 grey. Each row is a button that opens the request popup.
+.shelf-table {
+  border: 1px solid var(--clr-line);
+
+  &__head,
+  &__row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  &__head {
+    min-height: rem(60);
+    background: var(--bg-1);
+    color: var(--clr-black);
+
+    .shelf-table__cell {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__cell {
+    padding: rem(12) rem(16);
+    overflow-wrap: anywhere;
+
+    & + & {
+      border-left: 1px solid var(--clr-line);
+    }
+
+    @include maxMedia(md) {
+      padding: 10px 12px;
+    }
+  }
+
+  &__body li + li,
+  &__body li:first-child {
+    border-top: 1px solid var(--clr-line);
+  }
+
+  &__row {
+    width: 100%;
+    color: var(--clr-text);
+    font-size: max(15px, #{rem(18)});
+    line-height: 1.55;
+    text-align: left;
+    cursor: pointer;
+    transition: background var(--transition-1), color var(--transition-1);
+
+    @include maxMedia(md) {
+      font-size: 14px;
+    }
+
+    @include hover {
+      background: var(--bg-1);
+      color: var(--clr-main);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--clr-main);
+      outline-offset: -2px;
+    }
+  }
+}

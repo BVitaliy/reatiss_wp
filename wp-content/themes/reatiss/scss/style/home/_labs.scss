@@ -12,8 +12,11 @@
     aspect-ratio: 1920 / 649;
   }
 
+  // 2: over the stats section's line (z-index 1), which comes out from under
+  // the cards (home/_stats.scss); the section itself stays unstacked so its
+  // own line keeps running under the About photo
   .container {
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
 }

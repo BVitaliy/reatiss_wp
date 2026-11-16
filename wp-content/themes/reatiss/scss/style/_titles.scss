@@ -1,6 +1,6 @@
 @use "../mixins" as *;
 
-// ── Title reveal "decode" (app-titles.js) ──
+// ── Title reveal: words rise in (app-titles.js) ──
 // Titles wait hidden until the script has split them; if it never runs they
 // show after 3s anyway (fail-safe animation). Reduced motion: no hiding.
 @keyframes title-failsafe {
@@ -22,16 +22,7 @@
   }
 }
 
+// split by the script while the words rise in (reverted afterwards)
 .title-word {
-  white-space: nowrap;
-}
-
-// fixed to the final glyph width by the script, so bits don't reflow
-.title-char {
-  display: inline-block;
-  text-align: center;
-
-  &.is-bit {
-    color: var(--clr-accent);
-  }
+  will-change: transform, opacity, filter;
 }
