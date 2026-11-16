@@ -75,7 +75,9 @@ logs/             — custom logs (rts_log()), gitignored
   capture frames over progress 0→1 headless (1080², SwiftShader) and encode H.264 (fade in/out, end hold),
   poster `img/home/solutions-3d/mobile-poster.webp`. **Re-render it after scene changes.** The block's Nov 16
   content reaches a server via `RTS_Solutions_Migration` (functions/solutions.php, once — v2: into the
-  untouched 4-item seed or its own v1, never into a block edited by hand). QA: `?solp=0..1`
+  untouched 4-item seed or its own v1, never into a block edited by hand). `RTS_Content_Migration`
+  (functions/migration-content.php, once) does the same for the home stats lead, the On Shelf title / text
+  and the six reports still named after the old seed (+ the 13th report). QA: `?solp=0..1`
   (headless: suppress the promo popup via sessionStorage `reatiss-promo-service` / `reatiss-toast-closed`).
   Since Nov 16 the block is edited in WP only (the markup is no longer the source for it).
 - `js/app-solutions.js`: reads optional `data-zoom` (`[[in, out], …]` seconds of the layers clip,
@@ -88,8 +90,9 @@ logs/             — custom logs (rts_log()), gitignored
   form setting `acceptance_as_validation: on`; unticked → not sent, red + nudge (`app-cf7.js`). Link the
   text to `#privacy-policy` — `RTS_Forms::privacy_link()` swaps in the Privacy Policy page URL.
   `RTS_Consent_Migration` (forms.php, once) adds it to every `[rts_submit]` form lacking it on a server.
-- Header (client): on scroll a dark full-width translucent bar (`.header::before`, headings' colour),
-  not the markup's white bar; `header--light` stays white only at the top of inner pages.
+- Header (client): one background, `.header::before`, always edge to edge — transparent over the hero,
+  white glass at the top of inner pages (`header--light`), `#04041ce8` (blur 8) once scrolled; only its
+  colour fades. `.header__inner` has no background of its own (two layers showed).
 - Title reveal = words rise in (`app-titles.js`); the markup's 0/1 "decode" is gone (titles + statement).
 - Running lines: 1.3× faster than `data-duration` + a fading tail of dash copies (`app-lines.js`).
 - Section partials take every text from fields; decorative run-lines (`.run-line` SVG paths)

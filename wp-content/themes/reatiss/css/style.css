@@ -1853,7 +1853,7 @@ html.js .home-hero:not(.is-ready) .home-hero__content > * {opacity: 0;}
 @media (max-width: 767.98px) {
 .home-stats {padding: 72px 0;}
 }
-.home-stats__line {top: -18.2291666667vw;aspect-ratio: 823/720;width: 42.8645833333%;-webkit-mask-image: linear-gradient(transparent, #000 20%);mask-image: linear-gradient(transparent, #000 20%);}
+.home-stats__line {box-sizing: content-box;padding: 0 12px 12px 0;top: -18.2291666667vw;aspect-ratio: 823/720;width: 42.8645833333%;-webkit-mask-image: linear-gradient(transparent, #000 20%);mask-image: linear-gradient(transparent, #000 20%);}
 @media (max-width: 767.98px) {
 .home-stats__line {top: -29.7691373026vw;aspect-ratio: 823/720;height: auto;width: 70%;}
 }

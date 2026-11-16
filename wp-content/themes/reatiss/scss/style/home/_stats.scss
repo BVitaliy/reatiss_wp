@@ -23,7 +23,14 @@
   // the line and the dash leave the card's bottom edge instead of starting
   // in mid-air. The top 20% fades in — hidden under the cards there, a soft
   // start on pages where nothing covers it
+  // The path runs on the box's very edges (vertical at x 822.5 of 823, the
+  // last horizontal at y 719 of 720), and a mask clips whatever is outside
+  // the box — the dash was cut in half there (client: "the flying point is
+  // cut"). Padding on the right / bottom (content-box: the drawing keeps its
+  // size and ratio) gives the dash room inside the mask.
   &__line {
+    box-sizing: content-box;
+    padding: 0 12px 12px 0;
     top: calc(-350 / 1920 * 100vw);
     aspect-ratio: 823 / 720;
     width: calc(823 / 1920 * 100%);

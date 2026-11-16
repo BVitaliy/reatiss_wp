@@ -57,6 +57,7 @@ require_once RTS_DIR . '/functions/media.php';
 require_once RTS_DIR . '/functions/security.php';
 require_once RTS_DIR . '/functions/migration.php';
 require_once RTS_DIR . '/functions/solutions.php';
+require_once RTS_DIR . '/functions/migration-content.php';
 require_once RTS_DIR . '/functions/forms.php';
 require_once RTS_DIR . '/functions/shortcodes.php';
 
