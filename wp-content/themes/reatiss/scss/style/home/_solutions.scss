@@ -217,6 +217,15 @@
   &__item-title {
     max-width: 100%;
     width: fit-content;
+
+    a {
+      color: inherit;
+      transition: color var(--transition-1);
+
+      @include hover {
+        color: var(--clr-accent);
+      }
+    }
   }
 
   &__item-text {

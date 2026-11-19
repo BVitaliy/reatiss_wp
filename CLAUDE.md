@@ -67,7 +67,10 @@ logs/             — custom logs (rts_log()), gitignored
   `app-solutions.js` ≥1200 with WebGL2; URL + version in the section's `data-scene`, `imgBase` =
   `window.reatissThemeUrl`. Client edits (Nov 16): the package
   flips once and stays pads-up (no flip back), LGA pads stay on the board, package layers = the client's
-  photos `package-1…4.webp` (pins + SMD, metal, metal, lid), die-2 tinted copper; items = blue dot · title ·
+  photos `package-1…4.webp` (pins + SMD, metal, metal, lid; the metal layers mirrored so every notch is on
+  the right; the lid shows its inside — `package-4-inside.webp`, the die's gold contact square — at the
+  bottom of the stack), die-2 tinted copper; SSD label text blurred, batteries "Model A1234"; items = blue
+  dot · title (links like the item's link) ·
   1–2 lines · text link, no lines to the layers (two columns by the model: left under the title, right by
   the die; low screens: text to one line, then title + link only), block CTA (`cta_text` + `cta_btn`) under
   the scene; the final shot keeps between the header and the CTA. No WebGL → the video scene; <1200 → `video/solutions-mobile.mp4` (or the
@@ -80,10 +83,6 @@ logs/             — custom logs (rts_log()), gitignored
   and the six reports still named after the old seed (+ the 13th report). QA: `?solp=0..1`
   (headless: suppress the promo popup via sessionStorage `reatiss-promo-service` / `reatiss-toast-closed`).
   Since Nov 16 the block is edited in WP only (the markup is no longer the source for it).
-  Laptop shell (case / deck / lid, MacBook Pro 14"-style, silver, no logo) = `img/home/solutions-3d/laptop.glb`
-  from `blender/laptop.py` (`blender -b --python blender/laptop.py`): shapes only, the scene maps materials by
-  name; loaded with `js/vendors/GLTFLoader.js` (+ BufferGeometryUtils / SkeletonUtils — `gulp updateJS` copies
-  them from three/examples with their bare 'three' imports made relative). No GLB → the procedural shell.
 - `js/app-solutions.js`: reads optional `data-zoom` (`[[in, out], …]` seconds of the layers clip,
   one pair per item) from the section — the block's videos and zoom timings are editable; empty
   = the theme's `video/chip1|2.mp4` and the measured `ZOOM`.

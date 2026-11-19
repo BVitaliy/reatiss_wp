@@ -101,15 +101,21 @@ $rts_cta_btn  = rts_has_button( $args['cta_btn'] ?? [] );
 								<?php rts_picture( $rts_item['image'], null, [], 'large' ); ?>
 							</span>
 						<?php } ?>
+						<?php $rts_link = rts_has_button( $rts_item['link'] ?? [] ) ? rts_link( $rts_item['link'] ) : null; ?>
 						<span class="home-solutions__body">
 							<?php if ( ! empty( $rts_item['title'] ) ) { ?>
-								<h3 class="home-solutions__item-title h5"><?php echo esc_html( $rts_item['title'] ); ?></h3>
+								<h3 class="home-solutions__item-title h5">
+									<?php if ( $rts_link ) { // the title links where "Learn more" does (client) ?>
+										<a<?php echo rts_link_attrs( $rts_link, (string) $rts_item['title'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in rts_link_attrs(). ?>><?php echo esc_html( $rts_item['title'] ); ?></a>
+									<?php } else { ?>
+										<?php echo esc_html( $rts_item['title'] ); ?>
+									<?php } ?>
+								</h3>
 							<?php } ?>
 							<?php if ( ! empty( $rts_item['text'] ) ) { ?>
 								<p class="home-solutions__item-text text-lg"><?php echo esc_html( $rts_item['text'] ); ?></p>
 							<?php } ?>
 							<?php
-							$rts_link = rts_has_button( $rts_item['link'] ?? [] ) ? rts_link( $rts_item['link'] ) : null;
 							if ( $rts_link ) {
 								$rts_label = trim( (string) $rts_item['link']['label'] );
 								?>

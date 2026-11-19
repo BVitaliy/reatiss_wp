@@ -1805,6 +1805,10 @@ html.js .home-hero:not(.is-ready) .home-hero__content > * {opacity: 0;}
 .home-solutions__art img {display: block;width: 100%;height: auto;}
 .home-solutions__body {grid-column: 2;grid-row: 2;display: flex;flex-direction: column;align-items: flex-start;gap: 0.75rem;}
 .home-solutions__item-title {max-width: 100%;width: -moz-fit-content;width: fit-content;}
+.home-solutions__item-title a {color: inherit;transition: color var(--transition-1);}
+@media (min-width: 1200px) {
+.home-solutions__item-title a:hover {color: var(--clr-accent);}
+}
 .home-solutions__item-text {color: color-mix(in srgb, var(--clr-black) 60%, transparent);}
 .home-solutions__link {margin-top: 0.25rem;color: var(--clr-black);}
 .home-solutions.is-3d .home-solutions__art {display: none;}

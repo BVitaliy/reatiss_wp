@@ -9,13 +9,11 @@
  *   gulp            — styles + img, BrowserSync proxy to the local WP site, watch
  *   gulp styles     — scss/ → css/
  *   gulp img        — images/ → img/ (webp siblings + optimized originals)
- *   gulp updateJS   — refresh js/vendors/ from node_modules (+ three.js addons,
- *                     their bare 'three' imports pointed at js/vendors/)
+ *   gulp updateJS   — refresh js/vendors/ from node_modules
  *   gulp updateCSS  — refresh css/vendors/ (Swiper, lightGallery)
  *   gulp updateLgAssets — lightGallery icon font + loader → css/fonts, css/images
  */
 
-import fs from "node:fs";
 import gulp from "gulp";
 import { deleteAsync } from "del";
 import browsersync from "browser-sync";
@@ -130,26 +128,7 @@ const copyVendorJS = () => {
     .pipe(gulp.dest("js/vendors/"));
 };
 
-// three.js addons (GLTFLoader for the solutions scene's laptop.glb): they
-// import 'three' by its bare name, which a browser can't resolve without an
-// import map — copied next to three.module.min.js with relative imports
-const threeAddons = (done) => {
-  const files = {
-    "loaders/GLTFLoader.js": "GLTFLoader.js",
-    "utils/BufferGeometryUtils.js": "BufferGeometryUtils.js",
-    "utils/SkeletonUtils.js": "SkeletonUtils.js",
-  };
-  Object.entries(files).forEach(([src, dest]) => {
-    const code = fs
-      .readFileSync(`node_modules/three/examples/jsm/${src}`, "utf8")
-      .replace(/from 'three';/g, "from './three.module.min.js';")
-      .replace(/'\.\.\/utils\/(\w+\.js)'/g, "'./$1'");
-    fs.writeFileSync(`js/vendors/${dest}`, code);
-  });
-  done();
-};
-
-export const updateJS = gulp.series(copyVendorJS, threeAddons);
+export const updateJS = copyVendorJS;
 
 export const updateCSS = () => {
   return gulp
